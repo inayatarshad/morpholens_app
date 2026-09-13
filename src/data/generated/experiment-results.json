@@ -1,0 +1,2441 @@
+{
+ "generatedAt": "2026-09-13T12:05:18.185Z",
+ "config": {
+  "seeds": [
+   1,
+   2,
+   3,
+   4,
+   5
+  ],
+  "sizes": [
+   50,
+   100,
+   250,
+   500,
+   1000
+  ],
+  "cellsPerLemma": 10,
+  "universeTarget": 3000,
+  "testMax": 500,
+  "testFraction": 0.25
+ },
+ "sources": {
+  "tur": {
+   "repo": "https://github.com/unimorph/tur",
+   "branch": "master",
+   "sha": "6c179ace7d2f3d7f3484020e5304c1544d07bb6b"
+  },
+  "urd": {
+   "repo": "https://github.com/unimorph/urd",
+   "branch": "master",
+   "sha": "17b2fb34fac79ba7bc4b90f8e10e6a25bac3d396"
+  },
+  "evn": {
+   "repo": "https://github.com/unimorph/evn",
+   "branch": "main",
+   "sha": "cdbe7b44ba754403d60fd38818ac173bec13ba34"
+  },
+  "ckt": {
+   "repo": "https://github.com/unimorph/ckt",
+   "branch": "main",
+   "sha": "facbd482ef2558916b7283b398c9810a8649e7f2"
+  },
+  "ron": {
+   "repo": "https://github.com/unimorph/ron",
+   "branch": "master",
+   "sha": "0910e7850baef37f67817060fa8aae7c42cbe269"
+  }
+ },
+ "stats": {
+  "tur": {
+   "triples": 570420,
+   "lemmas": 3579,
+   "bundles": 883,
+   "testSize": 500
+  },
+  "urd": {
+   "triples": 12572,
+   "lemmas": 182,
+   "bundles": 217,
+   "testSize": 329
+  },
+  "evn": {
+   "triples": 11371,
+   "lemmas": 4495,
+   "bundles": 1021,
+   "testSize": 500
+  },
+  "ckt": {
+   "triples": 241,
+   "lemmas": 196,
+   "bundles": 99,
+   "testSize": 60
+  },
+  "ron": {
+   "triples": 80262,
+   "lemmas": 4405,
+   "bundles": 59,
+   "testSize": 500
+  }
+ },
+ "results": {
+  "tur": {
+   "random": {
+    "50": {
+     "overlap": 14.4,
+     "unseenBundle": 55.1,
+     "systems": {
+      "baseline": {
+       "mean": 15.7,
+       "std": 2.5,
+       "runs": [
+        16.8,
+        19,
+        14.4,
+        15.8,
+        12.4
+       ]
+      },
+      "memory": {
+       "mean": 15.7,
+       "std": 2.5,
+       "runs": [
+        16.8,
+        19,
+        14.4,
+        15.8,
+        12.4
+       ]
+      },
+      "morph": {
+       "mean": 15.4,
+       "std": 1.3,
+       "runs": [
+        17,
+        16,
+        14.6,
+        15.8,
+        13.6
+       ]
+      }
+     }
+    },
+    "100": {
+     "overlap": 27.1,
+     "unseenBundle": 39.5,
+     "systems": {
+      "baseline": {
+       "mean": 21,
+       "std": 2.4,
+       "runs": [
+        19.4,
+        24.6,
+        22.4,
+        19.2,
+        19.2
+       ]
+      },
+      "memory": {
+       "mean": 21,
+       "std": 2.4,
+       "runs": [
+        19.4,
+        24.6,
+        22.4,
+        19.2,
+        19.2
+       ]
+      },
+      "morph": {
+       "mean": 22.2,
+       "std": 1.9,
+       "runs": [
+        20.6,
+        24.2,
+        24,
+        22,
+        20.2
+       ]
+      }
+     }
+    },
+    "250": {
+     "overlap": 55,
+     "unseenBundle": 25,
+     "systems": {
+      "baseline": {
+       "mean": 28.5,
+       "std": 1.4,
+       "runs": [
+        27.6,
+        28.8,
+        30.2,
+        26.6,
+        29.2
+       ]
+      },
+      "memory": {
+       "mean": 29.4,
+       "std": 1.3,
+       "runs": [
+        28,
+        30.2,
+        30.6,
+        27.8,
+        30.2
+       ]
+      },
+      "morph": {
+       "mean": 29.7,
+       "std": 1.6,
+       "runs": [
+        28.2,
+        29.6,
+        31.4,
+        28,
+        31.2
+       ]
+      }
+     }
+    },
+    "500": {
+     "overlap": 79.6,
+     "unseenBundle": 19.2,
+     "systems": {
+      "baseline": {
+       "mean": 34.2,
+       "std": 2.5,
+       "runs": [
+        31.4,
+        38.2,
+        34,
+        33.2,
+        34
+       ]
+      },
+      "memory": {
+       "mean": 36.6,
+       "std": 3.2,
+       "runs": [
+        32.4,
+        40,
+        37.2,
+        34.4,
+        39
+       ]
+      },
+      "morph": {
+       "mean": 34.6,
+       "std": 2.3,
+       "runs": [
+        32,
+        38.2,
+        35,
+        33.6,
+        34.2
+       ]
+      }
+     }
+    },
+    "1000": {
+     "overlap": 96.9,
+     "unseenBundle": 15.6,
+     "systems": {
+      "baseline": {
+       "mean": 42,
+       "std": 2.7,
+       "runs": [
+        40.4,
+        45.2,
+        44.4,
+        41,
+        38.8
+       ]
+      },
+      "memory": {
+       "mean": 48.1,
+       "std": 2.6,
+       "runs": [
+        45.8,
+        50.6,
+        51.2,
+        47.4,
+        45.6
+       ]
+      },
+      "morph": {
+       "mean": 42.3,
+       "std": 2.6,
+       "runs": [
+        41,
+        45.4,
+        44.6,
+        41.4,
+        39.2
+       ]
+      }
+     }
+    }
+   },
+   "lemma-disjoint": {
+    "50": {
+     "overlap": 0,
+     "unseenBundle": 52.8,
+     "systems": {
+      "baseline": {
+       "mean": 16,
+       "std": 2.6,
+       "runs": [
+        15.6,
+        20.2,
+        13,
+        15.6,
+        15.8
+       ]
+      },
+      "memory": {
+       "mean": 16,
+       "std": 2.6,
+       "runs": [
+        15.6,
+        20.2,
+        13,
+        15.6,
+        15.8
+       ]
+      },
+      "morph": {
+       "mean": 15.9,
+       "std": 3.8,
+       "runs": [
+        16.4,
+        20.6,
+        10,
+        16.6,
+        16
+       ]
+      }
+     }
+    },
+    "100": {
+     "overlap": 0,
+     "unseenBundle": 35.8,
+     "systems": {
+      "baseline": {
+       "mean": 22.4,
+       "std": 3.1,
+       "runs": [
+        21,
+        27.8,
+        20.8,
+        21.8,
+        20.6
+       ]
+      },
+      "memory": {
+       "mean": 22.4,
+       "std": 3.1,
+       "runs": [
+        21,
+        27.8,
+        20.8,
+        21.8,
+        20.6
+       ]
+      },
+      "morph": {
+       "mean": 22.9,
+       "std": 2.9,
+       "runs": [
+        21.4,
+        28,
+        21.6,
+        22.4,
+        21.2
+       ]
+      }
+     }
+    },
+    "250": {
+     "overlap": 0,
+     "unseenBundle": 21.5,
+     "systems": {
+      "baseline": {
+       "mean": 30.9,
+       "std": 5.7,
+       "runs": [
+        30.4,
+        40.8,
+        27.6,
+        28.6,
+        27.2
+       ]
+      },
+      "memory": {
+       "mean": 30.9,
+       "std": 5.7,
+       "runs": [
+        30.4,
+        40.8,
+        27.6,
+        28.6,
+        27.2
+       ]
+      },
+      "morph": {
+       "mean": 31.5,
+       "std": 5.7,
+       "runs": [
+        30.6,
+        41.4,
+        27.6,
+        30.2,
+        27.6
+       ]
+      }
+     }
+    },
+    "500": {
+     "overlap": 0,
+     "unseenBundle": 17.3,
+     "systems": {
+      "baseline": {
+       "mean": 37.3,
+       "std": 6.5,
+       "runs": [
+        37.8,
+        48.2,
+        31.4,
+        33.8,
+        35.2
+       ]
+      },
+      "memory": {
+       "mean": 37.3,
+       "std": 6.5,
+       "runs": [
+        37.8,
+        48.2,
+        31.4,
+        33.8,
+        35.2
+       ]
+      },
+      "morph": {
+       "mean": 37.4,
+       "std": 6.5,
+       "runs": [
+        37.8,
+        48.4,
+        31.4,
+        34.2,
+        35.4
+       ]
+      }
+     }
+    },
+    "1000": {
+     "overlap": 0,
+     "unseenBundle": 14.7,
+     "systems": {
+      "baseline": {
+       "mean": 45.8,
+       "std": 8.2,
+       "runs": [
+        42.8,
+        59.4,
+        38.2,
+        46.4,
+        42
+       ]
+      },
+      "memory": {
+       "mean": 45.8,
+       "std": 8.2,
+       "runs": [
+        42.8,
+        59.4,
+        38.2,
+        46.4,
+        42
+       ]
+      },
+      "morph": {
+       "mean": 46.2,
+       "std": 8.1,
+       "runs": [
+        43,
+        59.8,
+        38.8,
+        46.8,
+        42.4
+       ]
+      }
+     }
+    }
+   }
+  },
+  "urd": {
+   "random": {
+    "50": {
+     "overlap": 23,
+     "unseenBundle": 39.4,
+     "systems": {
+      "baseline": {
+       "mean": 43.9,
+       "std": 3.4,
+       "runs": [
+        46.8,
+        46.2,
+        43.8,
+        44.4,
+        38.3
+       ]
+      },
+      "memory": {
+       "mean": 43.7,
+       "std": 3.3,
+       "runs": [
+        46.8,
+        45.9,
+        43.2,
+        44.4,
+        38.3
+       ]
+      },
+      "morph": {
+       "mean": 46,
+       "std": 3.7,
+       "runs": [
+        48.9,
+        49.2,
+        45.3,
+        46.2,
+        40.1
+       ]
+      }
+     }
+    },
+    "100": {
+     "overlap": 42.7,
+     "unseenBundle": 34.3,
+     "systems": {
+      "baseline": {
+       "mean": 51.1,
+       "std": 1.8,
+       "runs": [
+        51.4,
+        53.8,
+        48.9,
+        50.2,
+        51.4
+       ]
+      },
+      "memory": {
+       "mean": 50.2,
+       "std": 2.2,
+       "runs": [
+        51.1,
+        51.7,
+        46.5,
+        49.8,
+        51.7
+       ]
+      },
+      "morph": {
+       "mean": 53.4,
+       "std": 2.5,
+       "runs": [
+        52.6,
+        56.2,
+        50.2,
+        52.6,
+        55.6
+       ]
+      }
+     }
+    },
+    "250": {
+     "overlap": 73.9,
+     "unseenBundle": 26.6,
+     "systems": {
+      "baseline": {
+       "mean": 58,
+       "std": 2.9,
+       "runs": [
+        58.1,
+        62,
+        53.8,
+        57.4,
+        58.7
+       ]
+      },
+      "memory": {
+       "mean": 54.8,
+       "std": 4,
+       "runs": [
+        55.9,
+        57.4,
+        47.7,
+        56.2,
+        56.8
+       ]
+      },
+      "morph": {
+       "mean": 62.4,
+       "std": 3.3,
+       "runs": [
+        61.7,
+        66.6,
+        57.4,
+        62.6,
+        63.5
+       ]
+      }
+     }
+    },
+    "500": {
+     "overlap": 93.5,
+     "unseenBundle": 16.7,
+     "systems": {
+      "baseline": {
+       "mean": 65.7,
+       "std": 2.8,
+       "runs": [
+        65,
+        70.2,
+        62.6,
+        66,
+        64.4
+       ]
+      },
+      "memory": {
+       "mean": 69.4,
+       "std": 4.2,
+       "runs": [
+        66.6,
+        75.7,
+        65.3,
+        71.4,
+        67.8
+       ]
+      },
+      "morph": {
+       "mean": 69.5,
+       "std": 2.2,
+       "runs": [
+        69,
+        72.6,
+        66.9,
+        70.5,
+        68.4
+       ]
+      }
+     }
+    }
+   },
+   "lemma-disjoint": {
+    "50": {
+     "overlap": 0,
+     "unseenBundle": 37.2,
+     "systems": {
+      "baseline": {
+       "mean": 44.4,
+       "std": 2.6,
+       "runs": [
+        41.6,
+        47.7,
+        42.2,
+        46.5,
+        43.8
+       ]
+      },
+      "memory": {
+       "mean": 44.4,
+       "std": 2.6,
+       "runs": [
+        41.6,
+        47.7,
+        42.2,
+        46.5,
+        43.8
+       ]
+      },
+      "morph": {
+       "mean": 47.9,
+       "std": 3.2,
+       "runs": [
+        44.7,
+        51.1,
+        45,
+        51.4,
+        47.4
+       ]
+      }
+     }
+    },
+    "100": {
+     "overlap": 0,
+     "unseenBundle": 31.6,
+     "systems": {
+      "baseline": {
+       "mean": 50.6,
+       "std": 4.8,
+       "runs": [
+        48.6,
+        58.7,
+        46.5,
+        51.4,
+        48
+       ]
+      },
+      "memory": {
+       "mean": 50.6,
+       "std": 4.8,
+       "runs": [
+        48.6,
+        58.7,
+        46.5,
+        51.4,
+        48
+       ]
+      },
+      "morph": {
+       "mean": 54.6,
+       "std": 4.8,
+       "runs": [
+        53.2,
+        61.7,
+        49.5,
+        56.8,
+        51.7
+       ]
+      }
+     }
+    },
+    "250": {
+     "overlap": 0,
+     "unseenBundle": 22.8,
+     "systems": {
+      "baseline": {
+       "mean": 57.6,
+       "std": 4.5,
+       "runs": [
+        60.2,
+        63.8,
+        53.2,
+        57.1,
+        53.5
+       ]
+      },
+      "memory": {
+       "mean": 57.6,
+       "std": 4.5,
+       "runs": [
+        60.2,
+        63.8,
+        53.2,
+        57.1,
+        53.5
+       ]
+      },
+      "morph": {
+       "mean": 62.1,
+       "std": 4,
+       "runs": [
+        63.2,
+        68.1,
+        58.1,
+        62.3,
+        59
+       ]
+      }
+     }
+    },
+    "500": {
+     "overlap": 0,
+     "unseenBundle": 14.6,
+     "systems": {
+      "baseline": {
+       "mean": 65.2,
+       "std": 5.3,
+       "runs": [
+        66.9,
+        73.6,
+        61.7,
+        63.8,
+        60.2
+       ]
+      },
+      "memory": {
+       "mean": 65.2,
+       "std": 5.3,
+       "runs": [
+        66.9,
+        73.6,
+        61.7,
+        63.8,
+        60.2
+       ]
+      },
+      "morph": {
+       "mean": 70,
+       "std": 4.4,
+       "runs": [
+        70.5,
+        77.5,
+        68.1,
+        67.8,
+        66.3
+       ]
+      }
+     }
+    }
+   }
+  },
+  "evn": {
+   "random": {
+    "50": {
+     "overlap": 5.5,
+     "unseenBundle": 55.6,
+     "systems": {
+      "baseline": {
+       "mean": 27.9,
+       "std": 3,
+       "runs": [
+        27.4,
+        31.6,
+        24.2,
+        30.2,
+        26
+       ]
+      },
+      "memory": {
+       "mean": 27.9,
+       "std": 3,
+       "runs": [
+        27.4,
+        31.6,
+        24.2,
+        30.2,
+        26
+       ]
+      },
+      "morph": {
+       "mean": 26.8,
+       "std": 3.5,
+       "runs": [
+        25,
+        31.2,
+        23.2,
+        29.8,
+        25
+       ]
+      }
+     }
+    },
+    "100": {
+     "overlap": 10.2,
+     "unseenBundle": 43.9,
+     "systems": {
+      "baseline": {
+       "mean": 31.4,
+       "std": 1.8,
+       "runs": [
+        30,
+        32.2,
+        29,
+        33,
+        33
+       ]
+      },
+      "memory": {
+       "mean": 31.4,
+       "std": 1.8,
+       "runs": [
+        30,
+        32.2,
+        29,
+        33,
+        33
+       ]
+      },
+      "morph": {
+       "mean": 30.6,
+       "std": 2,
+       "runs": [
+        29.2,
+        31.8,
+        27.8,
+        32.6,
+        31.8
+       ]
+      }
+     }
+    },
+    "250": {
+     "overlap": 22.3,
+     "unseenBundle": 30.4,
+     "systems": {
+      "baseline": {
+       "mean": 36.7,
+       "std": 3.2,
+       "runs": [
+        34,
+        38.4,
+        32.6,
+        39,
+        39.6
+       ]
+      },
+      "memory": {
+       "mean": 36.8,
+       "std": 3.2,
+       "runs": [
+        34,
+        38.4,
+        32.6,
+        39,
+        39.8
+       ]
+      },
+      "morph": {
+       "mean": 37.1,
+       "std": 3.2,
+       "runs": [
+        35,
+        38.8,
+        32.6,
+        40.4,
+        38.6
+       ]
+      }
+     }
+    },
+    "500": {
+     "overlap": 34.1,
+     "unseenBundle": 22.4,
+     "systems": {
+      "baseline": {
+       "mean": 39.6,
+       "std": 2.7,
+       "runs": [
+        36.6,
+        41.8,
+        36.8,
+        42,
+        41
+       ]
+      },
+      "memory": {
+       "mean": 39.8,
+       "std": 2.7,
+       "runs": [
+        36.8,
+        41.6,
+        37,
+        42.6,
+        41
+       ]
+      },
+      "morph": {
+       "mean": 40.4,
+       "std": 2.8,
+       "runs": [
+        37.4,
+        43,
+        37.4,
+        42.8,
+        41.6
+       ]
+      }
+     }
+    },
+    "1000": {
+     "overlap": 48,
+     "unseenBundle": 15.2,
+     "systems": {
+      "baseline": {
+       "mean": 42.6,
+       "std": 2.6,
+       "runs": [
+        42.2,
+        44.8,
+        38.2,
+        44.4,
+        43.2
+       ]
+      },
+      "memory": {
+       "mean": 41.8,
+       "std": 2.8,
+       "runs": [
+        40.6,
+        43.2,
+        37.6,
+        44.4,
+        43.4
+       ]
+      },
+      "morph": {
+       "mean": 43.5,
+       "std": 2.5,
+       "runs": [
+        42.6,
+        45.8,
+        39.6,
+        45.4,
+        44.2
+       ]
+      }
+     }
+    }
+   },
+   "lemma-disjoint": {
+    "50": {
+     "overlap": 0,
+     "unseenBundle": 50.2,
+     "systems": {
+      "baseline": {
+       "mean": 29.3,
+       "std": 4.2,
+       "runs": [
+        34,
+        23.4,
+        28.2,
+        28,
+        32.8
+       ]
+      },
+      "memory": {
+       "mean": 29.3,
+       "std": 4.2,
+       "runs": [
+        34,
+        23.4,
+        28.2,
+        28,
+        32.8
+       ]
+      },
+      "morph": {
+       "mean": 27.8,
+       "std": 4.7,
+       "runs": [
+        33,
+        20.8,
+        26.4,
+        27.8,
+        31
+       ]
+      }
+     }
+    },
+    "100": {
+     "overlap": 0,
+     "unseenBundle": 40.8,
+     "systems": {
+      "baseline": {
+       "mean": 32.6,
+       "std": 2.3,
+       "runs": [
+        35.4,
+        29.4,
+        31.8,
+        32.2,
+        34
+       ]
+      },
+      "memory": {
+       "mean": 32.6,
+       "std": 2.3,
+       "runs": [
+        35.4,
+        29.4,
+        31.8,
+        32.2,
+        34
+       ]
+      },
+      "morph": {
+       "mean": 31.6,
+       "std": 2.7,
+       "runs": [
+        34.2,
+        27.2,
+        31,
+        32.2,
+        33.2
+       ]
+      }
+     }
+    },
+    "250": {
+     "overlap": 0,
+     "unseenBundle": 27.8,
+     "systems": {
+      "baseline": {
+       "mean": 37.6,
+       "std": 3.7,
+       "runs": [
+        44,
+        36.4,
+        35.2,
+        34.8,
+        37.6
+       ]
+      },
+      "memory": {
+       "mean": 37.6,
+       "std": 3.7,
+       "runs": [
+        44,
+        36.4,
+        35.2,
+        34.8,
+        37.6
+       ]
+      },
+      "morph": {
+       "mean": 36.8,
+       "std": 3.9,
+       "runs": [
+        43.2,
+        34,
+        34.4,
+        34.6,
+        38
+       ]
+      }
+     }
+    },
+    "500": {
+     "overlap": 0,
+     "unseenBundle": 20,
+     "systems": {
+      "baseline": {
+       "mean": 42.8,
+       "std": 4.1,
+       "runs": [
+        48.4,
+        37.4,
+        43.4,
+        40.6,
+        44.2
+       ]
+      },
+      "memory": {
+       "mean": 42.8,
+       "std": 4.1,
+       "runs": [
+        48.4,
+        37.4,
+        43.4,
+        40.6,
+        44.2
+       ]
+      },
+      "morph": {
+       "mean": 42.6,
+       "std": 4.4,
+       "runs": [
+        47.8,
+        36.6,
+        43,
+        40.4,
+        45.4
+       ]
+      }
+     }
+    },
+    "1000": {
+     "overlap": 0,
+     "unseenBundle": 12.5,
+     "systems": {
+      "baseline": {
+       "mean": 46.8,
+       "std": 3.3,
+       "runs": [
+        51.8,
+        43.2,
+        46.2,
+        44.8,
+        48
+       ]
+      },
+      "memory": {
+       "mean": 46.8,
+       "std": 3.3,
+       "runs": [
+        51.8,
+        43.2,
+        46.2,
+        44.8,
+        48
+       ]
+      },
+      "morph": {
+       "mean": 47.8,
+       "std": 3.3,
+       "runs": [
+        52.2,
+        43.6,
+        47.8,
+        46,
+        49.4
+       ]
+      }
+     }
+    }
+   }
+  },
+  "ckt": {
+   "random": {
+    "50": {
+     "overlap": 11.7,
+     "unseenBundle": 46.7,
+     "systems": {
+      "baseline": {
+       "mean": 55,
+       "std": 2.9,
+       "runs": [
+        55,
+        60,
+        53.3,
+        53.3,
+        53.3
+       ]
+      },
+      "memory": {
+       "mean": 55,
+       "std": 2.9,
+       "runs": [
+        55,
+        60,
+        53.3,
+        53.3,
+        53.3
+       ]
+      },
+      "morph": {
+       "mean": 53,
+       "std": 5.5,
+       "runs": [
+        51.7,
+        60,
+        53.3,
+        55,
+        45
+       ]
+      }
+     }
+    },
+    "100": {
+     "overlap": 18,
+     "unseenBundle": 40.3,
+     "systems": {
+      "baseline": {
+       "mean": 56.3,
+       "std": 1.8,
+       "runs": [
+        58.3,
+        58.3,
+        55,
+        55,
+        55
+       ]
+      },
+      "memory": {
+       "mean": 56.3,
+       "std": 1.8,
+       "runs": [
+        58.3,
+        58.3,
+        55,
+        55,
+        55
+       ]
+      },
+      "morph": {
+       "mean": 55.3,
+       "std": 4.9,
+       "runs": [
+        58.3,
+        58.3,
+        56.7,
+        56.7,
+        46.7
+       ]
+      }
+     }
+    }
+   },
+   "lemma-disjoint": {
+    "50": {
+     "overlap": 0,
+     "unseenBundle": 49.7,
+     "systems": {
+      "baseline": {
+       "mean": 52.3,
+       "std": 4.5,
+       "runs": [
+        58.3,
+        46.7,
+        51.7,
+        50,
+        55
+       ]
+      },
+      "memory": {
+       "mean": 52.3,
+       "std": 4.5,
+       "runs": [
+        58.3,
+        46.7,
+        51.7,
+        50,
+        55
+       ]
+      },
+      "morph": {
+       "mean": 53.7,
+       "std": 4.6,
+       "runs": [
+        60,
+        48.3,
+        55,
+        50,
+        55
+       ]
+      }
+     }
+    },
+    "100": {
+     "overlap": 0,
+     "unseenBundle": 45.3,
+     "systems": {
+      "baseline": {
+       "mean": 53,
+       "std": 4,
+       "runs": [
+        58.3,
+        48.3,
+        53.3,
+        50,
+        55
+       ]
+      },
+      "memory": {
+       "mean": 53,
+       "std": 4,
+       "runs": [
+        58.3,
+        48.3,
+        53.3,
+        50,
+        55
+       ]
+      },
+      "morph": {
+       "mean": 54.3,
+       "std": 5.1,
+       "runs": [
+        61.7,
+        48.3,
+        53.3,
+        51.7,
+        56.7
+       ]
+      }
+     }
+    }
+   }
+  },
+  "ron": {
+   "random": {
+    "50": {
+     "overlap": 13.4,
+     "unseenBundle": 37.2,
+     "systems": {
+      "baseline": {
+       "mean": 25.4,
+       "std": 2.3,
+       "runs": [
+        21.6,
+        27.4,
+        26.8,
+        26,
+        25.2
+       ]
+      },
+      "memory": {
+       "mean": 25.3,
+       "std": 2.3,
+       "runs": [
+        21.6,
+        27.4,
+        26.8,
+        25.4,
+        25.2
+       ]
+      },
+      "morph": {
+       "mean": 22.7,
+       "std": 3.1,
+       "runs": [
+        18,
+        26,
+        24.6,
+        23.6,
+        21.4
+       ]
+      }
+     }
+    },
+    "100": {
+     "overlap": 26.4,
+     "unseenBundle": 18.2,
+     "systems": {
+      "baseline": {
+       "mean": 34.7,
+       "std": 2.4,
+       "runs": [
+        34.4,
+        36.4,
+        32.8,
+        37.8,
+        32.2
+       ]
+      },
+      "memory": {
+       "mean": 34.6,
+       "std": 2.2,
+       "runs": [
+        35,
+        36.2,
+        32.6,
+        37.2,
+        32.2
+       ]
+      },
+      "morph": {
+       "mean": 34,
+       "std": 1.9,
+       "runs": [
+        32.8,
+        34.8,
+        33,
+        37,
+        32.4
+       ]
+      }
+     }
+    },
+    "250": {
+     "overlap": 53.1,
+     "unseenBundle": 5.4,
+     "systems": {
+      "baseline": {
+       "mean": 46.9,
+       "std": 0.9,
+       "runs": [
+        47.6,
+        47.2,
+        45.6,
+        46.2,
+        47.8
+       ]
+      },
+      "memory": {
+       "mean": 46.5,
+       "std": 1.4,
+       "runs": [
+        48.6,
+        46.8,
+        44.8,
+        45.6,
+        46.6
+       ]
+      },
+      "morph": {
+       "mean": 47.7,
+       "std": 0.6,
+       "runs": [
+        46.8,
+        47.6,
+        48.2,
+        48.2,
+        47.6
+       ]
+      }
+     }
+    },
+    "500": {
+     "overlap": 79,
+     "unseenBundle": 0.7,
+     "systems": {
+      "baseline": {
+       "mean": 54.1,
+       "std": 3.7,
+       "runs": [
+        49.6,
+        53.2,
+        55.4,
+        52.8,
+        59.6
+       ]
+      },
+      "memory": {
+       "mean": 54.3,
+       "std": 1.4,
+       "runs": [
+        53.6,
+        52.8,
+        56.6,
+        54.4,
+        54
+       ]
+      },
+      "morph": {
+       "mean": 54.2,
+       "std": 3.7,
+       "runs": [
+        49.4,
+        53.8,
+        55.2,
+        53.2,
+        59.6
+       ]
+      }
+     }
+    },
+    "1000": {
+     "overlap": 96.1,
+     "unseenBundle": 0,
+     "systems": {
+      "baseline": {
+       "mean": 54.9,
+       "std": 4.4,
+       "runs": [
+        49.8,
+        53,
+        56.8,
+        53.4,
+        61.4
+       ]
+      },
+      "memory": {
+       "mean": 55.4,
+       "std": 1.6,
+       "runs": [
+        54.4,
+        55.6,
+        53.8,
+        55.2,
+        58
+       ]
+      },
+      "morph": {
+       "mean": 55.2,
+       "std": 4.6,
+       "runs": [
+        49.8,
+        53.4,
+        57.4,
+        53.4,
+        61.8
+       ]
+      }
+     }
+    }
+   },
+   "lemma-disjoint": {
+    "50": {
+     "overlap": 0,
+     "unseenBundle": 31.5,
+     "systems": {
+      "baseline": {
+       "mean": 24.9,
+       "std": 2.9,
+       "runs": [
+        26.4,
+        25.4,
+        26.4,
+        26.4,
+        19.8
+       ]
+      },
+      "memory": {
+       "mean": 24.9,
+       "std": 2.9,
+       "runs": [
+        26.4,
+        25.4,
+        26.4,
+        26.4,
+        19.8
+       ]
+      },
+      "morph": {
+       "mean": 22.8,
+       "std": 2.3,
+       "runs": [
+        22.8,
+        21.4,
+        25.8,
+        24.2,
+        19.8
+       ]
+      }
+     }
+    },
+    "100": {
+     "overlap": 0,
+     "unseenBundle": 18.7,
+     "systems": {
+      "baseline": {
+       "mean": 31.6,
+       "std": 2.5,
+       "runs": [
+        33,
+        28.4,
+        35,
+        31.6,
+        30.2
+       ]
+      },
+      "memory": {
+       "mean": 31.6,
+       "std": 2.5,
+       "runs": [
+        33,
+        28.4,
+        35,
+        31.6,
+        30.2
+       ]
+      },
+      "morph": {
+       "mean": 31.8,
+       "std": 3.4,
+       "runs": [
+        32,
+        28,
+        37.2,
+        31.6,
+        30.2
+       ]
+      }
+     }
+    },
+    "250": {
+     "overlap": 0,
+     "unseenBundle": 5.4,
+     "systems": {
+      "baseline": {
+       "mean": 45.5,
+       "std": 3.6,
+       "runs": [
+        39.4,
+        47.2,
+        46,
+        46.2,
+        48.8
+       ]
+      },
+      "memory": {
+       "mean": 45.5,
+       "std": 3.6,
+       "runs": [
+        39.4,
+        47.2,
+        46,
+        46.2,
+        48.8
+       ]
+      },
+      "morph": {
+       "mean": 46,
+       "std": 3.3,
+       "runs": [
+        40.6,
+        46.6,
+        48.6,
+        45.8,
+        48.6
+       ]
+      }
+     }
+    },
+    "500": {
+     "overlap": 0,
+     "unseenBundle": 0.6,
+     "systems": {
+      "baseline": {
+       "mean": 55.1,
+       "std": 3.9,
+       "runs": [
+        51.6,
+        52.8,
+        60.8,
+        52.8,
+        57.6
+       ]
+      },
+      "memory": {
+       "mean": 55.1,
+       "std": 3.9,
+       "runs": [
+        51.6,
+        52.8,
+        60.8,
+        52.8,
+        57.6
+       ]
+      },
+      "morph": {
+       "mean": 55.5,
+       "std": 4,
+       "runs": [
+        52.6,
+        52.6,
+        60.8,
+        52.8,
+        58.8
+       ]
+      }
+     }
+    },
+    "1000": {
+     "overlap": 0,
+     "unseenBundle": 0,
+     "systems": {
+      "baseline": {
+       "mean": 60.6,
+       "std": 2.9,
+       "runs": [
+        57.2,
+        59.8,
+        65,
+        59.2,
+        61.6
+       ]
+      },
+      "memory": {
+       "mean": 60.6,
+       "std": 2.9,
+       "runs": [
+        57.2,
+        59.8,
+        65,
+        59.2,
+        61.6
+       ]
+      },
+      "morph": {
+       "mean": 60.8,
+       "std": 3.1,
+       "runs": [
+        57.6,
+        59.8,
+        65.8,
+        59.2,
+        61.6
+       ]
+      }
+     }
+    }
+   }
+  }
+ },
+ "examples": {
+  "tur": {
+   "random": {
+    "n": 500,
+    "items": [
+     {
+      "lemma": "veteriner",
+      "tag": "N;GEN;SG;PSS2S",
+      "gold": "veterinerinin",
+      "baseline": "veteriner",
+      "memory": "veteriner",
+      "morph": "veterinerinin",
+      "kind": "morph-only",
+      "lemmaSeen": true,
+      "bundleSeen": true
+     },
+     {
+      "lemma": "komikleşmek",
+      "tag": "V;IND;PRS;HAB;3;PL;NEG;DECL",
+      "gold": "komikleşmezler",
+      "baseline": "komikleşmek",
+      "memory": "komikleşmek",
+      "morph": "komikleşmezler",
+      "kind": "morph-only",
+      "lemmaSeen": true,
+      "bundleSeen": false
+     },
+     {
+      "lemma": "el sıkışmak",
+      "tag": "V;IND;PRS;PROG;3;PL;INTR;POS",
+      "gold": "el sıkışıyorlar mı",
+      "baseline": "el sıkışmak",
+      "memory": "el sıkışmak",
+      "morph": "el sıkışıyorlar mı",
+      "kind": "morph-only",
+      "lemmaSeen": true,
+      "bundleSeen": false
+     },
+     {
+      "lemma": "idadi",
+      "tag": "N;ABL;SG",
+      "gold": "idadiden",
+      "baseline": "idadi",
+      "memory": "idadiden",
+      "morph": "idadi",
+      "kind": "memory-only",
+      "lemmaSeen": true,
+      "bundleSeen": true
+     },
+     {
+      "lemma": "kek",
+      "tag": "N;ACC;SG",
+      "gold": "keki",
+      "baseline": "keğı",
+      "memory": "keki",
+      "morph": "keğı",
+      "kind": "memory-only",
+      "lemmaSeen": true,
+      "bundleSeen": true
+     },
+     {
+      "lemma": "konveks dörtgen",
+      "tag": "N;NOM;PL",
+      "gold": "konveks dörtgenler",
+      "baseline": "konveks dörtgenlar",
+      "memory": "konveks dörtgenler",
+      "morph": "konveks dörtgenlar",
+      "kind": "memory-only",
+      "lemmaSeen": true,
+      "bundleSeen": true
+     },
+     {
+      "lemma": "port",
+      "tag": "N;NOM;PL;PSS3S",
+      "gold": "portları",
+      "baseline": "portleri",
+      "memory": "portleri",
+      "morph": "portleri",
+      "kind": "all-wrong",
+      "lemmaSeen": true,
+      "bundleSeen": true
+     },
+     {
+      "lemma": "kızan",
+      "tag": "N;ABL;SG;PSS2P",
+      "gold": "kızanınızdan",
+      "baseline": "kızannizden",
+      "memory": "kızannizden",
+      "morph": "kızannizden",
+      "kind": "all-wrong",
+      "lemmaSeen": true,
+      "bundleSeen": true
+     }
+    ]
+   },
+   "lemma-disjoint": {
+    "n": 500,
+    "items": [
+     {
+      "lemma": "kahraman",
+      "tag": "N;DAT;SG;PSS2S",
+      "gold": "kahramanına",
+      "baseline": "kahramanne",
+      "memory": "kahramanne",
+      "morph": "kahramanne",
+      "kind": "all-wrong",
+      "lemmaSeen": false,
+      "bundleSeen": true
+     },
+     {
+      "lemma": "kavun",
+      "tag": "N;ARGNO3P;SG;LGSPEC2",
+      "gold": "kavunmuşlar",
+      "baseline": "kavun",
+      "memory": "kavun",
+      "morph": "kavunmışsılar",
+      "kind": "all-wrong",
+      "lemmaSeen": false,
+      "bundleSeen": false
+     }
+    ]
+   }
+  },
+  "urd": {
+   "random": {
+    "n": 500,
+    "items": [
+     {
+      "lemma": "آرام کرنا",
+      "tag": "V;3;PL;HAB;SBJV;FEM",
+      "gold": "آرام کرتی ہوں",
+      "baseline": "آرام کرنا",
+      "memory": "آرام کرنا",
+      "morph": "آرام کرتی ہوں",
+      "kind": "morph-only",
+      "lemmaSeen": true,
+      "bundleSeen": false
+     },
+     {
+      "lemma": "لوٹنا",
+      "tag": "V;2;PL;PRF;LGSPEC3;FEM",
+      "gold": "لوٹی ہو گی",
+      "baseline": "لوٹنا",
+      "memory": "لوٹنا",
+      "morph": "لوٹی ہو گی",
+      "kind": "morph-only",
+      "lemmaSeen": true,
+      "bundleSeen": false
+     },
+     {
+      "lemma": "بہنا",
+      "tag": "V;1;PL;PROG;LGSPEC4;MASC",
+      "gold": "بہ رہے ہوتے",
+      "baseline": "بہنا",
+      "memory": "بہنا",
+      "morph": "بہ رہے ہوتے",
+      "kind": "morph-only",
+      "lemmaSeen": true,
+      "bundleSeen": false
+     },
+     {
+      "lemma": "قیدخانہ",
+      "tag": "N;VOC;SG",
+      "gold": "قید خاہے",
+      "baseline": "قیدخانہ",
+      "memory": "قید خاہے",
+      "morph": "قیدخانہ",
+      "kind": "memory-only",
+      "lemmaSeen": true,
+      "bundleSeen": true
+     },
+     {
+      "lemma": "پْرشنسا",
+      "tag": "N;NOM;SG",
+      "gold": "پررشنسا",
+      "baseline": "پْرشنسا",
+      "memory": "پررشنسا",
+      "morph": "پْرشنسا",
+      "kind": "memory-only",
+      "lemmaSeen": true,
+      "bundleSeen": true
+     },
+     {
+      "lemma": "سالگرہ",
+      "tag": "N;ACC;PL",
+      "gold": "سالگرہوں",
+      "baseline": "سالگروں",
+      "memory": "سالگرہوں",
+      "morph": "سالگروں",
+      "kind": "memory-only",
+      "lemmaSeen": true,
+      "bundleSeen": true
+     },
+     {
+      "lemma": "جلنا",
+      "tag": "V;NFIN;LGSPEC1",
+      "gold": "جلنا",
+      "baseline": "جلنا",
+      "memory": "جلنا",
+      "morph": "جلنے",
+      "kind": "baseline-only",
+      "lemmaSeen": true,
+      "bundleSeen": false
+     },
+     {
+      "lemma": "لکھنا",
+      "tag": "V;NFIN;LGSPEC1",
+      "gold": "لکھنا",
+      "baseline": "لکھنا",
+      "memory": "لکھنا",
+      "morph": "لکھنے",
+      "kind": "baseline-only",
+      "lemmaSeen": true,
+      "bundleSeen": false
+     },
+     {
+      "lemma": "جھکنا",
+      "tag": "V;1;SG;SBJV;MASC",
+      "gold": "میں جھکوں گا",
+      "baseline": "جھکنا",
+      "memory": "جھکنا",
+      "morph": "تو جھکے گا",
+      "kind": "all-wrong",
+      "lemmaSeen": true,
+      "bundleSeen": false
+     },
+     {
+      "lemma": "ہنسنا",
+      "tag": "V;2;SG;PROG;PST;FEM",
+      "gold": "ہنس رہی تھی",
+      "baseline": "ہنسنا",
+      "memory": "ہنسنا",
+      "morph": "ہنس رہی تھا",
+      "kind": "all-wrong",
+      "lemmaSeen": true,
+      "bundleSeen": false
+     }
+    ]
+   },
+   "lemma-disjoint": {
+    "n": 500,
+    "items": [
+     {
+      "lemma": "سوپن دیکھنا",
+      "tag": "V;3;PL;PRF;SBJV;FEM",
+      "gold": "سوپن دیکھی ہوں",
+      "baseline": "سوپن دیکھنا",
+      "memory": "سوپن دیکھنا",
+      "morph": "سوپن دیکھی ہوں",
+      "kind": "morph-only",
+      "lemmaSeen": false,
+      "bundleSeen": false
+     },
+     {
+      "lemma": "کھیلنا",
+      "tag": "V;3;PL;PROG;SBJV;FEM",
+      "gold": "کھیل رہی ہوں",
+      "baseline": "کھیلنا",
+      "memory": "کھیلنا",
+      "morph": "کھیل رہی ہوں",
+      "kind": "morph-only",
+      "lemmaSeen": false,
+      "bundleSeen": false
+     },
+     {
+      "lemma": "چومنا",
+      "tag": "V;1;SG;PROG;PST;FEM",
+      "gold": "چوم رہی تھی",
+      "baseline": "چومنا",
+      "memory": "چومنا",
+      "morph": "چوم رہی تھی",
+      "kind": "morph-only",
+      "lemmaSeen": false,
+      "bundleSeen": false
+     },
+     {
+      "lemma": "جھگڑا",
+      "tag": "N;NOM;PL",
+      "gold": "جھگڑے",
+      "baseline": "جھگڑاے",
+      "memory": "جھگڑاے",
+      "morph": "جھگڑاے",
+      "kind": "all-wrong",
+      "lemmaSeen": false,
+      "bundleSeen": true
+     },
+     {
+      "lemma": "سالگرہ",
+      "tag": "N;NOM;PL",
+      "gold": "سالگرہیں",
+      "baseline": "سالگرے",
+      "memory": "سالگرے",
+      "morph": "سالگرے",
+      "kind": "all-wrong",
+      "lemmaSeen": false,
+      "bundleSeen": true
+     }
+    ]
+   }
+  },
+  "evn": {
+   "random": {
+    "n": 500,
+    "items": [
+     {
+      "lemma": "eːkun",
+      "tag": "PRO;TERM;SG",
+      "gold": "eːkundulaː",
+      "baseline": "eːkun",
+      "memory": "eːkun",
+      "morph": "eːkundulaː",
+      "kind": "morph-only",
+      "lemmaSeen": true,
+      "bundleSeen": false
+     },
+     {
+      "lemma": "aki",
+      "tag": "V;FIN;IND;SG;1;ACT",
+      "gold": "akim",
+      "baseline": "aki",
+      "memory": "aki",
+      "morph": "akim",
+      "kind": "morph-only",
+      "lemmaSeen": false,
+      "bundleSeen": false
+     },
+     {
+      "lemma": "baji",
+      "tag": "N;COM;PL",
+      "gold": "bajilnun",
+      "baseline": "baji",
+      "memory": "baji",
+      "morph": "bajilnun",
+      "kind": "morph-only",
+      "lemmaSeen": false,
+      "bundleSeen": false
+     },
+     {
+      "lemma": "ŋinakin",
+      "tag": "N;ACC;DEF;SG",
+      "gold": "ŋinakinma",
+      "baseline": "ŋinakinmə",
+      "memory": "ŋinakinma",
+      "morph": "ŋinakinmə",
+      "kind": "memory-only",
+      "lemmaSeen": true,
+      "bundleSeen": true
+     },
+     {
+      "lemma": "amar",
+      "tag": "N;DAT;SG;PSS3P",
+      "gold": "amarduːn",
+      "baseline": "amarduːtin",
+      "memory": "amarduːtin",
+      "morph": "amarduːtin",
+      "kind": "all-wrong",
+      "lemmaSeen": true,
+      "bundleSeen": true
+     },
+     {
+      "lemma": "omŋo",
+      "tag": "V;FIN;IND;SG;1;PST;ACT",
+      "gold": "omŋokoːkuːśim",
+      "baseline": "omŋom",
+      "memory": "omŋom",
+      "morph": "omŋom",
+      "kind": "all-wrong",
+      "lemmaSeen": true,
+      "bundleSeen": true
+     }
+    ]
+   },
+   "lemma-disjoint": {
+    "n": 500,
+    "items": [
+     {
+      "lemma": "munŋədi",
+      "tag": "PRO;NOM;PL;1+EXCL",
+      "gold": "munŋədi",
+      "baseline": "munŋədi",
+      "memory": "munŋədi",
+      "morph": "munŋədiŋkiːwun",
+      "kind": "baseline-only",
+      "lemmaSeen": false,
+      "bundleSeen": false
+     },
+     {
+      "lemma": "ədin",
+      "tag": "DET;EQTV;PROX",
+      "gold": "ədin",
+      "baseline": "ədin",
+      "memory": "ədin",
+      "morph": "ədinduː",
+      "kind": "baseline-only",
+      "lemmaSeen": false,
+      "bundleSeen": false
+     },
+     {
+      "lemma": "ərə",
+      "tag": "DET;PROX",
+      "gold": "ərə",
+      "baseline": "ərə",
+      "memory": "ərə",
+      "morph": "ərəduː",
+      "kind": "baseline-only",
+      "lemmaSeen": false,
+      "bundleSeen": false
+     },
+     {
+      "lemma": "amaski",
+      "tag": "ADV;PSS3P",
+      "gold": "amaskitin",
+      "baseline": "amaski",
+      "memory": "amaski",
+      "morph": "amaski",
+      "kind": "all-wrong",
+      "lemmaSeen": false,
+      "bundleSeen": false
+     },
+     {
+      "lemma": "γoːta",
+      "tag": "V;IPFV;FIN;IND;SG;1;PST;ACT",
+      "gold": "γoːtaďasaːw",
+      "baseline": "γoːtaďət͡ʃaːw",
+      "memory": "γoːtaďət͡ʃaːw",
+      "morph": "γoːtaďət͡ʃaːw",
+      "kind": "all-wrong",
+      "lemmaSeen": false,
+      "bundleSeen": true
+     }
+    ]
+   }
+  },
+  "ckt": {
+   "random": {
+    "n": 100,
+    "items": [
+     {
+      "lemma": "ԓьук",
+      "tag": "V;IND;PFV;SG;3",
+      "gold": "гэԓьуԓин",
+      "baseline": "ԓьук",
+      "memory": "ԓьук",
+      "morph": "гэԓьуԓин",
+      "kind": "morph-only",
+      "lemmaSeen": true,
+      "bundleSeen": false
+     },
+     {
+      "lemma": "мури",
+      "tag": "1;PRO;PL;ABS",
+      "gold": "мури",
+      "baseline": "мури",
+      "memory": "мури",
+      "morph": "мурык",
+      "kind": "baseline-only",
+      "lemmaSeen": true,
+      "bundleSeen": false
+     },
+     {
+      "lemma": "пэтька",
+      "tag": "PROPN;INS;SG",
+      "gold": "пэтькана",
+      "baseline": "пэтька",
+      "memory": "пэтька",
+      "morph": "пэтька",
+      "kind": "all-wrong",
+      "lemmaSeen": false,
+      "bundleSeen": false
+     },
+     {
+      "lemma": "тыӈэк",
+      "tag": "PROPN;INS;ANIM",
+      "gold": "тыӈэтинэ",
+      "baseline": "тыӈэк",
+      "memory": "тыӈэк",
+      "morph": "тыӈэк",
+      "kind": "all-wrong",
+      "lemmaSeen": false,
+      "bundleSeen": false
+     }
+    ]
+   },
+   "lemma-disjoint": {
+    "n": 100,
+    "items": [
+     {
+      "lemma": "ытԓыгын",
+      "tag": "N;INS;ANIM;SG",
+      "gold": "ытԓыгэ",
+      "baseline": "ытԓыгын",
+      "memory": "ытԓыгын",
+      "morph": "ытԓыгэ",
+      "kind": "morph-only",
+      "lemmaSeen": false,
+      "bundleSeen": false
+     },
+     {
+      "lemma": "тэйкык",
+      "tag": "V;PFV;PST;SG;3",
+      "gold": "гэтэйкыԓин",
+      "baseline": "тэйкык",
+      "memory": "тэйкык",
+      "morph": "гэтэйкыԓин",
+      "kind": "morph-only",
+      "lemmaSeen": false,
+      "bundleSeen": false
+     },
+     {
+      "lemma": "ивык",
+      "tag": "V;IND;PST;ARGER3S;ARBEB1S",
+      "gold": "ивнин",
+      "baseline": "ивык",
+      "memory": "ивык",
+      "morph": "ивнин",
+      "kind": "morph-only",
+      "lemmaSeen": false,
+      "bundleSeen": false
+     },
+     {
+      "lemma": "тури",
+      "tag": "PRO;2;PL",
+      "gold": "тури",
+      "baseline": "тури",
+      "memory": "тури",
+      "morph": "турык",
+      "kind": "baseline-only",
+      "lemmaSeen": false,
+      "bundleSeen": false
+     },
+     {
+      "lemma": "чакыгэт",
+      "tag": "N;DAT;ANIM;SG",
+      "gold": "чакэттэты",
+      "baseline": "чакыгэт",
+      "memory": "чакыгэт",
+      "morph": "чакыгэт",
+      "kind": "all-wrong",
+      "lemmaSeen": false,
+      "bundleSeen": false
+     },
+     {
+      "lemma": "рывэтгавык",
+      "tag": "V;IND;PRS;ARGER3S;ARGAB3S",
+      "gold": "нынвэтгаваннэн",
+      "baseline": "рывэтгавык",
+      "memory": "рывэтгавык",
+      "morph": "рывэтгавынин",
+      "kind": "all-wrong",
+      "lemmaSeen": false,
+      "bundleSeen": false
+     }
+    ]
+   }
+  },
+  "ron": {
+   "random": {
+    "n": 500,
+    "items": [
+     {
+      "lemma": "sticlă",
+      "tag": "N;NOM/ACC;SG;INDF",
+      "gold": "niște sticle",
+      "baseline": "sticlă",
+      "memory": "niște sticle",
+      "morph": "sticlă",
+      "kind": "memory-only",
+      "lemmaSeen": true,
+      "bundleSeen": true
+     },
+     {
+      "lemma": "foaie",
+      "tag": "N;GEN/DAT;SG;INDF",
+      "gold": "unor foi",
+      "baseline": "unei foaii",
+      "memory": "unor foi",
+      "morph": "unei foaii",
+      "kind": "memory-only",
+      "lemmaSeen": true,
+      "bundleSeen": true
+     },
+     {
+      "lemma": "sfârtica",
+      "tag": "V;SBJV;PRS;2;SG",
+      "gold": "să sfârtici",
+      "baseline": "să sfârticezi",
+      "memory": "să sfârtici",
+      "morph": "să sfârticezi",
+      "kind": "memory-only",
+      "lemmaSeen": true,
+      "bundleSeen": true
+     },
+     {
+      "lemma": "descoperi",
+      "tag": "V;IND;PRS;2;SG",
+      "gold": "descoperi",
+      "baseline": "descoperi",
+      "memory": "descoperi",
+      "morph": "descoperiești",
+      "kind": "baseline-only",
+      "lemmaSeen": true,
+      "bundleSeen": true
+     },
+     {
+      "lemma": "trezire",
+      "tag": "N;GEN/DAT;PL;DEF",
+      "gold": "trezirii",
+      "baseline": "trezirei",
+      "memory": "trezireei",
+      "morph": "trezirei",
+      "kind": "all-wrong",
+      "lemmaSeen": true,
+      "bundleSeen": true
+     },
+     {
+      "lemma": "depăra",
+      "tag": "V;SBJV;PRS;3;PL",
+      "gold": "să depere",
+      "baseline": "să depăre",
+      "memory": "să depărască",
+      "morph": "să depăre",
+      "kind": "all-wrong",
+      "lemmaSeen": true,
+      "bundleSeen": true
+     }
+    ]
+   },
+   "lemma-disjoint": {
+    "n": 500,
+    "items": [
+     {
+      "lemma": "cumplit",
+      "tag": "ADJ;NOM/ACC;FEM;SG;INDF",
+      "gold": "cumpliți",
+      "baseline": "cumplit",
+      "memory": "cumplit",
+      "morph": "cumpliți",
+      "kind": "morph-only",
+      "lemmaSeen": false,
+      "bundleSeen": true
+     },
+     {
+      "lemma": "convențional",
+      "tag": "ADJ;NOM/ACC;FEM;SG;INDF",
+      "gold": "convenționali",
+      "baseline": "convențional",
+      "memory": "convențional",
+      "morph": "convenționali",
+      "kind": "morph-only",
+      "lemmaSeen": false,
+      "bundleSeen": true
+     },
+     {
+      "lemma": "irațional",
+      "tag": "ADJ;NOM/ACC;FEM;SG;INDF",
+      "gold": "iraționali",
+      "baseline": "irațional",
+      "memory": "irațional",
+      "morph": "iraționali",
+      "kind": "morph-only",
+      "lemmaSeen": false,
+      "bundleSeen": true
+     },
+     {
+      "lemma": "molid",
+      "tag": "N;NOM/ACC;SG;INDF",
+      "gold": "niște molizi",
+      "baseline": "un molid",
+      "memory": "un molid",
+      "morph": "un molid",
+      "kind": "all-wrong",
+      "lemmaSeen": false,
+      "bundleSeen": true
+     },
+     {
+      "lemma": "famen",
+      "tag": "N;VOC;SG",
+      "gold": "famenule",
+      "baseline": "famen",
+      "memory": "famen",
+      "morph": "famen",
+      "kind": "all-wrong",
+      "lemmaSeen": false,
+      "bundleSeen": true
+     }
+    ]
+   }
+  }
+ }
+}

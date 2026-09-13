@@ -3,8 +3,8 @@ import { ArrowDown, ArrowRight, FlaskConical, Microscope } from "lucide-react";
 import { Container } from "@/components/AppShell";
 import { HeroSpecimen } from "@/components/HeroSpecimen";
 import { LanguageCard } from "@/components/LanguageCard";
+import { experiment, getCell, sizesFor } from "@/data/experiments";
 import { languages } from "@/data/languages";
-import { entriesByLanguage } from "@/data/morphology";
 
 const questions = [
   { n: "01", q: "What morphological information is encoded in a word?", href: "/explore", cta: "Explore" },
@@ -12,10 +12,18 @@ const questions = [
   { n: "03", q: "Does explicit morphology improve generalisation to unseen lemmas?", href: "/experiment", cta: "Experiment" },
 ];
 
+const signed = (n: number) => `${n >= 0 ? "+" : "−"}${Math.abs(n).toFixed(1)}`;
+
 export default function Home() {
+  const nT = Math.max(...sizesFor("tur"));
+  const tR = getCell("tur", "random", nT)!;
+  const tL = getCell("tur", "lemma-disjoint", nT)!;
+  const nU = sizesFor("urd").filter((s) => s <= 500).pop()!;
+  const uL = getCell("urd", "lemma-disjoint", nU)!;
+  const totalTriples = Object.values(experiment.stats).reduce((s, x) => s + x.triples, 0);
+
   return (
     <>
-      {/* Hero */}
       <section className="relative overflow-hidden border-b border-line">
         <div className="hairline-grid pointer-events-none absolute inset-0 opacity-50 [mask-image:linear-gradient(to_bottom,black,transparent_85%)]" />
         <span className="pointer-events-none absolute -right-10 top-10 select-none font-serif text-[22rem] leading-none text-oak/25">”</span>
@@ -23,27 +31,27 @@ export default function Home() {
           <div>
             <p className="eyebrow">Open research prototype · low-resource morphology</p>
             <p className="mt-6 text-[0.8rem] font-semibold tracking-[0.34em] text-bush">MORPHOLENS</p>
-            <h1 className="display mt-4 text-bush text-[clamp(2.4rem,1.1rem+3.3vw,4.6rem)] text-balance">
+            <h1 className="display mt-4 text-balance text-[clamp(2.4rem,1.1rem+3.3vw,4.6rem)] text-bush">
               Can multilingual models understand morphology
               <span className="block italic text-sienna">— or do they mostly memorise word forms?</span>
             </h1>
             <p className="lede mt-8 max-w-2xl text-ink/80">
-              MorphoLens is an interactive research prototype for exploring morphological structure across high- and
-              low-resource languages, with particular attention to <em>unseen-word generalisation</em>.
+              MorphoLens is an interactive research workspace for exploring morphological structure across high- and
+              low-resource languages, built on UniMorph data and a reproducible <em>lemma-overlap</em> experiment.
             </p>
             <p className="mt-3 max-w-2xl text-sm text-muted">
-              Explore how words change across languages — an interactive workspace for low-resource morphology, lexical
-              variation, and unseen-word generalisation.
+              Explore how words change across Turkish, Urdu, Evenki, Chukchi and Romanian — every form traceable to its
+              source record.
             </p>
             <div className="mt-9 flex flex-wrap gap-3">
               <Link href="/explore" className="inline-flex items-center gap-2 rounded-lg bg-bush px-5 py-3 text-sm font-semibold text-ivory transition hover:bg-bush-soft">
                 <Microscope size={16} /> Explore morphology
               </Link>
               <Link href="/experiment" className="inline-flex items-center gap-2 rounded-lg border border-bush bg-ivory px-5 py-3 text-sm font-semibold text-bush transition hover:bg-cashmere">
-                <FlaskConical size={16} /> Run experiment
+                <FlaskConical size={16} /> See the experiment
               </Link>
               <Link href="/about" className="inline-flex items-center gap-2 rounded-lg px-3 py-3 text-sm text-ink/70 underline-offset-4 hover:text-sienna hover:underline">
-                Methodology &amp; limitations <ArrowRight size={14} />
+                Methodology <ArrowRight size={14} />
               </Link>
             </div>
           </div>
@@ -51,26 +59,24 @@ export default function Home() {
         </Container>
       </section>
 
-      {/* Languages */}
       <Container className="py-16">
         <div className="mb-8 flex flex-wrap items-end justify-between gap-4">
           <div>
             <p className="eyebrow">Languages in the workspace</p>
-            <h2 className="display display-md mt-2 text-bush">Four systems, uneven coverage.</h2>
+            <h2 className="display display-md mt-2 text-bush">Five languages, very uneven resources.</h2>
           </div>
           <p className="max-w-md text-sm text-muted">
-            Coverage deliberately differs. Evenki and Chukchi slots stay empty or unverified until forms can be checked —
-            the interface shows the gap instead of hiding it.
+            From 570k UniMorph triples for Turkish to 241 for Chukchi. The gap is part of the research question, so the
+            interface shows it rather than hiding it.
           </p>
         </div>
-        <div className="grid gap-4 sm:grid-cols-2 lg:grid-cols-4">
+        <div className="grid gap-4 sm:grid-cols-2 lg:grid-cols-5">
           {languages.map((l) => (
-            <LanguageCard key={l.id} language={l} count={entriesByLanguage(l.id).length} />
+            <LanguageCard key={l.id} language={l} />
           ))}
         </div>
       </Container>
 
-      {/* The problem */}
       <section className="border-y border-line bg-oak-soft/50">
         <Container className="grid gap-12 py-20 lg:grid-cols-[1fr_1.1fr] lg:items-center">
           <div className="grain rounded-2xl border border-line bg-ivory p-8">
@@ -97,22 +103,51 @@ export default function Home() {
               Familiar lemmas can make a model look <span className="italic text-sienna">smarter than it is.</span>
             </h2>
             <p className="lede mt-6 text-ink/80">
-              Random train/test splits often allow models to encounter closely related forms of the same lemma during
-              training.
+              Random train/test splits often let a model see closely related forms of the same lemma during training.
             </p>
             <p className="mt-4 text-ink/75">
-              MorphoLens instead highlights <strong className="font-semibold text-bush">lemma-disjoint evaluation</strong>: can a model generalise when the
-              underlying lexical item itself was never observed?
+              MorphoLens contrasts this with <strong className="font-semibold text-bush">lemma-disjoint evaluation</strong>: can a model generalise when the
+              lexical item itself was never observed?
             </p>
-            <Link href="/experiment" className="mt-8 inline-flex items-center gap-2 text-sm font-semibold text-sienna hover:underline">
-              See the illustrative experiment <ArrowRight size={14} />
-            </Link>
           </div>
         </Container>
       </section>
 
-      {/* Three questions */}
       <Container className="py-20">
+        <div className="flex flex-wrap items-end justify-between gap-4">
+          <div>
+            <p className="eyebrow">Measured, not simulated</p>
+            <h2 className="display display-md mt-2 text-bush">What the first experiment shows.</h2>
+          </div>
+          <Link href="/experiment" className="inline-flex items-center gap-2 text-sm font-semibold text-sienna hover:underline">
+            Full results <ArrowRight size={14} />
+          </Link>
+        </div>
+        <div className="mt-8 grid gap-4 md:grid-cols-3">
+          <div className="rounded-2xl border border-line bg-ivory/80 p-6">
+            <p className="text-xs text-muted">Turkish · n = {nT} · paradigm memory vs. baseline</p>
+            <p className="display mt-3 text-5xl text-burgundy">{signed(tR.systems.memory.mean - tR.systems.baseline.mean)}</p>
+            <p className="mt-1 text-sm text-ink/80">
+              points on the random split ({tR.overlap.toFixed(0)}% of test lemmas seen) — and{" "}
+              <strong className="font-semibold">{signed(tL.systems.memory.mean - tL.systems.baseline.mean)}</strong> once lemmas are disjoint.
+            </p>
+          </div>
+          <div className="rounded-2xl border border-line bg-ivory/80 p-6">
+            <p className="text-xs text-muted">Urdu · n = {nU} · feature-aware vs. baseline, lemma-disjoint</p>
+            <p className="display mt-3 text-5xl text-bush">{signed(uL.systems.morph.mean - uL.systems.baseline.mean)}</p>
+            <p className="mt-1 text-sm text-ink/80">points on unseen lemmas from decomposing feature bundles (s.d. ≈ {uL.systems.morph.std.toFixed(1)}).</p>
+          </div>
+          <div className="rounded-2xl border border-line bg-bush p-6 text-ivory">
+            <p className="text-xs text-oak">Setup</p>
+            <p className="display mt-3 text-4xl">{totalTriples.toLocaleString("en")}</p>
+            <p className="mt-1 text-sm text-ivory/80">
+              UniMorph triples, pinned commits, 5 seeds, three transparent rule-based systems. Neural comparisons are the next step.
+            </p>
+          </div>
+        </div>
+      </Container>
+
+      <Container className="pb-8">
         <p className="eyebrow">Three questions</p>
         <div className="mt-8 grid gap-px overflow-hidden rounded-2xl border border-line bg-line md:grid-cols-3">
           {questions.map((q) => (

@@ -1,12 +1,15 @@
 /**
  * MorphoLens data model.
  *
- * Every linguistic example lives in /src/data as plain TypeScript objects so it can be
- * swapped for UniMorph exports, digitised lexicons, custom Urdu datasets or model
- * predictions without touching UI code. See README → "Architecture".
+ * Two kinds of linguistic records feed the UI:
+ *  1. UniMorph triples (lemma, form, feature bundle) — generated into
+ *     src/data/generated/unimorph-sample.json by scripts/build-data.mjs, pinned to a
+ *     repository commit.
+ *  2. A handful of hand-annotated entries with gold morpheme segmentation
+ *     (src/data/morphology.ts), each labelled by whether UniMorph attests it.
  */
 
-export type LanguageId = "evn" | "ckt" | "tur" | "urd";
+export type LanguageId = "tur" | "urd" | "evn" | "ckt" | "ron";
 
 export type Language = {
   id: LanguageId;
@@ -21,8 +24,6 @@ export type Language = {
   /** Broad, widely documented typological profile — not a claim about any specific form. */
   profile: string;
   description: string;
-  /** Honest statement of what the local dataset currently covers. */
-  coverageNote: string;
 };
 
 export type MorphemeRole = "stem" | "suffix" | "prefix" | "clitic" | "particle" | "word";
@@ -40,6 +41,8 @@ export type ParadigmEntry = {
   surface: string;
   romanization?: string;
   features: Record<string, string>;
+  /** Raw UniMorph bundle, when the row comes from UniMorph. */
+  tag?: string;
   segmentation?: string[];
 };
 
@@ -49,14 +52,17 @@ export type DifficultyTag =
   | "RARE_FEATURE"
   | "ORTHOGRAPHIC_VARIATION"
   | "LONG_MORPHEME_CHAIN"
-  | "CODE_SWITCHING";
+  | "CODE_SWITCHING"
+  | "SYNCRETISM"
+  | "PERIPHRASIS"
+  | "STEM_CHANGE";
 
 /**
- * verified: true  → the form follows a textbook-attested pattern cited in `source`.
- *                   It has NOT yet been cross-checked against a UniMorph release or by
- *                   a field linguist; `verificationNote` says so explicitly.
- * verified: false → illustrative demo example. The UI labels it "UNVERIFIED / DEMO".
+ * unimorph   → the exact (lemma, form, bundle) triple occurs in the pinned UniMorph file.
+ * reference  → follows a textbook-attested pattern cited in `source`; NOT in UniMorph.
  */
+export type Attestation = "unimorph" | "reference";
+
 export type MorphologicalEntry = {
   id: string;
   languageId: LanguageId;
@@ -70,28 +76,25 @@ export type MorphologicalEntry = {
   segmentation: string[];
   morphemes: Morpheme[];
   features: Record<string, string>;
-  /** UniMorph-style feature bundle (schema mapping, not copied from a release). */
+  /** UniMorph bundle(s) under which UniMorph attests this form, if any. */
   unimorph?: string;
   gloss?: string;
   translation?: string;
   paradigm?: ParadigmEntry[];
   difficulty?: DifficultyTag[];
   difficultyNotes?: Partial<Record<DifficultyTag, string>>;
-  source?: string;
+  source: string;
   sourceUrl?: string;
-  /** Resource the entry should be cross-checked against. */
-  crossCheck?: { label: string; url: string };
-  dataset: string;
-  verified: boolean;
-  verificationNote?: string;
+  attestation: Attestation;
+  note?: string;
 };
 
 export type ComparisonFeature = "plural" | "case" | "possession" | "past" | "negation";
 
-export type ComparisonExample = {
+/** Hand-curated comparison slot, used only where UniMorph has no example. */
+export type CuratedComparison = {
   languageId: LanguageId;
   feature: ComparisonFeature;
-  /** Entry the example is drawn from — provenance is inherited from it. */
   entryId: string;
   base: string;
   baseRomanization?: string;
@@ -101,5 +104,4 @@ export type ComparisonExample = {
 };
 
 export type ExperimentSplit = "random" | "lemma-disjoint";
-export type TrainingSize = 50 | 100 | 250 | 500;
-export type ModelId = "baseline" | "morph";
+export type SystemId = "baseline" | "memory" | "morph";

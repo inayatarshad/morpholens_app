@@ -1,61 +1,64 @@
 "use client";
 
-import { getResult } from "@/data/experiments";
-import type { ExperimentSplit, LanguageId, TrainingSize } from "@/data/types";
-import { IllustrativeTag } from "./ResearchBadge";
+import { getCell } from "@/data/experiments";
+import type { ExperimentSplit, LanguageId } from "@/data/types";
+import { StatusTag } from "./ResearchBadge";
 
-const r1 = (n: number) => Math.round(n * 10) / 10;
-const signed = (n: number) => `${n > 0 ? "+" : n < 0 ? "−" : "±"}${Math.abs(n).toFixed(1)}`;
+const signed = (n: number) => `${n > 0.05 ? "+" : n < -0.05 ? "−" : "±"}${Math.abs(n).toFixed(1)}`;
 
-export function GeneralisationGap({ lang, size, split }: { lang: LanguageId; size: TrainingSize; split: ExperimentSplit }) {
-  const br = getResult(lang, "random", size, "baseline");
-  const mr = getResult(lang, "random", size, "morph");
-  const bl = getResult(lang, "lemma-disjoint", size, "baseline");
-  const ml = getResult(lang, "lemma-disjoint", size, "morph");
+function Row({ label, a, b, color, split }: { label: string; a: number; b: number; color: string; split: ExperimentSplit }) {
+  return (
+    <div className="border-t border-line py-3 first:border-0">
+      <p className="text-sm text-bush">{label}</p>
+      <div className="mt-1 grid grid-cols-2 gap-3">
+        {[
+          { k: "random", v: a },
+          { k: "lemma-disjoint", v: b },
+        ].map((x) => (
+          <div key={x.k} className={`transition-opacity ${split === x.k ? "opacity-100" : "opacity-55"}`}>
+            <p className="text-[0.65rem] uppercase tracking-wider text-muted">{x.k}</p>
+            <p className={`display text-3xl ${color}`}>{signed(x.v)}<span className="ml-1 text-xs text-muted">pts</span></p>
+          </div>
+        ))}
+      </div>
+    </div>
+  );
+}
 
-  const advRandom = r1(mr - br);
-  const advLD = r1(ml - bl);
-  const dropBase = r1(bl - br);
-  const dropMorph = r1(ml - mr);
+/** Differences computed directly from the measured means for the current language and n. */
+export function GeneralisationGap({ lang, size, split }: { lang: LanguageId; size: number; split: ExperimentSplit }) {
+  const r = getCell(lang, "random", size);
+  const l = getCell(lang, "lemma-disjoint", size);
+  if (!r || !l) return null;
+
+  const memR = r.systems.memory.mean - r.systems.baseline.mean;
+  const memL = l.systems.memory.mean - l.systems.baseline.mean;
+  const morR = r.systems.morph.mean - r.systems.baseline.mean;
+  const morL = l.systems.morph.mean - l.systems.baseline.mean;
 
   return (
     <div className="rounded-2xl border border-line bg-ivory/80 p-6">
       <div className="flex flex-wrap items-center justify-between gap-2">
-        <p className="eyebrow">Generalisation gap</p>
-        <IllustrativeTag />
+        <p className="eyebrow">What the numbers say · n = {size}</p>
+        <StatusTag label="MEASURED" />
       </div>
-
-      <p className="mt-4 text-sm text-muted">Baseline deficit relative to morphology-aware model</p>
-      <div className="mt-3 space-y-3">
-        {[
-          { label: "Random split", v: advRandom, active: split === "random", color: "bg-bush" },
-          { label: "Lemma-disjoint", v: advLD, active: split === "lemma-disjoint", color: "bg-sienna" },
-        ].map((row) => (
-          <div key={row.label} className={`transition-opacity ${row.active ? "opacity-100" : "opacity-50"}`}>
-            <div className="flex items-baseline justify-between">
-              <span className="text-sm text-bush">{row.label}</span>
-              <span className="display text-3xl text-bush">{signed(-row.v)}<span className="ml-1 text-sm text-muted">pts</span></span>
-            </div>
-            <div className="mt-1 h-2 rounded-full bg-cashmere">
-              <div className={`h-2 rounded-full ${row.color} transition-all duration-700`} style={{ width: `${Math.min(100, (row.v / 25) * 100)}%` }} />
-            </div>
-          </div>
-        ))}
+      <div className="mt-3">
+        <Row label="Paradigm memory vs. atomic baseline" a={memR} b={memL} color="text-burgundy" split={split} />
+        <Row label="Feature-aware vs. atomic baseline" a={morR} b={morL} color="text-bush" split={split} />
       </div>
-
-      <div className="mt-6 grid grid-cols-2 gap-3 border-t border-line pt-5">
+      <dl className="mt-2 grid grid-cols-2 gap-3 border-t border-line pt-4 text-sm">
         <div>
-          <p className="text-xs text-muted">Baseline degradation<br />random → lemma-disjoint</p>
-          <p className="display mt-1 text-4xl text-sienna">{signed(dropBase)}</p>
+          <dt className="text-xs text-muted">Test lemmas also in training (random split)</dt>
+          <dd className="display text-2xl text-sienna">{r.overlap.toFixed(0)}%</dd>
         </div>
         <div>
-          <p className="text-xs text-muted">Morphology-aware degradation<br />random → lemma-disjoint</p>
-          <p className="display mt-1 text-4xl text-bush">{signed(dropMorph)}</p>
+          <dt className="text-xs text-muted">Test bundles unseen in training (lemma-disjoint)</dt>
+          <dd className="display text-2xl text-sienna">{l.unseenBundle.toFixed(0)}%</dd>
         </div>
-      </div>
+      </dl>
       <p className="mt-4 text-xs leading-relaxed text-muted">
-        Hypothesis being illustrated: the advantage of explicit morphology is small when test lemmas are familiar and
-        grows when they are not. Only a controlled experiment can confirm or refute this.
+        Paradigm memory can only help when a test lemma was seen, so its advantage is confined to the random split. A
+        feature-aware gain that survives the lemma-disjoint split is evidence of generalisation rather than recall.
       </p>
     </div>
   );

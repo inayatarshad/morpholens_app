@@ -21,7 +21,7 @@ export function HeroSpecimen() {
     <div className="relative rounded-2xl border border-line-strong bg-ivory/90 p-6 shadow-[0_30px_60px_-40px_rgba(16,46,40,0.6)] sm:p-8">
       <div className="flex items-center justify-between">
         <span className="eyebrow">Specimen {String(i + 1).padStart(2, "0")} / {String(ids.length).padStart(2, "0")}</span>
-        <VerificationBadge verified={entry.verified} compact />
+        <VerificationBadge status={entry.attestation} compact />
       </div>
       <div key={entry.id} className="rise mt-6">
         <p className="text-xs font-semibold tracking-[0.2em] text-sienna">{lang.name.toUpperCase()}</p>

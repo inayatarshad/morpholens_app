@@ -8,15 +8,20 @@ const ALL: DifficultyTag[] = [
   "ORTHOGRAPHIC_VARIATION",
   "LONG_MORPHEME_CHAIN",
   "CODE_SWITCHING",
+  "SYNCRETISM",
+  "PERIPHRASIS",
+  "STEM_CHANGE",
 ];
 
-/** Shows the full challenge vocabulary; tags annotated on the entry are highlighted. */
+/** Shows the full challenge vocabulary; tags that apply are highlighted. */
 export function DifficultyTags({
   tags = [],
   notes = {},
+  computed = false,
 }: {
   tags?: DifficultyTag[];
   notes?: Partial<Record<DifficultyTag, string>>;
+  computed?: boolean;
 }) {
   return (
     <div>
@@ -27,7 +32,7 @@ export function DifficultyTags({
             <span
               key={t}
               title={difficultyMeta[t].description}
-              className={`rounded-sm border px-2 py-1 font-mono text-[0.64rem] font-semibold tracking-[0.12em] transition ${
+              className={`rounded-sm border px-2 py-1 font-mono text-[0.62rem] font-semibold tracking-[0.12em] transition ${
                 on ? "border-bush bg-bush text-ivory" : "border-line text-muted/60"
               }`}
             >
@@ -49,8 +54,9 @@ export function DifficultyTags({
           ))}
         </ul>
       ) : (
-        <p className="mt-3 text-sm text-muted">No difficulty annotations recorded for this entry.</p>
+        <p className="mt-3 text-sm text-muted">No difficulty signals detected for this form.</p>
       )}
+      {computed && <p className="mt-3 text-xs text-muted">Tags computed automatically from the UniMorph sample and the lemma–form alignment.</p>}
     </div>
   );
 }

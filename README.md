@@ -1,100 +1,103 @@
 # MorphoLens
 
-**Explore how words change across languages.** An interactive research prototype for low-resource morphology, lexical variation and unseen-word generalisation.
+**Explore how words change across languages.** MorphoLens is an interactive research workspace for low-resource morphology and unseen-lemma generalisation. It is built on UniMorph data for Turkish, Urdu, Evenki, Chukchi and Romanian.
 
-> **Research prototype.** MorphoLens demonstrates an *interface and research workflow*. It does not ship a morphological analyser, and every quantitative result in the UI is **illustrative**.
-
----
+Live: https://morpholens-app.vercel.app
 
 ## Research motivation
 
-Multilingual models often look strong on morphology when the test data contains **familiar lemmas**. With a random train/test split, `walked` and `walking` can land in training while `walks` lands in test. The test form is new, but the lexical item is not, so a model can succeed through stem familiarity instead of composing morphology.
+Inflection systems often look strong when the test data contains **familiar lemmas**: other forms of the same word were seen during training, so a system can recall rather than compose. Lemma overlap has been shown to inflate reported inflection accuracy (Goldman, Guriel & Tsarfaty, 2022).
 
-To test real morphological generalisation you need **unseen lexical items**: a **lemma-disjoint** split puts every form of a test lemma outside training. MorphoLens is built around one question:
+MorphoLens asks one question:
 
-> *Can explicit morphological structure help multilingual models generalise to unseen word forms and unseen lemmas in low-resource languages?*
+> *Can explicit morphological structure help models generalise to unseen word forms and unseen lemmas in low-resource languages?*
+
+It answers it by comparing **random** and **lemma-disjoint** evaluation on the same data.
 
 ## Features
 
-- **Morphology explorer** (`/explore`): look up a stored form to see its segmentation as aligned morpheme blocks, its feature table, a morpheme-by-morpheme interpretation, difficulty tags and data provenance. It accepts ASCII input for Turkish (`kitaplarimizdan`) and Roman Urdu spelling variants (`larke`, `larkay`).
-- **Paradigm view**: compact tables of related forms. Clicking a row loads that form's analysis.
-- **Cross-language comparison** (`/compare`): shows how Plural, Case, Possession, Past tense and Negation are encoded in each language, plus a typological table (strategy, position, resource level). Unverified candidates stay hidden until you switch them on.
-- **Lemma-disjoint experiment simulator** (`/experiment`): compares random and lemma-disjoint splits at 50, 100, 250 and 500 training examples, with a bar chart, a generalisation-gap panel, a few-shot learning curve and a hypothetical prediction example. Every value is labelled **ILLUSTRATIVE**.
-- **Morphological difficulty tags**: UNSEEN LEMMA, ALLOMORPHY, RARE FEATURE, ORTHOGRAPHIC VARIATION, LONG MORPHEME CHAIN and CODE-SWITCHING, all annotated in the dataset.
-- **Provenance-aware data architecture**: every form records its source, dataset, record ID, cross-check target and verification flag. The **Evidence drawer** opens the full provenance record for any form.
-- **Methodology page** (`/about`): research question, evaluation design, data provenance and limitations.
+- **Morphology explorer** (`/explore`): search forms from the shipped UniMorph sample or the hand-annotated entries.
+  - Every UniMorph bundle a form realises is shown, which makes syncretism visible.
+  - Each analysis includes a readable feature table, a segmentation (gold for hand-annotated entries, automatic lemma–form alignment otherwise), the paradigm, and difficulty tags computed from the data.
+  - Every form has a verbatim evidence record.
+- **Cross-language comparison** (`/compare`): Plural, Case, Possession, Past tense and Negation across five languages.
+  - Examples are drawn from UniMorph, with an automatic classification of the surface strategy.
+  - Hand-curated reference patterns fill a slot only when UniMorph has no example.
+  - Slots with unreliable data are withheld, with the reason shown.
+- **Unseen-lemma experiment** (`/experiment`): measured results for three transparent systems, two splits, five training sizes and five seeds.
+  - Includes learning curves and a cross-language findings table.
+  - Shows real system outputs on test items.
+- **Methodology** (`/about`): data sources with commit hashes, the experiment design, results, data-quality notes, limitations and references.
 
-## Languages
+## Data
 
-| Language | Family | Script | Resource level | Current local coverage |
-|---|---|---|---|---|
-| Evenki | Tungusic | Cyrillic | Low-resource | 1 **unverified** candidate |
-| Chukchi | Chukotko-Kamchatkan | Cyrillic | Low-resource | none, schema slots only |
-| Turkish | Turkic | Latin | Higher-resource comparison | textbook paradigms (ev, kitap, gel, git) |
-| Urdu | Indo-Aryan | Perso-Arabic (Nastaliq) | Low-resource NLP | textbook noun and perfective paradigms, plus 1 unverified code-switching form |
+| Language | UniMorph repo @ commit | Triples | Lemmas | Bundles |
+|---|---|---:|---:|---:|
+| Turkish | `unimorph/tur` @ `6c179ac` | 570,420 | 3,579 | 883 |
+| Urdu | `unimorph/urd` @ `17b2fb3` | 12,572 | 182 | 217 |
+| Evenki | `unimorph/evn` @ `cdbe7b4` | 11,371 | 4,495 | 1,021 |
+| Chukchi | `unimorph/ckt` @ `facbd48` | 241 | 196 | 99 |
+| Romanian | `unimorph/ron` @ `0910e78` | 80,262 | 4,405 | 59 |
 
-Coverage is uneven on purpose. Evenki and Chukchi slots stay empty or visibly unverified until forms can be checked by a linguist or against a published resource. The interface shows these gaps openly.
+Counts are after removing duplicate lines. Source facts shown in the UI are taken from each repository's README:
+- **Turkish:** verbs are semi-automatically generated; nouns and adjectives come from Wiktionary and are unverified. Licence CC BY-SA 3.0.
+- **Evenki:** annotated by E. Klyachko from a text corpus, in Latin transcription.
+- **Chukchi:** from chuklang.ru; used in SIGMORPHON 2021.
 
-## Research integrity
+**Data-quality notes** are shown in the UI, not silently fixed. For example, in UniMorph `ron` the plural forms *unor case* and *niște case* are tagged `SG`, and no noun bundle combines `PL` with `INDF`. Romanian plural comparisons are therefore withheld.
 
-- **Experiment numbers are not measurements.** `src/data/experiments.ts` computes them with a deterministic formula anchored to example values from the design brief. Each chart and panel carries an `ILLUSTRATIVE` label.
-- **Example predictions are hypothetical.** No model produced them.
-- **Verification has two levels:**
-  - `verified: true` (**Reference pattern**) means the form follows a textbook-attested pattern cited in `source` (Göksel & Kerslake 2005 for Turkish, Schmidt 1999 for Urdu). It has **not** been checked against a UniMorph release or reviewed by a linguist, and each entry states this.
-  - `verified: false` (**Unverified / demo**) means the form is illustrative only and must not be cited.
-- No speaker numbers, benchmark scores, dataset sizes or community claims are included.
+The hand-annotated entries (Turkish, Urdu) carry gold segmentation. Each one is labelled either **UniMorph-attested** (the exact triple is in the pinned file) or **Reference pattern** (a textbook form that UniMorph does not contain, e.g. Turkish *ev*, *kitap*).
+
+## Experiment
+
+- **Task:** inflection, i.e. (lemma, UniMorph bundle) → form. **Metric:** exact match, reported as mean ± s.d. over 5 seeds.
+- **Sampling:** for each seed, sample up to 10 cells per lemma until the universe holds about 3,000 triples.
+- **Splits:** the random split holds out items; the lemma-disjoint split holds out whole lemmas. Test sets hold up to 500 items, and both splits use the same universe.
+- **Training sizes:** 50, 100, 250, 500 and 1000, skipped where the pool is too small.
+
+| System | Idea |
+|---|---|
+| Atomic-tag rules (baseline) | Edit rules keyed by the whole bundle as an opaque label; picks the rule of the training lemma with the longest shared ending, in the spirit of the CoNLL–SIGMORPHON 2017 non-neural baseline. |
+| Paradigm memory | Reinflects from seen forms of the *same* lemma; otherwise uses the baseline. It can only benefit from lemma overlap. |
+| Feature-aware rules | Decomposes bundles into features. For an unseen bundle it composes lemma→A with a feature-difference rule A→T learned from any training paradigm (e.g. NOM→ABL). |
+
+**Current findings.** These are measured, and hold for these simple systems only.
+- Paradigm memory gains only on random splits with high lemma overlap (e.g. Turkish at n = 1000). On lemma-disjoint splits it equals the baseline.
+- Feature-difference transfer helps Urdu consistently, helps Turkish slightly, and gives mixed results for Evenki and Romanian.
+- Seed variance is often as large as the differences between systems. Chukchi is too small to interpret.
 
 ## Architecture
 
 ```
-src/
-├─ app/
-│  ├─ layout.tsx            fonts (Newsreader, Inter, JetBrains Mono, Noto Nastaliq Urdu) + AppShell
-│  ├─ globals.css           palette tokens + fluid typography
-│  ├─ page.tsx              home
-│  ├─ explore/page.tsx
-│  ├─ compare/page.tsx
-│  ├─ experiment/page.tsx
-│  └─ about/page.tsx
-├─ components/
-│  ├─ AppShell, Navbar, Footer, ResearchBadge
-│  ├─ LanguageSelector, LanguageCard
-│  ├─ Explorer, MorphologyInput, MorphologyAnalysis, MorphemeBreakdown, FeatureTable, ParadigmTable
-│  ├─ ComparisonMatrix
-│  ├─ ExperimentWorkspace, ExperimentControls, ExperimentChart, GeneralisationGap, PredictionExample
-│  ├─ DataProvenance, EvidenceDrawer, VerificationBadge, DifficultyTags, ResearchNote
-│  └─ ui.tsx (SectionLabel, Panel, CopyButton)
-├─ data/
-│  ├─ types.ts              Language, MorphologicalEntry, ParadigmEntry, ComparisonExample …
-│  ├─ languages.ts          language metadata
-│  ├─ morphology.ts         entries, paradigms, comparison slots, difficulty vocabulary
-│  └─ experiments.ts        ILLUSTRATIVE results + prediction scenarios
-└─ lib/lookup.ts            normalisation + lookup (diacritic/ı folding, aliases)
+scripts/
+  fetch-unimorph.mjs     download UniMorph files at pinned commits → .unimorph/
+  build-data.mjs         featured lemmas, capped paradigms, comparison examples → src/data/generated/unimorph-sample.json
+  run-experiment.mjs     splits, systems, seeds → src/data/generated/experiment-results.json
+src/data/
+  types.ts               shared types
+  languages.ts           language metadata (typological profile only)
+  unimorph.ts            typed sample loader, source notes, data-quality notes
+  unimorph-features.ts   readable labels for UniMorph features
+  morphology.ts          hand-annotated entries with gold segmentation + attestation
+  experiments.ts         typed results loader, system descriptions
+src/lib/
+  analysis.ts            one Analysis shape for UniMorph and hand-annotated forms
+  compare.ts             comparison slots (UniMorph → reference pattern → withheld)
+  align.ts               lemma–form alignment (mirrors the experiment's rule extractor)
+src/app/                 /, /explore, /compare, /experiment, /about
+src/components/          UI components
 ```
 
-The UI only reads from `src/data`, so you can swap in real resources without touching any components:
-
-| Replace | With |
-|---|---|
-| `entries` in `morphology.ts` | A build-time script that converts **UniMorph** TSV (`lemma \t form \t features`) into `MorphologicalEntry[]`, with `unimorph` = the feature string and `source` = release + commit |
-| `paradigm` fields | Rows grouped by lemma from the same UniMorph file |
-| `segmentation` / `morphemes` | Output of a segmentation resource or a hand-annotated file |
-| New languages | Add a `Language` to `languages.ts` and extend `LanguageId` in `types.ts` |
-| `comparisons` | One `ComparisonExample` per (language, feature), pointing to an `entryId` that supplies its provenance |
-| `getResult()` in `experiments.ts` | A lookup into a JSON file of measured results keyed by `lang/split/size/model` |
-| `predictionScenarios` | Real model outputs on the lemma-disjoint test set |
-
-Adding an entry makes it appear in the explorer, the comparison view (if a `ComparisonExample` references it) and the evidence drawer automatically.
+To add a language, add a `Language` entry, extend `LanguageId`, add the language code to the three scripts, then re-run them.
 
 ## Future research
 
-1. **Real UniMorph ingestion**: TSV → `MorphologicalEntry` converter, keeping release version and commit as provenance.
-2. **XLM-R baseline**: fine-tune on surface forms only.
-3. **XLM-R + morphological features**: the same encoder with feature-bundle and segmentation supervision.
-4. **Lemma-disjoint evaluation**: group-aware splitting by lemma, reported alongside random splits.
-5. **Few-shot learning curves**: 50 / 100 / 250 / 500 examples, with multiple seeds and confidence intervals.
-6. **Allomorphy analysis**: break down errors by harmony class, consonant alternation and gender class.
-7. **Human linguistic validation**: expert review of every entry, then promote `verified` flags with the reviewer and date recorded.
+1. **Neural baselines:** XLM-R or ByT5 with surface forms only, versus the same model with feature-bundle and segmentation supervision, run through the same splits.
+2. **Better composition:** affix ordering and harmony-aware composition for agglutinative languages.
+3. **Near-miss metrics:** edit distance and per-feature accuracy, not only exact match.
+4. **Allomorphy analysis:** break down errors by harmony class, consonant alternation and gender class.
+5. **Lexicon ingestion:** structured entries from digitised dictionaries as an additional data source.
+6. **Human validation:** expert review of forms, recording the reviewer and date.
 
 ## Running locally
 
@@ -103,16 +106,30 @@ npm install
 npm run dev
 ```
 
-Open http://localhost:3000.
+Reproduce the data and results. This downloads about 35 MB from GitHub:
+
+```bash
+npm run data:fetch
+npm run data:build
+npm run experiment
+```
 
 ## Build
 
 ```bash
 npm run build
-npm start
 ```
 
 Other scripts: `npm run lint` and `npm run typecheck`.
+
+## References
+
+- Batsuren et al. (2022). *UniMorph 4.0: Universal Morphology.* LREC.
+- Cotterell et al. (2017). *CoNLL–SIGMORPHON 2017 Shared Task: Universal Morphological Reinflection in 52 Languages.*
+- Goldman, Guriel & Tsarfaty (2022). *(Un)solving Morphological Inflection: Lemma Overlap Artificially Inflates Models' Performance.* ACL.
+- Pimentel, Ryskina et al. (2021). *SIGMORPHON 2021 Shared Task on Morphological Reinflection.*
+- Vylomova et al. (2020). *SIGMORPHON 2020 Shared Task 0: Typologically Diverse Morphological Inflection.*
+- Göksel & Kerslake (2005). *Turkish: A Comprehensive Grammar.* Schmidt (1999). *Urdu: An Essential Grammar.*
 
 ---
 

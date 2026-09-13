@@ -4,6 +4,7 @@ import { createContext, useCallback, useContext, useEffect, useState } from "rea
 import { ExternalLink, FileSearch, X } from "lucide-react";
 import { languageById } from "@/data/languages";
 import type { LanguageId } from "@/data/types";
+import type { Provenance } from "@/lib/analysis";
 import { VerificationBadge } from "./VerificationBadge";
 
 export type Evidence = {
@@ -11,12 +12,8 @@ export type Evidence = {
   romanization?: string;
   languageId: LanguageId;
   features?: Record<string, string>;
-  source?: string;
-  sourceUrl?: string;
-  dataset?: string;
-  verified: boolean;
-  note?: string;
-  crossCheck?: { label: string; url: string };
+  tag?: string;
+  provenance: Provenance;
 };
 
 const EvidenceContext = createContext<{ open: (e: Evidence) => void }>({ open: () => {} });
@@ -34,6 +31,7 @@ export function EvidenceProvider({ children }: { children: React.ReactNode }) {
   }, []);
 
   const lang = evidence ? languageById[evidence.languageId] : null;
+  const p = evidence?.provenance;
 
   return (
     <EvidenceContext.Provider value={{ open }}>
@@ -51,7 +49,7 @@ export function EvidenceProvider({ children }: { children: React.ReactNode }) {
           evidence ? "translate-x-0" : "translate-x-full"
         }`}
       >
-        {evidence && lang && (
+        {evidence && lang && p && (
           <>
             <div className="flex items-center justify-between border-b border-line px-6 py-4">
               <span className="eyebrow flex items-center gap-2 !text-bush">
@@ -69,50 +67,56 @@ export function EvidenceProvider({ children }: { children: React.ReactNode }) {
               </div>
               <dl className="grid grid-cols-[7rem_1fr] gap-y-3 text-sm">
                 <dt className="text-muted">Language</dt>
-                <dd>{lang.name} <span className="text-muted">· {lang.family} · {lang.script}</span></dd>
-                {evidence.features && (
+                <dd>{lang.name} <span className="text-muted">· {lang.family}</span></dd>
+                {evidence.tag && (
+                  <>
+                    <dt className="text-muted">Bundle</dt>
+                    <dd className="break-all font-mono text-xs text-bush">{evidence.tag}</dd>
+                  </>
+                )}
+                {evidence.features && Object.keys(evidence.features).length > 0 && (
                   <>
                     <dt className="text-muted">Features</dt>
                     <dd className="flex flex-wrap gap-1">
                       {Object.entries(evidence.features).map(([k, v]) => (
-                        <span key={k} className="rounded border border-line bg-cashmere px-1.5 py-0.5 font-mono text-[0.7rem]">
-                          {k}={v}
+                        <span key={k} className="rounded border border-line bg-cashmere px-1.5 py-0.5 text-[0.7rem]">
+                          {k}: {v}
                         </span>
                       ))}
                     </dd>
                   </>
                 )}
-                <dt className="text-muted">Verification</dt>
-                <dd><VerificationBadge verified={evidence.verified} /></dd>
+                <dt className="text-muted">Attestation</dt>
+                <dd><VerificationBadge status={p.attestation} /></dd>
                 <dt className="text-muted">Source</dt>
                 <dd>
-                  {evidence.source ?? "—"}
-                  {evidence.sourceUrl && (
-                    <a href={evidence.sourceUrl} target="_blank" rel="noreferrer" className="ml-1 inline-flex items-center gap-1 text-sienna underline">
-                      link <ExternalLink size={12} />
+                  {p.sourceUrl ? (
+                    <a href={p.sourceUrl} target="_blank" rel="noreferrer" className="inline-flex items-center gap-1 text-sienna underline">
+                      {p.source} <ExternalLink size={12} />
                     </a>
+                  ) : (
+                    p.source
                   )}
                 </dd>
                 <dt className="text-muted">Dataset</dt>
-                <dd>{evidence.dataset ?? "—"}</dd>
-                {evidence.crossCheck && (
+                <dd>{p.dataset}</dd>
+                {p.licence && (
                   <>
-                    <dt className="text-muted">Cross-check</dt>
-                    <dd>
-                      <a href={evidence.crossCheck.url} target="_blank" rel="noreferrer" className="inline-flex items-center gap-1 text-sienna underline">
-                        {evidence.crossCheck.label} <ExternalLink size={12} />
-                      </a>
-                      <span className="block text-xs text-muted">Not yet performed.</span>
-                    </dd>
+                    <dt className="text-muted">Licence</dt>
+                    <dd>{p.licence}</dd>
                   </>
                 )}
               </dl>
-              {evidence.note && (
-                <p className="rounded-md border-l-2 border-sienna bg-cashmere px-4 py-3 text-sm text-ink/80">{evidence.note}</p>
+              {p.record && (
+                <div>
+                  <p className="eyebrow mb-2">Verbatim record</p>
+                  <pre className="overflow-x-auto rounded-md bg-bush px-3 py-2 font-mono text-xs text-oak">{p.record.replace(/\t/g, "  ⇥  ")}</pre>
+                </div>
               )}
+              {p.note && <p className="rounded-md border-l-2 border-sienna bg-cashmere px-4 py-3 text-sm text-ink/80">{p.note}</p>}
             </div>
             <p className="border-t border-line px-6 py-4 text-xs text-muted">
-              Human-in-the-loop: every form should be checked by a speaker or linguist before it is used as evaluation data.
+              Human-in-the-loop: UniMorph attestation is not the same as expert validation — check with a speaker or linguist before relying on a form.
             </p>
           </>
         )}

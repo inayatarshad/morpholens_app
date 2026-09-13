@@ -1,15 +1,16 @@
 "use client";
 
 import { languages } from "@/data/languages";
-import { entriesByLanguage } from "@/data/morphology";
+import { statsFor } from "@/data/unimorph";
 import type { LanguageId } from "@/data/types";
+
+const compact = (n: number) => (n >= 1000 ? `${(n / 1000).toFixed(n >= 10000 ? 0 : 1)}k` : String(n));
 
 export function LanguageSelector({ value, onChange }: { value: LanguageId; onChange: (id: LanguageId) => void }) {
   return (
     <div role="radiogroup" aria-label="Language" className="flex gap-2 overflow-x-auto lg:flex-col lg:overflow-visible">
       {languages.map((l) => {
         const active = l.id === value;
-        const n = entriesByLanguage(l.id).length;
         return (
           <button
             key={l.id}
@@ -24,11 +25,9 @@ export function LanguageSelector({ value, onChange }: { value: LanguageId; onCha
           >
             <div className="flex items-center justify-between">
               <span className="text-sm font-semibold tracking-wide">{l.name}</span>
-              <span className={`font-mono text-[0.65rem] ${active ? "text-oak" : "text-muted"}`}>{n} entr{n === 1 ? "y" : "ies"}</span>
+              <span className={`font-mono text-[0.65rem] ${active ? "text-oak" : "text-muted"}`}>{compact(statsFor(l.id).triples)} triples</span>
             </div>
-            <p className={`mt-0.5 text-xs ${active ? "text-ivory/70" : "text-muted"}`}>
-              {l.family} · {l.script}
-            </p>
+            <p className={`mt-0.5 text-xs ${active ? "text-ivory/70" : "text-muted"}`}>{l.family}</p>
           </button>
         );
       })}

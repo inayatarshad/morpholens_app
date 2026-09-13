@@ -8,7 +8,10 @@
     "build": "next build",
     "start": "next start",
     "lint": "eslint .",
-    "typecheck": "tsc --noEmit"
+    "typecheck": "tsc --noEmit",
+    "data:fetch": "node scripts/fetch-unimorph.mjs .unimorph",
+    "data:build": "node scripts/build-data.mjs .unimorph",
+    "experiment": "node scripts/run-experiment.mjs .unimorph"
   },
   "dependencies": {
     "lucide-react": "^1.45.0",

@@ -1,15 +1,18 @@
 import Link from "next/link";
 import { ArrowUpRight } from "lucide-react";
+import { statsFor } from "@/data/unimorph";
 import type { Language } from "@/data/types";
 
 const accents: Record<string, string> = {
-  evn: "bg-bush",
-  ckt: "bg-burgundy",
   tur: "bg-sienna",
   urd: "bg-oak",
+  evn: "bg-bush",
+  ckt: "bg-burgundy",
+  ron: "bg-sienna-soft",
 };
 
-export function LanguageCard({ language, count }: { language: Language; count: number }) {
+export function LanguageCard({ language }: { language: Language }) {
+  const s = statsFor(language.id);
   return (
     <Link
       href={`/explore?lang=${language.id}`}
@@ -21,14 +24,12 @@ export function LanguageCard({ language, count }: { language: Language; count: n
         <ArrowUpRight size={16} className="text-muted transition group-hover:text-sienna" />
       </div>
       <p className="mt-6 text-[0.8rem] font-semibold tracking-[0.22em] text-bush">{language.name.toUpperCase()}</p>
-      {language.nativeName && (
-        <p className={`text-2xl text-bush/80 ${language.direction === "rtl" ? "urdu" : "font-serif italic"}`}>{language.nativeName}</p>
-      )}
-      <dl className="mt-auto space-y-1 pt-6 text-sm">
+      <p className={`min-h-[2.5rem] text-2xl text-bush/80 ${language.direction === "rtl" ? "urdu" : "font-serif italic"}`}>{language.nativeName ?? ""}</p>
+      <dl className="mt-auto space-y-1 pt-5 text-sm">
         <div className="flex justify-between gap-2"><dt className="text-muted">Family</dt><dd className="text-right">{language.family}</dd></div>
         <div className="flex justify-between gap-2"><dt className="text-muted">Resources</dt><dd className="text-right">{language.resourceLevel}</dd></div>
-        <div className="flex justify-between gap-2"><dt className="text-muted">Script</dt><dd className="text-right">{language.script}</dd></div>
-        <div className="flex justify-between gap-2 border-t border-line pt-2"><dt className="text-muted">Local entries</dt><dd className="font-mono">{count}</dd></div>
+        <div className="flex justify-between gap-2 border-t border-line pt-2"><dt className="text-muted">UniMorph triples</dt><dd className="font-mono">{s.triples.toLocaleString("en")}</dd></div>
+        <div className="flex justify-between gap-2"><dt className="text-muted">Lemmas</dt><dd className="font-mono">{s.lemmas.toLocaleString("en")}</dd></div>
       </dl>
     </Link>
   );
