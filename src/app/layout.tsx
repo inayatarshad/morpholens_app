@@ -1,6 +1,7 @@
 import type { Metadata } from "next";
-import { Inter, JetBrains_Mono, Newsreader, Noto_Nastaliq_Urdu } from "next/font/google";
+import { Inter, JetBrains_Mono, Newsreader, Noto_Nastaliq_Urdu, Poiret_One } from "next/font/google";
 import { AppShell } from "@/components/AppShell";
+import { Splash } from "@/components/Splash";
 import "./globals.css";
 
 const newsreader = Newsreader({
@@ -13,6 +14,7 @@ const newsreader = Newsreader({
 const inter = Inter({ subsets: ["latin", "latin-ext", "cyrillic"], variable: "--font-inter", display: "swap" });
 const jetbrains = JetBrains_Mono({ subsets: ["latin", "latin-ext", "cyrillic"], variable: "--font-jetbrains", display: "swap" });
 const nastaliq = Noto_Nastaliq_Urdu({ subsets: ["arabic"], weight: ["400", "600"], variable: "--font-nastaliq", display: "swap" });
+const splashFont = Poiret_One({ subsets: ["latin"], weight: "400", variable: "--font-splash", display: "block" });
 
 const description =
   "An interactive research workspace for low-resource morphology and unseen-lemma generalisation, built on UniMorph data for Turkish, Urdu, Evenki, Chukchi and Romanian.";
@@ -38,8 +40,9 @@ export const metadata: Metadata = {
 
 export default function RootLayout({ children }: { children: React.ReactNode }) {
   return (
-    <html lang="en" className={`${newsreader.variable} ${inter.variable} ${jetbrains.variable} ${nastaliq.variable}`}>
+    <html lang="en" className={`${newsreader.variable} ${inter.variable} ${jetbrains.variable} ${nastaliq.variable} ${splashFont.variable}`}>
       <body>
+        <Splash />
         <AppShell>{children}</AppShell>
       </body>
     </html>
