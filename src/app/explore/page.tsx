@@ -15,7 +15,7 @@ export default function ExplorePage() {
         </h1>
         <p className="lede mt-4 text-ink/75">
           Inspect the morphological information packed into a single word form: segmentation, features, paradigm,
-          difficulty and — always — where the analysis came from.
+          difficulty and, always, where the analysis came from.
         </p>
       </header>
       <Suspense fallback={<p className="text-muted">Loading workspace…</p>}>

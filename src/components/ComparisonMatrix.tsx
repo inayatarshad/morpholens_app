@@ -135,8 +135,8 @@ export function ComparisonMatrix() {
                   <tr key={l.id} className="border-t border-line">
                     <td className="px-4 py-3 font-medium text-bush">{l.name}</td>
                     <td className="px-4 py-3">{l.family}</td>
-                    <td className={`px-4 py-3 ${none ? "italic text-muted" : "text-sienna"}`}>{none ? "—" : slot.strategy}</td>
-                    <td className={`px-4 py-3 ${none ? "text-muted" : ""}`}>{none ? "—" : slot.position}</td>
+                    <td className={`px-4 py-3 ${none ? "italic text-muted" : "text-sienna"}`}>{none ? "n/a" : slot.strategy}</td>
+                    <td className={`px-4 py-3 ${none ? "text-muted" : ""}`}>{none ? "n/a" : slot.position}</td>
                     <td className="px-4 py-3 text-xs text-muted">{none ? "none" : slot.kind === "unimorph" ? "UniMorph" : "Reference grammar"}</td>
                     <td className="px-4 py-3">{l.resourceLevel}</td>
                   </tr>

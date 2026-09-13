@@ -19,7 +19,7 @@ It answers it by comparing **random** and **lemma-disjoint** evaluation on the s
 - **Morphology explorer** (`/explore`): searches the **full** pinned UniMorph file for the selected language on the server.
   - Every bundle a form realises is shown, which makes syncretism visible.
   - A lemma query opens its full paradigm, which you can filter by feature code or label.
-  - Each analysis has readable features, a segmentation (gold for hand-annotated entries, an automatic lemma–form alignment otherwise), computed difficulty tags and a verbatim evidence record.
+  - Each analysis has readable features, a segmentation (gold for hand-annotated entries, an automatic lemma-form alignment otherwise), computed difficulty tags and a verbatim evidence record.
 - **Cross-language comparison** (`/compare`): Plural, Case, Possession, Past tense and Negation across the five languages.
   - Examples come from UniMorph, with an automatic label for the surface strategy.
   - Hand-curated reference patterns fill a slot only when UniMorph has none.
@@ -62,7 +62,7 @@ Data-quality notes are shown in the UI rather than silently fixed. For example, 
 
 | System | Idea |
 |---|---|
-| Atomic-tag rules (baseline) | Edit rules keyed by the whole bundle as an opaque label, using nearest-ending analogy. It follows the spirit of the CoNLL–SIGMORPHON 2017 non-neural baseline. |
+| Atomic-tag rules (baseline) | Edit rules keyed by the whole bundle as an opaque label, using nearest-ending analogy. It follows the spirit of the CoNLL-SIGMORPHON 2017 non-neural baseline. |
 | Paradigm memory | Reinflects from forms of the *same* lemma already seen in training; otherwise it falls back to the baseline. It can only benefit from lemma overlap. |
 | Feature-aware rules | Decomposes bundles into features. For an unseen bundle it combines the rule lemma→A with a feature-difference rule A→T learned from any training paradigm (e.g. NOM→ABL). |
 
@@ -137,7 +137,7 @@ Please also cite UniMorph and the per-language sources.
 ## References
 
 - Batsuren et al. (2022). *UniMorph 4.0: Universal Morphology.* LREC.
-- Cotterell et al. (2017). *CoNLL–SIGMORPHON 2017 Shared Task: Universal Morphological Reinflection in 52 Languages.*
+- Cotterell et al. (2017). *CoNLL-SIGMORPHON 2017 Shared Task: Universal Morphological Reinflection in 52 Languages.*
 - Goldman, Guriel & Tsarfaty (2022). *(Un)solving Morphological Inflection: Lemma Overlap Artificially Inflates Models' Performance.* ACL.
 - Pimentel, Ryskina et al. (2021). *SIGMORPHON 2021 Shared Task on Morphological Reinflection.*
 - Vylomova et al. (2020). *SIGMORPHON 2020 Shared Task 0: Typologically Diverse Morphological Inflection.*

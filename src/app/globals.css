@@ -1,7 +1,7 @@
 @import "tailwindcss";
 
 :root {
-  /* Palette 3 — Sienna / Oak / Cashmere / Bush (+ ivory, burgundy) */
+  /* Palette 3: Sienna / Oak / Cashmere / Bush (+ ivory, burgundy) */
   --background: #e9e0d2;
   --ivory: #f6f1e7;
   --surface: #d2b792;
@@ -116,6 +116,46 @@ body {
 @media (prefers-reduced-motion: reduce) {
   .rise, .grow { animation: none; }
   html { scroll-behavior: auto; }
+}
+
+/* Scroll-driven typography (see src/components/motion.tsx) */
+.reveal {
+  opacity: 0;
+  transform: translateY(28px);
+  filter: blur(4px);
+  transition: opacity 0.9s cubic-bezier(0.2, 0.7, 0.1, 1), transform 0.9s cubic-bezier(0.2, 0.7, 0.1, 1), filter 0.9s;
+  transition-delay: var(--d, 0ms);
+}
+.reveal[data-shown="true"] {
+  opacity: 1;
+  transform: none;
+  filter: none;
+}
+
+.kinetic .kw {
+  display: inline-block;
+  opacity: 0;
+  transform: translateY(0.55em) rotate(3deg);
+  filter: blur(6px);
+  transition: opacity 0.8s cubic-bezier(0.2, 0.7, 0.1, 1), transform 0.9s cubic-bezier(0.2, 0.7, 0.1, 1), filter 0.8s;
+  transition-delay: calc(var(--i, 0) * 70ms);
+}
+.kinetic[data-shown="true"] .kw {
+  opacity: 1;
+  transform: none;
+  filter: none;
+}
+
+@keyframes cue {
+  0%, 100% { transform: scaleY(0.3); transform-origin: top; }
+  50% { transform: scaleY(1); transform-origin: top; }
+}
+.scroll-cue > span { animation: cue 1.8s ease-in-out infinite; }
+
+@media (prefers-reduced-motion: reduce) {
+  .reveal, .kinetic .kw { opacity: 1; transform: none; filter: none; transition: none; }
+  .scroll-cue > span { animation: none; }
+  .will-change-transform { transform: none !important; }
 }
 
 :focus-visible {

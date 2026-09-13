@@ -56,7 +56,7 @@ export function DifficultyTags({
       ) : (
         <p className="mt-3 text-sm text-muted">No difficulty signals detected for this form.</p>
       )}
-      {computed && <p className="mt-3 text-xs text-muted">Tags computed automatically from the UniMorph sample and the lemma–form alignment.</p>}
+      {computed && <p className="mt-3 text-xs text-muted">Tags computed automatically from the UniMorph sample and the lemma-form alignment.</p>}
     </div>
   );
 }

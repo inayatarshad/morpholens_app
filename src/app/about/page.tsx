@@ -21,7 +21,7 @@ function Section({ n, title, children }: { n: string; title: string; children: R
 
 const references = [
   "Batsuren, K. et al. (2022). UniMorph 4.0: Universal Morphology. Proceedings of LREC 2022.",
-  "Cotterell, R. et al. (2017). CoNLL–SIGMORPHON 2017 Shared Task: Universal Morphological Reinflection in 52 Languages.",
+  "Cotterell, R. et al. (2017). CoNLL-SIGMORPHON 2017 Shared Task: Universal Morphological Reinflection in 52 Languages.",
   "Goldman, O., Guriel, D. & Tsarfaty, R. (2022). (Un)solving Morphological Inflection: Lemma Overlap Artificially Inflates Models’ Performance. Proceedings of ACL 2022.",
   "Pimentel, T., Ryskina, M. et al. (2021). SIGMORPHON 2021 Shared Task on Morphological Reinflection: Generalization Across Languages.",
   "Vylomova, E. et al. (2020). SIGMORPHON 2020 Shared Task 0: Typologically Diverse Morphological Inflection.",
@@ -118,21 +118,21 @@ export default function AboutPage() {
       </Section>
 
       <Section n="03" title="How search works">
-        <p>The explorer searches the full UniMorph file for the selected language on the server — nothing is generated or guessed.</p>
+        <p>The explorer searches the full UniMorph file for the selected language on the server. Nothing is generated or guessed.</p>
         <ol className="list-decimal space-y-2 pl-5">
-          <li><strong className="text-bush">Exact match</strong> — the same spelling, ignoring only letter case, Unicode normalisation and keyboard variants that never distinguish words (Romanian ş/ș and ţ/ț, Arabic-keyboard ي/ك vs. Urdu ی/ک, apostrophe variants, zero-width characters).</li>
-          <li><strong className="text-bush">Lemma match</strong> — if the query is a citation form, its full paradigm is shown.</li>
-          <li><strong className="text-sienna">Loose match</strong> — only if nothing matches exactly: diacritics and transcription details are ignored (ı/i, ă/a, ə/e, ː, Chukchi ԓ/л …). These results are labelled, because they can be different words (Romanian <em>casă</em> ≠ <em>casa</em>).</li>
-          <li><strong className="text-bush">Not attested</strong> — the page says so, reports how many triples were searched, and lists the closest attested forms (edit distance ≤ 2). Absence from UniMorph is not evidence that a word does not exist.</li>
+          <li><strong className="text-bush">Exact match</strong>: the same spelling, ignoring only letter case, Unicode normalisation and keyboard variants that never distinguish words (Romanian ş/ș and ţ/ț, Arabic-keyboard ي/ك vs. Urdu ی/ک, apostrophe variants, zero-width characters).</li>
+          <li><strong className="text-bush">Lemma match</strong>: if the query is a citation form, its full paradigm is shown.</li>
+          <li><strong className="text-sienna">Loose match</strong>: only if nothing matches exactly: diacritics and transcription details are ignored (ı/i, ă/a, ə/e, ː, Chukchi ԓ/л …). These results are labelled, because they can be different words (Romanian <em>casă</em> ≠ <em>casa</em>).</li>
+          <li><strong className="text-bush">Not attested</strong>: the page says so, reports how many triples were searched, and lists the closest attested forms (edit distance ≤ 2). Absence from UniMorph is not evidence that a word does not exist.</li>
         </ol>
         <p className="text-sm">
-          A form realising several bundles (syncretism) is shown once per bundle. Segmentations of UniMorph forms are automatic lemma–form alignments and are labelled as such.
+          A form realising several bundles (syncretism) is shown once per bundle. Segmentations of UniMorph forms are automatic lemma-form alignments and are labelled as such.
         </p>
       </Section>
 
       <Section n="04" title="Experiment design">
         <p>
-          Task: morphological inflection — predict the form for a (lemma, feature bundle) pair. Metrics: exact-match
+          The task is morphological inflection: predict the form for a (lemma, feature bundle) pair. Metrics: exact-match
           accuracy and mean Levenshtein distance to the gold form. For each of {c.seeds.length} seeds a universe of up to
           ~{c.universeTarget.toLocaleString("en")} triples is sampled ({c.cellsPerLemma} cells per lemma at most). The random split holds out items; the lemma-disjoint
           split holds out whole lemmas. Test sets hold up to {c.testMax} items; training sizes are {c.sizes.join(", ")}. Both splits use the same universe.
@@ -145,9 +145,9 @@ export default function AboutPage() {
 
       <Section n="05" title="Systems">
         <ul className="list-disc space-y-2 pl-5">
-          <li><strong className="text-bush">Atomic-tag rules</strong> — edit rules keyed by the whole bundle; nearest-ending analogy; unseen bundle ⇒ copy the lemma. In the spirit of the CoNLL–SIGMORPHON 2017 non-neural baseline.</li>
-          <li><strong className="text-burgundy">Paradigm memory</strong> — reinflects from seen forms of the same lemma (cell-to-cell rules); otherwise the baseline.</li>
-          <li><strong className="text-bush">Feature-aware rules</strong> — bundles decomposed into features; composes lemma→A with a feature-difference rule A→T learned across paradigms; otherwise nearest bundle.</li>
+          <li><strong className="text-bush">Atomic-tag rules</strong>: edit rules keyed by the whole bundle; nearest-ending analogy; unseen bundle ⇒ copy the lemma. In the spirit of the CoNLL-SIGMORPHON 2017 non-neural baseline.</li>
+          <li><strong className="text-burgundy">Paradigm memory</strong>: reinflects from seen forms of the same lemma (cell-to-cell rules); otherwise the baseline.</li>
+          <li><strong className="text-bush">Feature-aware rules</strong>: bundles decomposed into features; composes lemma→A with a feature-difference rule A→T learned across paradigms; otherwise nearest bundle.</li>
         </ul>
         <p className="text-sm">All three are transparent, non-neural and trained from scratch per run. They are baselines for the evaluation design, not claims about neural models.</p>
       </Section>
@@ -166,8 +166,8 @@ export default function AboutPage() {
       <Section n="07" title="Provenance & data quality">
         <p>Every form in the interface carries one of two attestation levels and opens a verbatim evidence record:</p>
         <ul className="list-disc space-y-2 pl-5">
-          <li><strong className="text-bush">UniMorph-attested</strong> — the exact triple occurs in the pinned UniMorph file.</li>
-          <li><strong className="text-sienna">Reference pattern</strong> — a hand-annotated textbook form that UniMorph does not contain (e.g. Turkish <em>ev</em>, <em>kitap</em>).</li>
+          <li><strong className="text-bush">UniMorph-attested</strong>: the exact triple occurs in the pinned UniMorph file.</li>
+          <li><strong className="text-sienna">Reference pattern</strong>: a hand-annotated textbook form that UniMorph does not contain (e.g. Turkish <em>ev</em>, <em>kitap</em>).</li>
         </ul>
         <p>UniMorph attestation is not expert validation. Problems observed in the data are reported, not silently corrected:</p>
         <div className="space-y-3">
@@ -188,7 +188,7 @@ export default function AboutPage() {
           <li>No neural models yet; conclusions apply to these rule-based systems only.</li>
           <li>Exact match treats UniMorph variants (several forms for one cell) as errors; edit distance is reported as a complement.</li>
           <li>Bootstrap intervals treat pooled test items as independent; items from different seeds can overlap.</li>
-          <li>Segmentations for UniMorph forms are automatic lemma–form alignments, not gold morpheme boundaries.</li>
+          <li>Segmentations for UniMorph forms are automatic lemma-form alignments, not gold morpheme boundaries.</li>
           <li>Turkish nouns and adjectives in UniMorph are Wiktionary-derived and unverified (per its README); Romanian noun labels show systematic issues.</li>
           <li>Evenki data is in Latin transcription and sparse per lemma; Chukchi has 241 triples.</li>
           <li>Urdu romanisation in hand-annotated entries is simplified; Nastaliq rendering depends on the font.</li>

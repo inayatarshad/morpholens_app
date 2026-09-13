@@ -51,7 +51,7 @@ function extractRule(src, tgt) {
 
 /** Automatic, alignment-based description of how target differs from base. */
 function classify(base, target) {
-  if (base === target) return { strategy: "No overt change (syncretic with base)", position: "—" };
+  if (base === target) return { strategy: "No overt change (syncretic with base)", position: "none" };
   const bw = base.split(/\s+/), tw = target.split(/\s+/);
   if (tw.length > bw.length) {
     // find the target word that best aligns with the base word, then describe both changes
@@ -110,7 +110,7 @@ const specs = {
     negation: { base: "LEMMA", must: ["NEG"] },
   },
   // ron plural intentionally omitted: noun number labels in UniMorph ron are unreliable
-  // (e.g. "unor case", "niște case" tagged SG) — surfaced as a data-quality note in the UI.
+  // (e.g. "unor case", "niște case" tagged SG), surfaced as a data-quality note in the UI.
   ron: {
     case: { base: "LEMMA", must: ["N", "GEN/DAT", "SG", "INDF"] },
     past: { base: "LEMMA", must: ["V", "IND", "PST", "3", "SG", "PFV"] },

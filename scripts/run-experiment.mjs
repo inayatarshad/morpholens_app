@@ -1,14 +1,14 @@
 #!/usr/bin/env node
 /**
- * MorphoLens — lemma-overlap experiment on UniMorph data.
+ * MorphoLens: lemma-overlap experiment on UniMorph data.
  *
  * Task: morphological inflection. Given (lemma, UniMorph feature bundle) predict the
  * inflected form. Metrics: exact-match accuracy (primary) and mean Levenshtein distance
  * to the gold form (secondary, as in the SIGMORPHON shared tasks).
  *
  * Splits (built from the same sampled universe per seed):
- *   random          — items shuffled; test lemmas may also occur in training.
- *   lemma-disjoint  — lemmas shuffled; no test lemma occurs in training.
+ *   random:          items shuffled; test lemmas may also occur in training.
+ *   lemma-disjoint:  lemmas shuffled; no test lemma occurs in training.
  *
  * Systems (transparent, non-neural edit-rule learners):
  *   baseline  Atomic-tag rules. Learns lemma→form edit rules keyed by the full feature

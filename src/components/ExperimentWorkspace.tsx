@@ -23,7 +23,7 @@ export function ExperimentWorkspace() {
       <ExperimentControls lang={lang} split={split} size={size} sizes={sizes} onLang={setLang} onSplit={setSplit} onSize={setSizePref} />
 
       <p className="text-xs text-muted">
-        Task: <span className="text-ink">{task.name}</span> — {task.description} · {task.metric} · test set {stats.testSize} items per
+        Task: <span className="text-ink">{task.name}</span>. {task.description} · {task.metric} · test set {stats.testSize} items per
         seed · data: {stats.triples.toLocaleString("en")} UniMorph triples.
       </p>
 

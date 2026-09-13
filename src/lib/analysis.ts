@@ -16,7 +16,7 @@ export type Provenance = {
   record?: string;
 };
 
-/** One analysis of one surface form — the single shape every view renders. */
+/** One analysis of one surface form: the single shape every view renders. */
 export type Analysis = {
   id: string;
   languageId: LanguageId;
@@ -81,7 +81,7 @@ export const paradigmRows = (cells: Triple[]): ParadigmEntry[] =>
 
 function morphemesFor(t: Triple): Morpheme[] {
   const a = align(t.lemma, t.form);
-  const g = bundleGloss(t.tag) || "—";
+  const g = bundleGloss(t.tag) || "∅";
   if (a.suppletive) return [{ form: t.form, gloss: g, meaning: "whole-form replacement (no material shared with the lemma)", role: "word" }];
   const out: Morpheme[] = [];
   const pre = a.prefix, suf = a.suffix;

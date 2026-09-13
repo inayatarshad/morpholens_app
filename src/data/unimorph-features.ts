@@ -81,7 +81,7 @@ export function readableFeatures(tag: string): Record<string, string> {
 
 export function posLabel(tag: string): string {
   for (const code of tag.split(";")) if (table[code]?.[0] === "POS") return code;
-  return "—";
+  return "n/a";
 }
 
 /** Leipzig-ish gloss of a bundle without its primary POS, e.g. "ABL.PL.PSS1P". */

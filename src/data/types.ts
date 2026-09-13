@@ -2,7 +2,7 @@
  * MorphoLens data model.
  *
  * Two kinds of linguistic records feed the UI:
- *  1. UniMorph triples (lemma, form, feature bundle) — generated into
+ *  1. UniMorph triples (lemma, form, feature bundle), generated into
  *     src/data/generated/unimorph-sample.json by scripts/build-data.mjs, pinned to a
  *     repository commit.
  *  2. A handful of hand-annotated entries with gold morpheme segmentation
@@ -21,7 +21,7 @@ export type Language = {
   script: string;
   direction: "ltr" | "rtl";
   resourceLevel: string;
-  /** Broad, widely documented typological profile — not a claim about any specific form. */
+  /** Broad, widely documented typological profile, not a claim about any specific form. */
   profile: string;
   description: string;
 };

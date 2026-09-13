@@ -2,7 +2,7 @@
  * Alignment-based split of an inflected form against its lemma.
  * Mirrors `extractRule` in scripts/run-experiment.mjs: the longest common substring is
  * treated as the shared stem, material before/after it as prefix/suffix exponents.
- * This is an automatic heuristic — UniMorph provides features, not gold segmentation.
+ * This is an automatic heuristic: UniMorph provides features, not gold segmentation.
  */
 export type Alignment = {
   prefix: string;

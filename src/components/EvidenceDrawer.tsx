@@ -116,7 +116,7 @@ export function EvidenceProvider({ children }: { children: React.ReactNode }) {
               {p.note && <p className="rounded-md border-l-2 border-sienna bg-cashmere px-4 py-3 text-sm text-ink/80">{p.note}</p>}
             </div>
             <p className="border-t border-line px-6 py-4 text-xs text-muted">
-              Human-in-the-loop: UniMorph attestation is not the same as expert validation — check with a speaker or linguist before relying on a form.
+              Human-in-the-loop: UniMorph attestation is not the same as expert validation. Check with a speaker or linguist before relying on a form.
             </p>
           </>
         )}

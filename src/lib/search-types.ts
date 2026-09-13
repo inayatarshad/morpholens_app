@@ -2,7 +2,7 @@ import type { Triple } from "@/data/unimorph";
 
 export type NearMatch = Triple & { distance: number };
 
-/** Response of GET /api/search?lang=…&q=… — every triple is verbatim from UniMorph. */
+/** Response of GET /api/search?lang=…&q=…; every triple is verbatim from UniMorph. */
 export type SearchResponse = {
   lang: string;
   query: string;

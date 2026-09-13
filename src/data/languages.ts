@@ -15,7 +15,7 @@ export const languages: Language[] = [
     direction: "ltr",
     resourceLevel: "Higher-resource comparison",
     profile: "Agglutinative · suffixing · vowel harmony and consonant alternation",
-    description: "A morphologically rich language with comparatively strong NLP resources — the agglutinative reference point.",
+    description: "A morphologically rich language with comparatively strong NLP resources, used as the agglutinative reference point.",
   },
   {
     id: "urd",
@@ -26,7 +26,7 @@ export const languages: Language[] = [
     script: "Perso-Arabic (Nastaliq)",
     direction: "rtl",
     resourceLevel: "Low-resource NLP",
-    profile: "Fusional nominal/verbal inflection · postpositions · gender–number agreement",
+    profile: "Fusional nominal/verbal inflection · postpositions · gender and number agreement",
     description: "Widely spoken, yet under-served by annotated morphological resources; much grammatical meaning is carried by separate words.",
   },
   {
@@ -49,7 +49,7 @@ export const languages: Language[] = [
     direction: "ltr",
     resourceLevel: "Low-resource",
     profile: "Polysynthetic · noun incorporation · prefixes, suffixes and circumfixes · vowel harmony",
-    description: "A polysynthetic language of the Russian Far East. UniMorph holds only a few hundred triples — the extreme low-resource case.",
+    description: "A polysynthetic language of the Russian Far East. UniMorph holds only a few hundred triples: the extreme low-resource case.",
   },
   {
     id: "ron",

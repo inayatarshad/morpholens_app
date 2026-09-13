@@ -4,7 +4,7 @@ import { getCell, systemOrder, systems } from "@/data/experiments";
 import type { ExperimentSplit, LanguageId } from "@/data/types";
 import { StatusTag } from "./ResearchBadge";
 
-const cell = (v: number | null) => (v === null ? "—" : `${v.toFixed(1)}%`);
+const cell = (v: number | null) => (v === null ? "n/a" : `${v.toFixed(1)}%`);
 
 /** Where accuracy is won or lost: seen vs. unseen bundles and lemmas, error types, edit distance. */
 export function BreakdownPanel({ lang, split, size }: { lang: LanguageId; split: ExperimentSplit; size: number }) {

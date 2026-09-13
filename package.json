@@ -2,7 +2,7 @@
   "name": "morpholens",
   "version": "0.1.0",
   "private": true,
-  "description": "MorphoLens — an interactive research prototype for low-resource morphology and unseen-word generalisation.",
+  "description": "MorphoLens: an interactive research prototype for low-resource morphology and unseen-word generalisation.",
   "scripts": {
     "dev": "next dev",
     "prebuild": "node scripts/fetch-unimorph.mjs unimorph-data",

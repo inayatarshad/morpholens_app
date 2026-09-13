@@ -30,7 +30,7 @@ export function LemmaPanel({ lang, lemma, cells, onSelect }: { lang: LanguageId;
             </div>
             <div>
               <p className="eyebrow">Part of speech</p>
-              <p className="mt-2 font-mono text-sm font-semibold tracking-[0.14em] text-sienna">{pos || "—"}</p>
+              <p className="mt-2 font-mono text-sm font-semibold tracking-[0.14em] text-sienna">{pos || "n/a"}</p>
             </div>
             <div>
               <p className="eyebrow">Cells in UniMorph</p>

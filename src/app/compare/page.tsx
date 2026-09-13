@@ -16,7 +16,7 @@ export default function ComparePage() {
           </h1>
         </div>
         <p className="text-ink/75">
-          Select a grammatical feature to see how each language encodes it — as a suffix, an inflectional ending, a
+          Select a grammatical feature to see how each language encodes it: as a suffix, an inflectional ending, a
           postposition or a free particle. Slots without a verified example stay visibly empty.
         </p>
       </header>

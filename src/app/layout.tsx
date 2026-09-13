@@ -20,7 +20,7 @@ const description =
 export const metadata: Metadata = {
   metadataBase: new URL("https://morpholens-app.vercel.app"),
   title: {
-    default: "MorphoLens — Explore how words change across languages",
+    default: "MorphoLens: Explore how words change across languages",
     template: "%s · MorphoLens",
   },
   description,
@@ -40,6 +40,9 @@ export default function RootLayout({ children }: { children: React.ReactNode }) 
   return (
     <html lang="en" className={`${newsreader.variable} ${inter.variable} ${jetbrains.variable} ${nastaliq.variable}`}>
       <body>
+        <noscript>
+          <style>{".reveal,.kinetic .kw{opacity:1!important;transform:none!important;filter:none!important}"}</style>
+        </noscript>
         <AppShell>{children}</AppShell>
       </body>
     </html>

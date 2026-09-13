@@ -3,12 +3,12 @@ import type { LanguageId } from "@/data/types";
 /**
  * Two levels of string matching used everywhere a user can search.
  *
- * canonical — the same spelling. Only encoding and keyboard variants that never
+ * canonical: the same spelling. Only encoding and keyboard variants that never
  *   distinguish words are unified: Unicode NFC, letter case, zero-width characters,
  *   apostrophe variants, Romanian s/t-cedilla vs. comma-below, and Arabic-keyboard
  *   yeh/kaf vs. the Urdu letters. A canonical match is reported as an exact match.
  *
- * loose — additionally ignores diacritics and transcription details (e.g. ı/i, ă/a,
+ * loose: additionally ignores diacritics and transcription details (e.g. ı/i, ă/a,
  *   ə/e, ː, Chukchi ԓ/л). Loose matches can join genuinely different words
  *   (Romanian casă ≠ casa), so they are shown only when nothing matches exactly,
  *   and always labelled as such.

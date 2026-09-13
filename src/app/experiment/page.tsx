@@ -49,7 +49,7 @@ export default function ExperimentPage() {
           Does morphology help <span className="italic text-sienna">when the lemma is unseen?</span>
         </h1>
         <p className="lede mt-4 text-ink/75">
-          Three transparent inflection systems, five languages, random versus lemma-disjoint splits — measured on pinned
+          Three transparent inflection systems, five languages, random versus lemma-disjoint splits, measured on pinned
           UniMorph data.
         </p>
       </header>
@@ -66,7 +66,7 @@ export default function ExperimentPage() {
           <h2 className="display display-md mt-3 text-bush">One universe, two splits.</h2>
           <ol className="mt-5 list-decimal space-y-2 pl-5 text-sm leading-relaxed text-ink/80">
             <li>Per seed, sample lemmas at random and keep up to {c.cellsPerLemma} cells each until ~{c.universeTarget.toLocaleString("en")} triples.</li>
-            <li>Hold out a test set of up to {c.testMax} triples ({Math.round(c.testFraction * 100)}% for small languages) — by item for the random split, by lemma for the lemma-disjoint split.</li>
+            <li>Hold out a test set of up to {c.testMax} triples ({Math.round(c.testFraction * 100)}% for small languages): by item for the random split, by lemma for the lemma-disjoint split.</li>
             <li>Train each system on the first n ∈ {"{"}{c.sizes.join(", ")}{"}"} triples of the remaining pool (sizes the pool cannot support are skipped).</li>
             <li>Score exact-match accuracy; repeat for seeds {c.seeds.join(", ")} and report mean ± s.d.</li>
           </ol>
@@ -78,7 +78,7 @@ export default function ExperimentPage() {
           <p>
             <strong className="text-bush">Atomic-tag rules</strong> learn lemma→form edit rules (prefix and suffix rewrites around the longest
             shared substring) keyed by the whole feature bundle, and apply the rule of the training lemma with the longest
-            shared ending — in the spirit of the CoNLL–SIGMORPHON 2017 non-neural baseline.
+            shared ending, in the spirit of the CoNLL-SIGMORPHON 2017 non-neural baseline.
           </p>
           <p>
             <strong className="text-burgundy">Paradigm memory</strong> first looks for other forms of the <em>same</em> lemma in training and
@@ -90,7 +90,7 @@ export default function ExperimentPage() {
             NOM→ABL), falling back to the most similar bundle.
           </p>
           <p className="text-xs text-muted">
-            These are deliberately simple, inspectable systems — not multilingual neural encoders. They establish the
+            These are deliberately simple, inspectable systems, not multilingual neural encoders. They establish the
             evaluation pipeline that XLM-R-style models would be run through next.
           </p>
         </div>
@@ -113,11 +113,11 @@ export default function ExperimentPage() {
         </div>
         <div className="space-y-5">
           <div>
-            <p className="mb-2 text-sm font-medium text-bush">Random split <span className="text-muted">— lemma D leaks into training</span></p>
+            <p className="mb-2 text-sm font-medium text-bush">Random split <span className="text-muted">(lemma D leaks into training)</span></p>
             <SplitDiagram disjoint={false} />
           </div>
           <div>
-            <p className="mb-2 text-sm font-medium text-sienna">Lemma-disjoint split <span className="text-muted">— lemma D is never seen</span></p>
+            <p className="mb-2 text-sm font-medium text-sienna">Lemma-disjoint split <span className="text-muted">(lemma D is never seen)</span></p>
             <SplitDiagram disjoint />
           </div>
         </div>

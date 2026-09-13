@@ -35,7 +35,7 @@ export function ParadigmTable({
             <input
               value={filter}
               onChange={(e) => setFilter(e.target.value)}
-              placeholder="Filter cells — a form, a code (PST, PL, 1SG) or a label (Ablative)"
+              placeholder="Filter cells by form, code (PST, PL, 1SG) or label (Ablative)"
               className="w-full bg-transparent outline-none placeholder:text-muted/60"
               dir="auto"
             />
