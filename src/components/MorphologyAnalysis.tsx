@@ -103,8 +103,12 @@ export function MorphologyAnalysis({
           <>
             <ParadigmTable paradigm={a.paradigm} current={a.surface} currentTag={a.tag} language={language} onSelect={onSelect} />
             <p className="mt-3 text-xs text-muted">
-              {a.paradigm.length} cells of <em>{a.lemmaRomanization ?? a.lemma}</em>
-              {a.segmentation === "auto" ? " from the shipped UniMorph sample (large paradigms are capped)." : " (hand-annotated)."} Select a row to analyse it.
+              {a.paradigmScope === "full"
+                ? `All ${a.paradigm.length} cells UniMorph lists for “${a.lemma}”.`
+                : a.paradigmScope === "sample"
+                  ? `${a.paradigm.length} cells of “${a.lemma}” from the bundled sample (search the lemma for the full paradigm).`
+                  : `${a.paradigm.length} related forms of “${a.lemmaRomanization ?? a.lemma}” (hand-annotated).`}{" "}
+              Select a row to analyse it.
             </p>
           </>
         ) : (

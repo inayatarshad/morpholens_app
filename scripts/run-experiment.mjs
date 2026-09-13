@@ -3,7 +3,8 @@
  * MorphoLens — lemma-overlap experiment on UniMorph data.
  *
  * Task: morphological inflection. Given (lemma, UniMorph feature bundle) predict the
- * inflected form. Metric: exact-match accuracy.
+ * inflected form. Metrics: exact-match accuracy (primary) and mean Levenshtein distance
+ * to the gold form (secondary, as in the SIGMORPHON shared tasks).
  *
  * Splits (built from the same sampled universe per seed):
  *   random          — items shuffled; test lemmas may also occur in training.
@@ -23,8 +24,13 @@
  *             contains two cells differing by exactly that feature change (e.g. NOM→ABL),
  *             or (2) backs off to the most similar bundle (Jaccard) instead of copying.
  *
+ * Statistics: mean ± s.d. over seeds; paired bootstrap (2,000 resamples) over the test
+ * items pooled across seeds for system differences; breakdowns by seen/unseen bundle
+ * and lemma; share of errors that are lemma copies (no applicable rule).
+ *
  * Usage:  node scripts/run-experiment.mjs <dir-with-unimorph-tsvs>
- * Output: src/data/generated/experiment-results.json
+ * Output: src/data/generated/experiment-results.json (UI)
+ *         public/data/morpholens-results.{json,csv}     (downloads)
  */
 import fs from "node:fs";
 import path from "node:path";
@@ -39,6 +45,8 @@ const CELLS_PER_LEMMA = 10;
 const UNIVERSE_TARGET = 3000;
 const TEST_MAX = 500;
 const TEST_FRACTION = 0.25;
+const BOOTSTRAP = 2000;
+const t0 = Date.now();
 
 // ── utilities ─────────────────────────────────────────────────────────────────
 function rng(seed) {
@@ -65,6 +73,23 @@ const std = (xs) => {
   return Math.sqrt(xs.reduce((s, x) => s + (x - m) ** 2, 0) / Math.max(1, xs.length - 1));
 };
 const r1 = (x) => Math.round(x * 10) / 10;
+const r2 = (x) => Math.round(x * 100) / 100;
+const r3 = (x) => Math.round(x * 1000) / 1000;
+
+function levenshtein(a, b) {
+  if (a === b) return 0;
+  const prev = Array.from({ length: b.length + 1 }, (_, j) => j);
+  for (let i = 1; i <= a.length; i++) {
+    let diag = prev[0];
+    prev[0] = i;
+    for (let j = 1; j <= b.length; j++) {
+      const tmp = prev[j];
+      prev[j] = Math.min(prev[j] + 1, prev[j - 1] + 1, diag + (a[i - 1] === b[j - 1] ? 0 : 1));
+      diag = tmp;
+    }
+  }
+  return prev[b.length];
+}
 
 function load(lang) {
   const seen = new Set();
@@ -86,26 +111,19 @@ function load(lang) {
 /** Align two strings on their longest common substring → prefix + suffix rewrite. */
 function extractRule(src, tgt) {
   let best = 0, bi = 0, bj = 0;
-  const n = src.length, m = tgt.length;
+  const m = tgt.length;
   const prev = new Array(m + 1).fill(0);
-  for (let i = 1; i <= n; i++) {
+  for (let i = 1; i <= src.length; i++) {
     let diag = 0;
     for (let j = 1; j <= m; j++) {
       const tmp = prev[j];
       prev[j] = src[i - 1] === tgt[j - 1] ? diag + 1 : 0;
-      // prefer the leftmost-in-source, longest match
       if (prev[j] > best) { best = prev[j]; bi = i - best; bj = j - best; }
       diag = tmp;
     }
   }
   if (best === 0) return { pDel: src, pAdd: tgt, sDel: "", sAdd: "", whole: true };
-  return {
-    pDel: src.slice(0, bi),
-    pAdd: tgt.slice(0, bj),
-    sDel: src.slice(bi + best),
-    sAdd: tgt.slice(bj + best),
-    whole: false,
-  };
+  return { pDel: src.slice(0, bi), pAdd: tgt.slice(0, bj), sDel: src.slice(bi + best), sAdd: tgt.slice(bj + best), whole: false };
 }
 const ruleKey = (r) => `${r.pDel}|${r.pAdd}|${r.sDel}|${r.sAdd}|${r.whole ? 1 : 0}`;
 function applyRule(r, x) {
@@ -122,7 +140,6 @@ function sharedEnding(a, b) {
 
 /** Choose the best applicable rule among examples: (shared ending, support). */
 function bestPrediction(examples, x) {
-  // examples: [{ src, rule }]
   const byRule = new Map();
   for (const e of examples) {
     const out = applyRule(e.rule, x);
@@ -143,6 +160,13 @@ function bestPrediction(examples, x) {
 // ── systems ───────────────────────────────────────────────────────────────────
 const POS_SET = new Set(["N", "V", "ADJ", "ADV", "PRO", "DET", "NUM", "V.PTCP", "V.CVB", "V.MSDR", "ADP", "PROPN"]);
 const posOf = (tag) => tag.split(";").find((f) => POS_SET.has(f)) ?? tag.split(";")[0];
+
+function deltaKey(t1, t2) {
+  const a = new Set(t1.split(";")), b = new Set(t2.split(";"));
+  const rem = [...a].filter((f) => !b.has(f)).sort();
+  const add = [...b].filter((f) => !a.has(f)).sort();
+  return `${rem.join(",")}=>${add.join(",")}`;
+}
 
 function train(items) {
   const byTag = new Map();
@@ -172,13 +196,6 @@ function train(items) {
   }
   const tagFeats = new Map([...byTag.keys()].map((t) => [t, new Set(t.split(";"))]));
   return { byTag, byLemma, cellRules, deltaRules, tagFeats };
-}
-
-function deltaKey(t1, t2) {
-  const a = new Set(t1.split(";")), b = new Set(t2.split(";"));
-  const rem = [...a].filter((f) => !b.has(f)).sort();
-  const add = [...b].filter((f) => !a.has(f)).sort();
-  return `${rem.join(",")}=>${add.join(",")}`;
 }
 
 function predictBaseline(model, lemma, tag) {
@@ -248,6 +265,8 @@ function predictMorph(model, lemma, tag) {
 }
 
 const SYSTEMS = { baseline: predictBaseline, memory: predictMemory, morph: predictMorph };
+const SYS = Object.keys(SYSTEMS);
+const PAIRS = [["morph", "baseline"], ["memory", "baseline"], ["morph", "memory"]];
 
 // ── splits ────────────────────────────────────────────────────────────────────
 function universe(data, seed) {
@@ -272,13 +291,13 @@ function makeSplits(items, seed) {
   const random = { test: shuffled.slice(0, T), pool: shuffled.slice(T) };
 
   const lemmas = shuffle([...new Set(items.map((i) => i.lemma))], r);
-  const testLemmas = new Set();
-  let count = 0;
   const byLemma = new Map();
   for (const it of items) {
     if (!byLemma.has(it.lemma)) byLemma.set(it.lemma, []);
     byLemma.get(it.lemma).push(it);
   }
+  const testLemmas = new Set();
+  let count = 0;
   for (const l of lemmas) {
     if (count >= T) break;
     testLemmas.add(l);
@@ -289,6 +308,29 @@ function makeSplits(items, seed) {
   return { T, random, "lemma-disjoint": { test: ldTest, pool: ldPool } };
 }
 
+// ── statistics over pooled items ──────────────────────────────────────────────
+function pairedBootstrap(a, b, seed) {
+  const n = a.length;
+  const d = a.map((x, i) => x - b[i]);
+  const obs = mean(d);
+  const r = rng(seed);
+  const samples = new Float64Array(BOOTSTRAP);
+  for (let k = 0; k < BOOTSTRAP; k++) {
+    let s = 0;
+    for (let i = 0; i < n; i++) s += d[Math.floor(r() * n)];
+    samples[k] = s / n;
+  }
+  samples.sort();
+  const lo = samples[Math.floor(0.025 * BOOTSTRAP)];
+  const hi = samples[Math.floor(0.975 * BOOTSTRAP) - 1];
+  let le = 0, ge = 0;
+  for (const s of samples) { if (s <= 0) le++; if (s >= 0) ge++; }
+  const p = Math.min(1, (2 * Math.min(le, ge) + 1) / (BOOTSTRAP + 1));
+  return { diff: r1(100 * obs), lo: r1(100 * lo), hi: r1(100 * hi), p: r3(p) };
+}
+
+const pct = (xs) => (xs.length ? r1((100 * xs.reduce((s, x) => s + x, 0)) / xs.length) : null);
+
 // ── run ───────────────────────────────────────────────────────────────────────
 const shaFile = path.join(DIR, "shas.txt");
 const shas = fs.existsSync(shaFile)
@@ -298,15 +340,14 @@ const shas = fs.existsSync(shaFile)
 const results = {};
 const examples = {};
 const stats = {};
+const csv = [["language", "split", "n", "system", "accuracy_mean", "accuracy_sd", "levenshtein_mean", "acc_seen_bundle", "acc_unseen_bundle", "lemma_copy_share_of_errors", "test_items_pooled", "lemma_overlap_pct", "unseen_bundle_pct"].join(",")];
 
 for (const lang of LANGS) {
   const data = load(lang);
-  const lemmas = new Set(data.map((d) => d.lemma));
-  stats[lang] = { triples: data.length, lemmas: lemmas.size, bundles: new Set(data.map((d) => d.tag)).size };
+  stats[lang] = { triples: data.length, lemmas: new Set(data.map((d) => d.lemma)).size, bundles: new Set(data.map((d) => d.tag)).size };
   results[lang] = { random: {}, "lemma-disjoint": {} };
-  const acc = {}; // split → n → system → [runs]
-  const overlap = {}; // split → n → [runs]
-  const unseenBundle = {}; // split → n → [runs]
+  const acc = {};      // split → n → system → per-seed accuracy
+  const pooled = {};   // split → n → { items: [...], correct: {sys: [0/1]}, lev: {sys: []}, copy: {sys: []} }
   let testSize = 0;
 
   for (const seed of SEEDS) {
@@ -320,13 +361,18 @@ for (const lang of LANGS) {
         const trainItems = pool.slice(0, n);
         const model = train(trainItems);
         const trainLemmas = new Set(trainItems.map((t) => t.lemma));
-        ((overlap[split] ??= {})[n] ??= []).push((100 * test.filter((t) => trainLemmas.has(t.lemma)).length) / test.length);
-        ((unseenBundle[split] ??= {})[n] ??= []).push((100 * test.filter((t) => !model.byTag.has(t.tag)).length) / test.length);
+        const P = (((pooled[split] ??= {})[n]) ??= { items: [], correct: {}, lev: {}, copy: {} });
         const preds = {};
         for (const [name, fn] of Object.entries(SYSTEMS)) {
           preds[name] = test.map((t) => fn(model, t.lemma, t.tag));
-          const correct = preds[name].filter((p, i) => p === test[i].form).length;
-          (((acc[split] ??= {})[n] ??= {})[name] ??= []).push((100 * correct) / test.length);
+          const correct = preds[name].map((p, i) => (p === test[i].form ? 1 : 0));
+          (((acc[split] ??= {})[n] ??= {})[name] ??= []).push((100 * mean(correct)) / 1);
+          (P.correct[name] ??= []).push(...correct);
+          (P.lev[name] ??= []).push(...preds[name].map((p, i) => levenshtein(p, test[i].form)));
+          (P.copy[name] ??= []).push(...preds[name].map((p, i) => (p === test[i].lemma && p !== test[i].form ? 1 : 0)));
+        }
+        for (const t of test) {
+          P.items.push({ lemmaSeen: trainLemmas.has(t.lemma), bundleSeen: model.byTag.has(t.tag), pos: posOf(t.tag) });
         }
         // Real prediction examples: first seed, largest feasible size ≤ 500
         if (seed === SEEDS[0] && n === Math.min(500, ...SIZES.filter((s) => s <= pool.length).slice(-1))) {
@@ -346,17 +392,52 @@ for (const lang of LANGS) {
     }
   }
 
+  let bootSeed = 17;
   for (const split of ["random", "lemma-disjoint"]) {
     for (const [n, bySys] of Object.entries(acc[split] ?? {})) {
+      const P = pooled[split][n];
+      const idx = (pred) => P.items.map((it, i) => (pred(it) ? i : -1)).filter((i) => i >= 0);
+      const seenB = idx((it) => it.bundleSeen), unseenB = idx((it) => !it.bundleSeen);
+      const seenL = idx((it) => it.lemmaSeen), unseenL = idx((it) => !it.lemmaSeen);
+      const posCounts = {};
+      for (const it of P.items) posCounts[it.pos] = (posCounts[it.pos] ?? 0) + 1;
+      const topPos = Object.entries(posCounts).filter(([, c]) => c >= 50).sort((a, b) => b[1] - a[1]).slice(0, 3).map(([p]) => p);
+
+      const systems = {};
+      for (const s of SYS) {
+        const c = P.correct[s];
+        const errors = c.map((x, i) => (x ? -1 : i)).filter((i) => i >= 0);
+        systems[s] = {
+          mean: r1(mean(bySys[s])),
+          std: r1(std(bySys[s])),
+          runs: bySys[s].map(r1),
+          lev: r2(mean(P.lev[s])),
+          seenBundle: pct(seenB.map((i) => c[i])),
+          unseenBundle: pct(unseenB.map((i) => c[i])),
+          seenLemma: pct(seenL.map((i) => c[i])),
+          unseenLemma: pct(unseenL.map((i) => c[i])),
+          copyShare: errors.length ? r1((100 * errors.filter((i) => P.copy[s][i]).length) / errors.length) : 0,
+          pos: Object.fromEntries(topPos.map((p) => [p, pct(idx((it) => it.pos === p).map((i) => c[i]))])),
+        };
+      }
+      const tests = Object.fromEntries(PAIRS.map(([a, b]) => [`${a}-${b}`, pairedBootstrap(P.correct[a], P.correct[b], bootSeed++)]));
       results[lang][split][n] = {
-        overlap: r1(mean(overlap[split][n])),
-        unseenBundle: r1(mean(unseenBundle[split][n])),
-        systems: Object.fromEntries(Object.entries(bySys).map(([s, runs]) => [s, { mean: r1(mean(runs)), std: r1(std(runs)), runs: runs.map(r1) }])),
+        overlap: pct(P.items.map((it) => (it.lemmaSeen ? 1 : 0))),
+        unseenBundle: pct(P.items.map((it) => (it.bundleSeen ? 0 : 1))),
+        items: P.items.length,
+        posCounts: Object.fromEntries(topPos.map((p) => [p, posCounts[p]])),
+        systems,
+        tests,
       };
+      for (const s of SYS) {
+        const x = systems[s];
+        csv.push([lang, split, n, s, x.mean, x.std, x.lev, x.seenBundle ?? "", x.unseenBundle ?? "", x.copyShare, P.items.length, results[lang][split][n].overlap, results[lang][split][n].unseenBundle].join(","));
+      }
     }
   }
   stats[lang].testSize = testSize;
-  console.log(`${lang}: ${data.length} triples, test=${testSize}`, JSON.stringify(results[lang]["lemma-disjoint"]["500"]?.systems ?? results[lang]["lemma-disjoint"]["100"]?.systems ?? {}));
+  const show = results[lang]["lemma-disjoint"]["500"] ?? results[lang]["lemma-disjoint"]["100"];
+  console.log(`${lang}: ${data.length} triples, test=${testSize}`, show ? JSON.stringify(show.tests) : "");
 }
 
 /** Keep a small, diverse set of examples per language/split for the UI. */
@@ -375,13 +456,21 @@ const curatedExamples = Object.fromEntries(
 
 const out = {
   generatedAt: new Date().toISOString(),
-  config: { seeds: SEEDS, sizes: SIZES, cellsPerLemma: CELLS_PER_LEMMA, universeTarget: UNIVERSE_TARGET, testMax: TEST_MAX, testFraction: TEST_FRACTION },
+  runtimeSeconds: Math.round((Date.now() - t0) / 1000),
+  node: process.version,
+  config: { seeds: SEEDS, sizes: SIZES, cellsPerLemma: CELLS_PER_LEMMA, universeTarget: UNIVERSE_TARGET, testMax: TEST_MAX, testFraction: TEST_FRACTION, bootstrap: BOOTSTRAP },
   sources: Object.fromEntries(LANGS.map((l) => [l, { repo: `https://github.com/unimorph/${l}`, ...(shas[l] ?? {}) }])),
   stats,
   results,
   examples: curatedExamples,
 };
-const outPath = path.join(process.cwd(), "src", "data", "generated", "experiment-results.json");
-fs.mkdirSync(path.dirname(outPath), { recursive: true });
-fs.writeFileSync(outPath, JSON.stringify(out, null, 1));
-console.log("wrote", outPath);
+
+const root = process.cwd();
+const uiPath = path.join(root, "src", "data", "generated", "experiment-results.json");
+const pubDir = path.join(root, "public", "data");
+fs.mkdirSync(path.dirname(uiPath), { recursive: true });
+fs.mkdirSync(pubDir, { recursive: true });
+fs.writeFileSync(uiPath, JSON.stringify(out, null, 1));
+fs.writeFileSync(path.join(pubDir, "morpholens-results.json"), JSON.stringify(out, null, 1));
+fs.writeFileSync(path.join(pubDir, "morpholens-results.csv"), csv.join("\n") + "\n");
+console.log("wrote", uiPath, "and public/data/morpholens-results.{json,csv}", `(${out.runtimeSeconds}s)`);

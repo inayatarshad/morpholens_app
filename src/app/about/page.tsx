@@ -1,7 +1,7 @@
 import type { Metadata } from "next";
-import { ExternalLink } from "lucide-react";
+import { Download, ExternalLink } from "lucide-react";
 import { Container } from "@/components/AppShell";
-import { experiment } from "@/data/experiments";
+import { experiment, findingSentences } from "@/data/experiments";
 import { languages } from "@/data/languages";
 import { qualityNotes, sourceFor, statsFor } from "@/data/unimorph";
 
@@ -30,8 +30,22 @@ const references = [
   "Schmidt, R. L. (1999). Urdu: An Essential Grammar. Routledge.",
 ];
 
+const bibtex = `@misc{morpholens,
+  title        = {MorphoLens: Exploring Morphological Generalisation to Unseen Lemmas},
+  howpublished = {\\url{https://morpholens-app.vercel.app}},
+  note         = {Version 0.3. Data: UniMorph tur, urd, evn, ckt, ron at pinned commits},
+  year         = {2026}
+}`;
+
+const downloads = [
+  { href: "/data/morpholens-results.json", label: "Experiment results (JSON)", note: "All cells, per-seed runs, bootstrap tests, breakdowns, examples" },
+  { href: "/data/morpholens-results.csv", label: "Experiment results (CSV)", note: "One row per language × split × n × system" },
+  { href: "/data/unimorph-sample.json", label: "Explorer sample (JSON)", note: "Featured lemmas and comparison examples, verbatim UniMorph triples" },
+];
+
 export default function AboutPage() {
   const c = experiment.config;
+  const findings = findingSentences();
   return (
     <Container className="pt-12">
       <header className="mb-8 max-w-3xl">
@@ -41,7 +55,7 @@ export default function AboutPage() {
         </h1>
         <p className="lede mt-5 text-ink/75">
           MorphoLens does not claim state-of-the-art morphological analysis. It is an inspectable pipeline: pinned public
-          data, simple systems, measured results, and provenance for every form it shows.
+          data, simple systems, measured results with uncertainty, and provenance for every form it shows.
         </p>
       </header>
 
@@ -98,44 +112,59 @@ export default function AboutPage() {
           </table>
         </div>
         <p className="text-sm">
-          A small sample (featured lemmas with capped paradigms) is shipped to the browser for the explorer; the experiment
-          script reads the full files. Ten hand-annotated Turkish and Urdu entries add gold morpheme segmentation, which
-          UniMorph does not provide.
+          Counts are after removing duplicate lines. Ten hand-annotated Turkish and Urdu entries add gold morpheme
+          segmentation, which UniMorph does not provide; each is labelled by whether UniMorph attests it.
         </p>
       </Section>
 
-      <Section n="03" title="Experiment design">
+      <Section n="03" title="How search works">
+        <p>The explorer searches the full UniMorph file for the selected language on the server — nothing is generated or guessed.</p>
+        <ol className="list-decimal space-y-2 pl-5">
+          <li><strong className="text-bush">Exact match</strong> — the same spelling, ignoring only letter case, Unicode normalisation and keyboard variants that never distinguish words (Romanian ş/ș and ţ/ț, Arabic-keyboard ي/ك vs. Urdu ی/ک, apostrophe variants, zero-width characters).</li>
+          <li><strong className="text-bush">Lemma match</strong> — if the query is a citation form, its full paradigm is shown.</li>
+          <li><strong className="text-sienna">Loose match</strong> — only if nothing matches exactly: diacritics and transcription details are ignored (ı/i, ă/a, ə/e, ː, Chukchi ԓ/л …). These results are labelled, because they can be different words (Romanian <em>casă</em> ≠ <em>casa</em>).</li>
+          <li><strong className="text-bush">Not attested</strong> — the page says so, reports how many triples were searched, and lists the closest attested forms (edit distance ≤ 2). Absence from UniMorph is not evidence that a word does not exist.</li>
+        </ol>
+        <p className="text-sm">
+          A form realising several bundles (syncretism) is shown once per bundle. Segmentations of UniMorph forms are automatic lemma–form alignments and are labelled as such.
+        </p>
+      </Section>
+
+      <Section n="04" title="Experiment design">
         <p>
-          Task: morphological inflection — predict the form for a (lemma, feature bundle) pair; metric: exact match. For
-          each of {c.seeds.length} seeds a universe of up to ~{c.universeTarget.toLocaleString("en")} triples is sampled ({c.cellsPerLemma} cells per lemma at most). The
-          random split holds out items; the lemma-disjoint split holds out whole lemmas. Test sets hold up to {c.testMax} items;
-          training sizes are {c.sizes.join(", ")}. Both splits use the same universe, so differences reflect lemma overlap, not data.
+          Task: morphological inflection — predict the form for a (lemma, feature bundle) pair. Metrics: exact-match
+          accuracy and mean Levenshtein distance to the gold form. For each of {c.seeds.length} seeds a universe of up to
+          ~{c.universeTarget.toLocaleString("en")} triples is sampled ({c.cellsPerLemma} cells per lemma at most). The random split holds out items; the lemma-disjoint
+          split holds out whole lemmas. Test sets hold up to {c.testMax} items; training sizes are {c.sizes.join(", ")}. Both splits use the same universe.
+        </p>
+        <p>
+          Differences between systems are tested with a paired bootstrap ({c.bootstrap.toLocaleString("en")} resamples) over the test items pooled across
+          seeds; we report the difference in accuracy points, its 95% interval and a two-sided p-value.
         </p>
       </Section>
 
-      <Section n="04" title="Systems">
+      <Section n="05" title="Systems">
         <ul className="list-disc space-y-2 pl-5">
-          <li><strong className="text-bush">Atomic-tag rules</strong> — edit rules keyed by the whole bundle; nearest-ending analogy; unseen bundle ⇒ copy the lemma.</li>
+          <li><strong className="text-bush">Atomic-tag rules</strong> — edit rules keyed by the whole bundle; nearest-ending analogy; unseen bundle ⇒ copy the lemma. In the spirit of the CoNLL–SIGMORPHON 2017 non-neural baseline.</li>
           <li><strong className="text-burgundy">Paradigm memory</strong> — reinflects from seen forms of the same lemma (cell-to-cell rules); otherwise the baseline.</li>
           <li><strong className="text-bush">Feature-aware rules</strong> — bundles decomposed into features; composes lemma→A with a feature-difference rule A→T learned across paradigms; otherwise nearest bundle.</li>
         </ul>
+        <p className="text-sm">All three are transparent, non-neural and trained from scratch per run. They are baselines for the evaluation design, not claims about neural models.</p>
+      </Section>
+
+      <Section n="06" title="Results">
+        <p className="text-sm text-muted">Generated from the results file at the largest training size ≤ 500 per language; the Experiment page has every configuration.</p>
+        <ul className="list-disc space-y-2 pl-5">
+          {findings.map((f) => <li key={f}>{f}</li>)}
+        </ul>
         <p className="text-sm">
-          All three are transparent, non-neural and trained from scratch per run. They are baselines for the evaluation
-          design, not claims about neural models.
+          The feature-aware gains come almost entirely from test items whose feature bundle never occurred in training
+          (see “Where the differences come from” on the Experiment page); on seen bundles the systems are nearly identical.
         </p>
       </Section>
 
-      <Section n="05" title="What the results show">
-        <ul className="list-disc space-y-2 pl-5">
-          <li>Paradigm memory beats the baseline only on random splits and only as lemma overlap grows (clearest for Turkish and Urdu); on lemma-disjoint splits it equals the baseline by construction.</li>
-          <li>Feature-difference transfer gives consistent gains for Urdu on both splits, small gains for Turkish, and mixed results for Evenki and Romanian at these data sizes.</li>
-          <li>Seed-to-seed standard deviations are often as large as the differences between systems; Chukchi estimates are not interpretable.</li>
-        </ul>
-        <p className="text-sm">The live numbers are on the Experiment page and in <code className="font-mono">src/data/generated/experiment-results.json</code>.</p>
-      </Section>
-
-      <Section n="06" title="Provenance & data quality">
-        <p>Every form in the interface carries one of two attestation levels, and opens a verbatim evidence record:</p>
+      <Section n="07" title="Provenance & data quality">
+        <p>Every form in the interface carries one of two attestation levels and opens a verbatim evidence record:</p>
         <ul className="list-disc space-y-2 pl-5">
           <li><strong className="text-bush">UniMorph-attested</strong> — the exact triple occurs in the pinned UniMorph file.</li>
           <li><strong className="text-sienna">Reference pattern</strong> — a hand-annotated textbook form that UniMorph does not contain (e.g. Turkish <em>ev</em>, <em>kitap</em>).</li>
@@ -154,10 +183,11 @@ export default function AboutPage() {
         </div>
       </Section>
 
-      <Section n="07" title="Limitations">
+      <Section n="08" title="Limitations">
         <ul className="list-disc space-y-2 pl-5">
           <li>No neural models yet; conclusions apply to these rule-based systems only.</li>
-          <li>Exact match ignores near misses and treats UniMorph variants (several forms per cell) as errors.</li>
+          <li>Exact match treats UniMorph variants (several forms for one cell) as errors; edit distance is reported as a complement.</li>
+          <li>Bootstrap intervals treat pooled test items as independent; items from different seeds can overlap.</li>
           <li>Segmentations for UniMorph forms are automatic lemma–form alignments, not gold morpheme boundaries.</li>
           <li>Turkish nouns and adjectives in UniMorph are Wiktionary-derived and unverified (per its README); Romanian noun labels show systematic issues.</li>
           <li>Evenki data is in Latin transcription and sparse per lemma; Chukchi has 241 triples.</li>
@@ -165,18 +195,32 @@ export default function AboutPage() {
         </ul>
       </Section>
 
-      <Section n="08" title="References">
+      <Section n="09" title="Downloads & citation">
+        <div className="grid gap-3 sm:grid-cols-3">
+          {downloads.map((d) => (
+            <a key={d.href} href={d.href} className="group rounded-lg border border-line bg-ivory/80 p-4 transition hover:border-bush">
+              <p className="flex items-center gap-2 text-sm font-semibold text-bush"><Download size={14} /> {d.label}</p>
+              <p className="mt-1 text-xs text-muted">{d.note}</p>
+            </a>
+          ))}
+        </div>
+        <pre className="overflow-x-auto rounded-lg bg-bush p-5 font-mono text-xs leading-relaxed text-oak">{bibtex}</pre>
+        <p className="text-sm">Please also cite UniMorph (Batsuren et al., 2022) and the per-language sources listed above.</p>
+      </Section>
+
+      <Section n="10" title="References">
         <ol className="list-decimal space-y-2 pl-5 text-sm">
           {references.map((r) => <li key={r}>{r}</li>)}
         </ol>
       </Section>
 
-      <Section n="09" title="Reproduce">
+      <Section n="11" title="Reproduce">
         <pre className="overflow-x-auto rounded-lg bg-bush p-5 font-mono text-xs leading-relaxed text-oak">{`npm install
-npm run data:fetch     # UniMorph files at pinned commits → .unimorph/
+npm run data:fetch     # UniMorph files at pinned commits → unimorph-data/
 npm run data:build     # explorer + comparison sample
-npm run experiment     # 5 languages × 2 splits × 5 sizes × 5 seeds
+npm run experiment     # 5 languages × 2 splits × 5 sizes × 5 seeds (+ bootstrap)
 npm run dev`}</pre>
+        <p className="text-sm text-muted">Last run: {new Date(experiment.generatedAt).toISOString().slice(0, 10)} · Node {experiment.node} · {experiment.runtimeSeconds}s. Re-running reproduces the shipped results exactly.</p>
       </Section>
     </Container>
   );

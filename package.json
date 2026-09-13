@@ -5,13 +5,14 @@
   "description": "MorphoLens — an interactive research prototype for low-resource morphology and unseen-word generalisation.",
   "scripts": {
     "dev": "next dev",
+    "prebuild": "node scripts/fetch-unimorph.mjs unimorph-data",
     "build": "next build",
     "start": "next start",
     "lint": "eslint .",
     "typecheck": "tsc --noEmit",
-    "data:fetch": "node scripts/fetch-unimorph.mjs .unimorph",
-    "data:build": "node scripts/build-data.mjs .unimorph",
-    "experiment": "node scripts/run-experiment.mjs .unimorph"
+    "data:fetch": "node scripts/fetch-unimorph.mjs unimorph-data",
+    "data:build": "node scripts/build-data.mjs unimorph-data",
+    "experiment": "node scripts/run-experiment.mjs unimorph-data"
   },
   "dependencies": {
     "lucide-react": "^1.45.0",

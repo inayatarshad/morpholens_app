@@ -1,23 +1,27 @@
 "use client";
 
-import { getCell } from "@/data/experiments";
+import { fmtP, getCell, signed, significant, type Test } from "@/data/experiments";
 import type { ExperimentSplit, LanguageId } from "@/data/types";
 import { StatusTag } from "./ResearchBadge";
 
-const signed = (n: number) => `${n > 0.05 ? "+" : n < -0.05 ? "−" : "±"}${Math.abs(n).toFixed(1)}`;
-
-function Row({ label, a, b, color, split }: { label: string; a: number; b: number; color: string; split: ExperimentSplit }) {
+function Row({ label, ta, tb, color, split }: { label: string; ta: Test; tb: Test; color: string; split: ExperimentSplit }) {
   return (
     <div className="border-t border-line py-3 first:border-0">
       <p className="text-sm text-bush">{label}</p>
       <div className="mt-1 grid grid-cols-2 gap-3">
         {[
-          { k: "random", v: a },
-          { k: "lemma-disjoint", v: b },
+          { k: "random", t: ta },
+          { k: "lemma-disjoint", t: tb },
         ].map((x) => (
           <div key={x.k} className={`transition-opacity ${split === x.k ? "opacity-100" : "opacity-55"}`}>
             <p className="text-[0.65rem] uppercase tracking-wider text-muted">{x.k}</p>
-            <p className={`display text-3xl ${color}`}>{signed(x.v)}<span className="ml-1 text-xs text-muted">pts</span></p>
+            <p className={`display text-3xl ${significant(x.t) ? color : "text-muted"}`}>
+              {signed(x.t.diff)}
+              <span className="ml-1 text-xs text-muted">pts</span>
+            </p>
+            <p className="font-mono text-[0.62rem] text-muted">
+              [{signed(x.t.lo)}, {signed(x.t.hi)}] · {significant(x.t) ? fmtP(x.t.p) : "n.s."}
+            </p>
           </div>
         ))}
       </div>
@@ -25,16 +29,11 @@ function Row({ label, a, b, color, split }: { label: string; a: number; b: numbe
   );
 }
 
-/** Differences computed directly from the measured means for the current language and n. */
+/** Paired-bootstrap differences for the current language and n. */
 export function GeneralisationGap({ lang, size, split }: { lang: LanguageId; size: number; split: ExperimentSplit }) {
   const r = getCell(lang, "random", size);
   const l = getCell(lang, "lemma-disjoint", size);
   if (!r || !l) return null;
-
-  const memR = r.systems.memory.mean - r.systems.baseline.mean;
-  const memL = l.systems.memory.mean - l.systems.baseline.mean;
-  const morR = r.systems.morph.mean - r.systems.baseline.mean;
-  const morL = l.systems.morph.mean - l.systems.baseline.mean;
 
   return (
     <div className="rounded-2xl border border-line bg-ivory/80 p-6">
@@ -43,8 +42,8 @@ export function GeneralisationGap({ lang, size, split }: { lang: LanguageId; siz
         <StatusTag label="MEASURED" />
       </div>
       <div className="mt-3">
-        <Row label="Paradigm memory vs. atomic baseline" a={memR} b={memL} color="text-burgundy" split={split} />
-        <Row label="Feature-aware vs. atomic baseline" a={morR} b={morL} color="text-bush" split={split} />
+        <Row label="Paradigm memory vs. atomic baseline" ta={r.tests["memory-baseline"]} tb={l.tests["memory-baseline"]} color="text-burgundy" split={split} />
+        <Row label="Feature-aware vs. atomic baseline" ta={r.tests["morph-baseline"]} tb={l.tests["morph-baseline"]} color="text-bush" split={split} />
       </div>
       <dl className="mt-2 grid grid-cols-2 gap-3 border-t border-line pt-4 text-sm">
         <div>
@@ -57,8 +56,8 @@ export function GeneralisationGap({ lang, size, split }: { lang: LanguageId; siz
         </div>
       </dl>
       <p className="mt-4 text-xs leading-relaxed text-muted">
-        Paradigm memory can only help when a test lemma was seen, so its advantage is confined to the random split. A
-        feature-aware gain that survives the lemma-disjoint split is evidence of generalisation rather than recall.
+        Brackets: 95% paired-bootstrap interval over {l.items.toLocaleString("en")} pooled test items; grey = not significant. Paradigm memory can only help
+        when a test lemma was seen, so its advantage is confined to the random split.
       </p>
     </div>
   );

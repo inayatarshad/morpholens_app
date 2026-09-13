@@ -3,7 +3,7 @@ import { ArrowDown, ArrowRight, FlaskConical, Microscope } from "lucide-react";
 import { Container } from "@/components/AppShell";
 import { HeroSpecimen } from "@/components/HeroSpecimen";
 import { LanguageCard } from "@/components/LanguageCard";
-import { experiment, getCell, sizesFor } from "@/data/experiments";
+import { experiment, fmtCI, fmtP, getCell, sizesFor } from "@/data/experiments";
 import { languages } from "@/data/languages";
 
 const questions = [
@@ -126,16 +126,18 @@ export default function Home() {
         <div className="mt-8 grid gap-4 md:grid-cols-3">
           <div className="rounded-2xl border border-line bg-ivory/80 p-6">
             <p className="text-xs text-muted">Turkish · n = {nT} · paradigm memory vs. baseline</p>
-            <p className="display mt-3 text-5xl text-burgundy">{signed(tR.systems.memory.mean - tR.systems.baseline.mean)}</p>
+            <p className="display mt-3 text-5xl text-burgundy">{signed(tR.tests["memory-baseline"].diff)}</p>
             <p className="mt-1 text-sm text-ink/80">
-              points on the random split ({tR.overlap.toFixed(0)}% of test lemmas seen) — and{" "}
-              <strong className="font-semibold">{signed(tL.systems.memory.mean - tL.systems.baseline.mean)}</strong> once lemmas are disjoint.
+              points on the random split ({tR.overlap.toFixed(0)}% of test lemmas seen; {fmtCI(tR.tests["memory-baseline"])}) — and{" "}
+              <strong className="font-semibold">{signed(tL.tests["memory-baseline"].diff)}</strong> once lemmas are disjoint.
             </p>
           </div>
           <div className="rounded-2xl border border-line bg-ivory/80 p-6">
             <p className="text-xs text-muted">Urdu · n = {nU} · feature-aware vs. baseline, lemma-disjoint</p>
-            <p className="display mt-3 text-5xl text-bush">{signed(uL.systems.morph.mean - uL.systems.baseline.mean)}</p>
-            <p className="mt-1 text-sm text-ink/80">points on unseen lemmas from decomposing feature bundles (s.d. ≈ {uL.systems.morph.std.toFixed(1)}).</p>
+            <p className="display mt-3 text-5xl text-bush">{signed(uL.tests["morph-baseline"].diff)}</p>
+            <p className="mt-1 text-sm text-ink/80">
+              points on unseen lemmas from decomposing feature bundles ({fmtCI(uL.tests["morph-baseline"])}, {fmtP(uL.tests["morph-baseline"].p)}).
+            </p>
           </div>
           <div className="rounded-2xl border border-line bg-bush p-6 text-ivory">
             <p className="text-xs text-oak">Setup</p>

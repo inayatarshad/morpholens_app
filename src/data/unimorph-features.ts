@@ -16,7 +16,8 @@ const table: Record<string, [dimension: string, label: string]> = {
   ALL: ["Case", "Allative"], ABS: ["Case", "Absolutive"], ERG: ["Case", "Ergative"], VOC: ["Case", "Vocative"],
   ESS: ["Case", "Essive"], EQTV: ["Case", "Equative"], PROL: ["Case", "Prolative"], TERM: ["Case", "Terminative"],
   "NOM/ACC": ["Case", "Nominative/Accusative"], "DAT/GEN": ["Case", "Dative/Genitive"], "GEN/DAT": ["Case", "Genitive/Dative"],
-  IN: ["Case", "In-"], SPRL: ["Case", "Superlative (spatial)"],
+  "IN+ESS": ["Case", "Inessive (in)"], "IN+ALL": ["Case", "Illative (into)"], "IN+ABL": ["Case", "Elative (out of)"],
+  SPRL: ["Case", "Superlative (spatial)"],
   // person
   "1": ["Person", "1st"], "2": ["Person", "2nd"], "3": ["Person", "3rd"], "1+EXCL": ["Person", "1st exclusive"], "1+INCL": ["Person", "1st inclusive"],
   // tense
@@ -37,6 +38,7 @@ const table: Record<string, [dimension: string, label: string]> = {
   DEF: ["Definiteness", "Definite"], INDF: ["Definiteness", "Indefinite"],
   // voice
   ACT: ["Voice", "Active"], PASS: ["Voice", "Passive"], CAUS: ["Valency", "Causative"], RECP: ["Valency", "Reciprocal"], ANTIP: ["Voice", "Antipassive"],
+  INTR: ["Valency", "Intransitive"],
   // finiteness / politeness / comparison
   FIN: ["Finiteness", "Finite"], NFIN: ["Finiteness", "Non-finite"], INFM: ["Politeness", "Informal"], FORM: ["Politeness", "Formal"],
   CMPR: ["Comparison", "Comparative"], ALN: ["Possession", "Alienable"], PSSD: ["Possession", "Possessed"], PROX: ["Deixis", "Proximal"], REMT: ["Deixis", "Remote"],
@@ -56,16 +58,23 @@ function one(code: string): [string, string] {
   return ["Other", code];
 }
 
-/** Parse a UniMorph bundle into readable {dimension: value} pairs (POS excluded). */
+/** Parse a UniMorph bundle into readable {dimension: value} pairs (primary POS excluded). */
 export function readableFeatures(tag: string): Record<string, string> {
   const out: Record<string, string> = {};
-  for (const code of tag.split(";")) {
-    const parts = code.includes("+") ? code.split("+") : [code];
-    const labelled = code in table ? [one(code)] : parts.map(one);
-    const dim = labelled[0][0];
-    if (dim === "POS") continue;
-    const value = labelled.map((l) => l[1]).join(" + ");
+  const add = (dim: string, value: string) => {
     out[dim] = out[dim] ? `${out[dim]}, ${value}` : value;
+  };
+  let primaryPosSeen = false;
+  for (const code of tag.split(";")) {
+    const parts: [string, string][] = code in table || !code.includes("+") ? [one(code)] : code.split("+").map(one);
+    if (parts.length === 1 && parts[0][0] === "POS") {
+      // the first POS code is shown separately; a second one (e.g. V;V.PTCP) is a verb form
+      if (primaryPosSeen) add("Verb form", parts[0][1]);
+      primaryPosSeen = true;
+      continue;
+    }
+    if (parts.every((p) => p[0] === parts[0][0])) add(parts[0][0], parts.map((p) => p[1]).join(" + "));
+    else for (const [dim, value] of parts) add(dim, value);
   }
   return out;
 }
@@ -75,7 +84,17 @@ export function posLabel(tag: string): string {
   return "—";
 }
 
-/** Leipzig-ish gloss of the non-POS part of a bundle, e.g. "ABL.PL.PSS1P". */
+/** Leipzig-ish gloss of a bundle without its primary POS, e.g. "ABL.PL.PSS1P". */
 export function bundleGloss(tag: string): string {
-  return tag.split(";").filter((c) => table[c]?.[0] !== "POS").join(".");
+  let primarySkipped = false;
+  return tag
+    .split(";")
+    .filter((c) => {
+      if (!primarySkipped && table[c]?.[0] === "POS") {
+        primarySkipped = true;
+        return false;
+      }
+      return true;
+    })
+    .join(".");
 }

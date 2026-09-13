@@ -52,12 +52,19 @@ function extractRule(src, tgt) {
 /** Automatic, alignment-based description of how target differs from base. */
 function classify(base, target) {
   if (base === target) return { strategy: "No overt change (syncretic with base)", position: "—" };
-  const bw = base.split(/\s+/).length, tw = target.split(/\s+/).length;
-  if (tw > bw) {
-    const words = target.split(/\s+/);
-    const idx = words.findIndex((w) => base.split(/\s+/).includes(w) || w.startsWith(base.slice(0, Math.max(2, base.length - 2))));
-    const before = idx > 0;
-    return { strategy: "Separate word (periphrastic / particle)", position: before ? "Before the word" : "After the word" };
+  const bw = base.split(/\s+/), tw = target.split(/\s+/);
+  if (tw.length > bw.length) {
+    // find the target word that best aligns with the base word, then describe both changes
+    const head = bw[bw.length - 1];
+    let bestIdx = 0, bestShared = -1;
+    tw.forEach((w, i) => {
+      const r = extractRule(head, w);
+      const shared = r.whole ? 0 : w.length - r.pAdd.length - r.sAdd.length;
+      if (shared > bestShared) { bestShared = shared; bestIdx = i; }
+    });
+    const inner = classify(head, tw[bestIdx]);
+    const strategy = inner.strategy.startsWith("No overt") ? "Separate word" : `Separate word + ${inner.strategy.charAt(0).toLowerCase()}${inner.strategy.slice(1)}`;
+    return { strategy, position: bestIdx > 0 ? "Separate word before the stem" : "Separate word after the stem" };
   }
   const r = extractRule(base, target);
   if (r.whole) return { strategy: "Stem replacement (suppletive)", position: "Whole word" };
@@ -202,4 +209,7 @@ for (const lang of LANGS) {
 const outPath = path.join(process.cwd(), "src", "data", "generated", "unimorph-sample.json");
 fs.mkdirSync(path.dirname(outPath), { recursive: true });
 fs.writeFileSync(outPath, JSON.stringify(out));
-console.log("wrote", outPath, (fs.statSync(outPath).size / 1024).toFixed(0), "KB");
+const pubDir = path.join(process.cwd(), "public", "data");
+fs.mkdirSync(pubDir, { recursive: true });
+fs.writeFileSync(path.join(pubDir, "unimorph-sample.json"), JSON.stringify(out, null, 1));
+console.log("wrote", outPath, (fs.statSync(outPath).size / 1024).toFixed(0), "KB (+ public/data copy)");

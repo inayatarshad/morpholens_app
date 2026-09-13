@@ -3,7 +3,7 @@ import { sourceFor, unimorph, type Triple } from "@/data/unimorph";
 import { bundleGloss, posLabel, readableFeatures } from "@/data/unimorph-features";
 import type { Attestation, DifficultyTag, LanguageId, Morpheme, MorphologicalEntry, ParadigmEntry } from "@/data/types";
 import { align } from "./align";
-import { normalise } from "./lookup";
+import { canonical, loose } from "./lookup";
 
 export type Provenance = {
   attestation: Attestation;
@@ -32,6 +32,8 @@ export type Analysis = {
   gloss?: string;
   translation?: string;
   paradigm: ParadigmEntry[];
+  /** full = every cell of the lemma in UniMorph; sample = bundled subset; hand = curated. */
+  paradigmScope: "full" | "sample" | "hand";
   difficulty: DifficultyTag[];
   difficultyNotes: Partial<Record<DifficultyTag, string>>;
   provenance: Provenance;
@@ -53,6 +55,7 @@ export function fromCurated(e: MorphologicalEntry): Analysis {
     gloss: e.gloss,
     translation: e.translation,
     paradigm: e.paradigm ?? [],
+    paradigmScope: "hand",
     difficulty: e.difficulty ?? [],
     difficultyNotes: e.difficultyNotes ?? {},
     provenance: {
@@ -67,11 +70,14 @@ export function fromCurated(e: MorphologicalEntry): Analysis {
 
 const sample = (lang: LanguageId) => unimorph.languages[lang].entries;
 
-function segmentsOf(t: Triple): string[] {
+export function segmentsOf(t: Triple): string[] {
   const a = align(t.lemma, t.form);
   if (a.suppletive) return [t.form];
   return [a.prefix.trim(), a.stem, a.suffix.trim()].filter(Boolean);
 }
+
+export const paradigmRows = (cells: Triple[]): ParadigmEntry[] =>
+  cells.map((c) => ({ surface: c.form, features: readableFeatures(c.tag), tag: c.tag, segmentation: segmentsOf(c) }));
 
 function morphemesFor(t: Triple): Morpheme[] {
   const a = align(t.lemma, t.form);
@@ -106,17 +112,27 @@ function morphemesFor(t: Triple): Morpheme[] {
   return out;
 }
 
-export function fromTriple(lang: LanguageId, t: Triple): Analysis {
+/**
+ * Build an analysis for a UniMorph triple. Pass `cells` (the lemma's full paradigm from
+ * the search API) for complete paradigm and syncretism information; without it the
+ * bundled sample is used and the view says so.
+ */
+export function fromTriple(lang: LanguageId, t: Triple, cells?: Triple[]): Analysis {
   const src = sourceFor(lang);
-  const cells = sample(lang).filter((c) => c.lemma === t.lemma);
+  const list = cells ?? sample(lang).filter((c) => c.lemma === t.lemma);
   const a = align(t.lemma, t.form);
   const difficulty: DifficultyTag[] = [];
   const notes: Partial<Record<DifficultyTag, string>> = {};
 
-  const others = cells.filter((c) => c.form === t.form && c.tag !== t.tag).map((c) => c.tag);
+  const others = [...new Set(list.filter((c) => c.form === t.form && c.tag !== t.tag).map((c) => c.tag))];
   if (others.length) {
     difficulty.push("SYNCRETISM");
-    notes.SYNCRETISM = `UniMorph also lists this form as ${others.join(", ")}.`;
+    notes.SYNCRETISM = `UniMorph also lists this form of “${t.lemma}” as ${others.slice(0, 6).join(", ")}${others.length > 6 ? ` and ${others.length - 6} more` : ""}.`;
+  }
+  const variants = list.filter((c) => c.tag === t.tag && c.form !== t.form).map((c) => c.form);
+  if (variants.length) {
+    difficulty.push("ORTHOGRAPHIC_VARIATION");
+    notes.ORTHOGRAPHIC_VARIATION = `UniMorph lists other forms for the same bundle: ${variants.slice(0, 4).join(", ")}.`;
   }
   if (/\s/.test(t.form) && !/\s/.test(t.lemma)) {
     difficulty.push("PERIPHRASIS");
@@ -127,7 +143,7 @@ export function fromTriple(lang: LanguageId, t: Triple): Analysis {
     notes.STEM_CHANGE = `Lemma material “${[a.removedPrefix, a.removedSuffix].filter(Boolean).join("…")}” is replaced, not just added to.`;
   }
   const nFeats = t.tag.split(";").length - 1;
-  if (nFeats >= 4 && a.suffix.length >= 4) {
+  if (nFeats >= 4 && a.suffix.trim().length >= 4) {
     difficulty.push("LONG_MORPHEME_CHAIN");
     notes.LONG_MORPHEME_CHAIN = `${nFeats} features realised in the exponent “${a.suffix.trim()}”.`;
   }
@@ -143,7 +159,8 @@ export function fromTriple(lang: LanguageId, t: Triple): Analysis {
     morphemes: morphemesFor(t),
     segmentation: "auto",
     gloss: bundleGloss(t.tag),
-    paradigm: cells.map((c) => ({ surface: c.form, features: readableFeatures(c.tag), tag: c.tag, segmentation: segmentsOf(c) })),
+    paradigm: paradigmRows(list),
+    paradigmScope: cells ? "full" : "sample",
     difficulty,
     difficultyNotes: notes,
     provenance: {
@@ -158,17 +175,24 @@ export function fromTriple(lang: LanguageId, t: Triple): Analysis {
   };
 }
 
-/** Hand-annotated analyses first, then every UniMorph bundle the form realises. */
-export function findAnalyses(lang: LanguageId, query: string): Analysis[] {
-  const q = normalise(query);
-  if (!q) return [];
-  const hand = curated
-    .filter((e) => e.languageId === lang && [e.surface, e.romanization, ...(e.aliases ?? [])].some((c) => c && normalise(c) === q))
+/** Hand-annotated entries matching a query (surface, romanisation or listed alias). */
+export function curatedMatches(lang: LanguageId, query: string): Analysis[] {
+  const qc = canonical(query, lang);
+  const ql = loose(query, lang);
+  if (!qc) return [];
+  return curated
+    .filter((e) => e.languageId === lang && [e.surface, e.romanization, ...(e.aliases ?? [])].some((c) => c && (canonical(c, lang) === qc || loose(c, lang) === ql)))
     .map(fromCurated);
-  const um = sample(lang)
-    .filter((t) => normalise(t.form) === q)
-    .map((t) => fromTriple(lang, t));
-  return [...hand, ...um];
+}
+
+/** Offline fallback: hand-annotated entries + the bundled sample (exact, else loose). */
+export function findAnalyses(lang: LanguageId, query: string): Analysis[] {
+  const qc = canonical(query, lang);
+  if (!qc) return [];
+  const exact = sample(lang).filter((t) => canonical(t.form, lang) === qc);
+  const ql = loose(query, lang);
+  const hits = exact.length ? exact : sample(lang).filter((t) => loose(t.form, lang) === ql);
+  return [...curatedMatches(lang, query), ...hits.map((t) => fromTriple(lang, t))];
 }
 
 export function suggestions(lang: LanguageId): { label: string; query: string; kind: "hand" | "unimorph" }[] {

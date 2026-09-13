@@ -14,13 +14,26 @@ const inter = Inter({ subsets: ["latin", "latin-ext", "cyrillic"], variable: "--
 const jetbrains = JetBrains_Mono({ subsets: ["latin", "latin-ext", "cyrillic"], variable: "--font-jetbrains", display: "swap" });
 const nastaliq = Noto_Nastaliq_Urdu({ subsets: ["arabic"], weight: ["400", "600"], variable: "--font-nastaliq", display: "swap" });
 
+const description =
+  "An interactive research workspace for low-resource morphology and unseen-lemma generalisation, built on UniMorph data for Turkish, Urdu, Evenki, Chukchi and Romanian.";
+
 export const metadata: Metadata = {
+  metadataBase: new URL("https://morpholens-app.vercel.app"),
   title: {
     default: "MorphoLens — Explore how words change across languages",
     template: "%s · MorphoLens",
   },
-  description:
-    "An interactive research prototype for low-resource morphology, lexical variation and unseen-word generalisation.",
+  description,
+  keywords: ["morphology", "UniMorph", "low-resource NLP", "morphological inflection", "lemma-disjoint evaluation", "Evenki", "Chukchi", "Urdu", "Turkish", "Romanian"],
+  openGraph: {
+    title: "MorphoLens",
+    description,
+    url: "/",
+    siteName: "MorphoLens",
+    images: [{ url: "/logo.png", width: 189, height: 158, alt: "MorphoLens" }],
+    type: "website",
+  },
+  twitter: { card: "summary", title: "MorphoLens", description, images: ["/logo.png"] },
 };
 
 export default function RootLayout({ children }: { children: React.ReactNode }) {

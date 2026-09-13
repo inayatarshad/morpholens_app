@@ -3,6 +3,7 @@
 import { useState } from "react";
 import { experiment, sizesFor, task } from "@/data/experiments";
 import type { ExperimentSplit, LanguageId } from "@/data/types";
+import { BreakdownPanel } from "./BreakdownPanel";
 import { ExperimentControls } from "./ExperimentControls";
 import { ExperimentChart, LearningCurve } from "./ExperimentChart";
 import { GeneralisationGap } from "./GeneralisationGap";
@@ -30,6 +31,8 @@ export function ExperimentWorkspace() {
         <ExperimentChart lang={lang} split={split} size={size} />
         <GeneralisationGap lang={lang} size={size} split={split} />
       </div>
+
+      <BreakdownPanel lang={lang} split={split} size={size} />
 
       <div className="grid gap-6 lg:grid-cols-[1fr_1.6fr]">
         <LearningCurve lang={lang} split={split} />
