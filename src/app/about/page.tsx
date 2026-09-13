@@ -1,17 +1,9 @@
 import type { Metadata } from "next";
-import { ArrowDown, TriangleAlert } from "lucide-react";
+import { TriangleAlert } from "lucide-react";
 import { Container } from "@/components/AppShell";
 import { languages } from "@/data/languages";
 
 export const metadata: Metadata = { title: "Methodology" };
-
-const pipeline = [
-  { label: "Scanned dictionary", note: "Historical lexicographic source" },
-  { label: "Transcription", note: "OCR / manual, entry segmentation" },
-  { label: "Structured lexicon", note: "Headwords, senses, grammatical notes" },
-  { label: "Morphological resource", note: "Lemmas, paradigms, feature bundles" },
-  { label: "MorphoLens", note: "Exploration & generalisation studies", highlight: true },
-];
 
 function Section({ n, title, children }: { n: string; title: string; children: React.ReactNode }) {
   return (
@@ -123,37 +115,6 @@ export default function AboutPage() {
         </ul>
       </Section>
 
-      {/* MUDIDI connection */}
-      <section className="mt-6 grid gap-10 rounded-2xl bg-bush p-8 text-ivory md:p-12 lg:grid-cols-[1fr_1.1fr]">
-        <div className="flex flex-col items-center">
-          {pipeline.map((p, i) => (
-            <div key={p.label} className="flex w-full max-w-xs flex-col items-center">
-              <div className={`w-full rounded-lg border px-4 py-3 text-center ${p.highlight ? "border-sienna bg-sienna" : "border-ivory/15 bg-ivory/[0.04]"}`}>
-                <p className="font-mono text-xs font-semibold tracking-[0.18em]">{p.label.toUpperCase()}</p>
-                <p className={`mt-0.5 text-xs ${p.highlight ? "text-ivory/85" : "text-ivory/55"}`}>{p.note}</p>
-              </div>
-              {i < pipeline.length - 1 && <ArrowDown size={16} className="my-2 text-oak" />}
-            </div>
-          ))}
-        </div>
-        <div>
-          <p className="eyebrow !text-oak">From digitised lexicons to morphological analysis</p>
-          <h2 className="display display-md mt-3">Dictionaries hold morphology that models cannot yet read.</h2>
-          <p className="mt-5 leading-relaxed text-ivory/80">
-            Historical dictionaries often contain valuable lexical and morphological knowledge that remains difficult to
-            use computationally.
-          </p>
-          <p className="mt-4 leading-relaxed text-ivory/80">
-            Digitisation systems such as MUDIDI can help transform scanned lexicographic resources into structured
-            representations. MorphoLens explores a downstream question: how can structured lexical and morphological
-            information be used to study multilingual generalisation?
-          </p>
-          <p className="mt-6 border-t border-ivory/15 pt-4 text-sm italic text-oak">
-            Conceptually inspired by work in dictionary digitisation and low-resource morphology. MorphoLens is not
-            affiliated with or officially connected to MUDIDI.
-          </p>
-        </div>
-      </section>
     </Container>
   );
 }

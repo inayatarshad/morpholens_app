@@ -2,7 +2,7 @@
  * MorphoLens data model.
  *
  * Every linguistic example lives in /src/data as plain TypeScript objects so it can be
- * swapped for UniMorph exports, MUDIDI-derived lexicons, custom Urdu datasets or model
+ * swapped for UniMorph exports, digitised lexicons, custom Urdu datasets or model
  * predictions without touching UI code. See README → "Architecture".
  */
 

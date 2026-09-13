@@ -22,7 +22,7 @@ To test real morphological generalisation you need **unseen lexical items**: a *
 - **Lemma-disjoint experiment simulator** (`/experiment`): compares random and lemma-disjoint splits at 50, 100, 250 and 500 training examples, with a bar chart, a generalisation-gap panel, a few-shot learning curve and a hypothetical prediction example. Every value is labelled **ILLUSTRATIVE**.
 - **Morphological difficulty tags**: UNSEEN LEMMA, ALLOMORPHY, RARE FEATURE, ORTHOGRAPHIC VARIATION, LONG MORPHEME CHAIN and CODE-SWITCHING, all annotated in the dataset.
 - **Provenance-aware data architecture**: every form records its source, dataset, record ID, cross-check target and verification flag. The **Evidence drawer** opens the full provenance record for any form.
-- **Methodology page** (`/about`): research question, evaluation design, limitations, and the path from digitised lexicons to morphological resources.
+- **Methodology page** (`/about`): research question, evaluation design, data provenance and limitations.
 
 ## Languages
 
@@ -89,13 +89,12 @@ Adding an entry makes it appear in the explorer, the comparison view (if a `Comp
 ## Future research
 
 1. **Real UniMorph ingestion**: TSV → `MorphologicalEntry` converter, keeping release version and commit as provenance.
-2. **MUDIDI MDF → MorphoLens parser**: convert digitised dictionary records (MDF/Toolbox-style `\lx`, `\ps`, `\ge` fields) into structured lexicon entries.
-3. **XLM-R baseline**: fine-tune on surface forms only.
-4. **XLM-R + morphological features**: the same encoder with feature-bundle and segmentation supervision.
-5. **Lemma-disjoint evaluation**: group-aware splitting by lemma, reported alongside random splits.
-6. **Few-shot learning curves**: 50 / 100 / 250 / 500 examples, with multiple seeds and confidence intervals.
-7. **Allomorphy analysis**: break down errors by harmony class, consonant alternation and gender class.
-8. **Human linguistic validation**: expert review of every entry, then promote `verified` flags with the reviewer and date recorded.
+2. **XLM-R baseline**: fine-tune on surface forms only.
+3. **XLM-R + morphological features**: the same encoder with feature-bundle and segmentation supervision.
+4. **Lemma-disjoint evaluation**: group-aware splitting by lemma, reported alongside random splits.
+5. **Few-shot learning curves**: 50 / 100 / 250 / 500 examples, with multiple seeds and confidence intervals.
+6. **Allomorphy analysis**: break down errors by harmony class, consonant alternation and gender class.
+7. **Human linguistic validation**: expert review of every entry, then promote `verified` flags with the reviewer and date recorded.
 
 ## Running locally
 
@@ -117,4 +116,4 @@ Other scripts: `npm run lint` and `npm run typecheck`.
 
 ---
 
-MorphoLens is conceptually inspired by work in dictionary digitisation and low-resource morphology. It is not affiliated with MUDIDI. It is built for exploring morphological generalisation, not for replacing linguistic expertise.
+MorphoLens is built for exploring morphological generalisation, not for replacing linguistic expertise.
