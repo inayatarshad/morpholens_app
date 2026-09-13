@@ -18,7 +18,7 @@ export function Splash() {
   if (done) return null;
   return (
     <div className="splash" aria-hidden>
-      <Image src="/splash-bg.png" alt="" fill priority sizes="100vw" quality={70} className="object-cover" />
+      <Image src="/splash-bg.png" alt="" fill priority sizes="100vw" quality={75} className="object-cover" />
       <div className="splash-vignette" />
       <span className="splash-beam" />
       <div className="relative flex flex-col items-center gap-6">
