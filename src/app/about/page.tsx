@@ -3,7 +3,7 @@ import { Download, ExternalLink } from "lucide-react";
 import { Container } from "@/components/AppShell";
 import { experiment, findingSentences } from "@/data/experiments";
 import { languages } from "@/data/languages";
-import { qualityNotes, sourceFor, statsFor } from "@/data/unimorph";
+import { auditFor, qualityNotes, sourceFor, statsFor } from "@/data/unimorph";
 
 export const metadata: Metadata = { title: "Methodology" };
 
@@ -46,6 +46,7 @@ const downloads = [
 export default function AboutPage() {
   const c = experiment.config;
   const findings = findingSentences();
+  const ronAudit = auditFor("ron");
   return (
     <Container className="pt-12">
       <header className="mb-8 max-w-3xl">
@@ -130,7 +131,54 @@ export default function AboutPage() {
         </p>
       </Section>
 
-      <Section n="04" title="Experiment design">
+      <Section n="04" title="Reading an analysis">
+        <p>
+          Every UniMorph result is split into two cards so it is always clear what came from the resource and what
+          MorphoLens inferred.
+        </p>
+        <ul className="list-disc space-y-2 pl-5">
+          <li><strong className="text-bush">Source record</strong>: the verbatim line (lemma, form, bundle), dataset and commit, the upstream source named in the repository README, the licence, and the status <em>UniMorph record</em>: stored in UniMorph, not independently verified by MorphoLens.</li>
+          <li><strong className="text-bush">MorphoLens interpretation</strong>: the automatic surface alignment and its confidence, any stem alternation, ambiguity with other records of the lemma, and the record audit.</li>
+        </ul>
+        <p>
+          <strong className="text-bush">Surface alignment is not morphological segmentation.</strong> UniMorph stores feature bundles, never
+          morpheme boundaries. The alignment removes known citation endings (Turkish -mek/-mak, Urdu -nā and masculine -ā,
+          Romanian infinitive vowels) and then reports one of four confidence levels:
+        </p>
+        <ul className="list-disc space-y-2 pl-5">
+          <li><strong>High</strong>: the citation stem occurs unchanged (Turkish <em>kedi + ler</em>, Romanian <em>copil + ului</em>).</li>
+          <li><strong>Medium</strong>: one stem segment alternates and the stem variant recurs in other forms of the paradigm (Romanian <em>case + lor</em>, casă ~ case-, also in casei and casele), or a final ending is replaced (<em>cas + a</em>).</li>
+          <li><strong>Low</strong>: the alternation is not supported by other forms, or only a longest shared stretch could be aligned (Chukchi <em>гэ + тэйкы + ԓин</em>).</li>
+          <li><strong>No split</strong>: suppletive forms that share nothing with the lemma (Romanian <em>fă</em> of <em>face</em>).</li>
+        </ul>
+        <p>
+          Gold segmentations exist only for the hand-annotated Turkish and Urdu entries and carry the label <em>Gold segmentation</em>.
+        </p>
+        <p>
+          <strong className="text-bush">Difficulty tags</strong> say where they come from. <em>Data</em> is read from stored records (syncretism: one form
+          stored under several bundles; variant forms; multi-word forms). <em>Heuristic</em> is inferred by MorphoLens: <em>allomorphy</em> means a stem
+          variant with one alternating segment (casă ~ case-), <em>stem change</em> means lemma material is replaced or removed without a single
+          consistent alternation. <em>Gold</em> comes from hand annotation, and <em>experiment</em> tags (unseen lemma, rare feature) only make sense
+          relative to a train/test split.
+        </p>
+        <p>
+          <strong className="text-bush">Several analyses for one form</strong> are all shown. None is marked primary, because MorphoLens has no
+          corpus frequencies; they are listed by how many records in the full file carry each bundle, so Romanian <em>caselor</em> lists
+          GEN/DAT · PL · DEF before VOC · PL.
+        </p>
+        <p>
+          <strong className="text-bush">Record audit.</strong> For Romanian nouns and adjectives, the Number tag is compared with unambiguous
+          cues: indefinite articles (o, un, unei, unui are singular; niște, unor are plural) and definite endings (-lui, -ul, genitive/dative
+          -ei and feminine -a are singular; -lor and nominative -ii are plural), only when the ending is not already part of the lemma.
+          {ronAudit && (
+            <> Of {ronAudit.checked.toLocaleString("en")} records with such a cue, {ronAudit.conflicts.toLocaleString("en")} ({((100 * ronAudit.conflicts) / ronAudit.checked).toFixed(0)}%) conflict with their tag.</>
+          )}{" "}
+          Conflicting records are flagged in the explorer and paradigm tables and shown exactly as stored. Records without a cue are not
+          checked, so an unflagged record is not thereby confirmed.
+        </p>
+      </Section>
+
+      <Section n="05" title="Experiment design">
         <p>
           The task is morphological inflection: predict the form for a (lemma, feature bundle) pair. Metrics: exact-match
           accuracy and mean Levenshtein distance to the gold form. For each of {c.seeds.length} seeds a universe of up to
@@ -143,7 +191,7 @@ export default function AboutPage() {
         </p>
       </Section>
 
-      <Section n="05" title="Systems">
+      <Section n="06" title="Systems">
         <ul className="list-disc space-y-2 pl-5">
           <li><strong className="text-bush">Atomic-tag rules</strong>: edit rules keyed by the whole bundle; nearest-ending analogy; unseen bundle ⇒ copy the lemma. In the spirit of the CoNLL-SIGMORPHON 2017 non-neural baseline.</li>
           <li><strong className="text-burgundy">Paradigm memory</strong>: reinflects from seen forms of the same lemma (cell-to-cell rules); otherwise the baseline.</li>
@@ -152,7 +200,7 @@ export default function AboutPage() {
         <p className="text-sm">All three are transparent, non-neural and trained from scratch per run. They are baselines for the evaluation design, not claims about neural models.</p>
       </Section>
 
-      <Section n="06" title="Results">
+      <Section n="07" title="Results">
         <p className="text-sm text-muted">Generated from the results file at the largest training size ≤ 500 per language; the Experiment page has every configuration.</p>
         <ul className="list-disc space-y-2 pl-5">
           {findings.map((f) => <li key={f}>{f}</li>)}
@@ -163,13 +211,13 @@ export default function AboutPage() {
         </p>
       </Section>
 
-      <Section n="07" title="Provenance & data quality">
-        <p>Every form in the interface carries one of two attestation levels and opens a verbatim evidence record:</p>
+      <Section n="08" title="Provenance & data quality">
+        <p>Every form in the interface carries one of two source labels and opens a verbatim evidence record:</p>
         <ul className="list-disc space-y-2 pl-5">
-          <li><strong className="text-bush">UniMorph-attested</strong>: the exact triple occurs in the pinned UniMorph file.</li>
+          <li><strong className="text-bush">UniMorph record</strong>: the exact triple is stored in the pinned UniMorph file. MorphoLens has not independently verified it.</li>
           <li><strong className="text-sienna">Reference pattern</strong>: a hand-annotated textbook form that UniMorph does not contain (e.g. Turkish <em>ev</em>, <em>kitap</em>).</li>
         </ul>
-        <p>UniMorph attestation is not expert validation. Problems observed in the data are reported, not silently corrected:</p>
+        <p>Being stored in UniMorph is not expert validation. Problems observed in the data are reported, not silently corrected:</p>
         <div className="space-y-3">
           {Object.entries(qualityNotes).flatMap(([lang, notes]) =>
             (notes ?? []).map((n) => (
@@ -183,19 +231,20 @@ export default function AboutPage() {
         </div>
       </Section>
 
-      <Section n="08" title="Limitations">
+      <Section n="09" title="Limitations">
         <ul className="list-disc space-y-2 pl-5">
           <li>No neural models yet; conclusions apply to these rule-based systems only.</li>
           <li>Exact match treats UniMorph variants (several forms for one cell) as errors; edit distance is reported as a complement.</li>
           <li>Bootstrap intervals treat pooled test items as independent; items from different seeds can overlap.</li>
-          <li>Segmentations for UniMorph forms are automatic lemma-form alignments, not gold morpheme boundaries.</li>
+          <li>Surface alignments for UniMorph forms are automatic and handle one alternating stem segment at most; they are not gold morpheme boundaries, and exponents are never attributed to individual features.</li>
+          <li>The record audit covers Romanian Number only, and only records with an unambiguous cue.</li>
           <li>Turkish nouns and adjectives in UniMorph are Wiktionary-derived and unverified (per its README); Romanian noun labels show systematic issues.</li>
           <li>Evenki data is in Latin transcription and sparse per lemma; Chukchi has 241 triples.</li>
           <li>Urdu romanisation in hand-annotated entries is simplified; Nastaliq rendering depends on the font.</li>
         </ul>
       </Section>
 
-      <Section n="09" title="Downloads & citation">
+      <Section n="10" title="Downloads & citation">
         <div className="grid gap-3 sm:grid-cols-3">
           {downloads.map((d) => (
             <a key={d.href} href={d.href} className="group rounded-lg border border-line bg-ivory/80 p-4 transition hover:border-bush">
@@ -208,17 +257,18 @@ export default function AboutPage() {
         <p className="text-sm">Please also cite UniMorph (Batsuren et al., 2022) and the per-language sources listed above.</p>
       </Section>
 
-      <Section n="10" title="References">
+      <Section n="11" title="References">
         <ol className="list-decimal space-y-2 pl-5 text-sm">
           {references.map((r) => <li key={r}>{r}</li>)}
         </ol>
       </Section>
 
-      <Section n="11" title="Reproduce">
+      <Section n="12" title="Reproduce">
         <pre className="overflow-x-auto rounded-lg bg-bush p-5 font-mono text-xs leading-relaxed text-oak">{`npm install
 npm run data:fetch     # UniMorph files at pinned commits → unimorph-data/
-npm run data:build     # explorer + comparison sample
+npm run data:build     # explorer + comparison sample + record audit
 npm run experiment     # 5 languages × 2 splits × 5 sizes × 5 seeds (+ bootstrap)
+npm test               # regression checks: alignment, audit, matching
 npm run dev`}</pre>
         <p className="text-sm text-muted">Last run: {new Date(experiment.generatedAt).toISOString().slice(0, 10)} · Node {experiment.node} · {experiment.runtimeSeconds}s. Re-running reproduces the shipped results exactly.</p>
       </Section>

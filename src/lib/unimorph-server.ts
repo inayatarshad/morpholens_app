@@ -21,6 +21,7 @@ type Store = {
   lemmaC: string[];
   lemmaL: string[];
   byLemma: Map<string, number[]>;
+  tagCount: Map<string, number>;
   sha?: string;
 };
 
@@ -70,10 +71,12 @@ function load(lang: LanguageId): Store | null {
     return v;
   };
   const byLemma = new Map<string, number[]>();
+  const tagCount = new Map<string, number>();
   rows.forEach((r, i) => {
     const list = byLemma.get(r.lemma);
     if (list) list.push(i);
     else byLemma.set(r.lemma, [i]);
+    tagCount.set(r.tag, (tagCount.get(r.tag) ?? 0) + 1);
   });
   return {
     rows,
@@ -82,6 +85,7 @@ function load(lang: LanguageId): Store | null {
     lemmaC: rows.map((r) => lk(r.lemma)[0]),
     lemmaL: rows.map((r) => lk(r.lemma)[1]),
     byLemma,
+    tagCount,
     sha: readSha(lang),
   };
 }
@@ -163,6 +167,7 @@ export function search(lang: LanguageId, query: string): SearchResponse | null {
     alternatives: exact.length ? [...new Set(looseIdx.map((i) => s.rows[i].form))].slice(0, 6) : [],
     near,
     paradigms: Object.fromEntries(lemmas.map((l) => [l, paradigm(lang, l)])),
+    bundleCounts: Object.fromEntries([...new Set([...ex, ...lo].map((r) => r.tag))].map((t) => [t, s.tagCount.get(t) ?? 0])),
     truncated: exact.length > RESULT_LIMIT || looseIdx.length > RESULT_LIMIT,
     source: { sha: s.sha },
   };

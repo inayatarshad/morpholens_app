@@ -1,15 +1,20 @@
 import { entries as curated } from "@/data/morphology";
 import { sourceFor, unimorph, type Triple } from "@/data/unimorph";
 import { bundleGloss, posLabel, readableFeatures } from "@/data/unimorph-features";
-import type { Attestation, DifficultyTag, LanguageId, Morpheme, MorphologicalEntry, ParadigmEntry } from "@/data/types";
-import { align } from "./align";
+import type { Attestation, DifficultyTag, LanguageId, Morpheme, MorphologicalEntry, ParadigmEntry, TagSource } from "@/data/types";
+import { auditRecord, type AuditResult } from "./audit";
 import { canonical, loose } from "./lookup";
+import { alignSurface, alignmentSegments, headWord, type SurfaceAlignment } from "./stem";
 
 export type Provenance = {
   attestation: Attestation;
   source: string;
   sourceUrl?: string;
   dataset: string;
+  /** Where the source itself got the record from (per its documentation). */
+  upstream?: string;
+  /** What verification MorphoLens can vouch for. */
+  verification: string;
   note?: string;
   licence?: string;
   /** Verbatim UniMorph line, when the analysis comes from UniMorph. */
@@ -29,17 +34,25 @@ export type Analysis = {
   features: Record<string, string>;
   morphemes: Morpheme[];
   segmentation: "hand" | "auto";
+  /** Automatic surface alignment (UniMorph analyses only). */
+  alignment?: SurfaceAlignment;
+  /** Consistency audit of the source record (null = no rule applies). */
+  audit?: AuditResult | null;
   gloss?: string;
   translation?: string;
   paradigm: ParadigmEntry[];
   /** full = every cell of the lemma in UniMorph; sample = bundled subset; hand = curated. */
   paradigmScope: "full" | "sample" | "hand";
+  /** How many records in the full file carry this bundle (used for ordering, not ranking). */
+  bundleCount?: number;
   difficulty: DifficultyTag[];
   difficultyNotes: Partial<Record<DifficultyTag, string>>;
+  difficultySources: Partial<Record<DifficultyTag, TagSource>>;
   provenance: Provenance;
 };
 
 export function fromCurated(e: MorphologicalEntry): Analysis {
+  const tags = e.difficulty ?? [];
   return {
     id: e.id,
     languageId: e.languageId,
@@ -56,97 +69,132 @@ export function fromCurated(e: MorphologicalEntry): Analysis {
     translation: e.translation,
     paradigm: e.paradigm ?? [],
     paradigmScope: "hand",
-    difficulty: e.difficulty ?? [],
+    difficulty: tags,
     difficultyNotes: e.difficultyNotes ?? {},
+    difficultySources: Object.fromEntries(tags.map((t) => [t, "gold" as const])),
     provenance: {
       attestation: e.attestation,
       source: e.source,
       sourceUrl: e.sourceUrl,
-      dataset: e.attestation === "unimorph" ? `Hand-annotated segmentation · triple attested in ${sourceFor(e.languageId).label}` : "Hand-annotated segmentation (MorphoLens)",
+      dataset: "MorphoLens hand-annotated entries",
+      upstream: e.source,
+      verification:
+        e.attestation === "unimorph"
+          ? "Segmentation hand-annotated from the cited grammar; the same form and bundle are also stored in UniMorph."
+          : "Hand-annotated from the cited grammar; this form is not stored in UniMorph.",
       note: e.note,
     },
   };
 }
 
 const sample = (lang: LanguageId) => unimorph.languages[lang].entries;
+const primaryPos = (tag: string) => {
+  const p = posLabel(tag);
+  return p === "V.PTCP" || p === "V.CVB" || p === "V.MSDR" ? "V" : p;
+};
 
-export function segmentsOf(t: Triple): string[] {
-  const a = align(t.lemma, t.form);
-  if (a.suppletive) return [t.form];
-  return [a.prefix.trim(), a.stem, a.suffix.trim()].filter(Boolean);
+function conflictText(a: AuditResult): string {
+  return `Source tag ${a.source}; ${a.cue}, which suggests ${a.expected}.`;
 }
 
-export const paradigmRows = (cells: Triple[]): ParadigmEntry[] =>
-  cells.map((c) => ({ surface: c.form, features: readableFeatures(c.tag), tag: c.tag, segmentation: segmentsOf(c) }));
-
-function morphemesFor(t: Triple): Morpheme[] {
-  const a = align(t.lemma, t.form);
-  const g = bundleGloss(t.tag) || "∅";
-  if (a.suppletive) return [{ form: t.form, gloss: g, meaning: "whole-form replacement (no material shared with the lemma)", role: "word" }];
-  const out: Morpheme[] = [];
-  const pre = a.prefix, suf = a.suffix;
-  if (pre) {
-    const word = /\s/.test(pre);
-    out.push({
-      form: word ? pre.trim() : `${pre}-`,
-      gloss: suf ? "EXP" : g,
-      meaning: word ? "separate word preceding the stem" : suf ? "prefixal part of the exponent" : "prefixal exponent of the bundle",
-      role: word ? "particle" : "prefix",
-    });
-  }
-  out.push({
-    form: a.stem,
-    gloss: "STEM",
-    meaning: a.removedPrefix || a.removedSuffix ? `shared with lemma “${t.lemma}” (lemma material replaced)` : `shared with lemma “${t.lemma}”`,
-    role: "stem",
+/** Paradigm rows with automatic alignment and audit flags. */
+export function paradigmRows(cells: Triple[], lang: LanguageId): ParadigmEntry[] {
+  const heads = cells.map((c) => headWord(c.form, c.lemma));
+  return cells.map((c) => {
+    const al = alignSurface(c.lemma, c.form, lang, primaryPos(c.tag), heads);
+    const au = auditRecord(lang, c.lemma, c.form, c.tag);
+    return {
+      surface: c.form,
+      features: readableFeatures(c.tag),
+      tag: c.tag,
+      segmentation: al.confidence === "none" ? [c.form] : alignmentSegments(al),
+      conflict: au?.conflict ? conflictText(au) : undefined,
+    };
   });
-  if (suf) {
-    const word = /\s/.test(suf);
-    out.push({
-      form: word ? suf.trim() : `-${suf}`,
-      gloss: g,
-      meaning: word ? "separate word following the stem" : pre ? "suffixal part of the exponent" : "suffixal exponent of the bundle",
-      role: word ? "particle" : "suffix",
-    });
+}
+
+function stemMeaning(al: SurfaceAlignment, lemma: string): string {
+  switch (al.method) {
+    case "stem-variant":
+      return `stem variant of “${lemma}”: ${al.alternation?.from} → ${al.alternation?.to}${
+        al.support.length ? `; also begins ${al.support.length} other form${al.support.length > 1 ? "s" : ""} (${al.support.slice(0, 4).join(", ")})` : "; not found in other forms of the paradigm"
+      }`;
+    case "ending-replacement":
+      return `stem of “${lemma}” with final “${al.removed}” replaced`;
+    case "truncation":
+      return `“${lemma}” without its final “${al.removed}”`;
+    case "substring":
+      return `longest stretch shared with “${lemma}”; lemma material “${al.removed}” is not accounted for`;
+    case "identity":
+      return al.suffix ? `stem of “${lemma}” (citation ending removed)` : "the citation form itself";
+    default:
+      return al.citationStem !== al.lemmaHead ? `stem of “${lemma}” (citation ending “-${al.lemmaHead.slice(al.citationStem.length)}” removed)` : `stem of “${lemma}”, unchanged`;
   }
+}
+
+function morphemesFor(t: Triple, al: SurfaceAlignment): Morpheme[] {
+  const g = bundleGloss(t.tag) || "∅";
+  const lemmaWords = t.lemma.split(/\s+/);
+  const word = (w: string): Morpheme => ({
+    form: w,
+    gloss: lemmaWords.includes(w) ? "LEX" : "WORD",
+    meaning: lemmaWords.includes(w) ? "word shared with the lemma" : "separate word recorded as part of the form (article, particle or pronoun)",
+    role: lemmaWords.includes(w) ? "word" : "particle",
+  });
+  const out: Morpheme[] = al.before.map(word);
+  if (al.confidence === "none") {
+    out.push({ form: al.stem, gloss: g, meaning: "irregular form: no material shared with the lemma, so no automatic split", role: "word" });
+  } else {
+    if (al.prefix) {
+      out.push({ form: `${al.prefix}-`, gloss: al.suffix ? "EXP" : g, meaning: al.suffix ? "prefixal part of the exponent" : `exponent of ${g}`, role: "prefix" });
+    }
+    out.push({ form: al.suffix ? `${al.stem}-` : al.stem, gloss: "STEM", meaning: stemMeaning(al, t.lemma), role: "stem" });
+    if (al.suffix) {
+      out.push(
+        al.method === "identity"
+          ? { form: `-${al.suffix}`, gloss: "CIT", meaning: "citation ending of the lemma", role: "suffix" }
+          : { form: `-${al.suffix}`, gloss: g, meaning: `exponent of the whole bundle ${g} (not attributed to individual features)`, role: "suffix" },
+      );
+    }
+  }
+  out.push(...al.after.map(word));
   return out;
 }
 
 /**
  * Build an analysis for a UniMorph triple. Pass `cells` (the lemma's full paradigm from
- * the search API) for complete paradigm and syncretism information; without it the
- * bundled sample is used and the view says so.
+ * the search API) for complete paradigm, syncretism and stem-variant evidence; without
+ * it the bundled sample is used and the view says so.
  */
-export function fromTriple(lang: LanguageId, t: Triple, cells?: Triple[]): Analysis {
+export function fromTriple(lang: LanguageId, t: Triple, cells?: Triple[], bundleCount?: number): Analysis {
   const src = sourceFor(lang);
   const list = cells ?? sample(lang).filter((c) => c.lemma === t.lemma);
-  const a = align(t.lemma, t.form);
+  const heads = list.map((c) => headWord(c.form, c.lemma));
+  const al = alignSurface(t.lemma, t.form, lang, primaryPos(t.tag), heads);
+  const audit = auditRecord(lang, t.lemma, t.form, t.tag);
   const difficulty: DifficultyTag[] = [];
   const notes: Partial<Record<DifficultyTag, string>> = {};
+  const sources: Partial<Record<DifficultyTag, TagSource>> = {};
+  const add = (tag: DifficultyTag, source: TagSource, note: string) => {
+    difficulty.push(tag);
+    sources[tag] = source;
+    notes[tag] = note;
+  };
 
   const others = [...new Set(list.filter((c) => c.form === t.form && c.tag !== t.tag).map((c) => c.tag))];
-  if (others.length) {
-    difficulty.push("SYNCRETISM");
-    notes.SYNCRETISM = `UniMorph also lists this form of “${t.lemma}” as ${others.slice(0, 6).join(", ")}${others.length > 6 ? ` and ${others.length - 6} more` : ""}.`;
+  if (others.length) add("SYNCRETISM", "data", `The same form of “${t.lemma}” is also stored as ${others.slice(0, 6).join(", ")}${others.length > 6 ? ` and ${others.length - 6} more` : ""}.`);
+  // Other forms under the same bundle count as variants only if the audit does not flag them
+  // as mislabelled (e.g. Romanian casei is stored as PL but is singular).
+  const sameBundle = list.filter((c) => c.tag === t.tag && c.form !== t.form);
+  const variants = sameBundle.filter((c) => !auditRecord(lang, c.lemma, c.form, c.tag)?.conflict).map((c) => c.form);
+  if (variants.length) add("ORTHOGRAPHIC_VARIATION", "data", `Other forms stored for the same bundle: ${variants.slice(0, 4).join(", ")}.`);
+  if (/\s/.test(t.form) && !/\s/.test(t.lemma)) add("PERIPHRASIS", "data", "Stored as a multi-word form.");
+  if (al.method === "stem-variant" || al.method === "ending-replacement") {
+    add("ALLOMORPHY", "heuristic", `Stem alternation ${al.alternation?.from} → ${al.alternation?.to} (${al.lemmaHead} ~ ${al.stem}-)${al.support.length ? `, recurring in ${al.support.length} other form${al.support.length > 1 ? "s" : ""}` : ""}.`);
   }
-  const variants = list.filter((c) => c.tag === t.tag && c.form !== t.form).map((c) => c.form);
-  if (variants.length) {
-    difficulty.push("ORTHOGRAPHIC_VARIATION");
-    notes.ORTHOGRAPHIC_VARIATION = `UniMorph lists other forms for the same bundle: ${variants.slice(0, 4).join(", ")}.`;
-  }
-  if (/\s/.test(t.form) && !/\s/.test(t.lemma)) {
-    difficulty.push("PERIPHRASIS");
-    notes.PERIPHRASIS = "UniMorph records this cell as a multi-word form.";
-  }
-  if (!a.suppletive && (a.removedPrefix || a.removedSuffix)) {
-    difficulty.push("STEM_CHANGE");
-    notes.STEM_CHANGE = `Lemma material “${[a.removedPrefix, a.removedSuffix].filter(Boolean).join("…")}” is replaced, not just added to.`;
-  }
+  if (al.method === "substring" || al.method === "truncation") add("STEM_CHANGE", "heuristic", `Lemma material “${al.removed}” is replaced or removed and no single consistent alternation was found.`);
   const nFeats = t.tag.split(";").length - 1;
-  if (nFeats >= 4 && a.suffix.trim().length >= 4) {
-    difficulty.push("LONG_MORPHEME_CHAIN");
-    notes.LONG_MORPHEME_CHAIN = `${nFeats} features realised in the exponent “${a.suffix.trim()}”.`;
-  }
+  if (nFeats >= 4 && al.suffix.length >= 4 && al.method !== "identity") add("LONG_MORPHEME_CHAIN", "heuristic", `${nFeats} features realised in the aligned exponent “${al.suffix}”.`);
 
   return {
     id: `${lang}:${t.lemma}:${t.form}:${t.tag}`,
@@ -156,18 +204,24 @@ export function fromTriple(lang: LanguageId, t: Triple, cells?: Triple[]): Analy
     pos: posLabel(t.tag),
     tag: t.tag,
     features: readableFeatures(t.tag),
-    morphemes: morphemesFor(t),
+    morphemes: morphemesFor(t, al),
     segmentation: "auto",
+    alignment: al,
+    audit,
     gloss: bundleGloss(t.tag),
-    paradigm: paradigmRows(list),
+    paradigm: paradigmRows(list, lang),
     paradigmScope: cells ? "full" : "sample",
+    bundleCount,
     difficulty,
     difficultyNotes: notes,
+    difficultySources: sources,
     provenance: {
       attestation: "unimorph",
       source: src.label,
       sourceUrl: src.url,
       dataset: `UniMorph · ${src.repo.replace("https://github.com/", "")}`,
+      upstream: src.upstream,
+      verification: "Stored in UniMorph; not independently verified by MorphoLens.",
       note: src.summary,
       licence: src.licence,
       record: `${t.lemma}\t${t.form}\t${t.tag}`,

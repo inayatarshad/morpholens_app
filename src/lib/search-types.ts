@@ -20,6 +20,8 @@ export type SearchResponse = {
   near: NearMatch[];
   /** Full paradigms (all cells) of every lemma referenced above. */
   paradigms: Record<string, Triple[]>;
+  /** Number of records in the full file carrying each returned bundle (for ordering only). */
+  bundleCounts: Record<string, number>;
   truncated: boolean;
   source: { sha?: string };
 };

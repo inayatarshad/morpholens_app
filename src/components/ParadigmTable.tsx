@@ -1,7 +1,7 @@
 "use client";
 
 import { useState } from "react";
-import { Search } from "lucide-react";
+import { Search, TriangleAlert } from "lucide-react";
 import type { Language, ParadigmEntry } from "@/data/types";
 import { canonical } from "@/lib/lookup";
 
@@ -25,22 +25,30 @@ export function ParadigmTable({
   const rows = f
     ? paradigm.filter((p) => [p.surface, p.romanization, p.tag, ...Object.values(p.features)].some((x) => x && x.toLowerCase().includes(f)))
     : paradigm;
+  const conflicts = paradigm.filter((p) => p.conflict).length;
 
   return (
     <div className="space-y-3">
-      {paradigm.length > 12 && (
+      {(paradigm.length > 12 || conflicts > 0) && (
         <div className="flex flex-wrap items-center gap-3">
-          <label className="flex min-w-[14rem] flex-1 items-center gap-2 rounded-md border border-line-strong bg-ivory px-3 py-1.5 text-sm focus-within:border-bush">
-            <Search size={14} className="text-muted" />
-            <input
-              value={filter}
-              onChange={(e) => setFilter(e.target.value)}
-              placeholder="Filter cells by form, code (PST, PL, 1SG) or label (Ablative)"
-              className="w-full bg-transparent outline-none placeholder:text-muted/60"
-              dir="auto"
-            />
-          </label>
+          {paradigm.length > 12 && (
+            <label className="flex min-w-[14rem] flex-1 items-center gap-2 rounded-md border border-line-strong bg-ivory px-3 py-1.5 text-sm focus-within:border-bush">
+              <Search size={14} className="text-muted" />
+              <input
+                value={filter}
+                onChange={(e) => setFilter(e.target.value)}
+                placeholder="Filter cells by form, code (PST, PL, 1SG) or label (Ablative)"
+                className="w-full bg-transparent outline-none placeholder:text-muted/60"
+                dir="auto"
+              />
+            </label>
+          )}
           <span className="font-mono text-xs text-muted">{rows.length} / {paradigm.length} cells</span>
+          {conflicts > 0 && (
+            <span className="inline-flex items-center gap-1 rounded-sm border border-sienna/50 bg-sienna/10 px-2 py-0.5 text-xs text-sienna">
+              <TriangleAlert size={12} /> {conflicts} row{conflicts > 1 ? "s" : ""} conflict with audit cues
+            </span>
+          )}
         </div>
       )}
       <div className="max-h-[30rem] overflow-auto rounded-lg border border-line">
@@ -48,8 +56,8 @@ export function ParadigmTable({
           <thead className="sticky top-0 z-10 bg-oak text-left text-bush">
             <tr>
               <th className="px-4 py-2.5 font-semibold">Form</th>
-              <th className="px-4 py-2.5 font-semibold">Features</th>
-              <th className="px-4 py-2.5 font-semibold">Segmentation</th>
+              <th className="px-4 py-2.5 font-semibold">Features (as stored)</th>
+              <th className="px-4 py-2.5 font-semibold">Surface alignment</th>
             </tr>
           </thead>
           <tbody className="bg-ivory/70">
@@ -60,10 +68,21 @@ export function ParadigmTable({
                 <tr
                   key={`${p.surface}-${p.tag ?? i}-${i}`}
                   onClick={() => onSelect?.(p.romanization ?? p.surface)}
-                  className={`cursor-pointer border-t border-line transition-colors ${exact ? "bg-sienna/15" : same ? "bg-sienna/[0.06]" : "hover:bg-cashmere"}`}
+                  className={`cursor-pointer border-t border-line transition-colors ${
+                    p.conflict
+                      ? "bg-[repeating-linear-gradient(135deg,rgba(169,79,36,0.07)_0_6px,transparent_6px_12px)]"
+                      : exact
+                        ? "bg-sienna/15"
+                        : same
+                          ? "bg-sienna/[0.06]"
+                          : "hover:bg-cashmere"
+                  } ${exact && p.conflict ? "outline outline-1 -outline-offset-1 outline-sienna/60" : ""}`}
                 >
                   <td className="px-4 py-2">
-                    <span className={`${rtl ? "urdu text-lg" : "font-serif text-lg"} ${same ? "text-sienna" : "text-bush"}`}>{p.surface}</span>
+                    <span className="inline-flex items-center gap-1.5">
+                      {p.conflict && <TriangleAlert size={13} className="shrink-0 text-sienna" aria-label="Audit conflict" />}
+                      <bdi className={`${rtl ? "urdu text-lg" : "font-serif text-lg"} ${same ? "text-sienna" : "text-bush"}`}>{p.surface}</bdi>
+                    </span>
                     {p.romanization && <span className="ml-2 font-mono text-xs text-muted">{p.romanization}</span>}
                   </td>
                   <td className="px-4 py-2">
@@ -74,6 +93,7 @@ export function ParadigmTable({
                         </span>
                       ))}
                     </div>
+                    {p.conflict && <p className="mt-1 text-[0.68rem] text-sienna">{p.conflict}</p>}
                   </td>
                   <td className="px-4 py-2 font-mono text-xs text-ink/80" dir={rtl ? "rtl" : undefined}>
                     {p.segmentation?.map((s, j) => (

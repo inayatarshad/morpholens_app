@@ -47,7 +47,7 @@ export function LemmaPanel({ lang, lemma, cells, onSelect }: { lang: LanguageId;
       </Panel>
       <Panel>
         <SectionLabel index="01">Full paradigm</SectionLabel>
-        <ParadigmTable paradigm={paradigmRows(cells)} current="" language={language} onSelect={onSelect} />
+        <ParadigmTable paradigm={paradigmRows(cells, lang)} current="" language={language} onSelect={onSelect} />
         <p className="mt-3 text-xs text-muted">Every cell UniMorph lists for this lemma. Select a row to analyse that form.</p>
       </Panel>
     </div>

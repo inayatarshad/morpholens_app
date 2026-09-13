@@ -84,6 +84,11 @@ export function posLabel(tag: string): string {
   return "n/a";
 }
 
+/** Short label for tabs, e.g. "GEN/DAT · PL · DEF". */
+export function bundleShort(tag: string): string {
+  return bundleGloss(tag).split(".").join(" · ") || tag;
+}
+
 /** Leipzig-ish gloss of a bundle without its primary POS, e.g. "ABL.PL.PSS1P". */
 export function bundleGloss(tag: string): string {
   let primarySkipped = false;

@@ -209,12 +209,12 @@ export const featureLabels: Record<string, { label: string; description: string 
 
 export const difficultyMeta: Record<DifficultyTag, { label: string; description: string }> = {
   UNSEEN_LEMMA: { label: "Unseen lemma", description: "No form of this lexical item appears in training." },
-  ALLOMORPHY: { label: "Allomorphy", description: "One morpheme, several phonologically conditioned shapes." },
+  ALLOMORPHY: { label: "Allomorphy", description: "A stem variant in which one segment alternates with the citation stem (casă ~ case-, kitap ~ kitab-)." },
   RARE_FEATURE: { label: "Rare feature", description: "Feature bundle sparsely attested in training." },
   ORTHOGRAPHIC_VARIATION: { label: "Orthographic variation", description: "Several spellings for one form (e.g. Roman Urdu)." },
   LONG_MORPHEME_CHAIN: { label: "Long morpheme chain", description: "Several features realised in a long stacked exponent." },
   CODE_SWITCHING: { label: "Code-switching", description: "Material from another language inside the word." },
   SYNCRETISM: { label: "Syncretism", description: "One surface form realises several feature bundles." },
   PERIPHRASIS: { label: "Periphrasis", description: "The bundle is realised with more than one word." },
-  STEM_CHANGE: { label: "Stem change", description: "Material of the lemma is deleted or altered, not just added to." },
+  STEM_CHANGE: { label: "Stem change", description: "Lemma material is replaced or removed, but no single consistent alternation was found." },
 };

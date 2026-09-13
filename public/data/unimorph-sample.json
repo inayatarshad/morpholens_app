@@ -1,5 +1,5 @@
 {
- "generatedAt": "2026-09-13T19:18:29.883Z",
+ "generatedAt": "2026-09-13T19:58:10.043Z",
  "sources": {
   "tur": {
    "repo": "https://github.com/unimorph/tur",
@@ -6315,6 +6315,94 @@
     "strategy": "Separate word + ending replacement",
     "position": "Separate word before the stem"
    }
+  }
+ },
+ "audits": {
+  "ron": {
+   "checked": 22943,
+   "conflicts": 10171,
+   "byCue": {
+    "definite plural ending “-ii”": 731,
+    "ending “-lor” is plural": 1004,
+    "feminine definite article “-a” is singular": 1174,
+    "definite genitive/dative ending “-ei” is singular": 677,
+    "indefinite article “unor” is plural": 2222,
+    "indefinite article “niște” is plural": 2222,
+    "definite ending “-lui” is singular": 1089,
+    "definite article “-ul” is singular": 1052
+   },
+   "examples": [
+    {
+     "lemma": "gravat",
+     "form": "gravații",
+     "tag": "ADJ;NOM/ACC;FEM;SG;DEF",
+     "expected": "PL",
+     "cue": "definite plural ending “-ii”"
+    },
+    {
+     "lemma": "gravitate",
+     "form": "gravitatea",
+     "tag": "N;NOM/ACC;PL;DEF",
+     "expected": "SG",
+     "cue": "feminine definite article “-a” is singular"
+    },
+    {
+     "lemma": "gravitație",
+     "form": "gravitației",
+     "tag": "N;GEN/DAT;PL;DEF",
+     "expected": "SG",
+     "cue": "definite genitive/dative ending “-ei” is singular"
+    },
+    {
+     "lemma": "gravitațional",
+     "form": "gravitaționalii",
+     "tag": "ADJ;NOM/ACC;FEM;SG;DEF",
+     "expected": "PL",
+     "cue": "definite plural ending “-ii”"
+    },
+    {
+     "lemma": "grație",
+     "form": "grației",
+     "tag": "N;GEN/DAT;PL;DEF",
+     "expected": "SG",
+     "cue": "definite genitive/dative ending “-ei” is singular"
+    },
+    {
+     "lemma": "greață",
+     "form": "unor grețuri",
+     "tag": "N;GEN/DAT;SG;INDF",
+     "expected": "PL",
+     "cue": "indefinite article “unor” is plural"
+    },
+    {
+     "lemma": "greblă",
+     "form": "greblei",
+     "tag": "N;GEN/DAT;PL;DEF",
+     "expected": "SG",
+     "cue": "definite genitive/dative ending “-ei” is singular"
+    },
+    {
+     "lemma": "grec",
+     "form": "grecului",
+     "tag": "N;GEN/DAT;PL;DEF",
+     "expected": "SG",
+     "cue": "definite ending “-lui” is singular"
+    },
+    {
+     "lemma": "grecesc",
+     "form": "greceștii",
+     "tag": "ADJ;NOM/ACC;FEM;SG;DEF",
+     "expected": "PL",
+     "cue": "definite plural ending “-ii”"
+    },
+    {
+     "lemma": "grecoaică",
+     "form": "grecoaicei",
+     "tag": "N;GEN/DAT;PL;DEF",
+     "expected": "SG",
+     "cue": "definite genitive/dative ending “-ei” is singular"
+    }
+   ]
   }
  }
 }

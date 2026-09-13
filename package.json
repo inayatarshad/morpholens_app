@@ -10,8 +10,10 @@
     "start": "next start",
     "lint": "eslint .",
     "typecheck": "tsc --noEmit",
+    "test": "node --disable-warning=MODULE_TYPELESS_PACKAGE_JSON --disable-warning=ExperimentalWarning scripts/check-morphology.mts",
+    "test:live": "node --disable-warning=MODULE_TYPELESS_PACKAGE_JSON --disable-warning=ExperimentalWarning scripts/check-morphology.mts https://morpholens-app.vercel.app",
     "data:fetch": "node scripts/fetch-unimorph.mjs unimorph-data",
-    "data:build": "node scripts/build-data.mjs unimorph-data",
+    "data:build": "node --disable-warning=MODULE_TYPELESS_PACKAGE_JSON --disable-warning=ExperimentalWarning scripts/build-data.mjs unimorph-data",
     "experiment": "node scripts/run-experiment.mjs unimorph-data"
   },
   "dependencies": {

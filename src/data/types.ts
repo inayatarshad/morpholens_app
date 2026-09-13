@@ -44,7 +44,12 @@ export type ParadigmEntry = {
   /** Raw UniMorph bundle, when the row comes from UniMorph. */
   tag?: string;
   segmentation?: string[];
+  /** Audit conflict for this record, e.g. "source PL; cue suggests SG (ending “-ei” …)". */
+  conflict?: string;
 };
+
+/** Where a difficulty signal comes from. */
+export type TagSource = "data" | "heuristic" | "gold" | "experiment";
 
 export type DifficultyTag =
   | "UNSEEN_LEMMA"

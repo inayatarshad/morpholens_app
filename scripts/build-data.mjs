@@ -10,6 +10,7 @@
  */
 import fs from "node:fs";
 import path from "node:path";
+import { auditRecord } from "../src/lib/audit.ts";
 
 const DIR = process.argv[2];
 if (!DIR) throw new Error("Usage: node scripts/build-data.mjs <unimorph-dir>");
@@ -203,6 +204,28 @@ for (const lang of LANGS) {
     entries,
   };
   out.comparisons[lang] = comp;
+
+  // Rule-based audit over the full file (only languages with rules produce results).
+  let checked = 0, conflicts = 0;
+  const byCue = {};
+  const examples = [];
+  const exampleLemmas = new Set();
+  for (const d of data) {
+    const r = auditRecord(lang, d.lemma, d.form, d.tag);
+    if (!r) continue;
+    checked++;
+    if (!r.conflict) continue;
+    conflicts++;
+    byCue[r.cue] = (byCue[r.cue] ?? 0) + 1;
+    if (examples.length < 10 && !exampleLemmas.has(d.lemma)) {
+      exampleLemmas.add(d.lemma);
+      examples.push({ lemma: d.lemma, form: d.form, tag: d.tag, expected: r.expected, cue: r.cue });
+    }
+  }
+  if (checked) {
+    (out.audits ??= {})[lang] = { checked, conflicts, byCue, examples };
+    console.log(`${lang} audit: ${conflicts} / ${checked} checked records conflict`, JSON.stringify(byCue));
+  }
   console.log(lang, "featured:", chosen.join(", "), "| entries:", entries.length, "| comparisons:", Object.entries(comp).map(([k, v]) => `${k}=${v ? `${v.base.form}→${v.target.form} (${v.strategy})` : "none"}`).join("; "));
 }
 

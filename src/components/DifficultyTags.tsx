@@ -1,5 +1,5 @@
 import { difficultyMeta } from "@/data/morphology";
-import type { DifficultyTag } from "@/data/types";
+import type { DifficultyTag, TagSource } from "@/data/types";
 
 const ALL: DifficultyTag[] = [
   "UNSEEN_LEMMA",
@@ -13,15 +13,22 @@ const ALL: DifficultyTag[] = [
   "STEM_CHANGE",
 ];
 
-/** Shows the full challenge vocabulary; tags that apply are highlighted. */
+const SOURCE_LABEL: Record<TagSource, string> = {
+  data: "DATA",
+  heuristic: "HEURISTIC",
+  gold: "GOLD",
+  experiment: "EXPERIMENT",
+};
+
+/** Shows the full challenge vocabulary; tags that apply are highlighted with where they come from. */
 export function DifficultyTags({
   tags = [],
   notes = {},
-  computed = false,
+  sources = {},
 }: {
   tags?: DifficultyTag[];
   notes?: Partial<Record<DifficultyTag, string>>;
-  computed?: boolean;
+  sources?: Partial<Record<DifficultyTag, TagSource>>;
 }) {
   return (
     <div>
@@ -32,11 +39,12 @@ export function DifficultyTags({
             <span
               key={t}
               title={difficultyMeta[t].description}
-              className={`rounded-sm border px-2 py-1 font-mono text-[0.62rem] font-semibold tracking-[0.12em] transition ${
+              className={`inline-flex items-center gap-1.5 rounded-sm border px-2 py-1 font-mono text-[0.62rem] font-semibold tracking-[0.12em] transition ${
                 on ? "border-bush bg-bush text-ivory" : "border-line text-muted/60"
               }`}
             >
               {t.replace(/_/g, " ")}
+              {on && sources[t] && <span className="rounded-[2px] bg-ivory/20 px-1 text-[0.55rem] text-oak">{SOURCE_LABEL[sources[t]!]}</span>}
             </span>
           );
         })}
@@ -56,7 +64,9 @@ export function DifficultyTags({
       ) : (
         <p className="mt-3 text-sm text-muted">No difficulty signals detected for this form.</p>
       )}
-      {computed && <p className="mt-3 text-xs text-muted">Tags computed automatically from the UniMorph sample and the lemma-form alignment.</p>}
+      <p className="mt-3 text-[0.7rem] leading-relaxed text-muted">
+        DATA: read directly from stored records · HEURISTIC: inferred by MorphoLens · GOLD: hand annotation · EXPERIMENT: defined only relative to a train/test split (see the Experiment page).
+      </p>
     </div>
   );
 }
