@@ -5,7 +5,6 @@ import Link from "next/link";
 import { usePathname } from "next/navigation";
 import { useState } from "react";
 import { Menu, X } from "lucide-react";
-import { ResearchBadge } from "./ResearchBadge";
 
 const links = [
   { href: "/explore", label: "Explore" },
@@ -45,10 +44,6 @@ export function Navbar() {
           })}
         </nav>
 
-        <div className="ml-auto hidden md:ml-2 md:block">
-          <ResearchBadge />
-        </div>
-
         <button
           className="ml-auto rounded-md p-2 text-bush md:hidden"
           onClick={() => setOpen((o) => !o)}
@@ -71,9 +66,6 @@ export function Navbar() {
               {l.label}
             </Link>
           ))}
-          <div className="mt-3 px-3">
-            <ResearchBadge />
-          </div>
         </nav>
       )}
     </header>
