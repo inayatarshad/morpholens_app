@@ -107,7 +107,7 @@ export function FindingsTable() {
         (baseline → feature-aware; lower is better). The neural columns are the same PyTorch network given the bundle as one token (atomic) or one
         token per feature, trained on the same items. Multi-form cells = share of test items whose lemma and bundle have more than one stored form.
         Romanian (verbs) excludes nouns and adjectives because their Number and Gender tags are unreliable; the raw run on all records is shown
-        separately. Chukchi excludes 7 records with non-schema tags and is shown for completeness only.
+        separately. Chukchi (n = 100): of 241 UniMorph records, 234 are usable after excluding 7 with non-schema tags, and each test set holds 58 items per seed; it is shown for completeness only.
       </p>
     </div>
   );

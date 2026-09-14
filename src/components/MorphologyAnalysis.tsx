@@ -197,7 +197,7 @@ export function MorphologyAnalysis({
           </p>
         </Panel>
         <Panel>
-          <SectionLabel index="02">Morpheme interpretation</SectionLabel>
+          <SectionLabel index="02">{a.segmentation === "hand" ? "Morpheme interpretation" : "Aligned parts (not morphemes)"}</SectionLabel>
           <table className="w-full text-sm">
             <tbody>
               {a.morphemes.map((m, i) => (

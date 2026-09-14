@@ -98,7 +98,7 @@ export function ParadigmTable({
                   <td className="px-4 py-2 font-mono text-xs text-ink/80" dir={rtl ? "rtl" : undefined}>
                     {p.segmentation?.map((s, j) => (
                       <span key={j}>
-                        {j > 0 && <span className="px-1 text-sienna">+</span>}
+                        {j > 0 && <span className="px-0.5 text-sienna">·</span>}
                         {s}
                       </span>
                     ))}
@@ -114,6 +114,10 @@ export function ParadigmTable({
           </tbody>
         </table>
       </div>
+      <p className="mt-2 text-[0.7rem] leading-relaxed text-muted">
+        Surface alignment: an automatic character split of each form against the lemma. It is not a morphological segmentation; UniMorph stores
+        feature bundles, not morpheme boundaries.
+      </p>
     </div>
   );
 }

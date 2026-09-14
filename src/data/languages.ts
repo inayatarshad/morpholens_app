@@ -49,7 +49,7 @@ export const languages: Language[] = [
     direction: "ltr",
     resourceLevel: "Low-resource",
     profile: "Polysynthetic · noun incorporation · prefixes, suffixes and circumfixes · vowel harmony",
-    description: "A polysynthetic language of the Russian Far East with polypersonal agreement and ergative-absolutive alignment. UniMorph holds 241 corpus-derived records from spoken Chukchi (Amguema variant), most of them citation forms: the extreme low-resource case.",
+    description: "A polysynthetic language of the Russian Far East with polypersonal agreement and ergative-absolutive alignment. UniMorph holds 241 corpus-derived records from spoken Chukchi (Amguema variant), most of them citation forms, of which 234 are usable in the experiment: the extreme low-resource case.",
   },
   {
     id: "ron",

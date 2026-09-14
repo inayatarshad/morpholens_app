@@ -131,7 +131,11 @@ export default function AboutPage() {
       </Section>
 
       <Section n="03" title="How search works">
-        <p>The explorer searches the full UniMorph file for the selected language on the server. Nothing is generated or guessed.</p>
+        <p>
+          The explorer searches the full UniMorph file for the selected language on the server. Source records are retrieved, never generated.
+          Everything MorphoLens adds to a record (surface alignment, ambiguity, record audit, difficulty tags) is derived from the stored records and
+          shown separately, labelled as interpretation.
+        </p>
         <ol className="list-decimal space-y-2 pl-5">
           <li><strong className="text-bush">Exact match</strong>: the same spelling, ignoring only letter case, Unicode normalisation and keyboard variants that never distinguish words (Romanian ş/ș and ţ/ț, Arabic-keyboard ي/ك vs. Urdu ی/ک, apostrophe variants, zero-width characters).</li>
           <li><strong className="text-bush">Lemma match</strong>: if the query is a citation form, its full paradigm is shown.</li>
@@ -318,7 +322,7 @@ export default function AboutPage() {
           <li>Surface alignments for UniMorph forms are automatic and handle one alternating stem segment at most; they are not morpheme boundaries, and exponents are never attributed to individual features.</li>
           <li>The record audit covers Romanian Number and adjective Gender only, and only records with an unambiguous cue; other dimensions are not audited.</li>
           <li>Turkish nouns and adjectives in UniMorph are Wiktionary-derived and unverified (per its README); Romanian noun labels show systematic issues.</li>
-          <li>Evenki data is in IPA transcription from an oral corpus, sparse per lemma and rich in variants; Chukchi has 241 corpus-derived records (234 after excluding non-schema tags), mostly citation forms.</li>
+          <li>Evenki data is in IPA transcription from an oral corpus, sparse per lemma and rich in variants; Chukchi has 241 corpus-derived records in UniMorph, mostly citation forms; 234 are usable in the experiment after excluding 7 with non-schema tags, its test sets hold 58 items per seed, and training stops at n = 100.</li>
           <li>Urdu romanisation in hand-annotated entries is simplified; Nastaliq rendering depends on the font.</li>
         </ul>
       </Section>

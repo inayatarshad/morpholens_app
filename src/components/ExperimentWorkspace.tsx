@@ -34,7 +34,7 @@ export function ExperimentWorkspace() {
       />
 
       <p className="text-xs text-muted">
-        Task: <span className="text-ink">{task.name}</span>. {task.description} · mean ± s.d. over 5 seeds · test set {stats.testSize} items per seed ·
+        Task: <span className="text-ink">{task.name}</span>. {task.description} · mean ± s.d. over 5 seeds · test set of {stats.testSize} items per seed (at most {experiment.config.testMax}; {Math.round(experiment.config.testFraction * 100)}% of the sampled records when that is smaller) ·
         data: {stats.triples.toLocaleString("en")} UniMorph triples
         {stats.note ? ` (${stats.note})` : ""}
         {stats.excludedAnomalies ? `, ${stats.excludedAnomalies} records with non-schema tags excluded` : ""}.

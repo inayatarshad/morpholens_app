@@ -66,7 +66,7 @@ export default function Home() {
             <h2 className="display display-md mt-2 text-bush">Five languages, very uneven resources.</h2>
           </div>
           <p className="max-w-md text-sm text-muted">
-            From 570k UniMorph triples for Turkish to 241 for Chukchi. The gap is part of the research question, so the
+            From 570k UniMorph triples for Turkish to 241 for Chukchi (234 usable in the experiment). The gap is part of the research question, so the
             interface shows it rather than hiding it.
           </p>
         </div>

@@ -208,10 +208,31 @@ entries.push({
   features: { Tense: "Past", Aspect: "Perfective", Person: "3SG", "Grammatical description": "Perfect" },
   unimorph: "V;PFV;PST;SG;3",
   gloss: "PF-make-E-3SG",
-  translation: "(s)he has made",
+  translation: "(s)he made / built (it)",
   source: "Hand annotation following the glossing of perfect forms in Dunn (1999), A Grammar of Chukchi, PhD thesis, Australian National University.",
   attestation: "unimorph",
   note: "Stored in UniMorph ckt as V;PFV;PST;SG;3. Chukchi grammars describe the gə-…-lin construction as the perfect, so UniMorph's PFV · PST and the traditional label are shown together.",
+});
+
+entries.push({
+  id: "ckt-tumgyt",
+  languageId: "ckt",
+  surface: "тумгыт",
+  lemma: "тумгытум",
+  pos: "NOUN",
+  segmentation: ["тумг", "ы", "т"],
+  morphemes: [
+    { form: "тумг", gloss: "FRIEND", meaning: "friend (stem)", role: "stem" },
+    { form: "-ы-", gloss: "E", meaning: "epenthetic vowel", role: "suffix" },
+    { form: "-т", gloss: "ABS.PL", meaning: "absolutive plural", role: "suffix" },
+  ],
+  features: { Number: "Plural", Case: "Absolutive" },
+  unimorph: "N;ABS;PL",
+  gloss: "friend-E-ABS.PL",
+  translation: "friends",
+  source: "Hand annotation following the description of absolutive singular formation (including reduplication) and the absolutive plural -t in Dunn (1999), A Grammar of Chukchi, PhD thesis, Australian National University.",
+  attestation: "unimorph",
+  note: "The citation form тумгытум is the absolutive singular, formed by partial reduplication of the stem (тумг-ы-тум); the plural adds -т to the bare stem instead. Because UniMorph's lemma is the reduplicated singular, the automatic alignment can only describe тумгыт as a truncation of тумгытум, with low confidence.",
 });
 
 export const entryById = (id: string) => entries.find((e) => e.id === id);

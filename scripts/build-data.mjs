@@ -82,7 +82,7 @@ const featured = {
   urd: { N: ["لڑکا", "کتاب", "لڑکی", "گھر", "کمرہ"], V: ["لکھنا", "کرنا", "جانا", "دیکھنا"], limits: { N: 3, V: 1 } },
   ron: { N: ["carte", "casă", "om", "copil", "masă", "câine", "frate", "floare"], V: ["face", "merge", "lucra", "cânta", "vedea", "avea"], ADJ: ["bun", "frumos", "mare"], limits: { N: 3, V: 2, ADJ: 1 } },
   evn: { N: ["ďu"], V: [], limits: { N: 4, V: 3 } },
-  ckt: { N: [], V: [], limits: { N: 5, V: 4 } },
+  ckt: { N: ["тумгытум"], V: [], limits: { N: 5, V: 4 } },
 };
 
 /** Comparison specs: target = features the cell must contain (fewest extra features wins). */
@@ -107,6 +107,7 @@ const specs = {
   },
   ckt: {
     // prefer a transparent absolutive plural over тумгытум, whose singular is reduplicated
+    // (тумгытум → тумгыт is featured in the explorer with a hand annotation instead)
     plural: { base: "LEMMA", must: ["N", "PL"], prefer: ["ытԓыгын", "танӈын", "чакэттомгын"] },
     case: { base: "LEMMA", must: ["N", "ABL"] },
     past: { base: "LEMMA", must: ["V", "PST", "3"] },

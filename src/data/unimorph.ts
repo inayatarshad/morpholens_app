@@ -118,7 +118,7 @@ export const qualityNotes: Partial<Record<LanguageId, { title: string; body: str
   ckt: [
     {
       title: "Small, corpus-derived sample",
-      body: "241 records over 196 lemmas from spoken Chukchi (Amguema variant); 168 lemmas have a single record and 128 records are citation forms. Experiment estimates for Chukchi have high variance.",
+      body: "241 records over 196 lemmas from spoken Chukchi (Amguema variant); 168 lemmas have a single record and 128 records are citation forms. The experiment uses 234 of them (7 with non-schema tags are excluded), with test sets of 58 items per seed and at most 100 training items, so Chukchi estimates have high variance.",
     },
     ...(cktAnomalies.length
       ? [

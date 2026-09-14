@@ -2,7 +2,7 @@
 
 **Explore how words change across languages.** MorphoLens is an interactive research workspace for low-resource morphology, unseen-lemma generalisation and morphological resource quality. It is built on UniMorph data for Turkish, Urdu, Evenki, Chukchi and Romanian.
 
-Live: https://morpholens-app.vercel.app · Version 0.5
+Live: https://morpholens-app.vercel.app · Version 0.6
 
 ## Research motivation
 
@@ -46,7 +46,7 @@ The framing is deliberately modest. MorphoLens makes multilingual morphological 
 
 Counts are after removing duplicate lines. The files are not committed: `npm run data:fetch` downloads them at the pinned commits (this also runs before every build).
 
-Chukchi is corpus-derived, not a paradigm lexicon: 168 of 196 lemmas have a single record, and 128 records are citation forms. Evenki cells often hold several dialectal or transcription variants; the 3SG past cell of *bi* has 17 stored forms.
+Chukchi is corpus-derived, not a paradigm lexicon: 168 of 196 lemmas have a single record, and 128 records are citation forms. Of its 241 records, 234 are usable in the experiment (7 with non-schema tags are excluded); its test sets hold 58 items per seed, and training sizes stop at 100. Evenki cells often hold several dialectal or transcription variants; the 3SG past cell of *bi* has 17 stored forms.
 
 ## Tag validation
 
@@ -85,7 +85,7 @@ Samples from every rule were checked by hand, and all were genuine errors. Flagg
 - **Task:** inflection, (lemma, UniMorph bundle) → form.
 - **Metrics:** strict exact match, variant-aware exact match (any stored form of the same lemma and bundle counts), and mean Levenshtein distance.
 - **Sampling:** up to 10 cells per lemma until the universe reaches about 3,000 triples, and the same universe is used for both splits.
-- **Size:** test sets have up to 500 items, and there are five training sizes from 50 to 1000.
+- **Size:** test sets have up to 500 items per seed (25% of the sampled records when that is smaller: 58 for Chukchi), and there are five training sizes from 50 to 1000 where the data allow.
 - **Significance:** paired bootstrap, 2,000 resamples.
 - **Data preparation:** non-schema anomalies are excluded. Romanian uses verbs only, because its noun and adjective tags are unreliable; a raw run on all Romanian records is reported separately and not used for claims.
 

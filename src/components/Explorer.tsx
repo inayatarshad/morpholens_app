@@ -160,7 +160,7 @@ export function Explorer() {
             })}
           </div>
           <p className="mt-2 text-xs text-muted">
-            Searches all {fmt(stats.triples)} UniMorph triples for {language.name} plus hand-annotated entries (<span className="font-mono">SEG</span> = hand segmentation, not expert-reviewed). Nothing is generated: every result is a stored record.
+            Searches all {fmt(stats.triples)} UniMorph triples for {language.name} plus hand-annotated entries (<span className="font-mono">SEG</span> = hand segmentation, not expert-reviewed). Source records are retrieved, not generated; alignments and flags are derived from them and labelled as interpretation.
           </p>
         </div>
 
