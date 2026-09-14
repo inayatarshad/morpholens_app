@@ -14,6 +14,7 @@ import {
   XAxis,
   YAxis,
 } from "recharts";
+import { useSyncExternalStore } from "react";
 import { getCell, sizesFor, summaryOf, systemOrder, systems, type Metric } from "@/data/experiments";
 import type { ExperimentSplit } from "@/data/types";
 import { StatusTag } from "./ResearchBadge";
@@ -21,7 +22,17 @@ import { StatusTag } from "./ResearchBadge";
 const C = { bush: "#102e28", line: "rgba(16,46,40,0.12)", muted: "#6f6a60" };
 const tooltipStyle = { background: "#f6f1e7", border: "1px solid rgba(16,46,40,0.2)", borderRadius: 8, fontSize: 12 };
 
+/** Value labels on bars only fit from small-tablet width up; phones read values from the tooltip. */
+const WIDE = "(min-width: 640px)";
+const subscribeWide = (cb: () => void) => {
+  const m = window.matchMedia(WIDE);
+  m.addEventListener("change", cb);
+  return () => m.removeEventListener("change", cb);
+};
+const useWide = () => useSyncExternalStore(subscribeWide, () => window.matchMedia(WIDE).matches, () => true);
+
 export function ExperimentChart({ lang, split, size, metric }: { lang: string; split: ExperimentSplit; size: number; metric: Metric }) {
+  const wide = useWide();
   const data = (["random", "lemma-disjoint"] as ExperimentSplit[]).map((s) => {
     const cell = getCell(lang, s, size);
     const row: Record<string, string | number> = { split: s === "random" ? "Random split" : "Lemma-disjoint split", key: s };
@@ -41,7 +52,7 @@ export function ExperimentChart({ lang, split, size, metric }: { lang: string; s
       </div>
       <div className="mt-4 h-[320px] w-full">
         <ResponsiveContainer width="100%" height="100%">
-          <BarChart data={data} barGap={4} barCategoryGap="22%" margin={{ top: 16, right: 8, left: -12, bottom: 0 }}>
+          <BarChart data={data} barGap={wide ? 3 : 1} barCategoryGap={wide ? "16%" : "10%"} margin={{ top: 16, right: 8, left: -12, bottom: 0 }}>
             <CartesianGrid stroke={C.line} vertical={false} />
             <XAxis dataKey="split" tick={{ fill: C.bush, fontSize: 13 }} axisLine={{ stroke: C.line }} tickLine={false} />
             <YAxis domain={[0, 100]} tick={{ fill: C.muted, fontSize: 11 }} axisLine={false} tickLine={false} unit="%" />
@@ -55,7 +66,7 @@ export function ExperimentChart({ lang, split, size, metric }: { lang: string; s
                 fill={systems[m].color}
                 radius={[4, 4, 0, 0]}
                 animationDuration={600}
-                label={{ position: "insideTop", fill: m === "baseline" ? C.bush : "#f6f1e7", fontSize: 11, offset: 8 }}
+                label={wide ? { position: "insideTop", fill: m === "baseline" ? C.bush : "#f6f1e7", fontSize: 10, offset: 8 } : false}
               >
                 {data.map((d) => (
                   <Cell key={String(d.key)} fillOpacity={d.key === split ? 1 : 0.32} />

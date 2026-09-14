@@ -26,7 +26,6 @@ export default function Home() {
   return (
     <>
       <section className="relative overflow-hidden border-b border-line">
-        <div className="hairline-grid pointer-events-none absolute inset-0 opacity-50 [mask-image:linear-gradient(to_bottom,black,transparent_85%)]" />
         <span className="pointer-events-none absolute -right-10 top-10 select-none font-serif text-[22rem] leading-none text-oak/25">”</span>
         <Container className="relative grid items-center gap-14 py-16 lg:grid-cols-[1.55fr_1fr] lg:py-24">
           <div>

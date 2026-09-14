@@ -88,17 +88,16 @@ body {
   line-height: 2.1;
 }
 
+/* Grid items may shrink below their content width; wide content (tables, charts, chip rows)
+   scrolls inside its own overflow container instead of widening the page on phones. */
+.grid > * {
+  min-width: 0;
+}
+
 /* Paper grain on large surfaces */
 .grain {
   background-image: radial-gradient(rgba(16, 46, 40, 0.05) 1px, transparent 1px);
   background-size: 4px 4px;
-}
-
-.hairline-grid {
-  background-image:
-    linear-gradient(to right, var(--line) 1px, transparent 1px),
-    linear-gradient(to bottom, var(--line) 1px, transparent 1px);
-  background-size: 56px 56px;
 }
 
 @keyframes rise {
