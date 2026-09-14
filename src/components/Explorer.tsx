@@ -186,7 +186,7 @@ export function Explorer() {
         {view.mode === "loose" && (
           <Notice tone="warn">
             No exact match for “{q}”. Showing {view.analyses.length === 1 ? "1 UniMorph form that matches" : `${view.analyses.length} UniMorph forms that match`} only when diacritics, case and
-            transcription details are ignored — {view.analyses.length === 1 ? "it may be a different word" : "these may be different words"}. Check the spelling before relying on {view.analyses.length === 1 ? "it" : "them"}.
+            transcription details are ignored, so {view.analyses.length === 1 ? "it may be a different word" : "these may be different words"}. Check the spelling before relying on {view.analyses.length === 1 ? "it" : "them"}.
           </Notice>
         )}
 
@@ -196,7 +196,7 @@ export function Explorer() {
 
         {view.mode === "exact" && view.alternatives.length > 0 && (
           <div className="flex flex-wrap items-center gap-2 text-sm">
-            <span className="text-xs text-muted">Different spelling, same letters ignoring diacritics — did you mean:</span>
+            <span className="text-xs text-muted">Different spelling, same letters ignoring diacritics. Did you mean:</span>
             {view.alternatives.map((f) => (
               <button key={f} onClick={() => analyse(f)} className="rounded-full border border-sienna/40 bg-ivory px-3 py-0.5 text-bush hover:border-sienna">
                 <span className={language.direction === "rtl" ? "urdu" : "font-serif"}>{f}</span>
@@ -242,7 +242,7 @@ export function Explorer() {
             <p className="display display-sm mt-3 text-bush">No stored record for “{q}” in UniMorph {lang}.</p>
             <p className="mt-2 max-w-2xl text-sm text-muted">
               Searched all {fmt(view.total)} triples, as a form and as a lemma, including diacritic-insensitive matching. Absence from UniMorph
-              does not mean the word does not exist — coverage is partial.
+              does not mean the word does not exist; coverage is partial.
             </p>
             {view.near.length > 0 && (
               <div className="mt-5">

@@ -1,6 +1,6 @@
 {
- "generatedAt": "2026-09-14T08:21:35.006Z",
- "runtimeSeconds": 59,
+ "generatedAt": "2026-09-14T10:42:02.223Z",
+ "runtimeSeconds": 37,
  "node": "v24.15.0",
  "config": {
   "seeds": [
@@ -248,6 +248,70 @@
         "N": 18.6,
         "V": 0.2
        }
+      },
+      "natom": {
+       "mean": 0.2,
+       "std": 0.3,
+       "runs": [
+        0.4,
+        0.6,
+        0,
+        0.2,
+        0
+       ],
+       "variant": {
+        "mean": 0.2,
+        "std": 0.3,
+        "runs": [
+         0.4,
+         0.6,
+         0,
+         0.2,
+         0
+        ]
+       },
+       "lev": 7.39,
+       "seenBundle": 0.4,
+       "unseenBundle": 0.1,
+       "seenLemma": 0.3,
+       "unseenLemma": 0.2,
+       "copyShare": 0.6,
+       "pos": {
+        "N": 0.3,
+        "V": 0
+       }
+      },
+      "nfeat": {
+       "mean": 0.5,
+       "std": 0.4,
+       "runs": [
+        1.2,
+        0.4,
+        0.2,
+        0.2,
+        0.4
+       ],
+       "variant": {
+        "mean": 0.5,
+        "std": 0.4,
+        "runs": [
+         1.2,
+         0.4,
+         0.2,
+         0.2,
+         0.4
+        ]
+       },
+       "lev": 6.75,
+       "seenBundle": 0.6,
+       "unseenBundle": 0.4,
+       "seenLemma": 0.6,
+       "unseenLemma": 0.5,
+       "copyShare": 0.9,
+       "pos": {
+        "N": 0.5,
+        "V": 0
+       }
       }
      },
      "tests": {
@@ -268,6 +332,30 @@
        "lo": -0.7,
        "hi": 0.1,
        "p": 0.167
+      },
+      "nfeat-baseline": {
+       "diff": -15.2,
+       "lo": -16.6,
+       "hi": -13.8,
+       "p": 0
+      },
+      "natom-baseline": {
+       "diff": -15.4,
+       "lo": -16.8,
+       "hi": -14,
+       "p": 0
+      },
+      "nfeat-natom": {
+       "diff": 0.2,
+       "lo": 0,
+       "hi": 0.5,
+       "p": 0.127
+      },
+      "nfeat-morph": {
+       "diff": -14.9,
+       "lo": -16.4,
+       "hi": -13.5,
+       "p": 0
       }
      },
      "testsVariant": {
@@ -275,7 +363,7 @@
        "diff": -0.3,
        "lo": -0.7,
        "hi": 0.1,
-       "p": 0.169
+       "p": 0.18
       },
       "memory-baseline": {
        "diff": 0,
@@ -287,7 +375,31 @@
        "diff": -0.3,
        "lo": -0.7,
        "hi": 0.1,
-       "p": 0.196
+       "p": 0.19
+      },
+      "nfeat-baseline": {
+       "diff": -15.2,
+       "lo": -16.6,
+       "hi": -13.8,
+       "p": 0
+      },
+      "natom-baseline": {
+       "diff": -15.4,
+       "lo": -16.8,
+       "hi": -14.1,
+       "p": 0
+      },
+      "nfeat-natom": {
+       "diff": 0.2,
+       "lo": 0,
+       "hi": 0.6,
+       "p": 0.142
+      },
+      "nfeat-morph": {
+       "diff": -14.9,
+       "lo": -16.3,
+       "hi": -13.6,
+       "p": 0
       }
      }
     },
@@ -396,13 +508,77 @@
         "N": 26.7,
         "V": 1
        }
+      },
+      "natom": {
+       "mean": 0.4,
+       "std": 0.2,
+       "runs": [
+        0.6,
+        0.2,
+        0.6,
+        0.6,
+        0.2
+       ],
+       "variant": {
+        "mean": 0.4,
+        "std": 0.2,
+        "runs": [
+         0.6,
+         0.2,
+         0.6,
+         0.6,
+         0.2
+        ]
+       },
+       "lev": 6.16,
+       "seenBundle": 0.7,
+       "unseenBundle": 0.1,
+       "seenLemma": 0.3,
+       "unseenLemma": 0.5,
+       "copyShare": 0.8,
+       "pos": {
+        "N": 0.5,
+        "V": 0
+       }
+      },
+      "nfeat": {
+       "mean": 1.3,
+       "std": 0.7,
+       "runs": [
+        1.6,
+        1,
+        2.4,
+        0.6,
+        0.8
+       ],
+       "variant": {
+        "mean": 1.3,
+        "std": 0.7,
+        "runs": [
+         1.6,
+         1,
+         2.4,
+         0.6,
+         0.8
+        ]
+       },
+       "lev": 5.58,
+       "seenBundle": 1.9,
+       "unseenBundle": 0.3,
+       "seenLemma": 1,
+       "unseenLemma": 1.4,
+       "copyShare": 1.1,
+       "pos": {
+        "N": 1.5,
+        "V": 0.2
+       }
       }
      },
      "tests": {
       "morph-baseline": {
        "diff": 1.2,
        "lo": 0.6,
-       "hi": 1.9,
+       "hi": 1.8,
        "p": 0
       },
       "memory-baseline": {
@@ -413,8 +589,32 @@
       },
       "morph-memory": {
        "diff": 1.2,
-       "lo": 0.7,
-       "hi": 1.8,
+       "lo": 0.6,
+       "hi": 1.9,
+       "p": 0
+      },
+      "nfeat-baseline": {
+       "diff": -19.7,
+       "lo": -21.4,
+       "hi": -18.1,
+       "p": 0
+      },
+      "natom-baseline": {
+       "diff": -20.5,
+       "lo": -22.2,
+       "hi": -18.9,
+       "p": 0
+      },
+      "nfeat-natom": {
+       "diff": 0.8,
+       "lo": 0.4,
+       "hi": 1.3,
+       "p": 0.001
+      },
+      "nfeat-morph": {
+       "diff": -20.9,
+       "lo": -22.5,
+       "hi": -19.4,
        "p": 0
       }
      },
@@ -423,7 +623,7 @@
        "diff": 1.2,
        "lo": 0.6,
        "hi": 1.8,
-       "p": 0
+       "p": 0.001
       },
       "memory-baseline": {
        "diff": 0,
@@ -433,8 +633,32 @@
       },
       "morph-memory": {
        "diff": 1.2,
-       "lo": 0.7,
-       "hi": 1.9,
+       "lo": 0.6,
+       "hi": 1.8,
+       "p": 0
+      },
+      "nfeat-baseline": {
+       "diff": -19.7,
+       "lo": -21.4,
+       "hi": -18.1,
+       "p": 0
+      },
+      "natom-baseline": {
+       "diff": -20.5,
+       "lo": -22.2,
+       "hi": -18.9,
+       "p": 0
+      },
+      "nfeat-natom": {
+       "diff": 0.8,
+       "lo": 0.4,
+       "hi": 1.3,
+       "p": 0
+      },
+      "nfeat-morph": {
+       "diff": -20.9,
+       "lo": -22.5,
+       "hi": -19.2,
        "p": 0
       }
      }
@@ -544,6 +768,70 @@
         "N": 35.7,
         "V": 1.5
        }
+      },
+      "natom": {
+       "mean": 1.2,
+       "std": 0.5,
+       "runs": [
+        1.2,
+        1.4,
+        1.2,
+        1.6,
+        0.4
+       ],
+       "variant": {
+        "mean": 1.2,
+        "std": 0.5,
+        "runs": [
+         1.2,
+         1.4,
+         1.2,
+         1.6,
+         0.4
+        ]
+       },
+       "lev": 5.49,
+       "seenBundle": 1.5,
+       "unseenBundle": 0,
+       "seenLemma": 1,
+       "unseenLemma": 1.3,
+       "copyShare": 1.2,
+       "pos": {
+        "N": 1.4,
+        "V": 0
+       }
+      },
+      "nfeat": {
+       "mean": 8.2,
+       "std": 6.8,
+       "runs": [
+        6.8,
+        1.8,
+        3.2,
+        18.8,
+        10.4
+       ],
+       "variant": {
+        "mean": 8.2,
+        "std": 6.8,
+        "runs": [
+         6.8,
+         1.8,
+         3.2,
+         18.8,
+         10.4
+        ]
+       },
+       "lev": 4.33,
+       "seenBundle": 10.2,
+       "unseenBundle": 2.1,
+       "seenLemma": 9,
+       "unseenLemma": 7.2,
+       "copyShare": 1.4,
+       "pos": {
+        "N": 9.7,
+        "V": 1
+       }
       }
      },
      "tests": {
@@ -555,7 +843,7 @@
       },
       "memory-baseline": {
        "diff": 0.9,
-       "lo": 0.4,
+       "lo": 0.5,
        "hi": 1.3,
        "p": 0
       },
@@ -563,7 +851,31 @@
        "diff": 0.3,
        "lo": -0.4,
        "hi": 1,
-       "p": 0.375
+       "p": 0.387
+      },
+      "nfeat-baseline": {
+       "diff": -20.3,
+       "lo": -22.2,
+       "hi": -18.4,
+       "p": 0
+      },
+      "natom-baseline": {
+       "diff": -27.3,
+       "lo": -29.1,
+       "hi": -25.6,
+       "p": 0
+      },
+      "nfeat-natom": {
+       "diff": 7,
+       "lo": 6,
+       "hi": 8.1,
+       "p": 0
+      },
+      "nfeat-morph": {
+       "diff": -21.5,
+       "lo": -23.5,
+       "hi": -19.4,
+       "p": 0
       }
      },
      "testsVariant": {
@@ -575,15 +887,39 @@
       },
       "memory-baseline": {
        "diff": 0.9,
-       "lo": 0.4,
+       "lo": 0.5,
        "hi": 1.3,
        "p": 0
       },
       "morph-memory": {
        "diff": 0.3,
-       "lo": -0.4,
+       "lo": -0.3,
        "hi": 1,
-       "p": 0.394
+       "p": 0.338
+      },
+      "nfeat-baseline": {
+       "diff": -20.3,
+       "lo": -22.3,
+       "hi": -18.4,
+       "p": 0
+      },
+      "natom-baseline": {
+       "diff": -27.3,
+       "lo": -29.2,
+       "hi": -25.5,
+       "p": 0
+      },
+      "nfeat-natom": {
+       "diff": 7,
+       "lo": 6,
+       "hi": 8.2,
+       "p": 0
+      },
+      "nfeat-morph": {
+       "diff": -21.5,
+       "lo": -23.5,
+       "hi": -19.5,
+       "p": 0
       }
      }
     },
@@ -692,13 +1028,77 @@
         "N": 41.1,
         "V": 4
        }
+      },
+      "natom": {
+       "mean": 1.2,
+       "std": 0.2,
+       "runs": [
+        1,
+        1.4,
+        1.4,
+        1.2,
+        1.2
+       ],
+       "variant": {
+        "mean": 1.2,
+        "std": 0.2,
+        "runs": [
+         1,
+         1.4,
+         1.4,
+         1.2,
+         1.2
+        ]
+       },
+       "lev": 5.4,
+       "seenBundle": 1.5,
+       "unseenBundle": 0.2,
+       "seenLemma": 1.5,
+       "unseenLemma": 0.2,
+       "copyShare": 1.1,
+       "pos": {
+        "N": 1.5,
+        "V": 0.2
+       }
+      },
+      "nfeat": {
+       "mean": 43.6,
+       "std": 6,
+       "runs": [
+        49.4,
+        43,
+        40.8,
+        49.4,
+        35.2
+       ],
+       "variant": {
+        "mean": 43.6,
+        "std": 6,
+        "runs": [
+         49.4,
+         43,
+         40.8,
+         49.4,
+         35.2
+        ]
+       },
+       "lev": 2.66,
+       "seenBundle": 53.2,
+       "unseenBundle": 3.1,
+       "seenLemma": 46,
+       "unseenLemma": 34.2,
+       "copyShare": 2.1,
+       "pos": {
+        "N": 52.3,
+        "V": 2.2
+       }
       }
      },
      "tests": {
       "morph-baseline": {
        "diff": 0.4,
        "lo": 0.2,
-       "hi": 0.7,
+       "hi": 0.8,
        "p": 0
       },
       "memory-baseline": {
@@ -710,8 +1110,32 @@
       "morph-memory": {
        "diff": -2,
        "lo": -3,
-       "hi": -0.9,
-       "p": 0.001
+       "hi": -1,
+       "p": 0
+      },
+      "nfeat-baseline": {
+       "diff": 9.4,
+       "lo": 7.1,
+       "hi": 11.6,
+       "p": 0
+      },
+      "natom-baseline": {
+       "diff": -32.9,
+       "lo": -34.7,
+       "hi": -31,
+       "p": 0
+      },
+      "nfeat-natom": {
+       "diff": 42.3,
+       "lo": 40.4,
+       "hi": 44.2,
+       "p": 0
+      },
+      "nfeat-morph": {
+       "diff": 9,
+       "lo": 6.7,
+       "hi": 11.3,
+       "p": 0
       }
      },
      "testsVariant": {
@@ -729,8 +1153,32 @@
       },
       "morph-memory": {
        "diff": -2,
-       "lo": -3,
-       "hi": -1,
+       "lo": -3.1,
+       "hi": -0.9,
+       "p": 0.001
+      },
+      "nfeat-baseline": {
+       "diff": 9.4,
+       "lo": 7.2,
+       "hi": 11.7,
+       "p": 0
+      },
+      "natom-baseline": {
+       "diff": -32.9,
+       "lo": -34.8,
+       "hi": -31,
+       "p": 0
+      },
+      "nfeat-natom": {
+       "diff": 42.3,
+       "lo": 40.4,
+       "hi": 44.3,
+       "p": 0
+      },
+      "nfeat-morph": {
+       "diff": 9,
+       "lo": 6.6,
+       "hi": 11.2,
        "p": 0
       }
      }
@@ -840,25 +1288,113 @@
         "N": 49.5,
         "V": 8.2
        }
+      },
+      "natom": {
+       "mean": 3.8,
+       "std": 2.2,
+       "runs": [
+        2.4,
+        3,
+        5.6,
+        6.6,
+        1.6
+       ],
+       "variant": {
+        "mean": 3.8,
+        "std": 2.2,
+        "runs": [
+         2.4,
+         3,
+         5.6,
+         6.6,
+         1.6
+        ]
+       },
+       "lev": 5.1,
+       "seenBundle": 4.5,
+       "unseenBundle": 0.3,
+       "seenLemma": 3.8,
+       "unseenLemma": 3.8,
+       "copyShare": 0.7,
+       "pos": {
+        "N": 4.6,
+        "V": 0.2
+       }
+      },
+      "nfeat": {
+       "mean": 65.2,
+       "std": 3.9,
+       "runs": [
+        64.8,
+        70.6,
+        67.4,
+        61.6,
+        61.6
+       ],
+       "variant": {
+        "mean": 65.2,
+        "std": 3.9,
+        "runs": [
+         64.8,
+         70.6,
+         67.4,
+         61.6,
+         61.6
+        ]
+       },
+       "lev": 1.82,
+       "seenBundle": 76.7,
+       "unseenBundle": 3.3,
+       "seenLemma": 65.5,
+       "unseenLemma": 55.1,
+       "copyShare": 2.1,
+       "pos": {
+        "N": 78.2,
+        "V": 3.2
+       }
       }
      },
      "tests": {
       "morph-baseline": {
        "diff": 0.4,
-       "lo": 0.2,
+       "lo": 0.1,
        "hi": 0.6,
-       "p": 0
+       "p": 0.001
       },
       "memory-baseline": {
        "diff": 6.2,
-       "lo": 4.5,
+       "lo": 4.6,
        "hi": 7.8,
        "p": 0
       },
       "morph-memory": {
        "diff": -5.8,
-       "lo": -7.4,
+       "lo": -7.3,
        "hi": -4.2,
+       "p": 0
+      },
+      "nfeat-baseline": {
+       "diff": 23.2,
+       "lo": 21.1,
+       "hi": 25.4,
+       "p": 0
+      },
+      "natom-baseline": {
+       "diff": -38.1,
+       "lo": -40,
+       "hi": -36.1,
+       "p": 0
+      },
+      "nfeat-natom": {
+       "diff": 61.4,
+       "lo": 59.5,
+       "hi": 63.4,
+       "p": 0
+      },
+      "nfeat-morph": {
+       "diff": 22.9,
+       "lo": 20.6,
+       "hi": 25.2,
        "p": 0
       }
      },
@@ -867,18 +1403,42 @@
        "diff": 0.4,
        "lo": 0.2,
        "hi": 0.6,
-       "p": 0
+       "p": 0.001
       },
       "memory-baseline": {
        "diff": 6.2,
-       "lo": 4.4,
+       "lo": 4.6,
        "hi": 7.8,
        "p": 0
       },
       "morph-memory": {
        "diff": -5.8,
        "lo": -7.4,
-       "hi": -4.1,
+       "hi": -4.2,
+       "p": 0
+      },
+      "nfeat-baseline": {
+       "diff": 23.2,
+       "lo": 21,
+       "hi": 25.5,
+       "p": 0
+      },
+      "natom-baseline": {
+       "diff": -38.1,
+       "lo": -40.1,
+       "hi": -35.9,
+       "p": 0
+      },
+      "nfeat-natom": {
+       "diff": 61.4,
+       "lo": 59.5,
+       "hi": 63.2,
+       "p": 0
+      },
+      "nfeat-morph": {
+       "diff": 22.9,
+       "lo": 20.6,
+       "hi": 25.1,
        "p": 0
       }
      }
@@ -990,6 +1550,70 @@
         "N": 18.9,
         "V": 0.5
        }
+      },
+      "natom": {
+       "mean": 0.2,
+       "std": 0.2,
+       "runs": [
+        0.2,
+        0.4,
+        0.4,
+        0.2,
+        0
+       ],
+       "variant": {
+        "mean": 0.2,
+        "std": 0.2,
+        "runs": [
+         0.2,
+         0.4,
+         0.4,
+         0.2,
+         0
+        ]
+       },
+       "lev": 7.39,
+       "seenBundle": 0.5,
+       "unseenBundle": 0,
+       "seenLemma": null,
+       "unseenLemma": 0.2,
+       "copyShare": 0,
+       "pos": {
+        "N": 0.3,
+        "V": 0
+       }
+      },
+      "nfeat": {
+       "mean": 0.4,
+       "std": 0.2,
+       "runs": [
+        0.6,
+        0.2,
+        0.6,
+        0.2,
+        0.6
+       ],
+       "variant": {
+        "mean": 0.4,
+        "std": 0.2,
+        "runs": [
+         0.6,
+         0.2,
+         0.6,
+         0.2,
+         0.6
+        ]
+       },
+       "lev": 6.61,
+       "seenBundle": 0.8,
+       "unseenBundle": 0.2,
+       "seenLemma": null,
+       "unseenLemma": 0.4,
+       "copyShare": 0.1,
+       "pos": {
+        "N": 0.5,
+        "V": 0
+       }
       }
      },
      "tests": {
@@ -997,7 +1621,7 @@
        "diff": -0.1,
        "lo": -0.6,
        "hi": 0.4,
-       "p": 0.669
+       "p": 0.673
       },
       "memory-baseline": {
        "diff": 0,
@@ -1009,7 +1633,31 @@
        "diff": -0.1,
        "lo": -0.6,
        "hi": 0.4,
-       "p": 0.668
+       "p": 0.715
+      },
+      "nfeat-baseline": {
+       "diff": -15.6,
+       "lo": -17.1,
+       "hi": -14.2,
+       "p": 0
+      },
+      "natom-baseline": {
+       "diff": -15.8,
+       "lo": -17.2,
+       "hi": -14.4,
+       "p": 0
+      },
+      "nfeat-natom": {
+       "diff": 0.2,
+       "lo": -0.1,
+       "hi": 0.5,
+       "p": 0.273
+      },
+      "nfeat-morph": {
+       "diff": -15.5,
+       "lo": -16.9,
+       "hi": -14,
+       "p": 0
       }
      },
      "testsVariant": {
@@ -1017,7 +1665,7 @@
        "diff": -0.1,
        "lo": -0.6,
        "hi": 0.4,
-       "p": 0.692
+       "p": 0.691
       },
       "memory-baseline": {
        "diff": 0,
@@ -1029,7 +1677,31 @@
        "diff": -0.1,
        "lo": -0.6,
        "hi": 0.4,
-       "p": 0.675
+       "p": 0.696
+      },
+      "nfeat-baseline": {
+       "diff": -15.6,
+       "lo": -17.1,
+       "hi": -14.2,
+       "p": 0
+      },
+      "natom-baseline": {
+       "diff": -15.8,
+       "lo": -17.2,
+       "hi": -14.4,
+       "p": 0
+      },
+      "nfeat-natom": {
+       "diff": 0.2,
+       "lo": -0.1,
+       "hi": 0.5,
+       "p": 0.264
+      },
+      "nfeat-morph": {
+       "diff": -15.5,
+       "lo": -16.9,
+       "hi": -14,
+       "p": 0
       }
      }
     },
@@ -1138,6 +1810,70 @@
         "N": 27.3,
         "V": 1.3
        }
+      },
+      "natom": {
+       "mean": 0.5,
+       "std": 0.2,
+       "runs": [
+        0.4,
+        0.6,
+        0.2,
+        0.6,
+        0.6
+       ],
+       "variant": {
+        "mean": 0.5,
+        "std": 0.2,
+        "runs": [
+         0.4,
+         0.6,
+         0.2,
+         0.6,
+         0.6
+        ]
+       },
+       "lev": 6.49,
+       "seenBundle": 0.7,
+       "unseenBundle": 0,
+       "seenLemma": null,
+       "unseenLemma": 0.5,
+       "copyShare": 0,
+       "pos": {
+        "N": 0.6,
+        "V": 0
+       }
+      },
+      "nfeat": {
+       "mean": 1.2,
+       "std": 0.4,
+       "runs": [
+        1.6,
+        1,
+        1,
+        0.8,
+        1.8
+       ],
+       "variant": {
+        "mean": 1.2,
+        "std": 0.4,
+        "runs": [
+         1.6,
+         1,
+         1,
+         0.8,
+         1.8
+        ]
+       },
+       "lev": 5.82,
+       "seenBundle": 1.6,
+       "unseenBundle": 0.7,
+       "seenLemma": null,
+       "unseenLemma": 1.2,
+       "copyShare": 0.2,
+       "pos": {
+        "N": 1.4,
+        "V": 0.3
+       }
       }
      },
      "tests": {
@@ -1145,7 +1881,7 @@
        "diff": 0.5,
        "lo": 0.2,
        "hi": 0.9,
-       "p": 0.008
+       "p": 0.001
       },
       "memory-baseline": {
        "diff": 0,
@@ -1157,7 +1893,31 @@
        "diff": 0.5,
        "lo": 0.2,
        "hi": 0.9,
-       "p": 0.003
+       "p": 0.007
+      },
+      "nfeat-baseline": {
+       "diff": -21.2,
+       "lo": -22.8,
+       "hi": -19.6,
+       "p": 0
+      },
+      "natom-baseline": {
+       "diff": -21.9,
+       "lo": -23.6,
+       "hi": -20.4,
+       "p": 0
+      },
+      "nfeat-natom": {
+       "diff": 0.8,
+       "lo": 0.3,
+       "hi": 1.2,
+       "p": 0
+      },
+      "nfeat-morph": {
+       "diff": -21.7,
+       "lo": -23.3,
+       "hi": -20.1,
+       "p": 0
       }
      },
      "testsVariant": {
@@ -1165,7 +1925,7 @@
        "diff": 0.5,
        "lo": 0.2,
        "hi": 0.9,
-       "p": 0.01
+       "p": 0.006
       },
       "memory-baseline": {
        "diff": 0,
@@ -1178,6 +1938,30 @@
        "lo": 0.2,
        "hi": 0.9,
        "p": 0.002
+      },
+      "nfeat-baseline": {
+       "diff": -21.2,
+       "lo": -22.8,
+       "hi": -19.5,
+       "p": 0
+      },
+      "natom-baseline": {
+       "diff": -21.9,
+       "lo": -23.6,
+       "hi": -20.3,
+       "p": 0
+      },
+      "nfeat-natom": {
+       "diff": 0.8,
+       "lo": 0.3,
+       "hi": 1.2,
+       "p": 0
+      },
+      "nfeat-morph": {
+       "diff": -21.7,
+       "lo": -23.3,
+       "hi": -20,
+       "p": 0
       }
      }
     },
@@ -1286,6 +2070,70 @@
         "N": 37.2,
         "V": 3.2
        }
+      },
+      "natom": {
+       "mean": 1.1,
+       "std": 0.4,
+       "runs": [
+        1.4,
+        1.4,
+        0.4,
+        1.4,
+        1
+       ],
+       "variant": {
+        "mean": 1.1,
+        "std": 0.4,
+        "runs": [
+         1.4,
+         1.4,
+         0.4,
+         1.4,
+         1
+        ]
+       },
+       "lev": 5.93,
+       "seenBundle": 1.4,
+       "unseenBundle": 0.2,
+       "seenLemma": null,
+       "unseenLemma": 1.1,
+       "copyShare": 0.9,
+       "pos": {
+        "N": 1.3,
+        "V": 0
+       }
+      },
+      "nfeat": {
+       "mean": 9.6,
+       "std": 6.7,
+       "runs": [
+        2.4,
+        4.8,
+        19.2,
+        12.8,
+        8.8
+       ],
+       "variant": {
+        "mean": 9.6,
+        "std": 6.7,
+        "runs": [
+         2.4,
+         4.8,
+         19.2,
+         12.8,
+         8.8
+        ]
+       },
+       "lev": 4.43,
+       "seenBundle": 12,
+       "unseenBundle": 0.7,
+       "seenLemma": null,
+       "unseenLemma": 9.6,
+       "copyShare": 1,
+       "pos": {
+        "N": 11.5,
+        "V": 0.3
+       }
       }
      },
      "tests": {
@@ -1305,7 +2153,31 @@
        "diff": 0.6,
        "lo": 0.2,
        "hi": 0.9,
-       "p": 0.002
+       "p": 0
+      },
+      "nfeat-baseline": {
+       "diff": -21.3,
+       "lo": -23.2,
+       "hi": -19.5,
+       "p": 0
+      },
+      "natom-baseline": {
+       "diff": -29.8,
+       "lo": -31.6,
+       "hi": -28,
+       "p": 0
+      },
+      "nfeat-natom": {
+       "diff": 8.5,
+       "lo": 7.4,
+       "hi": 9.6,
+       "p": 0
+      },
+      "nfeat-morph": {
+       "diff": -21.9,
+       "lo": -23.8,
+       "hi": -19.9,
+       "p": 0
       }
      },
      "testsVariant": {
@@ -1313,7 +2185,7 @@
        "diff": 0.6,
        "lo": 0.2,
        "hi": 0.9,
-       "p": 0
+       "p": 0.001
       },
       "memory-baseline": {
        "diff": 0,
@@ -1325,7 +2197,31 @@
        "diff": 0.6,
        "lo": 0.2,
        "hi": 0.9,
-       "p": 0.001
+       "p": 0
+      },
+      "nfeat-baseline": {
+       "diff": -21.3,
+       "lo": -23.2,
+       "hi": -19.4,
+       "p": 0
+      },
+      "natom-baseline": {
+       "diff": -29.8,
+       "lo": -31.6,
+       "hi": -28,
+       "p": 0
+      },
+      "nfeat-natom": {
+       "diff": 8.5,
+       "lo": 7.4,
+       "hi": 9.6,
+       "p": 0
+      },
+      "nfeat-morph": {
+       "diff": -21.9,
+       "lo": -23.9,
+       "hi": -20,
+       "p": 0
       }
      }
     },
@@ -1434,6 +2330,70 @@
         "N": 43.8,
         "V": 4.7
        }
+      },
+      "natom": {
+       "mean": 1.7,
+       "std": 0.6,
+       "runs": [
+        2.4,
+        1,
+        1.4,
+        2.4,
+        1.4
+       ],
+       "variant": {
+        "mean": 1.7,
+        "std": 0.6,
+        "runs": [
+         2.4,
+         1,
+         1.4,
+         2.4,
+         1.4
+        ]
+       },
+       "lev": 5.65,
+       "seenBundle": 2.1,
+       "unseenBundle": 0,
+       "seenLemma": null,
+       "unseenLemma": 1.7,
+       "copyShare": 0,
+       "pos": {
+        "N": 2.1,
+        "V": 0
+       }
+      },
+      "nfeat": {
+       "mean": 27.4,
+       "std": 2.8,
+       "runs": [
+        29.6,
+        29.6,
+        23.4,
+        25.6,
+        28.6
+       ],
+       "variant": {
+        "mean": 27.4,
+        "std": 2.8,
+        "runs": [
+         29.6,
+         29.6,
+         23.4,
+         25.6,
+         28.6
+        ]
+       },
+       "lev": 3.21,
+       "seenBundle": 32.8,
+       "unseenBundle": 1.2,
+       "seenLemma": null,
+       "unseenLemma": 27.4,
+       "copyShare": 2.4,
+       "pos": {
+        "N": 32.6,
+        "V": 1.3
+       }
       }
      },
      "tests": {
@@ -1441,7 +2401,7 @@
        "diff": 0.2,
        "lo": 0,
        "hi": 0.4,
-       "p": 0.23
+       "p": 0.2
       },
       "memory-baseline": {
        "diff": 0,
@@ -1451,9 +2411,33 @@
       },
       "morph-memory": {
        "diff": 0.2,
-       "lo": -0.1,
+       "lo": 0,
        "hi": 0.4,
-       "p": 0.242
+       "p": 0.208
+      },
+      "nfeat-baseline": {
+       "diff": -9.9,
+       "lo": -12.3,
+       "hi": -7.7,
+       "p": 0
+      },
+      "natom-baseline": {
+       "diff": -35.6,
+       "lo": -37.4,
+       "hi": -33.6,
+       "p": 0
+      },
+      "nfeat-natom": {
+       "diff": 25.6,
+       "lo": 24,
+       "hi": 27.4,
+       "p": 0
+      },
+      "nfeat-morph": {
+       "diff": -10.1,
+       "lo": -12.3,
+       "hi": -7.8,
+       "p": 0
       }
      },
      "testsVariant": {
@@ -1461,7 +2445,7 @@
        "diff": 0.2,
        "lo": 0,
        "hi": 0.4,
-       "p": 0.196
+       "p": 0.216
       },
       "memory-baseline": {
        "diff": 0,
@@ -1473,7 +2457,31 @@
        "diff": 0.2,
        "lo": 0,
        "hi": 0.4,
-       "p": 0.217
+       "p": 0.226
+      },
+      "nfeat-baseline": {
+       "diff": -9.9,
+       "lo": -12.2,
+       "hi": -7.7,
+       "p": 0
+      },
+      "natom-baseline": {
+       "diff": -35.6,
+       "lo": -37.4,
+       "hi": -33.7,
+       "p": 0
+      },
+      "nfeat-natom": {
+       "diff": 25.6,
+       "lo": 24,
+       "hi": 27.4,
+       "p": 0
+      },
+      "nfeat-morph": {
+       "diff": -10.1,
+       "lo": -12.4,
+       "hi": -7.7,
+       "p": 0
       }
      }
     },
@@ -1582,34 +2590,78 @@
         "N": 53.6,
         "V": 7.9
        }
+      },
+      "natom": {
+       "mean": 5.9,
+       "std": 4.7,
+       "runs": [
+        1.8,
+        8.6,
+        1.4,
+        5.2,
+        12.4
+       ],
+       "variant": {
+        "mean": 5.9,
+        "std": 4.7,
+        "runs": [
+         1.8,
+         8.6,
+         1.4,
+         5.2,
+         12.4
+        ]
+       },
+       "lev": 5.4,
+       "seenBundle": 6.9,
+       "unseenBundle": 0,
+       "seenLemma": null,
+       "unseenLemma": 5.9,
+       "copyShare": 0.3,
+       "pos": {
+        "N": 7.1,
+        "V": 0
+       }
+      },
+      "nfeat": {
+       "mean": 53.6,
+       "std": 7.7,
+       "runs": [
+        52.2,
+        64.4,
+        55.6,
+        42.8,
+        52.8
+       ],
+       "variant": {
+        "mean": 53.6,
+        "std": 7.7,
+        "runs": [
+         52.2,
+         64.4,
+         55.6,
+         42.8,
+         52.8
+        ]
+       },
+       "lev": 2.18,
+       "seenBundle": 62.2,
+       "unseenBundle": 3.5,
+       "seenLemma": null,
+       "unseenLemma": 53.6,
+       "copyShare": 2.9,
+       "pos": {
+        "N": 63.5,
+        "V": 4.2
+       }
       }
      },
      "tests": {
       "morph-baseline": {
        "diff": 0.4,
        "lo": 0.2,
-       "hi": 0.6,
+       "hi": 0.7,
        "p": 0
-      },
-      "memory-baseline": {
-       "diff": 0,
-       "lo": 0,
-       "hi": 0,
-       "p": 1
-      },
-      "morph-memory": {
-       "diff": 0.4,
-       "lo": 0.2,
-       "hi": 0.6,
-       "p": 0
-      }
-     },
-     "testsVariant": {
-      "morph-baseline": {
-       "diff": 0.4,
-       "lo": 0.2,
-       "hi": 0.6,
-       "p": 0.001
       },
       "memory-baseline": {
        "diff": 0,
@@ -1621,6 +2673,74 @@
        "diff": 0.4,
        "lo": 0.2,
        "hi": 0.7,
+       "p": 0
+      },
+      "nfeat-baseline": {
+       "diff": 7.8,
+       "lo": 5.4,
+       "hi": 10.1,
+       "p": 0
+      },
+      "natom-baseline": {
+       "diff": -39.9,
+       "lo": -42,
+       "hi": -37.8,
+       "p": 0
+      },
+      "nfeat-natom": {
+       "diff": 47.7,
+       "lo": 45.6,
+       "hi": 49.6,
+       "p": 0
+      },
+      "nfeat-morph": {
+       "diff": 7.4,
+       "lo": 5.1,
+       "hi": 9.7,
+       "p": 0
+      }
+     },
+     "testsVariant": {
+      "morph-baseline": {
+       "diff": 0.4,
+       "lo": 0.2,
+       "hi": 0.6,
+       "p": 0
+      },
+      "memory-baseline": {
+       "diff": 0,
+       "lo": 0,
+       "hi": 0,
+       "p": 1
+      },
+      "morph-memory": {
+       "diff": 0.4,
+       "lo": 0.2,
+       "hi": 0.7,
+       "p": 0
+      },
+      "nfeat-baseline": {
+       "diff": 7.8,
+       "lo": 5.5,
+       "hi": 10.2,
+       "p": 0
+      },
+      "natom-baseline": {
+       "diff": -39.9,
+       "lo": -42,
+       "hi": -37.9,
+       "p": 0
+      },
+      "nfeat-natom": {
+       "diff": 47.7,
+       "lo": 45.7,
+       "hi": 49.6,
+       "p": 0
+      },
+      "nfeat-morph": {
+       "diff": 7.4,
+       "lo": 4.9,
+       "hi": 9.6,
        "p": 0
       }
      }
@@ -1734,6 +2854,70 @@
         "N": 71.5,
         "V": 12.5
        }
+      },
+      "natom": {
+       "mean": 5.7,
+       "std": 1.3,
+       "runs": [
+        4.6,
+        7.9,
+        5.2,
+        5.8,
+        4.9
+       ],
+       "variant": {
+        "mean": 5.7,
+        "std": 1.3,
+        "runs": [
+         4.6,
+         7.9,
+         5.2,
+         5.8,
+         4.9
+        ]
+       },
+       "lev": 4.14,
+       "seenBundle": 9.3,
+       "unseenBundle": 0,
+       "seenLemma": 11.6,
+       "unseenLemma": 3.9,
+       "copyShare": 4,
+       "pos": {
+        "N": 10,
+        "V": 0
+       }
+      },
+      "nfeat": {
+       "mean": 8.5,
+       "std": 2.5,
+       "runs": [
+        6.1,
+        12.8,
+        7.9,
+        8.5,
+        7.3
+       ],
+       "variant": {
+        "mean": 8.5,
+        "std": 2.5,
+        "runs": [
+         6.1,
+         12.8,
+         7.9,
+         8.5,
+         7.3
+        ]
+       },
+       "lev": 3.46,
+       "seenBundle": 13.7,
+       "unseenBundle": 0.5,
+       "seenLemma": 11.6,
+       "unseenLemma": 7.6,
+       "copyShare": 3.9,
+       "pos": {
+        "N": 14.4,
+        "V": 0.8
+       }
       }
      },
      "tests": {
@@ -1754,6 +2938,30 @@
        "lo": 1.5,
        "hi": 3.1,
        "p": 0
+      },
+      "nfeat-baseline": {
+       "diff": -35.4,
+       "lo": -37.8,
+       "hi": -33,
+       "p": 0
+      },
+      "natom-baseline": {
+       "diff": -38.2,
+       "lo": -40.7,
+       "hi": -35.7,
+       "p": 0
+      },
+      "nfeat-natom": {
+       "diff": 2.9,
+       "lo": 1.6,
+       "hi": 4.1,
+       "p": 0
+      },
+      "nfeat-morph": {
+       "diff": -37.4,
+       "lo": -39.9,
+       "hi": -34.9,
+       "p": 0
       }
      },
      "testsVariant": {
@@ -1767,12 +2975,36 @@
        "diff": -0.2,
        "lo": -0.5,
        "hi": 0.1,
-       "p": 0.359
+       "p": 0.341
       },
       "morph-memory": {
        "diff": 2.2,
        "lo": 1.4,
        "hi": 3.1,
+       "p": 0
+      },
+      "nfeat-baseline": {
+       "diff": -35.4,
+       "lo": -37.8,
+       "hi": -32.9,
+       "p": 0
+      },
+      "natom-baseline": {
+       "diff": -38.2,
+       "lo": -40.7,
+       "hi": -35.8,
+       "p": 0
+      },
+      "nfeat-natom": {
+       "diff": 2.9,
+       "lo": 1.7,
+       "hi": 4.1,
+       "p": 0
+      },
+      "nfeat-morph": {
+       "diff": -37.4,
+       "lo": -40,
+       "hi": -35,
        "p": 0
       }
      }
@@ -1882,29 +3114,73 @@
         "N": 77.2,
         "V": 22.3
        }
+      },
+      "natom": {
+       "mean": 13.6,
+       "std": 4.3,
+       "runs": [
+        10.6,
+        20.1,
+        12.8,
+        15.2,
+        9.1
+       ],
+       "variant": {
+        "mean": 13.6,
+        "std": 4.3,
+        "runs": [
+         10.6,
+         20.1,
+         12.8,
+         15.2,
+         9.1
+        ]
+       },
+       "lev": 3.4,
+       "seenBundle": 20.3,
+       "unseenBundle": 0.7,
+       "seenLemma": 17.5,
+       "unseenLemma": 10.6,
+       "copyShare": 5.2,
+       "pos": {
+        "N": 23.2,
+        "V": 1
+       }
+      },
+      "nfeat": {
+       "mean": 21.1,
+       "std": 6.3,
+       "runs": [
+        19.8,
+        25.8,
+        14.6,
+        29.2,
+        16.1
+       ],
+       "variant": {
+        "mean": 21.1,
+        "std": 6.3,
+        "runs": [
+         19.8,
+         25.8,
+         14.6,
+         29.2,
+         16.1
+        ]
+       },
+       "lev": 2.53,
+       "seenBundle": 29.5,
+       "unseenBundle": 5,
+       "seenLemma": 24.5,
+       "unseenLemma": 18.6,
+       "copyShare": 6.5,
+       "pos": {
+        "N": 32.3,
+        "V": 6.5
+       }
       }
      },
      "tests": {
-      "morph-baseline": {
-       "diff": 2.3,
-       "lo": 1.5,
-       "hi": 3.1,
-       "p": 0
-      },
-      "memory-baseline": {
-       "diff": -1,
-       "lo": -1.7,
-       "hi": -0.2,
-       "p": 0.019
-      },
-      "morph-memory": {
-       "diff": 3.3,
-       "lo": 2.1,
-       "hi": 4.4,
-       "p": 0
-      }
-     },
-     "testsVariant": {
       "morph-baseline": {
        "diff": 2.3,
        "lo": 1.5,
@@ -1913,14 +3189,82 @@
       },
       "memory-baseline": {
        "diff": -1,
-       "lo": -1.7,
-       "hi": -0.2,
-       "p": 0.022
+       "lo": -1.8,
+       "hi": -0.1,
+       "p": 0.019
       },
       "morph-memory": {
        "diff": 3.3,
        "lo": 2.1,
        "hi": 4.4,
+       "p": 0
+      },
+      "nfeat-baseline": {
+       "diff": -30,
+       "lo": -32.6,
+       "hi": -27.5,
+       "p": 0
+      },
+      "natom-baseline": {
+       "diff": -37.6,
+       "lo": -40.1,
+       "hi": -35.2,
+       "p": 0
+      },
+      "nfeat-natom": {
+       "diff": 7.5,
+       "lo": 5.8,
+       "hi": 9.4,
+       "p": 0
+      },
+      "nfeat-morph": {
+       "diff": -32.3,
+       "lo": -34.8,
+       "hi": -29.8,
+       "p": 0
+      }
+     },
+     "testsVariant": {
+      "morph-baseline": {
+       "diff": 2.3,
+       "lo": 1.6,
+       "hi": 3.1,
+       "p": 0
+      },
+      "memory-baseline": {
+       "diff": -1,
+       "lo": -1.8,
+       "hi": -0.2,
+       "p": 0.009
+      },
+      "morph-memory": {
+       "diff": 3.3,
+       "lo": 2.2,
+       "hi": 4.4,
+       "p": 0
+      },
+      "nfeat-baseline": {
+       "diff": -30,
+       "lo": -32.5,
+       "hi": -27.6,
+       "p": 0
+      },
+      "natom-baseline": {
+       "diff": -37.6,
+       "lo": -40.1,
+       "hi": -35,
+       "p": 0
+      },
+      "nfeat-natom": {
+       "diff": 7.5,
+       "lo": 5.9,
+       "hi": 9.2,
+       "p": 0
+      },
+      "nfeat-morph": {
+       "diff": -32.3,
+       "lo": -34.7,
+       "hi": -29.8,
        "p": 0
       }
      }
@@ -2030,13 +3374,77 @@
         "N": 79.1,
         "V": 40.4
        }
+      },
+      "natom": {
+       "mean": 33.8,
+       "std": 1.4,
+       "runs": [
+        34.7,
+        33.1,
+        34.7,
+        31.6,
+        35
+       ],
+       "variant": {
+        "mean": 33.8,
+        "std": 1.4,
+        "runs": [
+         34.7,
+         33.1,
+         34.7,
+         31.6,
+         35
+        ]
+       },
+       "lev": 2.71,
+       "seenBundle": 45.7,
+       "unseenBundle": 0.9,
+       "seenLemma": 34.4,
+       "unseenLemma": 32.1,
+       "copyShare": 7,
+       "pos": {
+        "N": 57.7,
+        "V": 2.5
+       }
+      },
+      "nfeat": {
+       "mean": 50.6,
+       "std": 9.3,
+       "runs": [
+        61.1,
+        37.7,
+        51.1,
+        45.6,
+        57.4
+       ],
+       "variant": {
+        "mean": 50.6,
+        "std": 9.3,
+        "runs": [
+         61.1,
+         37.7,
+         51.1,
+         45.6,
+         57.4
+        ]
+       },
+       "lev": 1.29,
+       "seenBundle": 58.1,
+       "unseenBundle": 29.9,
+       "seenLemma": 53.6,
+       "unseenLemma": 42.1,
+       "copyShare": 7.9,
+       "pos": {
+        "N": 62.8,
+        "V": 34.6
+       }
       }
      },
      "tests": {
       "morph-baseline": {
        "diff": 4.4,
-       "lo": 3.3,
-       "hi": 5.5,
+       "lo": 3.4,
+       "hi": 5.3,
        "p": 0
       },
       "memory-baseline": {
@@ -2048,15 +3456,39 @@
       "morph-memory": {
        "diff": 7.5,
        "lo": 5.8,
-       "hi": 9.4,
+       "hi": 9.2,
+       "p": 0
+      },
+      "nfeat-baseline": {
+       "diff": -7.4,
+       "lo": -10.3,
+       "hi": -4.7,
+       "p": 0
+      },
+      "natom-baseline": {
+       "diff": -24.2,
+       "lo": -26.7,
+       "hi": -21.8,
+       "p": 0
+      },
+      "nfeat-natom": {
+       "diff": 16.8,
+       "lo": 14.4,
+       "hi": 19.1,
+       "p": 0
+      },
+      "nfeat-morph": {
+       "diff": -11.8,
+       "lo": -14.5,
+       "hi": -9,
        "p": 0
       }
      },
      "testsVariant": {
       "morph-baseline": {
        "diff": 4.4,
-       "lo": 3.4,
-       "hi": 5.4,
+       "lo": 3.3,
+       "hi": 5.3,
        "p": 0
       },
       "memory-baseline": {
@@ -2068,7 +3500,31 @@
       "morph-memory": {
        "diff": 7.5,
        "lo": 5.7,
-       "hi": 9.2,
+       "hi": 9.3,
+       "p": 0
+      },
+      "nfeat-baseline": {
+       "diff": -7.4,
+       "lo": -10.1,
+       "hi": -4.8,
+       "p": 0
+      },
+      "natom-baseline": {
+       "diff": -24.2,
+       "lo": -26.7,
+       "hi": -21.6,
+       "p": 0
+      },
+      "nfeat-natom": {
+       "diff": 16.8,
+       "lo": 14.5,
+       "hi": 19.1,
+       "p": 0
+      },
+      "nfeat-morph": {
+       "diff": -11.8,
+       "lo": -14.4,
+       "hi": -9.2,
        "p": 0
       }
      }
@@ -2178,13 +3634,77 @@
         "N": 77.2,
         "V": 59.4
        }
+      },
+      "natom": {
+       "mean": 48,
+       "std": 1.2,
+       "runs": [
+        47.4,
+        49.5,
+        48.9,
+        47.4,
+        46.5
+       ],
+       "variant": {
+        "mean": 48,
+        "std": 1.2,
+        "runs": [
+         47.4,
+         49.5,
+         48.9,
+         47.4,
+         46.5
+        ]
+       },
+       "lev": 2.27,
+       "seenBundle": 57.3,
+       "unseenBundle": 1.5,
+       "seenLemma": 47.8,
+       "unseenLemma": 50.5,
+       "copyShare": 6.3,
+       "pos": {
+        "N": 80.7,
+        "V": 5.1
+       }
+      },
+      "nfeat": {
+       "mean": 73.9,
+       "std": 4,
+       "runs": [
+        72.6,
+        72.3,
+        68.7,
+        78.7,
+        76.9
+       ],
+       "variant": {
+        "mean": 73.9,
+        "std": 4,
+        "runs": [
+         72.6,
+         72.3,
+         68.7,
+         78.7,
+         76.9
+        ]
+       },
+       "lev": 0.61,
+       "seenBundle": 76.9,
+       "unseenBundle": 58.8,
+       "seenLemma": 74.8,
+       "unseenLemma": 59.8,
+       "copyShare": 12.1,
+       "pos": {
+        "N": 81.6,
+        "V": 63.8
+       }
       }
      },
      "tests": {
       "morph-baseline": {
        "diff": 3.8,
        "lo": 2.9,
-       "hi": 4.7,
+       "hi": 4.8,
        "p": 0
       },
       "memory-baseline": {
@@ -2195,16 +3715,40 @@
       },
       "morph-memory": {
        "diff": 0.1,
-       "lo": -1.8,
+       "lo": -1.6,
        "hi": 1.9,
-       "p": 0.926
+       "p": 0.927
+      },
+      "nfeat-baseline": {
+       "diff": 8.2,
+       "lo": 5.7,
+       "hi": 10.8,
+       "p": 0
+      },
+      "natom-baseline": {
+       "diff": -17.7,
+       "lo": -20.3,
+       "hi": -14.9,
+       "p": 0
+      },
+      "nfeat-natom": {
+       "diff": 25.9,
+       "lo": 23.5,
+       "hi": 28.4,
+       "p": 0
+      },
+      "nfeat-morph": {
+       "diff": 4.4,
+       "lo": 1.9,
+       "hi": 6.9,
+       "p": 0
       }
      },
      "testsVariant": {
       "morph-baseline": {
        "diff": 3.8,
        "lo": 2.9,
-       "hi": 4.9,
+       "hi": 4.8,
        "p": 0
       },
       "memory-baseline": {
@@ -2217,7 +3761,31 @@
        "diff": 0.1,
        "lo": -1.7,
        "hi": 1.9,
-       "p": 0.927
+       "p": 0.931
+      },
+      "nfeat-baseline": {
+       "diff": 8.2,
+       "lo": 5.7,
+       "hi": 10.8,
+       "p": 0
+      },
+      "natom-baseline": {
+       "diff": -17.7,
+       "lo": -20.3,
+       "hi": -14.9,
+       "p": 0
+      },
+      "nfeat-natom": {
+       "diff": 25.9,
+       "lo": 23.3,
+       "hi": 28.4,
+       "p": 0
+      },
+      "nfeat-morph": {
+       "diff": 4.4,
+       "lo": 1.8,
+       "hi": 6.9,
+       "p": 0.001
       }
      }
     }
@@ -2328,6 +3896,70 @@
         "N": 67.6,
         "V": 17.9
        }
+      },
+      "natom": {
+       "mean": 5.1,
+       "std": 2.1,
+       "runs": [
+        3.3,
+        5.8,
+        2.7,
+        7.9,
+        5.8
+       ],
+       "variant": {
+        "mean": 5.1,
+        "std": 2.1,
+        "runs": [
+         3.3,
+         5.8,
+         2.7,
+         7.9,
+         5.8
+        ]
+       },
+       "lev": 4.14,
+       "seenBundle": 7.9,
+       "unseenBundle": 0.3,
+       "seenLemma": null,
+       "unseenLemma": 5.1,
+       "copyShare": 4.3,
+       "pos": {
+        "N": 8.3,
+        "V": 0.3
+       }
+      },
+      "nfeat": {
+       "mean": 5.8,
+       "std": 1,
+       "runs": [
+        6.4,
+        5.5,
+        4.3,
+        6.7,
+        6.1
+       ],
+       "variant": {
+        "mean": 5.8,
+        "std": 1,
+        "runs": [
+         6.4,
+         5.5,
+         4.3,
+         6.7,
+         6.1
+        ]
+       },
+       "lev": 3.55,
+       "seenBundle": 8.6,
+       "unseenBundle": 1,
+       "seenLemma": null,
+       "unseenLemma": 5.8,
+       "copyShare": 3.1,
+       "pos": {
+        "N": 8.4,
+        "V": 1.8
+       }
       }
      },
      "tests": {
@@ -2348,13 +3980,37 @@
        "lo": 2.7,
        "hi": 4.4,
        "p": 0
+      },
+      "nfeat-baseline": {
+       "diff": -38.6,
+       "lo": -41,
+       "hi": -36.2,
+       "p": 0
+      },
+      "natom-baseline": {
+       "diff": -39.3,
+       "lo": -41.5,
+       "hi": -37,
+       "p": 0
+      },
+      "nfeat-natom": {
+       "diff": 0.7,
+       "lo": -0.6,
+       "hi": 1.9,
+       "p": 0.326
+      },
+      "nfeat-morph": {
+       "diff": -42.1,
+       "lo": -44.4,
+       "hi": -39.6,
+       "p": 0
       }
      },
      "testsVariant": {
       "morph-baseline": {
        "diff": 3.5,
        "lo": 2.7,
-       "hi": 4.5,
+       "hi": 4.4,
        "p": 0
       },
       "memory-baseline": {
@@ -2367,6 +4023,30 @@
        "diff": 3.5,
        "lo": 2.7,
        "hi": 4.4,
+       "p": 0
+      },
+      "nfeat-baseline": {
+       "diff": -38.6,
+       "lo": -41,
+       "hi": -36.3,
+       "p": 0
+      },
+      "natom-baseline": {
+       "diff": -39.3,
+       "lo": -41.7,
+       "hi": -37,
+       "p": 0
+      },
+      "nfeat-natom": {
+       "diff": 0.7,
+       "lo": -0.5,
+       "hi": 1.9,
+       "p": 0.324
+      },
+      "nfeat-morph": {
+       "diff": -42.1,
+       "lo": -44.6,
+       "hi": -39.7,
        "p": 0
       }
      }
@@ -2476,6 +4156,70 @@
         "N": 73.5,
         "V": 25.8
        }
+      },
+      "natom": {
+       "mean": 11.5,
+       "std": 2.1,
+       "runs": [
+        13.7,
+        11.9,
+        7.9,
+        11.9,
+        12.2
+       ],
+       "variant": {
+        "mean": 11.5,
+        "std": 2.1,
+        "runs": [
+         13.7,
+         11.9,
+         7.9,
+         11.9,
+         12.2
+        ]
+       },
+       "lev": 3.52,
+       "seenBundle": 16.8,
+       "unseenBundle": 0,
+       "seenLemma": null,
+       "unseenLemma": 11.5,
+       "copyShare": 6.6,
+       "pos": {
+        "N": 18.7,
+        "V": 0.5
+       }
+      },
+      "nfeat": {
+       "mean": 20.9,
+       "std": 5.9,
+       "runs": [
+        23.1,
+        23.7,
+        13.7,
+        28,
+        15.8
+       ],
+       "variant": {
+        "mean": 20.9,
+        "std": 5.9,
+        "runs": [
+         23.1,
+         23.7,
+         13.7,
+         28,
+         15.8
+        ]
+       },
+       "lev": 2.59,
+       "seenBundle": 27.6,
+       "unseenBundle": 6.2,
+       "seenLemma": null,
+       "unseenLemma": 20.9,
+       "copyShare": 7.4,
+       "pos": {
+        "N": 30,
+        "V": 6.9
+       }
       }
      },
      "tests": {
@@ -2496,6 +4240,30 @@
        "lo": 3,
        "hi": 4.9,
        "p": 0
+      },
+      "nfeat-baseline": {
+       "diff": -29.8,
+       "lo": -32.2,
+       "hi": -27.4,
+       "p": 0
+      },
+      "natom-baseline": {
+       "diff": -39.1,
+       "lo": -41.7,
+       "hi": -36.9,
+       "p": 0
+      },
+      "nfeat-natom": {
+       "diff": 9.4,
+       "lo": 7.5,
+       "hi": 11.1,
+       "p": 0
+      },
+      "nfeat-morph": {
+       "diff": -33.7,
+       "lo": -36.2,
+       "hi": -31.3,
+       "p": 0
       }
      },
      "testsVariant": {
@@ -2515,6 +4283,30 @@
        "diff": 4,
        "lo": 3,
        "hi": 4.9,
+       "p": 0
+      },
+      "nfeat-baseline": {
+       "diff": -29.8,
+       "lo": -32.2,
+       "hi": -27.4,
+       "p": 0
+      },
+      "natom-baseline": {
+       "diff": -39.1,
+       "lo": -41.6,
+       "hi": -36.8,
+       "p": 0
+      },
+      "nfeat-natom": {
+       "diff": 9.4,
+       "lo": 7.5,
+       "hi": 11.2,
+       "p": 0
+      },
+      "nfeat-morph": {
+       "diff": -33.7,
+       "lo": -36.2,
+       "hi": -31.2,
        "p": 0
       }
      }
@@ -2624,9 +4416,117 @@
         "N": 74.6,
         "V": 43.1
        }
+      },
+      "natom": {
+       "mean": 30.6,
+       "std": 7.2,
+       "runs": [
+        31.3,
+        41,
+        21.9,
+        32.8,
+        26.1
+       ],
+       "variant": {
+        "mean": 30.6,
+        "std": 7.2,
+        "runs": [
+         31.3,
+         41,
+         21.9,
+         32.8,
+         26.1
+        ]
+       },
+       "lev": 2.87,
+       "seenBundle": 39.6,
+       "unseenBundle": 0.3,
+       "seenLemma": null,
+       "unseenLemma": 30.6,
+       "copyShare": 7.4,
+       "pos": {
+        "N": 49.5,
+        "V": 1.8
+       }
+      },
+      "nfeat": {
+       "mean": 41.2,
+       "std": 4.3,
+       "runs": [
+        41.3,
+        47.1,
+        36.8,
+        37.4,
+        43.5
+       ],
+       "variant": {
+        "mean": 41.2,
+        "std": 4.3,
+        "runs": [
+         41.3,
+         47.1,
+         36.8,
+         37.4,
+         43.5
+        ]
+       },
+       "lev": 1.63,
+       "seenBundle": 48.7,
+       "unseenBundle": 16,
+       "seenLemma": null,
+       "unseenLemma": 41.2,
+       "copyShare": 8.9,
+       "pos": {
+        "N": 54.1,
+        "V": 21.6
+       }
       }
      },
      "tests": {
+      "morph-baseline": {
+       "diff": 4.6,
+       "lo": 3.6,
+       "hi": 5.6,
+       "p": 0
+      },
+      "memory-baseline": {
+       "diff": 0,
+       "lo": 0,
+       "hi": 0,
+       "p": 1
+      },
+      "morph-memory": {
+       "diff": 4.6,
+       "lo": 3.6,
+       "hi": 5.6,
+       "p": 0
+      },
+      "nfeat-baseline": {
+       "diff": -16.4,
+       "lo": -19,
+       "hi": -14,
+       "p": 0
+      },
+      "natom-baseline": {
+       "diff": -26.9,
+       "lo": -29.3,
+       "hi": -24.5,
+       "p": 0
+      },
+      "nfeat-natom": {
+       "diff": 10.6,
+       "lo": 8.3,
+       "hi": 12.8,
+       "p": 0
+      },
+      "nfeat-morph": {
+       "diff": -20.9,
+       "lo": -23.5,
+       "hi": -18.5,
+       "p": 0
+      }
+     },
+     "testsVariant": {
       "morph-baseline": {
        "diff": 4.6,
        "lo": 3.6,
@@ -2644,25 +4544,29 @@
        "lo": 3.6,
        "hi": 5.6,
        "p": 0
-      }
-     },
-     "testsVariant": {
-      "morph-baseline": {
-       "diff": 4.6,
-       "lo": 3.6,
-       "hi": 5.6,
+      },
+      "nfeat-baseline": {
+       "diff": -16.4,
+       "lo": -18.8,
+       "hi": -13.8,
        "p": 0
       },
-      "memory-baseline": {
-       "diff": 0,
-       "lo": 0,
-       "hi": 0,
-       "p": 1
+      "natom-baseline": {
+       "diff": -26.9,
+       "lo": -29.2,
+       "hi": -24.5,
+       "p": 0
       },
-      "morph-memory": {
-       "diff": 4.6,
-       "lo": 3.6,
-       "hi": 5.6,
+      "nfeat-natom": {
+       "diff": 10.6,
+       "lo": 8.3,
+       "hi": 12.8,
+       "p": 0
+      },
+      "nfeat-morph": {
+       "diff": -20.9,
+       "lo": -23.5,
+       "hi": -18.4,
        "p": 0
       }
      }
@@ -2772,6 +4676,70 @@
         "N": 74.7,
         "V": 62.9
        }
+      },
+      "natom": {
+       "mean": 36.3,
+       "std": 5.7,
+       "runs": [
+        37.4,
+        42.9,
+        34.7,
+        38.9,
+        27.7
+       ],
+       "variant": {
+        "mean": 36.3,
+        "std": 5.7,
+        "runs": [
+         37.4,
+         42.9,
+         34.7,
+         38.9,
+         27.7
+        ]
+       },
+       "lev": 2.69,
+       "seenBundle": 42.3,
+       "unseenBundle": 1.3,
+       "seenLemma": null,
+       "unseenLemma": 36.3,
+       "copyShare": 6.1,
+       "pos": {
+        "N": 58.1,
+        "V": 3.1
+       }
+      },
+      "nfeat": {
+       "mean": 59.1,
+       "std": 9.7,
+       "runs": [
+        45.9,
+        69.3,
+        68.1,
+        55.3,
+        56.8
+       ],
+       "variant": {
+        "mean": 59.1,
+        "std": 9.7,
+        "runs": [
+         45.9,
+         69.3,
+         68.1,
+         55.3,
+         56.8
+        ]
+       },
+       "lev": 1.07,
+       "seenBundle": 62.7,
+       "unseenBundle": 37.9,
+       "seenLemma": null,
+       "unseenLemma": 59.1,
+       "copyShare": 12.3,
+       "pos": {
+        "N": 68,
+        "V": 45.6
+       }
       }
      },
      "tests": {
@@ -2789,8 +4757,32 @@
       },
       "morph-memory": {
        "diff": 4.8,
-       "lo": 3.7,
-       "hi": 5.8,
+       "lo": 3.8,
+       "hi": 5.9,
+       "p": 0
+      },
+      "nfeat-baseline": {
+       "diff": -6.1,
+       "lo": -8.9,
+       "hi": -3.5,
+       "p": 0
+      },
+      "natom-baseline": {
+       "diff": -28.9,
+       "lo": -31.5,
+       "hi": -26.3,
+       "p": 0
+      },
+      "nfeat-natom": {
+       "diff": 22.8,
+       "lo": 20.5,
+       "hi": 25,
+       "p": 0
+      },
+      "nfeat-morph": {
+       "diff": -10.9,
+       "lo": -13.6,
+       "hi": -8.3,
        "p": 0
       }
      },
@@ -2798,7 +4790,7 @@
       "morph-baseline": {
        "diff": 4.8,
        "lo": 3.8,
-       "hi": 5.9,
+       "hi": 5.8,
        "p": 0
       },
       "memory-baseline": {
@@ -2810,7 +4802,31 @@
       "morph-memory": {
        "diff": 4.8,
        "lo": 3.8,
-       "hi": 5.9,
+       "hi": 5.8,
+       "p": 0
+      },
+      "nfeat-baseline": {
+       "diff": -6.1,
+       "lo": -8.7,
+       "hi": -3.6,
+       "p": 0
+      },
+      "natom-baseline": {
+       "diff": -28.9,
+       "lo": -31.4,
+       "hi": -26.3,
+       "p": 0
+      },
+      "nfeat-natom": {
+       "diff": 22.8,
+       "lo": 20.4,
+       "hi": 25.2,
+       "p": 0
+      },
+      "nfeat-morph": {
+       "diff": -10.9,
+       "lo": -13.5,
+       "hi": -8.4,
        "p": 0
       }
      }
@@ -2928,6 +4944,72 @@
         "V": 6.1,
         "V.PTCP": 4.2
        }
+      },
+      "natom": {
+       "mean": 2.6,
+       "std": 1,
+       "runs": [
+        4.2,
+        2.8,
+        2.2,
+        1.8,
+        2
+       ],
+       "variant": {
+        "mean": 3.1,
+        "std": 1,
+        "runs": [
+         4.8,
+         3,
+         2.8,
+         2.4,
+         2.4
+        ]
+       },
+       "lev": 4.67,
+       "seenBundle": 5.3,
+       "unseenBundle": 0.4,
+       "seenLemma": 1.4,
+       "unseenLemma": 2.7,
+       "copyShare": 3.8,
+       "pos": {
+        "N": 3.4,
+        "V": 0.2,
+        "V.PTCP": 0
+       }
+      },
+      "nfeat": {
+       "mean": 2,
+       "std": 1,
+       "runs": [
+        3.4,
+        2.4,
+        1.4,
+        1.6,
+        1
+       ],
+       "variant": {
+        "mean": 2.6,
+        "std": 0.9,
+        "runs": [
+         4,
+         2.8,
+         2,
+         2.4,
+         1.8
+        ]
+       },
+       "lev": 4.43,
+       "seenBundle": 4,
+       "unseenBundle": 0.4,
+       "seenLemma": 2.2,
+       "unseenLemma": 1.9,
+       "copyShare": 3.8,
+       "pos": {
+        "N": 2.9,
+        "V": 0,
+        "V.PTCP": 0.4
+       }
       }
      },
      "tests": {
@@ -2948,6 +5030,30 @@
        "lo": -1.5,
        "hi": -0.6,
        "p": 0
+      },
+      "nfeat-baseline": {
+       "diff": -25.9,
+       "lo": -27.6,
+       "hi": -24.2,
+       "p": 0
+      },
+      "natom-baseline": {
+       "diff": -25.3,
+       "lo": -27,
+       "hi": -23.7,
+       "p": 0
+      },
+      "nfeat-natom": {
+       "diff": -0.6,
+       "lo": -1.3,
+       "hi": 0,
+       "p": 0.051
+      },
+      "nfeat-morph": {
+       "diff": -24.9,
+       "lo": -26.5,
+       "hi": -23.2,
+       "p": 0
       }
      },
      "testsVariant": {
@@ -2967,6 +5073,30 @@
        "diff": -1,
        "lo": -1.5,
        "hi": -0.6,
+       "p": 0
+      },
+      "nfeat-baseline": {
+       "diff": -28.1,
+       "lo": -29.8,
+       "hi": -26.4,
+       "p": 0
+      },
+      "natom-baseline": {
+       "diff": -27.6,
+       "lo": -29.4,
+       "hi": -25.9,
+       "p": 0
+      },
+      "nfeat-natom": {
+       "diff": -0.5,
+       "lo": -1.2,
+       "hi": 0.2,
+       "p": 0.167
+      },
+      "nfeat-morph": {
+       "diff": -27.1,
+       "lo": -28.8,
+       "hi": -25.4,
        "p": 0
       }
      }
@@ -3080,6 +5210,72 @@
         "V": 7.8,
         "V.PTCP": 2.5
        }
+      },
+      "natom": {
+       "mean": 6.3,
+       "std": 1.4,
+       "runs": [
+        8,
+        7.6,
+        6,
+        5,
+        5
+       ],
+       "variant": {
+        "mean": 7.2,
+        "std": 1.4,
+        "runs": [
+         9,
+         8.2,
+         6.8,
+         6.4,
+         5.4
+        ]
+       },
+       "lev": 3.94,
+       "seenBundle": 10.7,
+       "unseenBundle": 0.7,
+       "seenLemma": 2,
+       "unseenLemma": 6.8,
+       "copyShare": 9.6,
+       "pos": {
+        "N": 8.5,
+        "V": 0.6,
+        "V.PTCP": 0.4
+       }
+      },
+      "nfeat": {
+       "mean": 7.1,
+       "std": 2.8,
+       "runs": [
+        11.4,
+        7.6,
+        5.4,
+        4,
+        7
+       ],
+       "variant": {
+        "mean": 8,
+        "std": 2.8,
+        "runs": [
+         12.6,
+         8,
+         6.2,
+         5.4,
+         7.6
+        ]
+       },
+       "lev": 3.71,
+       "seenBundle": 11.8,
+       "unseenBundle": 1,
+       "seenLemma": 2.7,
+       "unseenLemma": 7.6,
+       "copyShare": 7.2,
+       "pos": {
+        "N": 9.9,
+        "V": 2.1,
+        "V.PTCP": 0
+       }
       }
      },
      "tests": {
@@ -3100,6 +5296,30 @@
        "lo": -1.2,
        "hi": -0.4,
        "p": 0
+      },
+      "nfeat-baseline": {
+       "diff": -24.4,
+       "lo": -26.1,
+       "hi": -22.6,
+       "p": 0
+      },
+      "natom-baseline": {
+       "diff": -25.1,
+       "lo": -26.8,
+       "hi": -23.4,
+       "p": 0
+      },
+      "nfeat-natom": {
+       "diff": 0.8,
+       "lo": -0.2,
+       "hi": 1.7,
+       "p": 0.127
+      },
+      "nfeat-morph": {
+       "diff": -23.6,
+       "lo": -25.3,
+       "hi": -21.8,
+       "p": 0
       }
      },
      "testsVariant": {
@@ -3119,6 +5339,30 @@
        "diff": -0.8,
        "lo": -1.2,
        "hi": -0.4,
+       "p": 0
+      },
+      "nfeat-baseline": {
+       "diff": -26.8,
+       "lo": -28.5,
+       "hi": -25,
+       "p": 0
+      },
+      "natom-baseline": {
+       "diff": -27.6,
+       "lo": -29.4,
+       "hi": -25.8,
+       "p": 0
+      },
+      "nfeat-natom": {
+       "diff": 0.8,
+       "lo": -0.2,
+       "hi": 1.8,
+       "p": 0.129
+      },
+      "nfeat-morph": {
+       "diff": -26,
+       "lo": -27.8,
+       "hi": -24.2,
        "p": 0
       }
      }
@@ -3232,6 +5476,72 @@
         "V": 13.5,
         "V.PTCP": 5.4
        }
+      },
+      "natom": {
+       "mean": 11.2,
+       "std": 2.2,
+       "runs": [
+        12.8,
+        14.2,
+        8.8,
+        10.4,
+        10
+       ],
+       "variant": {
+        "mean": 12.7,
+        "std": 2.3,
+        "runs": [
+         14,
+         15.8,
+         9.8,
+         12,
+         12
+        ]
+       },
+       "lev": 3.49,
+       "seenBundle": 15.5,
+       "unseenBundle": 1.6,
+       "seenLemma": 3.9,
+       "unseenLemma": 13.3,
+       "copyShare": 8.7,
+       "pos": {
+        "N": 14.8,
+        "V": 1.1,
+        "V.PTCP": 0.8
+       }
+      },
+      "nfeat": {
+       "mean": 15.5,
+       "std": 5.4,
+       "runs": [
+        22,
+        14.6,
+        8.2,
+        13.4,
+        19.4
+       ],
+       "variant": {
+        "mean": 17.9,
+        "std": 5.9,
+        "runs": [
+         25,
+         17.4,
+         9.4,
+         16.2,
+         21.6
+        ]
+       },
+       "lev": 3.11,
+       "seenBundle": 21.3,
+       "unseenBundle": 2.4,
+       "seenLemma": 9.1,
+       "unseenLemma": 17.4,
+       "copyShare": 6.2,
+       "pos": {
+        "N": 20.7,
+        "V": 3.2,
+        "V.PTCP": 1.7
+       }
       }
      },
      "tests": {
@@ -3239,19 +5549,43 @@
        "diff": 0.4,
        "lo": -0.1,
        "hi": 0.8,
-       "p": 0.125
+       "p": 0.124
       },
       "memory-baseline": {
        "diff": 0,
        "lo": 0,
        "hi": 0.1,
-       "p": 0.716
+       "p": 0.726
       },
       "morph-memory": {
        "diff": 0.3,
        "lo": -0.1,
        "hi": 0.8,
-       "p": 0.177
+       "p": 0.18
+      },
+      "nfeat-baseline": {
+       "diff": -21.2,
+       "lo": -23,
+       "hi": -19.5,
+       "p": 0
+      },
+      "natom-baseline": {
+       "diff": -25.5,
+       "lo": -27.3,
+       "hi": -23.7,
+       "p": 0
+      },
+      "nfeat-natom": {
+       "diff": 4.3,
+       "lo": 3,
+       "hi": 5.6,
+       "p": 0
+      },
+      "nfeat-morph": {
+       "diff": -21.6,
+       "lo": -23.3,
+       "hi": -19.9,
+       "p": 0
       }
      },
      "testsVariant": {
@@ -3259,19 +5593,43 @@
        "diff": 0.4,
        "lo": 0,
        "hi": 0.8,
-       "p": 0.086
+       "p": 0.087
       },
       "memory-baseline": {
        "diff": 0,
        "lo": 0,
        "hi": 0.1,
-       "p": 0.714
+       "p": 0.791
       },
       "morph-memory": {
        "diff": 0.4,
        "lo": -0.1,
        "hi": 0.8,
-       "p": 0.137
+       "p": 0.119
+      },
+      "nfeat-baseline": {
+       "diff": -23.4,
+       "lo": -25.1,
+       "hi": -21.7,
+       "p": 0
+      },
+      "natom-baseline": {
+       "diff": -28.6,
+       "lo": -30.5,
+       "hi": -26.8,
+       "p": 0
+      },
+      "nfeat-natom": {
+       "diff": 5.2,
+       "lo": 3.9,
+       "hi": 6.6,
+       "p": 0
+      },
+      "nfeat-morph": {
+       "diff": -23.8,
+       "lo": -25.7,
+       "hi": -22,
+       "p": 0
       }
      }
     },
@@ -3384,6 +5742,72 @@
         "V": 14.6,
         "V.PTCP": 10
        }
+      },
+      "natom": {
+       "mean": 18.8,
+       "std": 4,
+       "runs": [
+        15,
+        20.6,
+        14,
+        23,
+        21.4
+       ],
+       "variant": {
+        "mean": 21.4,
+        "std": 4.5,
+        "runs": [
+         16.8,
+         23.4,
+         16.4,
+         25.8,
+         24.6
+        ]
+       },
+       "lev": 3.09,
+       "seenBundle": 23.9,
+       "unseenBundle": 1.2,
+       "seenLemma": 9.3,
+       "unseenLemma": 23.7,
+       "copyShare": 7.3,
+       "pos": {
+        "N": 26.3,
+        "V": 2.9,
+        "V.PTCP": 1.3
+       }
+      },
+      "nfeat": {
+       "mean": 27.8,
+       "std": 5.8,
+       "runs": [
+        18.2,
+        31.4,
+        26.6,
+        31,
+        32
+       ],
+       "variant": {
+        "mean": 31.8,
+        "std": 7.1,
+        "runs": [
+         19.6,
+         36.2,
+         31.4,
+         35.4,
+         36.4
+        ]
+       },
+       "lev": 2.5,
+       "seenBundle": 34.9,
+       "unseenBundle": 3.4,
+       "seenLemma": 17.1,
+       "unseenLemma": 33.4,
+       "copyShare": 6.7,
+       "pos": {
+        "N": 39.5,
+        "V": 7.8,
+        "V.PTCP": 2.9
+       }
       }
      },
      "tests": {
@@ -3397,13 +5821,37 @@
        "diff": 0.2,
        "lo": 0,
        "hi": 0.4,
-       "p": 0.191
+       "p": 0.226
       },
       "morph-memory": {
        "diff": 0.6,
        "lo": 0.2,
        "hi": 1.1,
-       "p": 0.01
+       "p": 0.009
+      },
+      "nfeat-baseline": {
+       "diff": -11.8,
+       "lo": -13.4,
+       "hi": -10.2,
+       "p": 0
+      },
+      "natom-baseline": {
+       "diff": -20.8,
+       "lo": -22.5,
+       "hi": -19.2,
+       "p": 0
+      },
+      "nfeat-natom": {
+       "diff": 9,
+       "lo": 7.6,
+       "hi": 10.5,
+       "p": 0
+      },
+      "nfeat-morph": {
+       "diff": -12.6,
+       "lo": -14.2,
+       "hi": -11,
+       "p": 0
       }
      },
      "testsVariant": {
@@ -3423,6 +5871,30 @@
        "diff": 0.9,
        "lo": 0.4,
        "hi": 1.4,
+       "p": 0
+      },
+      "nfeat-baseline": {
+       "diff": -14.1,
+       "lo": -15.7,
+       "hi": -12.4,
+       "p": 0
+      },
+      "natom-baseline": {
+       "diff": -24.5,
+       "lo": -26.3,
+       "hi": -22.7,
+       "p": 0
+      },
+      "nfeat-natom": {
+       "diff": 10.4,
+       "lo": 8.9,
+       "hi": 11.8,
+       "p": 0
+      },
+      "nfeat-morph": {
+       "diff": -15,
+       "lo": -16.8,
+       "hi": -13.3,
        "p": 0
       }
      }
@@ -3536,33 +6008,123 @@
         "V": 19.8,
         "V.PTCP": 9.6
        }
+      },
+      "natom": {
+       "mean": 23.9,
+       "std": 1.7,
+       "runs": [
+        24.6,
+        25.2,
+        21.2,
+        25.2,
+        23.2
+       ],
+       "variant": {
+        "mean": 26.8,
+        "std": 1.6,
+        "runs": [
+         26.8,
+         28,
+         25.4,
+         28.8,
+         25.2
+        ]
+       },
+       "lev": 2.89,
+       "seenBundle": 27.9,
+       "unseenBundle": 1.6,
+       "seenLemma": 11.9,
+       "unseenLemma": 34.9,
+       "copyShare": 5,
+       "pos": {
+        "N": 30.7,
+        "V": 2.9,
+        "V.PTCP": 2.1
+       }
+      },
+      "nfeat": {
+       "mean": 41.2,
+       "std": 2.9,
+       "runs": [
+        43,
+        41.6,
+        36.4,
+        40.8,
+        44
+       ],
+       "variant": {
+        "mean": 47.2,
+        "std": 3,
+        "runs": [
+         48.6,
+         46.6,
+         42.8,
+         47,
+         51
+        ]
+       },
+       "lev": 1.91,
+       "seenBundle": 47.1,
+       "unseenBundle": 8.4,
+       "seenLemma": 30.4,
+       "unseenLemma": 51.1,
+       "copyShare": 6.1,
+       "pos": {
+        "N": 56.9,
+        "V": 14.4,
+        "V.PTCP": 7.1
+       }
       }
      },
      "tests": {
       "morph-baseline": {
        "diff": 1,
-       "lo": 0.6,
+       "lo": 0.5,
        "hi": 1.4,
        "p": 0
       },
       "memory-baseline": {
        "diff": -0.7,
-       "lo": -1.2,
+       "lo": -1.3,
        "hi": -0.2,
-       "p": 0.013
+       "p": 0.008
       },
       "morph-memory": {
        "diff": 1.7,
        "lo": 1,
        "hi": 2.4,
        "p": 0
+      },
+      "nfeat-baseline": {
+       "diff": -1.4,
+       "lo": -3,
+       "hi": 0.2,
+       "p": 0.095
+      },
+      "natom-baseline": {
+       "diff": -18.7,
+       "lo": -20.4,
+       "hi": -17,
+       "p": 0
+      },
+      "nfeat-natom": {
+       "diff": 17.3,
+       "lo": 15.6,
+       "hi": 19.1,
+       "p": 0
+      },
+      "nfeat-morph": {
+       "diff": -2.4,
+       "lo": -4,
+       "hi": -0.7,
+       "p": 0.008
       }
      },
      "testsVariant": {
       "morph-baseline": {
        "diff": 1,
        "lo": 0.6,
-       "hi": 1.5,
+       "hi": 1.4,
        "p": 0
       },
       "memory-baseline": {
@@ -3575,6 +6137,30 @@
        "diff": 2,
        "lo": 1.2,
        "hi": 2.7,
+       "p": 0
+      },
+      "nfeat-baseline": {
+       "diff": -3.3,
+       "lo": -5,
+       "hi": -1.7,
+       "p": 0
+      },
+      "natom-baseline": {
+       "diff": -23.7,
+       "lo": -25.5,
+       "hi": -21.8,
+       "p": 0
+      },
+      "nfeat-natom": {
+       "diff": 20.4,
+       "lo": 18.5,
+       "hi": 22.2,
+       "p": 0
+      },
+      "nfeat-morph": {
+       "diff": -4.3,
+       "lo": -6,
+       "hi": -2.7,
        "p": 0
       }
      }
@@ -3690,6 +6276,72 @@
         "V": 5.5,
         "V.PTCP": 2.6
        }
+      },
+      "natom": {
+       "mean": 1.4,
+       "std": 0.5,
+       "runs": [
+        1.8,
+        0.6,
+        1.6,
+        1,
+        1.8
+       ],
+       "variant": {
+        "mean": 1.6,
+        "std": 0.8,
+        "runs": [
+         1.8,
+         0.6,
+         1.8,
+         1,
+         2.6
+        ]
+       },
+       "lev": 4.6,
+       "seenBundle": 2.2,
+       "unseenBundle": 0.5,
+       "seenLemma": null,
+       "unseenLemma": 1.4,
+       "copyShare": 2.5,
+       "pos": {
+        "N": 1.6,
+        "V": 0.6,
+        "V.PTCP": 0.4
+       }
+      },
+      "nfeat": {
+       "mean": 1.5,
+       "std": 1.1,
+       "runs": [
+        1,
+        1,
+        3.4,
+        1.6,
+        0.6
+       ],
+       "variant": {
+        "mean": 1.8,
+        "std": 1.2,
+        "runs": [
+         1,
+         1.2,
+         3.8,
+         1.6,
+         1.2
+        ]
+       },
+       "lev": 4.53,
+       "seenBundle": 2.9,
+       "unseenBundle": 0.2,
+       "seenLemma": null,
+       "unseenLemma": 1.5,
+       "copyShare": 1.3,
+       "pos": {
+        "N": 2.2,
+        "V": 0.4,
+        "V.PTCP": 0
+       }
       }
      },
      "tests": {
@@ -3710,12 +6362,36 @@
        "lo": -2,
        "hi": -1,
        "p": 0
+      },
+      "nfeat-baseline": {
+       "diff": -27.8,
+       "lo": -29.5,
+       "hi": -26,
+       "p": 0
+      },
+      "natom-baseline": {
+       "diff": -27.9,
+       "lo": -29.7,
+       "hi": -26.2,
+       "p": 0
+      },
+      "nfeat-natom": {
+       "diff": 0.2,
+       "lo": -0.4,
+       "hi": 0.8,
+       "p": 0.603
+      },
+      "nfeat-morph": {
+       "diff": -26.3,
+       "lo": -28,
+       "hi": -24.5,
+       "p": 0
       }
      },
      "testsVariant": {
       "morph-baseline": {
        "diff": -1.5,
-       "lo": -2,
+       "lo": -2.1,
        "hi": -1,
        "p": 0
       },
@@ -3729,6 +6405,30 @@
        "diff": -1.5,
        "lo": -2.1,
        "hi": -1,
+       "p": 0
+      },
+      "nfeat-baseline": {
+       "diff": -29.5,
+       "lo": -31.3,
+       "hi": -27.7,
+       "p": 0
+      },
+      "natom-baseline": {
+       "diff": -29.7,
+       "lo": -31.6,
+       "hi": -27.8,
+       "p": 0
+      },
+      "nfeat-natom": {
+       "diff": 0.2,
+       "lo": -0.4,
+       "hi": 0.8,
+       "p": 0.584
+      },
+      "nfeat-morph": {
+       "diff": -28,
+       "lo": -29.8,
+       "hi": -26.2,
        "p": 0
       }
      }
@@ -3842,6 +6542,72 @@
         "V": 8,
         "V.PTCP": 3.5
        }
+      },
+      "natom": {
+       "mean": 3.5,
+       "std": 0.8,
+       "runs": [
+        3.4,
+        3.8,
+        3,
+        2.6,
+        4.8
+       ],
+       "variant": {
+        "mean": 3.6,
+        "std": 0.8,
+        "runs": [
+         3.4,
+         3.8,
+         3,
+         2.8,
+         4.8
+        ]
+       },
+       "lev": 4.22,
+       "seenBundle": 4.7,
+       "unseenBundle": 1.8,
+       "seenLemma": null,
+       "unseenLemma": 3.5,
+       "copyShare": 2.8,
+       "pos": {
+        "N": 3.5,
+        "V": 0.8,
+        "V.PTCP": 1.3
+       }
+      },
+      "nfeat": {
+       "mean": 4.5,
+       "std": 1.8,
+       "runs": [
+        2.8,
+        5.2,
+        3.6,
+        3.6,
+        7.2
+       ],
+       "variant": {
+        "mean": 4.5,
+        "std": 1.8,
+        "runs": [
+         2.8,
+         5.2,
+         3.6,
+         3.6,
+         7.4
+        ]
+       },
+       "lev": 3.87,
+       "seenBundle": 6.8,
+       "unseenBundle": 1.2,
+       "seenLemma": null,
+       "unseenLemma": 4.5,
+       "copyShare": 4.8,
+       "pos": {
+        "N": 4.9,
+        "V": 1.4,
+        "V.PTCP": 0.4
+       }
       }
      },
      "tests": {
@@ -3859,8 +6625,32 @@
       },
       "morph-memory": {
        "diff": -1,
-       "lo": -1.4,
+       "lo": -1.5,
        "hi": -0.6,
+       "p": 0
+      },
+      "nfeat-baseline": {
+       "diff": -28.1,
+       "lo": -29.9,
+       "hi": -26.2,
+       "p": 0
+      },
+      "natom-baseline": {
+       "diff": -29,
+       "lo": -31,
+       "hi": -27.2,
+       "p": 0
+      },
+      "nfeat-natom": {
+       "diff": 1,
+       "lo": 0.2,
+       "hi": 1.8,
+       "p": 0.012
+      },
+      "nfeat-morph": {
+       "diff": -27.1,
+       "lo": -28.9,
+       "hi": -25.3,
        "p": 0
       }
      },
@@ -3868,7 +6658,7 @@
       "morph-baseline": {
        "diff": -0.9,
        "lo": -1.4,
-       "hi": -0.5,
+       "hi": -0.4,
        "p": 0
       },
       "memory-baseline": {
@@ -3880,7 +6670,31 @@
       "morph-memory": {
        "diff": -0.9,
        "lo": -1.4,
-       "hi": -0.4,
+       "hi": -0.5,
+       "p": 0
+      },
+      "nfeat-baseline": {
+       "diff": -30.1,
+       "lo": -32,
+       "hi": -28.2,
+       "p": 0
+      },
+      "natom-baseline": {
+       "diff": -31.1,
+       "lo": -32.9,
+       "hi": -29.2,
+       "p": 0
+      },
+      "nfeat-natom": {
+       "diff": 1,
+       "lo": 0.1,
+       "hi": 1.8,
+       "p": 0.027
+      },
+      "nfeat-morph": {
+       "diff": -29.2,
+       "lo": -31,
+       "hi": -27.3,
        "p": 0
       }
      }
@@ -3994,6 +6808,72 @@
         "V": 13.7,
         "V.PTCP": 4.8
        }
+      },
+      "natom": {
+       "mean": 9.4,
+       "std": 2,
+       "runs": [
+        9.2,
+        6.8,
+        12,
+        10.4,
+        8.4
+       ],
+       "variant": {
+        "mean": 9.6,
+        "std": 2.1,
+        "runs": [
+         9.4,
+         7,
+         12.2,
+         11.2,
+         8.4
+        ]
+       },
+       "lev": 3.58,
+       "seenBundle": 12.3,
+       "unseenBundle": 1.7,
+       "seenLemma": null,
+       "unseenLemma": 9.4,
+       "copyShare": 10.5,
+       "pos": {
+        "N": 11.2,
+        "V": 1.4,
+        "V.PTCP": 0.4
+       }
+      },
+      "nfeat": {
+       "mean": 15.8,
+       "std": 1.7,
+       "runs": [
+        15.6,
+        13,
+        16.6,
+        17.6,
+        16
+       ],
+       "variant": {
+        "mean": 16.8,
+        "std": 2.1,
+        "runs": [
+         16.4,
+         13.6,
+         17,
+         19.4,
+         17.8
+        ]
+       },
+       "lev": 3.01,
+       "seenBundle": 20.8,
+       "unseenBundle": 2.6,
+       "seenLemma": null,
+       "unseenLemma": 15.8,
+       "copyShare": 6.8,
+       "pos": {
+        "N": 19.7,
+        "V": 2.5,
+        "V.PTCP": 2.2
+       }
       }
      },
      "tests": {
@@ -4013,7 +6893,31 @@
        "diff": -0.8,
        "lo": -1.2,
        "hi": -0.3,
-       "p": 0.001
+       "p": 0
+      },
+      "nfeat-baseline": {
+       "diff": -21.8,
+       "lo": -23.6,
+       "hi": -20.1,
+       "p": 0
+      },
+      "natom-baseline": {
+       "diff": -28.2,
+       "lo": -30.1,
+       "hi": -26.5,
+       "p": 0
+      },
+      "nfeat-natom": {
+       "diff": 6.4,
+       "lo": 5.2,
+       "hi": 7.7,
+       "p": 0
+      },
+      "nfeat-morph": {
+       "diff": -21.1,
+       "lo": -22.8,
+       "hi": -19.3,
+       "p": 0
       }
      },
      "testsVariant": {
@@ -4021,7 +6925,7 @@
        "diff": -0.7,
        "lo": -1.2,
        "hi": -0.2,
-       "p": 0.006
+       "p": 0.01
       },
       "memory-baseline": {
        "diff": 0,
@@ -4031,9 +6935,33 @@
       },
       "morph-memory": {
        "diff": -0.7,
-       "lo": -1.2,
+       "lo": -1.1,
        "hi": -0.2,
-       "p": 0.005
+       "p": 0.007
+      },
+      "nfeat-baseline": {
+       "diff": -23.7,
+       "lo": -25.6,
+       "hi": -21.9,
+       "p": 0
+      },
+      "natom-baseline": {
+       "diff": -30.9,
+       "lo": -32.8,
+       "hi": -29.1,
+       "p": 0
+      },
+      "nfeat-natom": {
+       "diff": 7.2,
+       "lo": 5.9,
+       "hi": 8.5,
+       "p": 0
+      },
+      "nfeat-morph": {
+       "diff": -23,
+       "lo": -24.9,
+       "hi": -21.2,
+       "p": 0
       }
      }
     },
@@ -4146,14 +7074,80 @@
         "V": 19.3,
         "V.PTCP": 5.3
        }
+      },
+      "natom": {
+       "mean": 16.2,
+       "std": 5.1,
+       "runs": [
+        22.2,
+        15.4,
+        20.8,
+        11.6,
+        11.2
+       ],
+       "variant": {
+        "mean": 17.1,
+        "std": 5.7,
+        "runs": [
+         23.6,
+         16,
+         22.4,
+         12,
+         11.4
+        ]
+       },
+       "lev": 3.23,
+       "seenBundle": 20.1,
+       "unseenBundle": 0.8,
+       "seenLemma": null,
+       "unseenLemma": 16.2,
+       "copyShare": 7.7,
+       "pos": {
+        "N": 19.7,
+        "V": 1.6,
+        "V.PTCP": 0.9
+       }
+      },
+      "nfeat": {
+       "mean": 29,
+       "std": 5.7,
+       "runs": [
+        34,
+        21.2,
+        31.2,
+        25,
+        33.8
+       ],
+       "variant": {
+        "mean": 31.3,
+        "std": 5.4,
+        "runs": [
+         35.8,
+         23.4,
+         33.4,
+         28.2,
+         35.8
+        ]
+       },
+       "lev": 2.43,
+       "seenBundle": 35.1,
+       "unseenBundle": 4.8,
+       "seenLemma": null,
+       "unseenLemma": 29,
+       "copyShare": 6.7,
+       "pos": {
+        "N": 39,
+        "V": 6.8,
+        "V.PTCP": 2.2
+       }
       }
      },
      "tests": {
       "morph-baseline": {
        "diff": -0.2,
-       "lo": -0.5,
+       "lo": -0.6,
        "hi": 0.2,
-       "p": 0.471
+       "p": 0.462
       },
       "memory-baseline": {
        "diff": 0,
@@ -4163,17 +7157,41 @@
       },
       "morph-memory": {
        "diff": -0.2,
-       "lo": -0.5,
+       "lo": -0.6,
        "hi": 0.2,
-       "p": 0.49
+       "p": 0.489
+      },
+      "nfeat-baseline": {
+       "diff": -13.8,
+       "lo": -15.4,
+       "hi": -12,
+       "p": 0
+      },
+      "natom-baseline": {
+       "diff": -26.6,
+       "lo": -28.4,
+       "hi": -24.8,
+       "p": 0
+      },
+      "nfeat-natom": {
+       "diff": 12.8,
+       "lo": 11.2,
+       "hi": 14.3,
+       "p": 0
+      },
+      "nfeat-morph": {
+       "diff": -13.6,
+       "lo": -15.3,
+       "hi": -11.9,
+       "p": 0
       }
      },
      "testsVariant": {
       "morph-baseline": {
        "diff": -0.1,
        "lo": -0.5,
-       "hi": 0.4,
-       "p": 0.787
+       "hi": 0.3,
+       "p": 0.797
       },
       "memory-baseline": {
        "diff": 0,
@@ -4185,7 +7203,31 @@
        "diff": -0.1,
        "lo": -0.5,
        "hi": 0.4,
-       "p": 0.792
+       "p": 0.749
+      },
+      "nfeat-baseline": {
+       "diff": -14.9,
+       "lo": -16.6,
+       "hi": -13.2,
+       "p": 0
+      },
+      "natom-baseline": {
+       "diff": -29.1,
+       "lo": -30.8,
+       "hi": -27.4,
+       "p": 0
+      },
+      "nfeat-natom": {
+       "diff": 14.2,
+       "lo": 12.7,
+       "hi": 15.9,
+       "p": 0
+      },
+      "nfeat-morph": {
+       "diff": -14.8,
+       "lo": -16.5,
+       "hi": -13.2,
+       "p": 0
       }
      }
     },
@@ -4298,12 +7340,78 @@
         "V": 26.4,
         "V.PTCP": 7.9
        }
+      },
+      "natom": {
+       "mean": 25.6,
+       "std": 5.1,
+       "runs": [
+        30.6,
+        24.8,
+        31.2,
+        20.8,
+        20.8
+       ],
+       "variant": {
+        "mean": 27.4,
+        "std": 5.3,
+        "runs": [
+         31.8,
+         26.6,
+         33.8,
+         22,
+         22.8
+        ]
+       },
+       "lev": 2.86,
+       "seenBundle": 29.2,
+       "unseenBundle": 1,
+       "seenLemma": null,
+       "unseenLemma": 25.6,
+       "copyShare": 5.5,
+       "pos": {
+        "N": 30.1,
+        "V": 3.1,
+        "V.PTCP": 4.8
+       }
+      },
+      "nfeat": {
+       "mean": 42.2,
+       "std": 4.4,
+       "runs": [
+        48.8,
+        37.4,
+        41.4,
+        39.6,
+        44
+       ],
+       "variant": {
+        "mean": 46,
+        "std": 4.5,
+        "runs": [
+         52.8,
+         40.8,
+         44.2,
+         44.6,
+         47.6
+        ]
+       },
+       "lev": 1.81,
+       "seenBundle": 46.8,
+       "unseenBundle": 10.2,
+       "seenLemma": null,
+       "unseenLemma": 42.2,
+       "copyShare": 7.1,
+       "pos": {
+        "N": 55.2,
+        "V": 16.6,
+        "V.PTCP": 6.6
+       }
       }
      },
      "tests": {
       "morph-baseline": {
        "diff": 1,
-       "lo": 0.6,
+       "lo": 0.5,
        "hi": 1.5,
        "p": 0
       },
@@ -4315,8 +7423,32 @@
       },
       "morph-memory": {
        "diff": 1,
-       "lo": 0.6,
-       "hi": 1.5,
+       "lo": 0.5,
+       "hi": 1.4,
+       "p": 0
+      },
+      "nfeat-baseline": {
+       "diff": -4.6,
+       "lo": -6.1,
+       "hi": -2.9,
+       "p": 0
+      },
+      "natom-baseline": {
+       "diff": -21.2,
+       "lo": -22.9,
+       "hi": -19.4,
+       "p": 0
+      },
+      "nfeat-natom": {
+       "diff": 16.6,
+       "lo": 14.9,
+       "hi": 18.3,
+       "p": 0
+      },
+      "nfeat-morph": {
+       "diff": -5.6,
+       "lo": -7.2,
+       "hi": -4,
        "p": 0
       }
      },
@@ -4337,6 +7469,30 @@
        "diff": 1,
        "lo": 0.6,
        "hi": 1.5,
+       "p": 0
+      },
+      "nfeat-baseline": {
+       "diff": -4.9,
+       "lo": -6.5,
+       "hi": -3.2,
+       "p": 0
+      },
+      "natom-baseline": {
+       "diff": -23.5,
+       "lo": -25.4,
+       "hi": -21.6,
+       "p": 0
+      },
+      "nfeat-natom": {
+       "diff": 18.6,
+       "lo": 16.8,
+       "hi": 20.3,
+       "p": 0
+      },
+      "nfeat-morph": {
+       "diff": -5.9,
+       "lo": -7.5,
+       "hi": -4.3,
        "p": 0
       }
      }
@@ -4450,6 +7606,70 @@
         "N": 77.4,
         "V": 21.6
        }
+      },
+      "natom": {
+       "mean": 9,
+       "std": 5.1,
+       "runs": [
+        6.9,
+        17.2,
+        8.6,
+        8.6,
+        3.4
+       ],
+       "variant": {
+        "mean": 10,
+        "std": 4.3,
+        "runs": [
+         6.9,
+         17.2,
+         8.6,
+         10.3,
+         6.9
+        ]
+       },
+       "lev": 3.75,
+       "seenBundle": 14.1,
+       "unseenBundle": 1.7,
+       "seenLemma": 0,
+       "unseenLemma": 10,
+       "copyShare": 8,
+       "pos": {
+        "N": 10.2,
+        "V": 1.4
+       }
+      },
+      "nfeat": {
+       "mean": 13.1,
+       "std": 6.3,
+       "runs": [
+        13.8,
+        20.7,
+        15.5,
+        12.1,
+        3.4
+       ],
+       "variant": {
+        "mean": 14.1,
+        "std": 4.9,
+        "runs": [
+         13.8,
+         20.7,
+         15.5,
+         13.8,
+         6.9
+        ]
+       },
+       "lev": 3.92,
+       "seenBundle": 21.2,
+       "unseenBundle": 1.7,
+       "seenLemma": 3.2,
+       "unseenLemma": 14.3,
+       "copyShare": 5.2,
+       "pos": {
+        "N": 16.1,
+        "V": 1.4
+       }
       }
      },
      "tests": {
@@ -4470,12 +7690,36 @@
        "lo": -2.4,
        "hi": 3.1,
        "p": 0.878
+      },
+      "nfeat-baseline": {
+       "diff": -45.9,
+       "lo": -51.4,
+       "hi": -40,
+       "p": 0
+      },
+      "natom-baseline": {
+       "diff": -50,
+       "lo": -55.5,
+       "hi": -44.1,
+       "p": 0
+      },
+      "nfeat-natom": {
+       "diff": 4.1,
+       "lo": 0.7,
+       "hi": 7.9,
+       "p": 0.016
+      },
+      "nfeat-morph": {
+       "diff": -46.2,
+       "lo": -52.1,
+       "hi": -40.7,
+       "p": 0
       }
      },
      "testsVariant": {
       "morph-baseline": {
        "diff": 0,
-       "lo": -2.4,
+       "lo": -2.8,
        "hi": 2.8,
        "p": 1
       },
@@ -4490,6 +7734,30 @@
        "lo": -2.8,
        "hi": 2.8,
        "p": 1
+      },
+      "nfeat-baseline": {
+       "diff": -46.2,
+       "lo": -51.7,
+       "hi": -40.7,
+       "p": 0
+      },
+      "natom-baseline": {
+       "diff": -50.3,
+       "lo": -56.2,
+       "hi": -44.5,
+       "p": 0
+      },
+      "nfeat-natom": {
+       "diff": 4.1,
+       "lo": 0.7,
+       "hi": 7.6,
+       "p": 0.015
+      },
+      "nfeat-morph": {
+       "diff": -46.2,
+       "lo": -51.7,
+       "hi": -40.7,
+       "p": 0
       }
      }
     },
@@ -4598,6 +7866,70 @@
         "N": 78.1,
         "V": 23
        }
+      },
+      "natom": {
+       "mean": 18.6,
+       "std": 11.1,
+       "runs": [
+        8.6,
+        34.5,
+        12.1,
+        12.1,
+        25.9
+       ],
+       "variant": {
+        "mean": 19.7,
+        "std": 10.7,
+        "runs": [
+         10.3,
+         34.5,
+         12.1,
+         13.8,
+         27.6
+        ]
+       },
+       "lev": 2.96,
+       "seenBundle": 26.1,
+       "unseenBundle": 5.7,
+       "seenLemma": 2,
+       "unseenLemma": 22,
+       "copyShare": 11.9,
+       "pos": {
+        "N": 24.1,
+        "V": 4.1
+       }
+      },
+      "nfeat": {
+       "mean": 23.8,
+       "std": 11,
+       "runs": [
+        17.2,
+        43.1,
+        17.2,
+        19,
+        22.4
+       ],
+       "variant": {
+        "mean": 24.8,
+        "std": 10.5,
+        "runs": [
+         19,
+         43.1,
+         17.2,
+         20.7,
+         24.1
+        ]
+       },
+       "lev": 2.94,
+       "seenBundle": 36.4,
+       "unseenBundle": 1.9,
+       "seenLemma": 2,
+       "unseenLemma": 28.2,
+       "copyShare": 10.4,
+       "pos": {
+        "N": 35,
+        "V": 5.4
+       }
       }
      },
      "tests": {
@@ -4618,12 +7950,36 @@
        "lo": -2.4,
        "hi": 2.4,
        "p": 1
+      },
+      "nfeat-baseline": {
+       "diff": -35.5,
+       "lo": -41,
+       "hi": -30,
+       "p": 0
+      },
+      "natom-baseline": {
+       "diff": -40.7,
+       "lo": -46.2,
+       "hi": -35.2,
+       "p": 0
+      },
+      "nfeat-natom": {
+       "diff": 5.2,
+       "lo": 0.7,
+       "hi": 9.7,
+       "p": 0.024
+      },
+      "nfeat-morph": {
+       "diff": -35.5,
+       "lo": -41,
+       "hi": -30,
+       "p": 0
       }
      },
      "testsVariant": {
       "morph-baseline": {
        "diff": 0,
-       "lo": -2.1,
+       "lo": -2.4,
        "hi": 2.4,
        "p": 1
       },
@@ -4638,6 +7994,30 @@
        "lo": -2.4,
        "hi": 2.4,
        "p": 1
+      },
+      "nfeat-baseline": {
+       "diff": -35.9,
+       "lo": -41,
+       "hi": -30.3,
+       "p": 0
+      },
+      "natom-baseline": {
+       "diff": -41,
+       "lo": -46.6,
+       "hi": -35.5,
+       "p": 0
+      },
+      "nfeat-natom": {
+       "diff": 5.2,
+       "lo": 1,
+       "hi": 9.3,
+       "p": 0.012
+      },
+      "nfeat-morph": {
+       "diff": -35.9,
+       "lo": -41.4,
+       "hi": -30.3,
+       "p": 0
       }
      }
     }
@@ -4748,6 +8128,70 @@
         "N": 73.7,
         "V": 20
        }
+      },
+      "natom": {
+       "mean": 7.9,
+       "std": 4,
+       "runs": [
+        8.6,
+        13.8,
+        3.4,
+        8.6,
+        5.2
+       ],
+       "variant": {
+        "mean": 8.6,
+        "std": 4.7,
+        "runs": [
+         10.3,
+         15.5,
+         3.4,
+         8.6,
+         5.2
+        ]
+       },
+       "lev": 4.21,
+       "seenBundle": 13.6,
+       "unseenBundle": 0,
+       "seenLemma": null,
+       "unseenLemma": 7.9,
+       "copyShare": 6.7,
+       "pos": {
+        "N": 11.9,
+        "V": 0
+       }
+      },
+      "nfeat": {
+       "mean": 10.7,
+       "std": 4.5,
+       "runs": [
+        12.1,
+        13.8,
+        15.5,
+        5.2,
+        6.9
+       ],
+       "variant": {
+        "mean": 11.4,
+        "std": 5,
+        "runs": [
+         13.8,
+         15.5,
+         15.5,
+         5.2,
+         6.9
+        ]
+       },
+       "lev": 4.07,
+       "seenBundle": 18.3,
+       "unseenBundle": 0,
+       "seenLemma": null,
+       "unseenLemma": 10.7,
+       "copyShare": 3.5,
+       "pos": {
+        "N": 16.1,
+        "V": 1.3
+       }
       }
      },
      "tests": {
@@ -4755,7 +8199,7 @@
        "diff": 1.4,
        "lo": -0.3,
        "hi": 3.4,
-       "p": 0.208
+       "p": 0.183
       },
       "memory-baseline": {
        "diff": 0,
@@ -4765,9 +8209,33 @@
       },
       "morph-memory": {
        "diff": 1.4,
-       "lo": -0.3,
+       "lo": -0.7,
        "hi": 3.4,
-       "p": 0.204
+       "p": 0.209
+      },
+      "nfeat-baseline": {
+       "diff": -44.8,
+       "lo": -50.7,
+       "hi": -39,
+       "p": 0
+      },
+      "natom-baseline": {
+       "diff": -47.6,
+       "lo": -53.8,
+       "hi": -42.1,
+       "p": 0
+      },
+      "nfeat-natom": {
+       "diff": 2.8,
+       "lo": -0.3,
+       "hi": 5.9,
+       "p": 0.104
+      },
+      "nfeat-morph": {
+       "diff": -46.2,
+       "lo": -52.1,
+       "hi": -40.7,
+       "p": 0
       }
      },
      "testsVariant": {
@@ -4775,7 +8243,7 @@
        "diff": 1.4,
        "lo": -0.3,
        "hi": 3.4,
-       "p": 0.238
+       "p": 0.192
       },
       "memory-baseline": {
        "diff": 0,
@@ -4787,7 +8255,31 @@
        "diff": 1.4,
        "lo": -0.3,
        "hi": 3.4,
-       "p": 0.205
+       "p": 0.201
+      },
+      "nfeat-baseline": {
+       "diff": -44.5,
+       "lo": -50.3,
+       "hi": -38.3,
+       "p": 0
+      },
+      "natom-baseline": {
+       "diff": -47.2,
+       "lo": -53.4,
+       "hi": -41,
+       "p": 0
+      },
+      "nfeat-natom": {
+       "diff": 2.8,
+       "lo": -0.3,
+       "hi": 5.9,
+       "p": 0.113
+      },
+      "nfeat-morph": {
+       "diff": -45.9,
+       "lo": -51.7,
+       "hi": -40,
+       "p": 0
       }
      }
     },
@@ -4896,14 +8388,122 @@
         "N": 74.6,
         "V": 25.3
        }
+      },
+      "natom": {
+       "mean": 22.8,
+       "std": 8.2,
+       "runs": [
+        31,
+        25.9,
+        10.3,
+        19,
+        27.6
+       ],
+       "variant": {
+        "mean": 23.1,
+        "std": 8.7,
+        "runs": [
+         32.8,
+         25.9,
+         10.3,
+         19,
+         27.6
+        ]
+       },
+       "lev": 3.05,
+       "seenBundle": 35.1,
+       "unseenBundle": 1,
+       "seenLemma": null,
+       "unseenLemma": 22.8,
+       "copyShare": 11.6,
+       "pos": {
+        "N": 34.7,
+        "V": 4
+       }
+      },
+      "nfeat": {
+       "mean": 25.2,
+       "std": 5.3,
+       "runs": [
+        31,
+        29.3,
+        25.9,
+        20.7,
+        19
+       ],
+       "variant": {
+        "mean": 25.5,
+        "std": 5.8,
+        "runs": [
+         32.8,
+         29.3,
+         25.9,
+         20.7,
+         19
+        ]
+       },
+       "lev": 2.98,
+       "seenBundle": 38.4,
+       "unseenBundle": 1.9,
+       "seenLemma": null,
+       "unseenLemma": 25.2,
+       "copyShare": 10.1,
+       "pos": {
+        "N": 33.9,
+        "V": 2.7
+       }
       }
      },
      "tests": {
       "morph-baseline": {
        "diff": 1.7,
        "lo": -0.3,
+       "hi": 3.8,
+       "p": 0.172
+      },
+      "memory-baseline": {
+       "diff": 0,
+       "lo": 0,
+       "hi": 0,
+       "p": 1
+      },
+      "morph-memory": {
+       "diff": 1.7,
+       "lo": -0.3,
        "hi": 4.1,
-       "p": 0.166
+       "p": 0.163
+      },
+      "nfeat-baseline": {
+       "diff": -31.4,
+       "lo": -36.9,
+       "hi": -25.9,
+       "p": 0
+      },
+      "natom-baseline": {
+       "diff": -33.8,
+       "lo": -39.3,
+       "hi": -28.3,
+       "p": 0
+      },
+      "nfeat-natom": {
+       "diff": 2.4,
+       "lo": -1.7,
+       "hi": 6.2,
+       "p": 0.25
+      },
+      "nfeat-morph": {
+       "diff": -33.1,
+       "lo": -38.6,
+       "hi": -27.6,
+       "p": 0
+      }
+     },
+     "testsVariant": {
+      "morph-baseline": {
+       "diff": 1.7,
+       "lo": -0.3,
+       "hi": 4.1,
+       "p": 0.155
       },
       "memory-baseline": {
        "diff": 0,
@@ -4915,27 +8515,31 @@
        "diff": 1.7,
        "lo": -0.3,
        "hi": 3.8,
-       "p": 0.15
-      }
-     },
-     "testsVariant": {
-      "morph-baseline": {
-       "diff": 1.7,
-       "lo": -0.3,
-       "hi": 4.1,
-       "p": 0.159
+       "p": 0.145
       },
-      "memory-baseline": {
-       "diff": 0,
-       "lo": 0,
-       "hi": 0,
-       "p": 1
+      "nfeat-baseline": {
+       "diff": -31.4,
+       "lo": -37.2,
+       "hi": -25.9,
+       "p": 0
       },
-      "morph-memory": {
-       "diff": 1.7,
-       "lo": -0.7,
-       "hi": 4.1,
-       "p": 0.182
+      "natom-baseline": {
+       "diff": -33.8,
+       "lo": -39.3,
+       "hi": -27.9,
+       "p": 0
+      },
+      "nfeat-natom": {
+       "diff": 2.4,
+       "lo": -1.7,
+       "hi": 6.6,
+       "p": 0.266
+      },
+      "nfeat-morph": {
+       "diff": -33.1,
+       "lo": -39,
+       "hi": -27.6,
+       "p": 0
       }
      }
     }
@@ -5052,6 +8656,72 @@
         "V.PTCP": 58,
         "V.CVB": 46.2
        }
+      },
+      "natom": {
+       "mean": 1.1,
+       "std": 0.4,
+       "runs": [
+        0.8,
+        1,
+        1.6,
+        1.4,
+        0.6
+       ],
+       "variant": {
+        "mean": 1.1,
+        "std": 0.4,
+        "runs": [
+         0.8,
+         1,
+         1.6,
+         1.4,
+         0.6
+        ]
+       },
+       "lev": 4.47,
+       "seenBundle": 1.4,
+       "unseenBundle": 0.1,
+       "seenLemma": 0.6,
+       "unseenLemma": 1.2,
+       "copyShare": 5.3,
+       "pos": {
+        "V": 1.1,
+        "V.PTCP": 2.9,
+        "V.CVB": 0
+       }
+      },
+      "nfeat": {
+       "mean": 3.2,
+       "std": 1.8,
+       "runs": [
+        2.2,
+        1.6,
+        3.4,
+        2.4,
+        6.2
+       ],
+       "variant": {
+        "mean": 3.2,
+        "std": 1.8,
+        "runs": [
+         2.2,
+         1.6,
+         3.4,
+         2.4,
+         6.2
+        ]
+       },
+       "lev": 3.76,
+       "seenBundle": 4.2,
+       "unseenBundle": 0.4,
+       "seenLemma": 3.6,
+       "unseenLemma": 3.1,
+       "copyShare": 3.7,
+       "pos": {
+        "V": 3.2,
+        "V.PTCP": 4.3,
+        "V.CVB": 0
+       }
       }
      },
      "tests": {
@@ -5072,26 +8742,74 @@
        "lo": -1.2,
        "hi": -0.1,
        "p": 0.03
+      },
+      "nfeat-baseline": {
+       "diff": -40.3,
+       "lo": -42.3,
+       "hi": -38.2,
+       "p": 0
+      },
+      "natom-baseline": {
+       "diff": -42.4,
+       "lo": -44.3,
+       "hi": -40.5,
+       "p": 0
+      },
+      "nfeat-natom": {
+       "diff": 2.1,
+       "lo": 1.4,
+       "hi": 2.8,
+       "p": 0
+      },
+      "nfeat-morph": {
+       "diff": -39.6,
+       "lo": -41.6,
+       "hi": -37.5,
+       "p": 0
       }
      },
      "testsVariant": {
       "morph-baseline": {
        "diff": -0.8,
        "lo": -1.3,
-       "hi": -0.2,
-       "p": 0.005
+       "hi": -0.3,
+       "p": 0.003
       },
       "memory-baseline": {
        "diff": -0.1,
        "lo": -0.3,
        "hi": 0,
-       "p": 0.101
+       "p": 0.106
       },
       "morph-memory": {
        "diff": -0.6,
        "lo": -1.2,
        "hi": -0.1,
-       "p": 0.015
+       "p": 0.035
+      },
+      "nfeat-baseline": {
+       "diff": -40.3,
+       "lo": -42.4,
+       "hi": -38.4,
+       "p": 0
+      },
+      "natom-baseline": {
+       "diff": -42.4,
+       "lo": -44.5,
+       "hi": -40.4,
+       "p": 0
+      },
+      "nfeat-natom": {
+       "diff": 2.1,
+       "lo": 1.4,
+       "hi": 2.8,
+       "p": 0
+      },
+      "nfeat-morph": {
+       "diff": -39.6,
+       "lo": -41.5,
+       "hi": -37.6,
+       "p": 0
       }
      }
     },
@@ -5204,6 +8922,72 @@
         "V.PTCP": 75.4,
         "V.CVB": 63.1
        }
+      },
+      "natom": {
+       "mean": 3.2,
+       "std": 0.4,
+       "runs": [
+        2.6,
+        3,
+        3.8,
+        3.4,
+        3.2
+       ],
+       "variant": {
+        "mean": 3.2,
+        "std": 0.4,
+        "runs": [
+         2.6,
+         3,
+         3.8,
+         3.4,
+         3.2
+        ]
+       },
+       "lev": 3.55,
+       "seenBundle": 3.3,
+       "unseenBundle": 1.6,
+       "seenLemma": 2.2,
+       "unseenLemma": 3.6,
+       "copyShare": 5.4,
+       "pos": {
+        "V": 3.2,
+        "V.PTCP": 1.4,
+        "V.CVB": 4.6
+       }
+      },
+      "nfeat": {
+       "mean": 8.3,
+       "std": 0.7,
+       "runs": [
+        8.6,
+        8.8,
+        9,
+        7.6,
+        7.6
+       ],
+       "variant": {
+        "mean": 8.3,
+        "std": 0.7,
+        "runs": [
+         8.6,
+         8.8,
+         9,
+         7.6,
+         7.6
+        ]
+       },
+       "lev": 2.74,
+       "seenBundle": 8.8,
+       "unseenBundle": 2.7,
+       "seenLemma": 8.4,
+       "unseenLemma": 8.3,
+       "copyShare": 5.2,
+       "pos": {
+        "V": 8.4,
+        "V.PTCP": 11.6,
+        "V.CVB": 3.1
+       }
       }
      },
      "tests": {
@@ -5211,19 +8995,43 @@
        "diff": 0.2,
        "lo": -0.4,
        "hi": 0.8,
-       "p": 0.631
+       "p": 0.622
       },
       "memory-baseline": {
        "diff": -0.1,
        "lo": -0.3,
        "hi": 0,
-       "p": 0.28
+       "p": 0.238
       },
       "morph-memory": {
        "diff": 0.3,
-       "lo": -0.4,
+       "lo": -0.3,
        "hi": 0.9,
-       "p": 0.423
+       "p": 0.409
+      },
+      "nfeat-baseline": {
+       "diff": -50.8,
+       "lo": -52.9,
+       "hi": -48.8,
+       "p": 0
+      },
+      "natom-baseline": {
+       "diff": -55.9,
+       "lo": -57.8,
+       "hi": -53.9,
+       "p": 0
+      },
+      "nfeat-natom": {
+       "diff": 5.1,
+       "lo": 4.1,
+       "hi": 6.2,
+       "p": 0
+      },
+      "nfeat-morph": {
+       "diff": -51,
+       "lo": -53,
+       "hi": -48.8,
+       "p": 0
       }
      },
      "testsVariant": {
@@ -5231,19 +9039,43 @@
        "diff": 0.2,
        "lo": -0.4,
        "hi": 0.8,
-       "p": 0.65
+       "p": 0.627
       },
       "memory-baseline": {
        "diff": -0.1,
        "lo": -0.3,
        "hi": 0,
-       "p": 0.24
+       "p": 0.255
       },
       "morph-memory": {
        "diff": 0.3,
        "lo": -0.3,
        "hi": 0.9,
-       "p": 0.414
+       "p": 0.392
+      },
+      "nfeat-baseline": {
+       "diff": -50.8,
+       "lo": -52.8,
+       "hi": -48.7,
+       "p": 0
+      },
+      "natom-baseline": {
+       "diff": -55.9,
+       "lo": -57.8,
+       "hi": -54,
+       "p": 0
+      },
+      "nfeat-natom": {
+       "diff": 5.1,
+       "lo": 4,
+       "hi": 6.2,
+       "p": 0
+      },
+      "nfeat-morph": {
+       "diff": -51,
+       "lo": -53.1,
+       "hi": -49,
+       "p": 0
       }
      }
     },
@@ -5356,6 +9188,72 @@
         "V.PTCP": 84.1,
         "V.CVB": 78.5
        }
+      },
+      "natom": {
+       "mean": 9.2,
+       "std": 1.4,
+       "runs": [
+        11.2,
+        8,
+        8.6,
+        10,
+        8
+       ],
+       "variant": {
+        "mean": 9.2,
+        "std": 1.4,
+        "runs": [
+         11.2,
+         8,
+         8.6,
+         10,
+         8
+        ]
+       },
+       "lev": 2.76,
+       "seenBundle": 9.2,
+       "unseenBundle": null,
+       "seenLemma": 9,
+       "unseenLemma": 9.3,
+       "copyShare": 4.7,
+       "pos": {
+        "V": 9.6,
+        "V.PTCP": 1.4,
+        "V.CVB": 0
+       }
+      },
+      "nfeat": {
+       "mean": 31.6,
+       "std": 13.2,
+       "runs": [
+        44.2,
+        44.2,
+        17.6,
+        34,
+        18.2
+       ],
+       "variant": {
+        "mean": 31.6,
+        "std": 13.2,
+        "runs": [
+         44.2,
+         44.2,
+         17.6,
+         34,
+         18.2
+        ]
+       },
+       "lev": 1.69,
+       "seenBundle": 31.6,
+       "unseenBundle": null,
+       "seenLemma": 32.9,
+       "unseenLemma": 30.1,
+       "copyShare": 8.4,
+       "pos": {
+        "V": 32.2,
+        "V.PTCP": 29,
+        "V.CVB": 13.8
+       }
       }
      },
      "tests": {
@@ -5363,19 +9261,43 @@
        "diff": 0.2,
        "lo": 0,
        "hi": 0.4,
-       "p": 0.135
+       "p": 0.13
       },
       "memory-baseline": {
        "diff": -0.6,
        "lo": -1.2,
-       "hi": -0.2,
-       "p": 0.016
+       "hi": -0.1,
+       "p": 0.014
       },
       "morph-memory": {
        "diff": 0.8,
        "lo": 0.2,
-       "hi": 1.3,
-       "p": 0.006
+       "hi": 1.4,
+       "p": 0.005
+      },
+      "nfeat-baseline": {
+       "diff": -42.4,
+       "lo": -44.7,
+       "hi": -40.3,
+       "p": 0
+      },
+      "natom-baseline": {
+       "diff": -64.9,
+       "lo": -66.8,
+       "hi": -63,
+       "p": 0
+      },
+      "nfeat-natom": {
+       "diff": 22.5,
+       "lo": 20.6,
+       "hi": 24.3,
+       "p": 0
+      },
+      "nfeat-morph": {
+       "diff": -42.6,
+       "lo": -44.6,
+       "hi": -40.5,
+       "p": 0
       }
      },
      "testsVariant": {
@@ -5383,19 +9305,43 @@
        "diff": 0.2,
        "lo": 0,
        "hi": 0.4,
-       "p": 0.132
+       "p": 0.13
       },
       "memory-baseline": {
        "diff": -0.6,
-       "lo": -1.2,
+       "lo": -1.1,
        "hi": -0.1,
-       "p": 0.012
+       "p": 0.02
       },
       "morph-memory": {
        "diff": 0.8,
        "lo": 0.3,
-       "hi": 1.4,
-       "p": 0.008
+       "hi": 1.3,
+       "p": 0.001
+      },
+      "nfeat-baseline": {
+       "diff": -42.4,
+       "lo": -44.5,
+       "hi": -40.3,
+       "p": 0
+      },
+      "natom-baseline": {
+       "diff": -64.9,
+       "lo": -66.8,
+       "hi": -63,
+       "p": 0
+      },
+      "nfeat-natom": {
+       "diff": 22.5,
+       "lo": 20.6,
+       "hi": 24.3,
+       "p": 0
+      },
+      "nfeat-morph": {
+       "diff": -42.6,
+       "lo": -44.7,
+       "hi": -40.5,
+       "p": 0
       }
      }
     },
@@ -5508,34 +9454,80 @@
         "V.PTCP": 85.5,
         "V.CVB": 80
        }
+      },
+      "natom": {
+       "mean": 29.1,
+       "std": 17.1,
+       "runs": [
+        38.4,
+        54.6,
+        19.8,
+        20.2,
+        12.6
+       ],
+       "variant": {
+        "mean": 29.1,
+        "std": 17.1,
+        "runs": [
+         38.4,
+         54.6,
+         19.8,
+         20.2,
+         12.6
+        ]
+       },
+       "lev": 1.94,
+       "seenBundle": 29.1,
+       "unseenBundle": null,
+       "seenLemma": 28.6,
+       "unseenLemma": 31.1,
+       "copyShare": 5.8,
+       "pos": {
+        "V": 30,
+        "V.PTCP": 24.6,
+        "V.CVB": 3.1
+       }
+      },
+      "nfeat": {
+       "mean": 56.7,
+       "std": 5.4,
+       "runs": [
+        59.6,
+        57.2,
+        47.4,
+        61,
+        58.4
+       ],
+       "variant": {
+        "mean": 56.7,
+        "std": 5.4,
+        "runs": [
+         59.6,
+         57.2,
+         47.4,
+         61,
+         58.4
+        ]
+       },
+       "lev": 0.89,
+       "seenBundle": 56.7,
+       "unseenBundle": null,
+       "seenLemma": 57,
+       "unseenLemma": 55.6,
+       "copyShare": 8.6,
+       "pos": {
+        "V": 57.1,
+        "V.PTCP": 65.2,
+        "V.CVB": 32.3
+       }
       }
      },
      "tests": {
       "morph-baseline": {
        "diff": 0,
        "lo": 0,
-       "hi": 0.2,
-       "p": 0.709
-      },
-      "memory-baseline": {
-       "diff": -6.4,
-       "lo": -7.6,
-       "hi": -5.2,
-       "p": 0
-      },
-      "morph-memory": {
-       "diff": 6.4,
-       "lo": 5.2,
-       "hi": 7.7,
-       "p": 0
-      }
-     },
-     "testsVariant": {
-      "morph-baseline": {
-       "diff": 0,
-       "lo": 0,
        "hi": 0.1,
-       "p": 0.757
+       "p": 0.775
       },
       "memory-baseline": {
        "diff": -6.4,
@@ -5547,6 +9539,74 @@
        "diff": 6.4,
        "lo": 5.2,
        "hi": 7.6,
+       "p": 0
+      },
+      "nfeat-baseline": {
+       "diff": -22.4,
+       "lo": -24.4,
+       "hi": -20.5,
+       "p": 0
+      },
+      "natom-baseline": {
+       "diff": -50,
+       "lo": -52,
+       "hi": -48,
+       "p": 0
+      },
+      "nfeat-natom": {
+       "diff": 27.6,
+       "lo": 25.6,
+       "hi": 29.6,
+       "p": 0
+      },
+      "nfeat-morph": {
+       "diff": -22.4,
+       "lo": -24.4,
+       "hi": -20.5,
+       "p": 0
+      }
+     },
+     "testsVariant": {
+      "morph-baseline": {
+       "diff": 0,
+       "lo": 0,
+       "hi": 0.1,
+       "p": 0.74
+      },
+      "memory-baseline": {
+       "diff": -6.4,
+       "lo": -7.7,
+       "hi": -5.2,
+       "p": 0
+      },
+      "morph-memory": {
+       "diff": 6.4,
+       "lo": 5.2,
+       "hi": 7.7,
+       "p": 0
+      },
+      "nfeat-baseline": {
+       "diff": -22.4,
+       "lo": -24.4,
+       "hi": -20.6,
+       "p": 0
+      },
+      "natom-baseline": {
+       "diff": -50,
+       "lo": -52,
+       "hi": -47.8,
+       "p": 0
+      },
+      "nfeat-natom": {
+       "diff": 27.6,
+       "lo": 25.4,
+       "hi": 29.6,
+       "p": 0
+      },
+      "nfeat-morph": {
+       "diff": -22.4,
+       "lo": -24.4,
+       "hi": -20.6,
        "p": 0
       }
      }
@@ -5660,9 +9720,119 @@
         "V.PTCP": 85.5,
         "V.CVB": 84.6
        }
+      },
+      "natom": {
+       "mean": 47.3,
+       "std": 7.2,
+       "runs": [
+        58.8,
+        44.6,
+        44.2,
+        49,
+        40
+       ],
+       "variant": {
+        "mean": 47.3,
+        "std": 7.2,
+        "runs": [
+         58.8,
+         44.6,
+         44.2,
+         49,
+         40
+        ]
+       },
+       "lev": 1.3,
+       "seenBundle": 47.3,
+       "unseenBundle": null,
+       "seenLemma": 47.2,
+       "unseenLemma": 50,
+       "copyShare": 7.4,
+       "pos": {
+        "V": 48.2,
+        "V.PTCP": 42,
+        "V.CVB": 20
+       }
+      },
+      "nfeat": {
+       "mean": 67,
+       "std": 2.4,
+       "runs": [
+        68.8,
+        66.2,
+        64.6,
+        70.2,
+        65.2
+       ],
+       "variant": {
+        "mean": 67,
+        "std": 2.4,
+        "runs": [
+         68.8,
+         66.2,
+         64.6,
+         70.2,
+         65.2
+        ]
+       },
+       "lev": 0.67,
+       "seenBundle": 67,
+       "unseenBundle": null,
+       "seenLemma": 66.9,
+       "unseenLemma": 70.5,
+       "copyShare": 7.9,
+       "pos": {
+        "V": 67.2,
+        "V.PTCP": 79.7,
+        "V.CVB": 46.2
+       }
       }
      },
      "tests": {
+      "morph-baseline": {
+       "diff": 0,
+       "lo": 0,
+       "hi": 0,
+       "p": 1
+      },
+      "memory-baseline": {
+       "diff": -9.2,
+       "lo": -11,
+       "hi": -7.6,
+       "p": 0
+      },
+      "morph-memory": {
+       "diff": 9.2,
+       "lo": 7.5,
+       "hi": 11,
+       "p": 0
+      },
+      "nfeat-baseline": {
+       "diff": -14.3,
+       "lo": -16.1,
+       "hi": -12.6,
+       "p": 0
+      },
+      "natom-baseline": {
+       "diff": -34,
+       "lo": -36,
+       "hi": -31.9,
+       "p": 0
+      },
+      "nfeat-natom": {
+       "diff": 19.7,
+       "lo": 17.8,
+       "hi": 21.5,
+       "p": 0
+      },
+      "nfeat-morph": {
+       "diff": -14.3,
+       "lo": -16.1,
+       "hi": -12.5,
+       "p": 0
+      }
+     },
+     "testsVariant": {
       "morph-baseline": {
        "diff": 0,
        "lo": 0,
@@ -5678,27 +9848,31 @@
       "morph-memory": {
        "diff": 9.2,
        "lo": 7.6,
-       "hi": 11,
-       "p": 0
-      }
-     },
-     "testsVariant": {
-      "morph-baseline": {
-       "diff": 0,
-       "lo": 0,
-       "hi": 0,
-       "p": 1
-      },
-      "memory-baseline": {
-       "diff": -9.2,
-       "lo": -11,
-       "hi": -7.4,
-       "p": 0
-      },
-      "morph-memory": {
-       "diff": 9.2,
-       "lo": 7.6,
        "hi": 10.9,
+       "p": 0
+      },
+      "nfeat-baseline": {
+       "diff": -14.3,
+       "lo": -16,
+       "hi": -12.4,
+       "p": 0
+      },
+      "natom-baseline": {
+       "diff": -34,
+       "lo": -35.9,
+       "hi": -32,
+       "p": 0
+      },
+      "nfeat-natom": {
+       "diff": 19.7,
+       "lo": 17.8,
+       "hi": 21.6,
+       "p": 0
+      },
+      "nfeat-morph": {
+       "diff": -14.3,
+       "lo": -16.1,
+       "hi": -12.5,
        "p": 0
       }
      }
@@ -5814,6 +9988,72 @@
         "V.PTCP": 30.6,
         "V.CVB": 29.5
        }
+      },
+      "natom": {
+       "mean": 1.8,
+       "std": 0.4,
+       "runs": [
+        1.2,
+        1.8,
+        1.8,
+        2,
+        2.2
+       ],
+       "variant": {
+        "mean": 1.8,
+        "std": 0.4,
+        "runs": [
+         1.2,
+         1.8,
+         1.8,
+         2,
+         2.2
+        ]
+       },
+       "lev": 4.42,
+       "seenBundle": 2.4,
+       "unseenBundle": 0,
+       "seenLemma": null,
+       "unseenLemma": 1.8,
+       "copyShare": 1.8,
+       "pos": {
+        "V": 1.9,
+        "V.PTCP": 1.4,
+        "V.CVB": 0
+       }
+      },
+      "nfeat": {
+       "mean": 3.5,
+       "std": 1.1,
+       "runs": [
+        4.4,
+        2.8,
+        5,
+        2.6,
+        2.8
+       ],
+       "variant": {
+        "mean": 3.5,
+        "std": 1.1,
+        "runs": [
+         4.4,
+         2.8,
+         5,
+         2.6,
+         2.8
+        ]
+       },
+       "lev": 3.59,
+       "seenBundle": 4.4,
+       "unseenBundle": 0.7,
+       "seenLemma": null,
+       "unseenLemma": 3.5,
+       "copyShare": 2.4,
+       "pos": {
+        "V": 3.6,
+        "V.PTCP": 2.8,
+        "V.CVB": 1.6
+       }
       }
      },
      "tests": {
@@ -5834,6 +10074,30 @@
        "lo": -2,
        "hi": -0.9,
        "p": 0
+      },
+      "nfeat-baseline": {
+       "diff": -43.8,
+       "lo": -45.7,
+       "hi": -41.7,
+       "p": 0
+      },
+      "natom-baseline": {
+       "diff": -45.5,
+       "lo": -47.4,
+       "hi": -43.5,
+       "p": 0
+      },
+      "nfeat-natom": {
+       "diff": 1.7,
+       "lo": 0.9,
+       "hi": 2.5,
+       "p": 0
+      },
+      "nfeat-morph": {
+       "diff": -42.4,
+       "lo": -44.4,
+       "hi": -40.4,
+       "p": 0
       }
      },
      "testsVariant": {
@@ -5851,8 +10115,32 @@
       },
       "morph-memory": {
        "diff": -1.4,
-       "lo": -2,
+       "lo": -1.9,
        "hi": -0.9,
+       "p": 0
+      },
+      "nfeat-baseline": {
+       "diff": -43.8,
+       "lo": -45.8,
+       "hi": -41.8,
+       "p": 0
+      },
+      "natom-baseline": {
+       "diff": -45.5,
+       "lo": -47.4,
+       "hi": -43.5,
+       "p": 0
+      },
+      "nfeat-natom": {
+       "diff": 1.7,
+       "lo": 1,
+       "hi": 2.5,
+       "p": 0
+      },
+      "nfeat-morph": {
+       "diff": -42.4,
+       "lo": -44.2,
+       "hi": -40.4,
        "p": 0
       }
      }
@@ -5966,6 +10254,72 @@
         "V.PTCP": 45.8,
         "V.CVB": 55.7
        }
+      },
+      "natom": {
+       "mean": 5,
+       "std": 1.3,
+       "runs": [
+        7,
+        5.6,
+        3.6,
+        4.8,
+        4.2
+       ],
+       "variant": {
+        "mean": 5,
+        "std": 1.3,
+        "runs": [
+         7,
+         5.6,
+         3.6,
+         4.8,
+         4.2
+        ]
+       },
+       "lev": 3.76,
+       "seenBundle": 5.3,
+       "unseenBundle": 0.6,
+       "seenLemma": null,
+       "unseenLemma": 5,
+       "copyShare": 4.3,
+       "pos": {
+        "V": 5.3,
+        "V.PTCP": 0,
+        "V.CVB": 1.6
+       }
+      },
+      "nfeat": {
+       "mean": 11.4,
+       "std": 3.7,
+       "runs": [
+        15.6,
+        13.2,
+        6.6,
+        8.4,
+        13.2
+       ],
+       "variant": {
+        "mean": 11.4,
+        "std": 3.7,
+        "runs": [
+         15.6,
+         13.2,
+         6.6,
+         8.4,
+         13.2
+        ]
+       },
+       "lev": 2.7,
+       "seenBundle": 12.1,
+       "unseenBundle": 1.3,
+       "seenLemma": null,
+       "unseenLemma": 11.4,
+       "copyShare": 4.7,
+       "pos": {
+        "V": 11.8,
+        "V.PTCP": 2.8,
+        "V.CVB": 4.9
+       }
       }
      },
      "tests": {
@@ -5973,7 +10327,7 @@
        "diff": 0.2,
        "lo": -0.2,
        "hi": 0.7,
-       "p": 0.305
+       "p": 0.353
       },
       "memory-baseline": {
        "diff": 0,
@@ -5985,7 +10339,31 @@
        "diff": 0.2,
        "lo": -0.2,
        "hi": 0.7,
-       "p": 0.336
+       "p": 0.36
+      },
+      "nfeat-baseline": {
+       "diff": -50,
+       "lo": -52,
+       "hi": -47.9,
+       "p": 0
+      },
+      "natom-baseline": {
+       "diff": -56.4,
+       "lo": -58.3,
+       "hi": -54.4,
+       "p": 0
+      },
+      "nfeat-natom": {
+       "diff": 6.4,
+       "lo": 5.2,
+       "hi": 7.6,
+       "p": 0
+      },
+      "nfeat-morph": {
+       "diff": -50.2,
+       "lo": -52.3,
+       "hi": -48.2,
+       "p": 0
       }
      },
      "testsVariant": {
@@ -5993,7 +10371,7 @@
        "diff": 0.2,
        "lo": -0.2,
        "hi": 0.7,
-       "p": 0.332
+       "p": 0.317
       },
       "memory-baseline": {
        "diff": 0,
@@ -6005,7 +10383,31 @@
        "diff": 0.2,
        "lo": -0.2,
        "hi": 0.7,
-       "p": 0.319
+       "p": 0.331
+      },
+      "nfeat-baseline": {
+       "diff": -50,
+       "lo": -52.1,
+       "hi": -48,
+       "p": 0
+      },
+      "natom-baseline": {
+       "diff": -56.4,
+       "lo": -58.4,
+       "hi": -54.4,
+       "p": 0
+      },
+      "nfeat-natom": {
+       "diff": 6.4,
+       "lo": 5.1,
+       "hi": 7.6,
+       "p": 0
+      },
+      "nfeat-morph": {
+       "diff": -50.2,
+       "lo": -52.2,
+       "hi": -48.3,
+       "p": 0
       }
      }
     },
@@ -6118,6 +10520,72 @@
         "V.PTCP": 90.3,
         "V.CVB": 78.7
        }
+      },
+      "natom": {
+       "mean": 11.5,
+       "std": 1.7,
+       "runs": [
+        10.8,
+        11.4,
+        14.4,
+        10,
+        11
+       ],
+       "variant": {
+        "mean": 11.5,
+        "std": 1.7,
+        "runs": [
+         10.8,
+         11.4,
+         14.4,
+         10,
+         11
+        ]
+       },
+       "lev": 2.75,
+       "seenBundle": 11.5,
+       "unseenBundle": null,
+       "seenLemma": null,
+       "unseenLemma": 11.5,
+       "copyShare": 3.4,
+       "pos": {
+        "V": 12.1,
+        "V.PTCP": 2.8,
+        "V.CVB": 0
+       }
+      },
+      "nfeat": {
+       "mean": 31.1,
+       "std": 5.5,
+       "runs": [
+        35.6,
+        35.6,
+        33.2,
+        22.8,
+        28.4
+       ],
+       "variant": {
+        "mean": 31.1,
+        "std": 5.5,
+        "runs": [
+         35.6,
+         35.6,
+         33.2,
+         22.8,
+         28.4
+        ]
+       },
+       "lev": 1.76,
+       "seenBundle": 31.1,
+       "unseenBundle": null,
+       "seenLemma": null,
+       "unseenLemma": 31.1,
+       "copyShare": 5.4,
+       "pos": {
+        "V": 31.9,
+        "V.PTCP": 26.4,
+        "V.CVB": 4.9
+       }
       }
      },
      "tests": {
@@ -6138,6 +10606,30 @@
        "lo": -0.2,
        "hi": 0.2,
        "p": 1
+      },
+      "nfeat-baseline": {
+       "diff": -44,
+       "lo": -46,
+       "hi": -42,
+       "p": 0
+      },
+      "natom-baseline": {
+       "diff": -63.6,
+       "lo": -65.6,
+       "hi": -61.6,
+       "p": 0
+      },
+      "nfeat-natom": {
+       "diff": 19.6,
+       "lo": 17.8,
+       "hi": 21.5,
+       "p": 0
+      },
+      "nfeat-morph": {
+       "diff": -44,
+       "lo": -46,
+       "hi": -42,
+       "p": 0
       }
      },
      "testsVariant": {
@@ -6158,6 +10650,30 @@
        "lo": -0.2,
        "hi": 0.2,
        "p": 1
+      },
+      "nfeat-baseline": {
+       "diff": -44,
+       "lo": -45.9,
+       "hi": -41.9,
+       "p": 0
+      },
+      "natom-baseline": {
+       "diff": -63.6,
+       "lo": -65.6,
+       "hi": -61.7,
+       "p": 0
+      },
+      "nfeat-natom": {
+       "diff": 19.6,
+       "lo": 17.8,
+       "hi": 21.5,
+       "p": 0
+      },
+      "nfeat-morph": {
+       "diff": -44,
+       "lo": -46,
+       "hi": -42,
+       "p": 0
       }
      }
     },
@@ -6270,6 +10786,72 @@
         "V.PTCP": 90.3,
         "V.CVB": 80.3
        }
+      },
+      "natom": {
+       "mean": 21.6,
+       "std": 5.5,
+       "runs": [
+        19.8,
+        17,
+        31.2,
+        20,
+        20
+       ],
+       "variant": {
+        "mean": 21.6,
+        "std": 5.5,
+        "runs": [
+         19.8,
+         17,
+         31.2,
+         20,
+         20
+        ]
+       },
+       "lev": 2.09,
+       "seenBundle": 21.6,
+       "unseenBundle": null,
+       "seenLemma": null,
+       "unseenLemma": 21.6,
+       "copyShare": 3.5,
+       "pos": {
+        "V": 22.6,
+        "V.PTCP": 5.6,
+        "V.CVB": 3.3
+       }
+      },
+      "nfeat": {
+       "mean": 54.8,
+       "std": 2.6,
+       "runs": [
+        56.2,
+        54.6,
+        52.2,
+        58.4,
+        52.6
+       ],
+       "variant": {
+        "mean": 54.8,
+        "std": 2.6,
+        "runs": [
+         56.2,
+         54.6,
+         52.2,
+         58.4,
+         52.6
+        ]
+       },
+       "lev": 1.05,
+       "seenBundle": 54.8,
+       "unseenBundle": null,
+       "seenLemma": null,
+       "unseenLemma": 54.8,
+       "copyShare": 7.8,
+       "pos": {
+        "V": 54.8,
+        "V.PTCP": 77.8,
+        "V.CVB": 26.2
+       }
       }
      },
      "tests": {
@@ -6277,7 +10859,7 @@
        "diff": 0,
        "lo": 0,
        "hi": 0.1,
-       "p": 0.774
+       "p": 0.778
       },
       "memory-baseline": {
        "diff": 0,
@@ -6289,7 +10871,31 @@
        "diff": 0,
        "lo": 0,
        "hi": 0.1,
-       "p": 0.773
+       "p": 0.76
+      },
+      "nfeat-baseline": {
+       "diff": -24.8,
+       "lo": -26.8,
+       "hi": -22.9,
+       "p": 0
+      },
+      "natom-baseline": {
+       "diff": -58,
+       "lo": -60,
+       "hi": -56,
+       "p": 0
+      },
+      "nfeat-natom": {
+       "diff": 33.2,
+       "lo": 31.2,
+       "hi": 35.2,
+       "p": 0
+      },
+      "nfeat-morph": {
+       "diff": -24.8,
+       "lo": -26.6,
+       "hi": -23,
+       "p": 0
       }
      },
      "testsVariant": {
@@ -6297,7 +10903,7 @@
        "diff": 0,
        "lo": 0,
        "hi": 0.1,
-       "p": 0.722
+       "p": 0.716
       },
       "memory-baseline": {
        "diff": 0,
@@ -6309,7 +10915,31 @@
        "diff": 0,
        "lo": 0,
        "hi": 0.1,
-       "p": 0.736
+       "p": 0.737
+      },
+      "nfeat-baseline": {
+       "diff": -24.8,
+       "lo": -26.6,
+       "hi": -23,
+       "p": 0
+      },
+      "natom-baseline": {
+       "diff": -58,
+       "lo": -59.9,
+       "hi": -55.9,
+       "p": 0
+      },
+      "nfeat-natom": {
+       "diff": 33.2,
+       "lo": 31.1,
+       "hi": 35.4,
+       "p": 0
+      },
+      "nfeat-morph": {
+       "diff": -24.8,
+       "lo": -26.7,
+       "hi": -22.9,
+       "p": 0
       }
      }
     },
@@ -6422,6 +11052,72 @@
         "V.PTCP": 93.1,
         "V.CVB": 85.2
        }
+      },
+      "natom": {
+       "mean": 51.1,
+       "std": 7.9,
+       "runs": [
+        62.8,
+        41.8,
+        54.2,
+        48.8,
+        47.8
+       ],
+       "variant": {
+        "mean": 51.1,
+        "std": 7.9,
+        "runs": [
+         62.8,
+         41.8,
+         54.2,
+         48.8,
+         47.8
+        ]
+       },
+       "lev": 1.24,
+       "seenBundle": 51.1,
+       "unseenBundle": null,
+       "seenLemma": null,
+       "unseenLemma": 51.1,
+       "copyShare": 5,
+       "pos": {
+        "V": 52,
+        "V.PTCP": 51.4,
+        "V.CVB": 16.4
+       }
+      },
+      "nfeat": {
+       "mean": 67.5,
+       "std": 3.9,
+       "runs": [
+        67.6,
+        69.2,
+        60.8,
+        69.6,
+        70.2
+       ],
+       "variant": {
+        "mean": 67.5,
+        "std": 3.9,
+        "runs": [
+         67.6,
+         69.2,
+         60.8,
+         69.6,
+         70.2
+        ]
+       },
+       "lev": 0.69,
+       "seenBundle": 67.5,
+       "unseenBundle": null,
+       "seenLemma": null,
+       "unseenLemma": 67.5,
+       "copyShare": 9,
+       "pos": {
+        "V": 67.7,
+        "V.PTCP": 87.5,
+        "V.CVB": 36.1
+       }
       }
      },
      "tests": {
@@ -6442,6 +11138,30 @@
        "lo": 0,
        "hi": 0,
        "p": 1
+      },
+      "nfeat-baseline": {
+       "diff": -14.6,
+       "lo": -16.3,
+       "hi": -13,
+       "p": 0
+      },
+      "natom-baseline": {
+       "diff": -31,
+       "lo": -33,
+       "hi": -29.1,
+       "p": 0
+      },
+      "nfeat-natom": {
+       "diff": 16.4,
+       "lo": 14.5,
+       "hi": 18.3,
+       "p": 0
+      },
+      "nfeat-morph": {
+       "diff": -14.6,
+       "lo": -16.3,
+       "hi": -13,
+       "p": 0
       }
      },
      "testsVariant": {
@@ -6462,6 +11182,30 @@
        "lo": 0,
        "hi": 0,
        "p": 1
+      },
+      "nfeat-baseline": {
+       "diff": -14.6,
+       "lo": -16.3,
+       "hi": -13,
+       "p": 0
+      },
+      "natom-baseline": {
+       "diff": -31,
+       "lo": -33,
+       "hi": -29.1,
+       "p": 0
+      },
+      "nfeat-natom": {
+       "diff": 16.4,
+       "lo": 14.5,
+       "hi": 18.3,
+       "p": 0
+      },
+      "nfeat-morph": {
+       "diff": -14.6,
+       "lo": -16.4,
+       "hi": -12.9,
+       "p": 0
       }
      }
     }
@@ -8007,6 +12751,8 @@
       "baseline": "veteriner",
       "memory": "veteriner",
       "morph": "veterinerinin",
+      "natom": "veterinerlerinizde",
+      "nfeat": "veterinerinin",
       "kind": "morph-only",
       "lemmaSeen": true,
       "bundleSeen": true
@@ -8019,6 +12765,8 @@
       "baseline": "komikleşmek",
       "memory": "komikleşmek",
       "morph": "komikleşmezler",
+      "natom": "komikleşecek miydin",
+      "nfeat": "komikleşecektim",
       "kind": "morph-only",
       "lemmaSeen": true,
       "bundleSeen": false
@@ -8031,6 +12779,8 @@
       "baseline": "el sıkışmak",
       "memory": "el sıkışmak",
       "morph": "el sıkışıyorlar mı",
+      "natom": "el sıkışıyor olmayacak mıymış",
+      "nfeat": "el sıkışır olmayacaklar mıymız",
       "kind": "morph-only",
       "lemmaSeen": true,
       "bundleSeen": false
@@ -8043,6 +12793,8 @@
       "baseline": "idadi",
       "memory": "idadiden",
       "morph": "idadi",
+      "natom": "idadide",
+      "nfeat": "idadinden",
       "kind": "memory-only",
       "lemmaSeen": true,
       "bundleSeen": true
@@ -8055,6 +12807,8 @@
       "baseline": "keğı",
       "memory": "keki",
       "morph": "keğı",
+      "natom": "kekleriniz",
+      "nfeat": "kekini",
       "kind": "memory-only",
       "lemmaSeen": true,
       "bundleSeen": true
@@ -8067,6 +12821,8 @@
       "baseline": "konveks dörtgenlar",
       "memory": "konveks dörtgenler",
       "morph": "konveks dörtgenlar",
+      "natom": "konveks dörtgenlerin",
+      "nfeat": "konveks dörtgenler",
       "kind": "memory-only",
       "lemmaSeen": true,
       "bundleSeen": true
@@ -8079,6 +12835,8 @@
       "baseline": "portleri",
       "memory": "portleri",
       "morph": "portleri",
+      "natom": "portları",
+      "nfeat": "portları",
       "kind": "all-wrong",
       "lemmaSeen": true,
       "bundleSeen": true
@@ -8091,6 +12849,8 @@
       "baseline": "kızannizden",
       "memory": "kızannizden",
       "morph": "kızannizden",
+      "natom": "kızanımızda",
+      "nfeat": "kızanınızdan",
       "kind": "all-wrong",
       "lemmaSeen": true,
       "bundleSeen": true
@@ -8108,6 +12868,8 @@
       "baseline": "kahramanne",
       "memory": "kahramanne",
       "morph": "kahramanne",
+      "natom": "kahramanlarından",
+      "nfeat": "kahramanda",
       "kind": "all-wrong",
       "lemmaSeen": false,
       "bundleSeen": true
@@ -8120,6 +12882,8 @@
       "baseline": "kavun",
       "memory": "kavun",
       "morph": "kavunmışsılar",
+      "natom": "kavunlarınızdan",
+      "nfeat": "kavununuzda",
       "kind": "all-wrong",
       "lemmaSeen": false,
       "bundleSeen": false
@@ -8139,6 +12903,8 @@
       "baseline": "آرام کرنا",
       "memory": "آرام کرنا",
       "morph": "آرام کرتی ہوں",
+      "natom": "آرام کر رہی ہوں گی",
+      "nfeat": "آرام کرتی ہوں",
       "kind": "morph-only",
       "lemmaSeen": true,
       "bundleSeen": false
@@ -8151,6 +12917,8 @@
       "baseline": "لوٹنا",
       "memory": "لوٹنا",
       "morph": "لوٹی ہو گی",
+      "natom": "لوٹ رہی ہوتی",
+      "nfeat": "لوٹی ہو گی",
       "kind": "morph-only",
       "lemmaSeen": true,
       "bundleSeen": false
@@ -8163,6 +12931,8 @@
       "baseline": "بہنا",
       "memory": "بہنا",
       "morph": "بہ رہے ہوتے",
+      "natom": "بہ رہی ہوں گی",
+      "nfeat": "بہ رہے ہوتے",
       "kind": "morph-only",
       "lemmaSeen": true,
       "bundleSeen": false
@@ -8175,6 +12945,8 @@
       "baseline": "قیدخانہ",
       "memory": "قید خاہے",
       "morph": "قیدخانہ",
+      "natom": "قید خاہہ",
+      "nfeat": "قیدخاہے",
       "kind": "memory-only",
       "lemmaSeen": true,
       "bundleSeen": true
@@ -8187,6 +12959,8 @@
       "baseline": "پْرشنسا",
       "memory": "پررشنسا",
       "morph": "پْرشنسا",
+      "natom": "پررشنسا",
+      "nfeat": "پررشنسا",
       "kind": "memory-only",
       "lemmaSeen": true,
       "bundleSeen": true
@@ -8199,6 +12973,8 @@
       "baseline": "سالگروں",
       "memory": "سالگرہوں",
       "morph": "سالگروں",
+      "natom": "سالگرہوں",
+      "nfeat": "سالگرہوں",
       "kind": "memory-only",
       "lemmaSeen": true,
       "bundleSeen": true
@@ -8211,6 +12987,8 @@
       "baseline": "جلنا",
       "memory": "جلنا",
       "morph": "جلنے",
+      "natom": "جلتا ہو گا",
+      "nfeat": "جلتی",
       "kind": "baseline-only",
       "lemmaSeen": true,
       "bundleSeen": false
@@ -8223,6 +13001,8 @@
       "baseline": "لکھنا",
       "memory": "لکھنا",
       "morph": "لکھنے",
+      "natom": "لکھ رہی ہوتی",
+      "nfeat": "لکھئی",
       "kind": "baseline-only",
       "lemmaSeen": true,
       "bundleSeen": false
@@ -8235,6 +13015,8 @@
       "baseline": "جھکنا",
       "memory": "جھکنا",
       "morph": "تو جھکے گا",
+      "natom": "جھکی ہوں گی",
+      "nfeat": "یہ  وہ جھکا ہوں",
       "kind": "all-wrong",
       "lemmaSeen": true,
       "bundleSeen": false
@@ -8247,6 +13029,8 @@
       "baseline": "ہنسنا",
       "memory": "ہنسنا",
       "morph": "ہنس رہی تھا",
+      "natom": "ہم ہنسیں گی",
+      "nfeat": "ہنس رہی تھی",
       "kind": "all-wrong",
       "lemmaSeen": true,
       "bundleSeen": false
@@ -8264,6 +13048,8 @@
       "baseline": "سوپن دیکھنا",
       "memory": "سوپن دیکھنا",
       "morph": "سوپن دیکھی ہوں",
+      "natom": "سونپی کھی ہوں گی",
+      "nfeat": "سوپ کھی ہوں",
       "kind": "morph-only",
       "lemmaSeen": false,
       "bundleSeen": false
@@ -8276,6 +13062,8 @@
       "baseline": "کھیلنا",
       "memory": "کھیلنا",
       "morph": "کھیل رہی ہوں",
+      "natom": "کھیل رہی ہوں گی",
+      "nfeat": "کھی رہی ہوں",
       "kind": "morph-only",
       "lemmaSeen": false,
       "bundleSeen": false
@@ -8288,6 +13076,8 @@
       "baseline": "چومنا",
       "memory": "چومنا",
       "morph": "چوم رہی تھی",
+      "natom": "چومتی ہوتی",
+      "nfeat": "چوم رہی تھی",
       "kind": "morph-only",
       "lemmaSeen": false,
       "bundleSeen": false
@@ -8300,6 +13090,8 @@
       "baseline": "جھگڑاے",
       "memory": "جھگڑاے",
       "morph": "جھگڑاے",
+      "natom": "جھڑائیں",
+      "nfeat": "جھگاا",
       "kind": "all-wrong",
       "lemmaSeen": false,
       "bundleSeen": true
@@ -8312,6 +13104,8 @@
       "baseline": "سالگرے",
       "memory": "سالگرے",
       "morph": "سالگرے",
+      "natom": "سالگر",
+      "nfeat": "سالگرے",
       "kind": "all-wrong",
       "lemmaSeen": false,
       "bundleSeen": true
@@ -8331,6 +13125,8 @@
       "baseline": "eːkun",
       "memory": "eːkun",
       "morph": "eːkundulaː",
+      "natom": "eːkunduː",
+      "nfeat": "eːkunə",
       "kind": "morph-only",
       "lemmaSeen": true,
       "bundleSeen": false
@@ -8343,6 +13139,8 @@
       "baseline": "aki",
       "memory": "aki",
       "morph": "akim",
+      "natom": "akilduː",
+      "nfeat": "akiwun",
       "kind": "morph-only",
       "lemmaSeen": false,
       "bundleSeen": false
@@ -8355,6 +13153,8 @@
       "baseline": "baji",
       "memory": "baji",
       "morph": "bajilnun",
+      "natom": "bajilwa",
+      "nfeat": "bajilwər",
       "kind": "morph-only",
       "lemmaSeen": false,
       "bundleSeen": false
@@ -8369,6 +13169,8 @@
       "baseline": "ŋinakinmə",
       "memory": "ŋinakinma",
       "morph": "ŋinakinmə",
+      "natom": "ŋinakinduː",
+      "nfeat": "ŋinakindulaː",
       "kind": "memory-only",
       "lemmaSeen": true,
       "bundleSeen": true
@@ -8383,6 +13185,8 @@
       "baseline": "amarduːtin",
       "memory": "amarduːtin",
       "morph": "amarduːtin",
+      "natom": "amarduː",
+      "nfeat": "amardukiː",
       "kind": "all-wrong",
       "lemmaSeen": true,
       "bundleSeen": true
@@ -8399,6 +13203,8 @@
       "baseline": "omŋom",
       "memory": "omŋom",
       "morph": "omŋom",
+      "natom": "omŋotin",
+      "nfeat": "omŋoďonďon",
       "kind": "all-wrong",
       "lemmaSeen": true,
       "bundleSeen": true
@@ -8416,6 +13222,8 @@
       "baseline": "munŋədi",
       "memory": "munŋədi",
       "morph": "munŋədiŋkiːwun",
+      "natom": "munŋədiduk",
+      "nfeat": "munŋədiwun",
       "kind": "baseline-only",
       "lemmaSeen": false,
       "bundleSeen": false
@@ -8428,6 +13236,8 @@
       "baseline": "ədin",
       "memory": "ədin",
       "morph": "ədinduː",
+      "natom": "ədinduː",
+      "nfeat": "ədinduː",
       "kind": "baseline-only",
       "lemmaSeen": false,
       "bundleSeen": false
@@ -8440,6 +13250,8 @@
       "baseline": "ərə",
       "memory": "ərə",
       "morph": "ərəduː",
+      "natom": "ərəldə",
+      "nfeat": "ərə",
       "kind": "baseline-only",
       "lemmaSeen": false,
       "bundleSeen": false
@@ -8452,6 +13264,8 @@
       "baseline": "amaski",
       "memory": "amaski",
       "morph": "amaski",
+      "natom": "amaskil",
+      "nfeat": "amaski",
       "kind": "all-wrong",
       "lemmaSeen": false,
       "bundleSeen": false
@@ -8464,6 +13278,8 @@
       "baseline": "γoːtaďət͡ʃaːw",
       "memory": "γoːtaďət͡ʃaːw",
       "morph": "γoːtaďət͡ʃaːw",
+      "natom": "γoːtaďən",
+      "nfeat": "γoːtaďəm",
       "kind": "all-wrong",
       "lemmaSeen": false,
       "bundleSeen": true
@@ -8483,6 +13299,8 @@
       "baseline": "тумгытум",
       "memory": "тумгытум",
       "morph": "тумгыт",
+      "natom": "тумгэ",
+      "nfeat": "тумгытум",
       "kind": "morph-only",
       "lemmaSeen": true,
       "bundleSeen": false
@@ -8495,6 +13313,8 @@
       "baseline": "тэнӈыткук",
       "memory": "тэнӈыткук",
       "morph": "гэтэнӈыткуԓин",
+      "natom": "тэнӈыткук",
+      "nfeat": "тэнӈыткук",
       "kind": "morph-only",
       "lemmaSeen": false,
       "bundleSeen": false
@@ -8507,6 +13327,8 @@
       "baseline": "ԓьук",
       "memory": "ԓьук",
       "morph": "гэԓьуԓин",
+      "natom": "ԓьунин",
+      "nfeat": "гэнуԓин",
       "kind": "morph-only",
       "lemmaSeen": true,
       "bundleSeen": true
@@ -8519,6 +13341,8 @@
       "baseline": "тури",
       "memory": "тури",
       "morph": "торыкагты",
+      "natom": "торыкагты",
+      "nfeat": "торыкагты",
       "kind": "baseline-only",
       "lemmaSeen": true,
       "bundleSeen": false
@@ -8531,6 +13355,8 @@
       "baseline": "ӈирэӄычьын",
       "memory": "ӈирэӄычьын",
       "morph": "ӈирэӄычьын",
+      "natom": "ӈирэӄычьын",
+      "nfeat": "ӈирэӄычьыт",
       "kind": "all-wrong",
       "lemmaSeen": false,
       "bundleSeen": false
@@ -8543,6 +13369,8 @@
       "baseline": "гым",
       "memory": "гым",
       "morph": "гым",
+      "natom": "гымнин",
+      "nfeat": "гымнан",
       "kind": "all-wrong",
       "lemmaSeen": true,
       "bundleSeen": false
@@ -8560,6 +13388,8 @@
       "baseline": "итык",
       "memory": "итык",
       "morph": "мыитнэт",
+      "natom": "мытытыгъэн",
+      "nfeat": "мытыԓитъан",
       "kind": "baseline-only",
       "lemmaSeen": false,
       "bundleSeen": false
@@ -8572,6 +13402,8 @@
       "baseline": "итык",
       "memory": "итык",
       "morph": "тыитгъэк",
+      "natom": "мытытыгъэн",
+      "nfeat": "гынэк",
       "kind": "all-wrong",
       "lemmaSeen": false,
       "bundleSeen": false
@@ -8586,6 +13418,8 @@
       "baseline": "гг",
       "memory": "гг",
       "morph": "гг",
+      "natom": "гым",
+      "nfeat": "гым",
       "kind": "all-wrong",
       "lemmaSeen": false,
       "bundleSeen": true
@@ -8605,6 +13439,8 @@
       "baseline": "arezi",
       "memory": "ari",
       "morph": "arezi",
+      "natom": "arăm",
+      "nfeat": "arai",
       "kind": "memory-only",
       "lemmaSeen": true,
       "bundleSeen": true
@@ -8617,6 +13453,8 @@
       "baseline": "cerese",
       "memory": "ceruse",
       "morph": "cerese",
+      "natom": "cereau",
+      "nfeat": "ceruse",
       "kind": "memory-only",
       "lemmaSeen": true,
       "bundleSeen": true
@@ -8629,6 +13467,8 @@
       "baseline": "reduceseși",
       "memory": "reduseseși",
       "morph": "reduceseși",
+      "natom": "reducseși",
+      "nfeat": "reduseseși",
       "kind": "memory-only",
       "lemmaSeen": true,
       "bundleSeen": true
@@ -8641,6 +13481,8 @@
       "baseline": "augură",
       "memory": "augură",
       "morph": "augură",
+      "natom": "augura",
+      "nfeat": "augură",
       "kind": "all-wrong",
       "lemmaSeen": true,
       "bundleSeen": true
@@ -8653,6 +13495,8 @@
       "baseline": "presupunei",
       "memory": "presupunei",
       "morph": "presupunei",
+      "natom": "presupun",
+      "nfeat": "presupusem",
       "kind": "all-wrong",
       "lemmaSeen": true,
       "bundleSeen": true
@@ -8670,6 +13514,8 @@
       "baseline": "să răsculi",
       "memory": "să răsculi",
       "morph": "să răsculi",
+      "natom": "să răsculezi",
+      "nfeat": "să răsculez",
       "kind": "all-wrong",
       "lemmaSeen": false,
       "bundleSeen": true
@@ -8682,6 +13528,8 @@
       "baseline": "presupunese",
       "memory": "presupunese",
       "morph": "presupunese",
+      "natom": "presupuneam",
+      "nfeat": "presupunese",
       "kind": "all-wrong",
       "lemmaSeen": false,
       "bundleSeen": true
@@ -8841,5 +13689,28 @@
     ]
    }
   }
+ },
+ "neural": {
+  "torch": "2.14.0+cpu",
+  "python": "3.14.4",
+  "config": {
+   "emb": 48,
+   "enc": 64,
+   "dec": 128,
+   "dropout": 0.3,
+   "lr": 0.003,
+   "lr_final": 0.0003,
+   "batch": 32,
+   "clip": 5,
+   "steps_base": 200,
+   "steps_per_item": 0.6,
+   "steps_max": 800,
+   "decode_extra": 20
+  },
+  "kinds": [
+   "natom",
+   "nfeat"
+  ],
+  "trainSeconds": 28676
  }
 }

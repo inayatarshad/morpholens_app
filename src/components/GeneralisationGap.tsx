@@ -44,6 +44,12 @@ export function GeneralisationGap({ lang, size, split, metric }: { lang: string;
       <div className="mt-3">
         <Row label="Paradigm memory vs. atomic baseline" ta={testOf(r, "memory-baseline", metric)} tb={testOf(l, "memory-baseline", metric)} color="text-burgundy" split={split} />
         <Row label="Feature-aware vs. atomic baseline" ta={testOf(r, "morph-baseline", metric)} tb={testOf(l, "morph-baseline", metric)} color="text-bush" split={split} />
+        {r.tests["nfeat-natom"] && l.tests["nfeat-natom"] && (
+          <>
+            <Row label="Neural: features vs. atomic tag" ta={testOf(r, "nfeat-natom", metric)} tb={testOf(l, "nfeat-natom", metric)} color="text-sienna" split={split} />
+            <Row label="Neural features vs. feature-aware rules" ta={testOf(r, "nfeat-morph", metric)} tb={testOf(l, "nfeat-morph", metric)} color="text-sienna" split={split} />
+          </>
+        )}
       </div>
       <dl className="mt-2 grid grid-cols-3 gap-3 border-t border-line pt-4 text-sm">
         <div>

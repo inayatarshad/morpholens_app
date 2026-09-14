@@ -8,3 +8,4 @@ next-env.d.ts
 .vercel
 .claude
 unimorph-data
+__pycache__

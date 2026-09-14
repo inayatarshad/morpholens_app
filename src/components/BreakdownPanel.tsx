@@ -55,7 +55,7 @@ export function BreakdownPanel({ lang, split, size }: { lang: LanguageId | strin
       </div>
       <p className="mt-3 text-xs leading-relaxed text-muted">
         Accuracy on test items whose feature bundle (or lemma) does / does not occur in the training sample, pooled over seeds ({c.items.toLocaleString("en")} items).
-        A lemma copy means the system found no applicable rule and returned the lemma unchanged.
+        A lemma copy means the output is the lemma unchanged; for the rule systems this happens when no rule applies.
       </p>
     </div>
   );

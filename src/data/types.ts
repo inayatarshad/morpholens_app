@@ -110,4 +110,4 @@ export type CuratedComparison = {
 };
 
 export type ExperimentSplit = "random" | "lemma-disjoint";
-export type SystemId = "baseline" | "memory" | "morph";
+export type SystemId = "baseline" | "memory" | "morph" | "natom" | "nfeat";

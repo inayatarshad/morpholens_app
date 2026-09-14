@@ -143,7 +143,7 @@ export default function Home() {
             <p className="text-xs text-oak">Setup</p>
             <p className="display mt-3 text-4xl">{totalTriples.toLocaleString("en")}</p>
             <p className="mt-1 text-sm text-ivory/80">
-              UniMorph triples, pinned commits, 5 seeds, three transparent rule-based systems. Neural comparisons are the next step.
+              UniMorph triples, pinned commits, 5 seeds, three transparent rule-based systems and two PyTorch neural models.
             </p>
           </div>
         </div>

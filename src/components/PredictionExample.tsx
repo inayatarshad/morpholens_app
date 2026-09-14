@@ -30,7 +30,7 @@ export function PredictionExample({ lang, split }: { lang: LanguageId; split: Ex
         <p className="mt-4 text-sm text-muted">No disagreement cases recorded for this configuration.</p>
       ) : (
         <div className="mt-4 overflow-x-auto">
-          <table className="w-full min-w-[40rem] text-sm">
+          <table className="w-full min-w-[58rem] text-sm">
             <thead className="text-left text-xs text-muted">
               <tr>
                 <th className="py-2 pr-3 font-medium">Lemma · bundle</th>

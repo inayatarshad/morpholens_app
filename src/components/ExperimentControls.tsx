@@ -77,7 +77,7 @@ export function ExperimentControls({ lang, split, size, sizes, metric, onLang, o
           : "the prediction may equal any form stored for the same lemma and bundle, so dialectal or transcription variants (frequent in oral Evenki) are not counted as errors."}
         {lang === "ron" && " Romanian results use verbs only; noun and adjective tags are unreliable. Results on all records are listed in the findings table."}
       </p>
-      <div className="grid gap-3 text-sm sm:grid-cols-3">
+      <div className="grid gap-3 text-sm sm:grid-cols-2 lg:grid-cols-5">
         {systemOrder.map((m) => (
           <div key={m} className="rounded-lg border border-line bg-cashmere/60 px-3 py-2">
             <p className="flex items-center gap-2 font-semibold text-bush">

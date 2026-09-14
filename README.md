@@ -28,7 +28,7 @@ The framing is deliberately modest. MorphoLens makes multilingual morphological 
   - Examples come from UniMorph, and audit-flagged or non-schema records are never used.
   - Hand-curated reference patterns appear only where UniMorph has no example.
   - The Chukchi examples carry hand annotations: a transparent absolutive plural, and the gə-…-lin perfect.
-- **Unseen-lemma experiment** (`/experiment`): three transparent systems, two splits, five training sizes and five seeds.
+- **Unseen-lemma experiment** (`/experiment`): three transparent rule systems and two PyTorch neural models, two splits, five training sizes and five seeds.
   - Scoring comes in two forms: **strict** and **variant-aware** exact match.
   - Each difference has a paired-bootstrap 95% interval and p-value, plus mean edit distance.
   - Breakdowns show seen vs unseen bundles and lemmas.
@@ -94,13 +94,20 @@ Samples from every rule were checked by hand, and all were genuine errors. Flagg
 | Atomic-tag rules (baseline) | Edit rules keyed by the whole bundle as an opaque label, using nearest-ending analogy. It follows the spirit of the CoNLL-SIGMORPHON 2017 non-neural baseline. |
 | Paradigm memory | Reinflects from forms of the *same* lemma seen in training; otherwise it falls back to the baseline. It can only benefit from lemma overlap. |
 | Feature-aware rules | Decomposes bundles into features and composes lemma→A with a feature-difference rule A→T learned across paradigms. |
+| Neural, atomic tag | Small character-level Transformer encoder-decoder (the SIGMORPHON 2020 baseline design of Wu, Cotterell & Hulden 2021, scaled down for CPU) with a copy head over the lemma characters. The whole bundle is one input token; an unseen bundle is an unknown token. |
+| Neural, features | The same network, schedule and seeds, but each feature is its own input token. |
 
-**Findings.** These are at n = 500 on the lemma-disjoint split (Chukchi n = 100), strict unless noted, and apply only to these simple systems.
+The neural models (`scripts/neural.py`) are trained from scratch in every run on exactly the same items as the rule systems, with a schedule fixed in advance and no development set, because the rule systems get no tuning data either. The two differ only in how the bundle is presented, so their difference is the neural counterpart of the atomic vs feature-aware rule comparison. They are CPU baselines, not state of the art. Predictions are committed in `experiments/neural/`, so `npm run experiment` reproduces every number without Python.
+
+**Findings.** These are at n = 500 on the lemma-disjoint split (Chukchi n = 100), strict unless noted, and apply only to these systems.
 - **Urdu:** feature-aware rules are **+4.8 points** above the baseline (95% CI +3.8 to +5.9, p < 0.001).
 - **No significant difference:** Turkish (+0.2), Evenki (−0.2; −0.1 variant-aware), Chukchi (+1.7) and Romanian verbs (±0.0).
 - **Romanian raw run:** on all Romanian records the difference is +0.4. It disappears on verbs, so it is not read as a morphological effect.
 - **Evenki scoring:** variant-aware scoring raises Evenki accuracy for every system, because 16% of test items have more than one stored form.
 - **Paradigm memory:** it beats the baseline only on random splits with high lemma overlap (Turkish, Urdu). On lemma-disjoint splits it equals the baseline by construction.
+- **Neural, feature vs atomic tag tokens:** the same network is far more accurate with one token per feature: Turkish +25.6, Urdu +22.8, Evenki +12.8, Romanian verbs +33.2 points (all p < 0.001); Chukchi +2.4 (n.s.). With one token per bundle the network almost never learns Turkish (1.7%), where bundles are numerous and each one is rare.
+- **Neural vs rules:** at n ≤ 500 the neural feature model is below the feature-aware rules in every language (Turkish −10.1, Urdu −10.9, Evenki −13.6, Romanian verbs −24.8, Chukchi −33.1). At n = 1000 it overtakes them on Turkish (+7.4, 95% CI +5.1 to +9.7).
+- **Lemma overlap and the neural model:** from the random to the lemma-disjoint split, the neural feature model drops from 43.6 to 27.4 on Turkish and from 73.9 to 59.1 on Urdu, while the atomic-tag rules do not drop (34.2 → 37.3, 65.7 → 65.2). The splits have different test items, so this comparison is descriptive.
 
 ## Architecture
 
@@ -109,6 +116,8 @@ scripts/
   fetch-unimorph.mjs       UniMorph files at pinned commits → unimorph-data/ (runs before every build)
   build-data.mjs           featured lemmas, comparisons, audits, tag validation, variant stats → src/data/generated/unimorph-sample.json
   run-experiment.mjs       splits, systems, seeds, both metrics, bootstrap → src/data/generated/experiment-results.json + public/data/*
+                           (--splits-only writes the exact train/test splits for neural.py)
+  neural.py                PyTorch Transformer with copy, atomic vs feature tag tokens → experiments/neural/*.json.gz
   check-morphology.mts     regression checks: alignment, audits, tag validation, matching, live search
 src/app/api/search/        full-data search (exact → lemma → loose → nearest), bundle counts
 src/lib/unimorph-server.ts in-memory index over the full files (server only)
@@ -133,6 +142,14 @@ The first `npm run build` or `npm run data:fetch` downloads about 35 MB from Git
 ```bash
 npm run data:fetch
 npm run data:build
+npm run experiment
+```
+
+To retrain the neural models (Python 3 with CPU PyTorch, `pip install torch --index-url https://download.pytorch.org/whl/cpu`; about 1.5 hours on a 6-core laptop, resumable):
+
+```bash
+npm run experiment:splits
+npm run experiment:neural
 npm run experiment
 ```
 
@@ -164,7 +181,7 @@ The results are available as [JSON](https://morpholens-app.vercel.app/data/morph
 @misc{morpholens,
   title        = {MorphoLens: Exploring Morphological Generalisation to Unseen Lemmas},
   howpublished = {\url{https://morpholens-app.vercel.app}},
-  note         = {Version 0.5. Data: UniMorph tur, urd, evn, ckt, ron at pinned commits},
+  note         = {Version 0.6. Data: UniMorph tur, urd, evn, ckt, ron at pinned commits},
   year         = {2026}
 }
 ```
@@ -173,7 +190,7 @@ Please also cite UniMorph and the per-language sources.
 
 ## Future research
 
-1. **Neural baselines:** XLM-R or ByT5 run through the same splits and both metrics.
+1. **Stronger neural systems:** data hallucination (Anastasopoulos & Neubig, 2019), a full-size Transformer on GPU, and pretrained models such as ByT5, run through the same splits and both metrics.
 2. **Cross-resource checks:** compare against Apertium dictionaries and Wiktionary.
 3. **Audit coverage:** extend audits beyond Romanian Number and adjective Gender.
 4. **Expert review:** have speakers or linguists review the hand annotations and flagged records.
@@ -184,11 +201,15 @@ Please also cite UniMorph and the per-language sources.
 - Cotterell et al. (2017). *CoNLL-SIGMORPHON 2017 Shared Task: Universal Morphological Reinflection in 52 Languages.*
 - Dunn, M. (1999). *A Grammar of Chukchi.* PhD thesis, Australian National University.
 - Goldman, Guriel & Tsarfaty (2022). *(Un)solving Morphological Inflection: Lemma Overlap Artificially Inflates Models' Performance.* ACL.
+- Kann, K. & Schütze, H. (2016). *Single-Model Encoder-Decoder with Explicit Morphological Representation for Reinflection.* ACL.
 - Kazakevich, O. A. & Klyachko, E. L. (2013). *Создание мультимедийного аннотированного корпуса текстов как исследовательская процедура.*
 - McCarthy et al. (2018). *Marrying Universal Dependencies and Universal Morphology.* UDW.
 - Pimentel, Ryskina et al. (2021). *SIGMORPHON 2021 Shared Task on Morphological Reinflection: Generalization Across Languages.*
+- See, Liu & Manning (2017). *Get To The Point: Summarization with Pointer-Generator Networks.* ACL.
+- Sharma, Katrapati & Sharma (2018). *IIT(BHU)-IIITH at CoNLL-SIGMORPHON 2018 Shared Task on Universal Morphological Reinflection.*
 - Tyers, F. & Mishchenkova, K. (2020). *Dependency annotation of noun incorporation in polysynthetic languages.* UDW.
 - Vylomova et al. (2020). *SIGMORPHON 2020 Shared Task 0: Typologically Diverse Morphological Inflection.*
+- Wu, Cotterell & Hulden (2021). *Applying the Transformer to Character-level Transduction.* EACL.
 - Göksel & Kerslake (2005). *Turkish: A Comprehensive Grammar.* Schmidt (1999). *Urdu: An Essential Grammar.*
 
 ---

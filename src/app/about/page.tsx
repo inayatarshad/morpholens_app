@@ -30,6 +30,10 @@ const references = [
   "Dunn, M. (1999). A Grammar of Chukchi. PhD thesis, Australian National University.",
   "Vylomova, E. et al. (2020). SIGMORPHON 2020 Shared Task 0: Typologically Diverse Morphological Inflection.",
   "Tyers, F. & Mishchenkova, K. (2020). Dependency annotation of noun incorporation in polysynthetic languages. UDW 2020.",
+  "Kann, K. & Schütze, H. (2016). Single-Model Encoder-Decoder with Explicit Morphological Representation for Reinflection. Proceedings of ACL 2016.",
+  "Wu, S., Cotterell, R. & Hulden, M. (2021). Applying the Transformer to Character-level Transduction. Proceedings of EACL 2021.",
+  "See, A., Liu, P. J. & Manning, C. D. (2017). Get To The Point: Summarization with Pointer-Generator Networks. Proceedings of ACL 2017.",
+  "Sharma, A., Katrapati, G. & Sharma, D. M. (2018). IIT(BHU)-IIITH at CoNLL-SIGMORPHON 2018 Shared Task on Universal Morphological Reinflection.",
   "Göksel, A. & Kerslake, C. (2005). Turkish: A Comprehensive Grammar. Routledge.",
   "Schmidt, R. L. (1999). Urdu: An Essential Grammar. Routledge.",
 ];
@@ -264,8 +268,15 @@ export default function AboutPage() {
           <li><strong className="text-bush">Atomic-tag rules</strong>: edit rules keyed by the whole bundle; nearest-ending analogy; unseen bundle ⇒ copy the lemma. In the spirit of the CoNLL-SIGMORPHON 2017 non-neural baseline.</li>
           <li><strong className="text-burgundy">Paradigm memory</strong>: reinflects from seen forms of the same lemma (cell-to-cell rules); otherwise the baseline.</li>
           <li><strong className="text-bush">Feature-aware rules</strong>: bundles decomposed into features; composes lemma→A with a feature-difference rule A→T learned across paradigms; otherwise nearest bundle.</li>
+          <li><strong className="text-sienna">Neural, atomic tag</strong>: a small character-level Transformer encoder-decoder in PyTorch, the design of the SIGMORPHON 2020 baseline (Wu, Cotterell &amp; Hulden, 2021) scaled down for CPU, with a copy head over the lemma characters in the style of the pointer-generator (See et al., 2017) used for low-resource inflection by Sharma et al. (2018). Tag tokens precede the lemma characters, as in Kann &amp; Schütze (2016). Here the whole bundle is one input token; a bundle never seen in training becomes an unknown token.</li>
+          <li><strong className="text-sienna">Neural, features</strong>: the same network, schedule and seeds, but each feature of the bundle is its own input token, so an unseen combination of seen features can still be represented.</li>
         </ul>
-        <p className="text-sm">All three are transparent, non-neural and trained from scratch per run. They are baselines for the evaluation design, not claims about neural models.</p>
+        <p className="text-sm">
+          All systems are trained from scratch in every run on exactly the same training items and scored on the same test items. The rule systems
+          are transparent. The two neural systems differ only in how the bundle is presented, so their difference is the neural counterpart of the
+          atomic vs. feature-aware rule comparison. They are small, trained on CPU with a schedule fixed in advance (no development set, no tuning,
+          because the rule systems get no tuning data either): baselines for the evaluation design, not state of the art.
+        </p>
       </Section>
 
       <Section n="07" title="Results">
@@ -301,7 +312,7 @@ export default function AboutPage() {
 
       <Section n="09" title="Limitations">
         <ul className="list-disc space-y-2 pl-5">
-          <li>No neural models yet; conclusions apply to these rule-based systems only.</li>
+          <li>The neural models are small, untuned CPU baselines with a fixed training schedule and no development set; transformers, data hallucination or pretrained models could change the picture.</li>
           <li>Strict exact match treats stored variants (several forms for one cell) as errors; variant-aware accuracy and edit distance are reported alongside it.</li>
           <li>Bootstrap intervals treat pooled test items as independent; items from different seeds can overlap.</li>
           <li>Surface alignments for UniMorph forms are automatic and handle one alternating stem segment at most; they are not morpheme boundaries, and exponents are never attributed to individual features.</li>
@@ -335,10 +346,20 @@ export default function AboutPage() {
         <pre className="overflow-x-auto rounded-lg bg-bush p-5 font-mono text-xs leading-relaxed text-oak">{`npm install
 npm run data:fetch     # UniMorph files at pinned commits → unimorph-data/
 npm run data:build     # explorer + comparison sample + record audit
+npm run experiment:splits   # exact train/test splits → unimorph-data/splits/
+npm run experiment:neural   # PyTorch (CPU), 2 neural systems → experiments/neural/
 npm run experiment     # 5 languages × 2 splits × 5 sizes × 5 seeds (+ bootstrap)
 npm test               # regression checks: alignment, audit, matching
 npm run dev`}</pre>
-        <p className="text-sm text-muted">Last run: {new Date(experiment.generatedAt).toISOString().slice(0, 10)} · Node {experiment.node} · {experiment.runtimeSeconds}s. Re-running reproduces the shipped results exactly.</p>
+        <p className="text-sm text-muted">
+          Last run: {new Date(experiment.generatedAt).toISOString().slice(0, 10)} · Node {experiment.node} · {experiment.runtimeSeconds}s
+          {experiment.neural && (
+            <>
+              {" "}· neural models: PyTorch {experiment.neural.torch} on CPU, {(experiment.neural.trainSeconds / 3600).toFixed(1)} CPU-hours of training
+            </>
+          )}
+          . Re-running <code>npm run experiment</code> reproduces the shipped results exactly from the committed neural predictions.
+        </p>
       </Section>
     </Container>
   );

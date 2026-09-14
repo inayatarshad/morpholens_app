@@ -43,10 +43,16 @@
  */
 import fs from "node:fs";
 import path from "node:path";
+import zlib from "node:zlib";
 import { atomStatus, unlistedAtoms } from "../src/lib/schema.ts";
 
 const DIR = process.argv[2];
-if (!DIR) throw new Error("Usage: node scripts/run-experiment.mjs <unimorph-dir>");
+if (!DIR) throw new Error("Usage: node scripts/run-experiment.mjs <unimorph-dir> [--splits-only]");
+/** --splits-only: write the exact train pools and test sets for scripts/neural.py, then stop. */
+const SPLITS_ONLY = process.argv.includes("--splits-only");
+const SPLITS_DIR = path.join(DIR, "splits");
+/** Neural predictions written by scripts/neural.py (committed, so results rebuild without Python). */
+const NEURAL_DIR = path.join(process.cwd(), "experiments", "neural");
 
 const DATASETS = [
   { id: "tur", source: "tur" },
@@ -283,8 +289,17 @@ function predictMorph(model, lemma, tag) {
 }
 
 const SYSTEMS = { baseline: predictBaseline, memory: predictMemory, morph: predictMorph };
-const SYS = Object.keys(SYSTEMS);
+/** Neural systems whose predictions come from scripts/neural.py (see experiments/neural/). */
+const NEURAL_SYS = ["natom", "nfeat"];
 const PAIRS = [["morph", "baseline"], ["memory", "baseline"], ["morph", "memory"]];
+const NEURAL_PAIRS = [["nfeat", "baseline"], ["natom", "baseline"], ["nfeat", "natom"], ["nfeat", "morph"]];
+
+/** Predictions keyed "seed|split|n" → { natom: string[], nfeat: string[] }, or null if not run. */
+function loadNeural(id) {
+  const file = path.join(NEURAL_DIR, `${id}.json.gz`);
+  if (!fs.existsSync(file)) return null;
+  return JSON.parse(zlib.gunzipSync(fs.readFileSync(file)).toString("utf8"));
+}
 
 // ── splits ────────────────────────────────────────────────────────────────────
 function universe(data, seed) {
@@ -361,6 +376,8 @@ const examples = {};
 const stats = {};
 const csv = [["dataset", "split", "n", "system", "accuracy_mean", "accuracy_sd", "variant_aware_mean", "variant_aware_sd", "levenshtein_mean", "acc_seen_bundle", "acc_unseen_bundle", "lemma_copy_share_of_errors", "test_items_pooled", "lemma_overlap_pct", "unseen_bundle_pct", "multi_form_cell_pct"].join(",")];
 const rawCache = new Map();
+let neuralMeta = null;
+let neuralSeconds = 0;
 
 for (const ds of DATASETS) {
   const lang = ds.id;
@@ -397,10 +414,26 @@ for (const ds of DATASETS) {
   const pooled = {};
   let testSize = 0;
 
+  const neural = SPLITS_ONLY ? null : loadNeural(lang);
+  const SYS = [...Object.keys(SYSTEMS), ...(neural ? NEURAL_SYS : [])];
+  const pairs = neural ? [...PAIRS, ...NEURAL_PAIRS] : PAIRS;
+  const exported = {};
+  if (neural) {
+    neuralMeta ??= neural._meta;
+    neuralSeconds += Object.values(neural._meta.runs ?? {}).reduce((s, r) => s + r.seconds, 0);
+  }
+
   for (const seed of SEEDS) {
     const uni = universe(data, seed);
     const splits = makeSplits(uni, seed);
     testSize = splits.T;
+    if (SPLITS_ONLY) {
+      const rows = (xs) => xs.map((t) => [t.lemma, t.tag, t.form]);
+      exported[seed] = Object.fromEntries(
+        ["random", "lemma-disjoint"].map((s) => [s, { test: rows(splits[s].test), pool: rows(splits[s].pool.slice(0, Math.max(...SIZES))) }]),
+      );
+      continue;
+    }
     for (const split of ["random", "lemma-disjoint"]) {
       const { test, pool } = splits[split];
       for (const n of SIZES) {
@@ -410,8 +443,12 @@ for (const ds of DATASETS) {
         const trainLemmas = new Set(trainItems.map((t) => t.lemma));
         const P = (((pooled[split] ??= {})[n]) ??= { items: [], correct: {}, correctV: {}, lev: {}, copy: {} });
         const preds = {};
-        for (const [name, fn] of Object.entries(SYSTEMS)) {
-          preds[name] = test.map((t) => fn(model, t.lemma, t.tag));
+        for (const name of SYS) {
+          if (NEURAL_SYS.includes(name)) {
+            const run = neural[`${seed}|${split}|${n}`]?.[name];
+            if (!run || run.length !== test.length) throw new Error(`neural predictions missing for ${lang} ${seed}|${split}|${n}; rerun scripts/neural.py`);
+            preds[name] = run;
+          } else preds[name] = test.map((t) => SYSTEMS[name](model, t.lemma, t.tag));
           const correct = preds[name].map((p, i) => (p === test[i].form ? 1 : 0));
           const correctV = preds[name].map((p, i) => (cellForms.get(`${test[i].lemma}\t${test[i].tag}`).has(p) ? 1 : 0));
           (((acc[split] ??= {})[n] ??= {})[name] ??= []).push(100 * mean(correct));
@@ -435,12 +472,20 @@ for (const ds of DATASETS) {
               mem === t.form && b !== t.form ? "memory-only" :
               b !== t.form && m !== t.form && mem !== t.form ? "all-wrong" : "all-right";
             const alt = [...cellForms.get(`${t.lemma}\t${t.tag}`)].filter((f) => f !== t.form).slice(0, 5);
-            pick.push({ lemma: t.lemma, tag: t.tag, gold: t.form, alt, baseline: b, memory: mem, morph: m, kind, lemmaSeen: trainLemmas.has(t.lemma), bundleSeen: model.byTag.has(t.tag) });
+            const nn = preds.nfeat ? { natom: preds.natom[i], nfeat: preds.nfeat[i] } : {};
+            pick.push({ lemma: t.lemma, tag: t.tag, gold: t.form, alt, baseline: b, memory: mem, morph: m, ...nn, kind, lemmaSeen: trainLemmas.has(t.lemma), bundleSeen: model.byTag.has(t.tag) });
           });
           (examples[lang] ??= {})[split] = { n, items: pick };
         }
       }
     }
+  }
+
+  if (SPLITS_ONLY) {
+    fs.mkdirSync(SPLITS_DIR, { recursive: true });
+    fs.writeFileSync(path.join(SPLITS_DIR, `${lang}.json`), JSON.stringify({ dataset: lang, sizes: SIZES, seeds: exported }));
+    console.log(`${lang}: splits written (${data.length} triples)`);
+    continue;
   }
 
   let bootSeed = 17;
@@ -470,8 +515,8 @@ for (const ds of DATASETS) {
           pos: Object.fromEntries(topPos.map((p) => [p, pct(idx((it) => it.pos === p).map((i) => c[i]))])),
         };
       }
-      const tests = Object.fromEntries(PAIRS.map(([a, b]) => [`${a}-${b}`, pairedBootstrap(P.correct[a], P.correct[b], bootSeed++)]));
-      const testsVariant = Object.fromEntries(PAIRS.map(([a, b]) => [`${a}-${b}`, pairedBootstrap(P.correctV[a], P.correctV[b], bootSeed++)]));
+      const tests = Object.fromEntries(pairs.map(([a, b]) => [`${a}-${b}`, pairedBootstrap(P.correct[a], P.correct[b], bootSeed++)]));
+      const testsVariant = Object.fromEntries(pairs.map(([a, b]) => [`${a}-${b}`, pairedBootstrap(P.correctV[a], P.correctV[b], bootSeed++)]));
       const cell = {
         overlap: pct(P.items.map((it) => (it.lemmaSeen ? 1 : 0))),
         unseenBundle: pct(P.items.map((it) => (it.bundleSeen ? 0 : 1))),
@@ -493,6 +538,11 @@ for (const ds of DATASETS) {
   const nShow = Object.keys(results[lang]["lemma-disjoint"]).map(Number).filter((x) => x <= 500).pop();
   const show = results[lang]["lemma-disjoint"][nShow];
   console.log(`${lang}: ${data.length} triples (excluded ${excludedAnomalies} anomalous${ds.verbsOnly ? ", verbs only" : ""}) n=${nShow} strict ${JSON.stringify(show?.tests["morph-baseline"])} variant ${JSON.stringify(show?.testsVariant["morph-baseline"])} multiRef=${show?.multiRef}%`);
+}
+
+if (SPLITS_ONLY) {
+  console.log("splits written to", SPLITS_DIR);
+  process.exit(0);
 }
 
 /** Keep a small, diverse set of examples per dataset/split for the UI. */
@@ -519,6 +569,9 @@ const out = {
   stats,
   results,
   examples: curatedExamples,
+  neural: neuralMeta
+    ? { torch: neuralMeta.torch, python: neuralMeta.python, config: neuralMeta.config, kinds: neuralMeta.kinds, trainSeconds: Math.round(neuralSeconds) }
+    : null,
 };
 
 const root = process.cwd();

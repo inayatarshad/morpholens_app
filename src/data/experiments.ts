@@ -28,7 +28,7 @@ export type SystemSummary = Summary & {
   pos: Record<string, number | null>;
 };
 export type Test = { diff: number; lo: number; hi: number; p: number };
-export type TestKey = "morph-baseline" | "memory-baseline" | "morph-memory";
+export type TestKey = "morph-baseline" | "memory-baseline" | "morph-memory" | "nfeat-baseline" | "natom-baseline" | "nfeat-natom" | "nfeat-morph";
 export type Cell = {
   overlap: number;
   unseenBundle: number;
@@ -49,6 +49,8 @@ export type PredictionExample = {
   baseline: string;
   memory: string;
   morph: string;
+  natom: string;
+  nfeat: string;
   kind: "morph-only" | "baseline-only" | "memory-only" | "all-wrong" | "all-right";
   lemmaSeen: boolean;
   bundleSeen: boolean;
@@ -64,6 +66,8 @@ type ResultsJson = {
   stats: Record<string, DatasetStats>;
   results: Record<string, Record<ExperimentSplit, Record<string, Cell>>>;
   examples: Record<string, Partial<Record<ExperimentSplit, { n: number; items: PredictionExample[] }>>>;
+  /** Neural training environment (scripts/neural.py); null when the neural systems were not run. */
+  neural: { torch: string; python: string; config: Record<string, number>; kinds: string[]; trainSeconds: number } | null;
 };
 
 export const experiment = raw as unknown as ResultsJson;
@@ -72,8 +76,13 @@ export const systems: Record<SystemId, { name: string; detail: string; color: st
   baseline: { name: "Atomic-tag rules", detail: "Baseline · feature bundle treated as one opaque label", color: "#d2b792" },
   memory: { name: "Paradigm memory", detail: "Surface · reuses seen forms of the same lemma", color: "#5b1a20" },
   morph: { name: "Feature-aware rules", detail: "Morphology-aware · decomposes bundles into features", color: "#102e28" },
+  natom: { name: "Neural, atomic tag", detail: "PyTorch Transformer with copy · bundle is one input token", color: "#c9794f" },
+  nfeat: { name: "Neural, features", detail: "Same network · one input token per feature", color: "#a94f24" },
 };
-export const systemOrder: SystemId[] = ["baseline", "memory", "morph"];
+export const ruleSystems: SystemId[] = ["baseline", "memory", "morph"];
+export const neuralSystems: SystemId[] = ["natom", "nfeat"];
+/** Neural systems appear only once their predictions are in the results file. */
+export const systemOrder: SystemId[] = [...ruleSystems, ...(experiment.neural ? neuralSystems : [])];
 
 export const metricLabel: Record<Metric, string> = {
   strict: "Strict exact match",
@@ -185,5 +194,28 @@ export function findingSentences(): string[] {
   }
   const memNs = rows.filter((x) => !significant(x.r.tests["memory-baseline"]));
   if (memNs.length) out.push(`It shows no significant random-split gain for ${memNs.map((x) => `${x.name} (${x.r.overlap.toFixed(0)}% overlap)`).join(", ")}.`);
+
+  // neural systems: the same network with the bundle as one token vs. one token per feature
+  const neu = rows.filter((x) => x.ld.tests["nfeat-natom"]);
+  if (neu.length) {
+    const item = (x: (typeof neu)[number], k: TestKey) => `${x.name} (${signed(x.ld.tests[k].diff)}, ${fmtCI(x.ld.tests[k])})`;
+    const up = neu.filter((x) => significant(x.ld.tests["nfeat-natom"]) && x.ld.tests["nfeat-natom"].diff > 0);
+    const down = neu.filter((x) => significant(x.ld.tests["nfeat-natom"]) && x.ld.tests["nfeat-natom"].diff < 0);
+    const flat = neu.filter((x) => !significant(x.ld.tests["nfeat-natom"]));
+    if (up.length) out.push(`Neural models, lemma-disjoint: one input token per feature instead of one per bundle helps for ${up.map((x) => item(x, "nfeat-natom")).join("; ")}.`);
+    if (down.length) out.push(`Neural models, lemma-disjoint: feature tokens are below the atomic-tag network for ${down.map((x) => item(x, "nfeat-natom")).join("; ")}.`);
+    if (flat.length) out.push(`Neural models, lemma-disjoint: no significant difference between feature and atomic tag tokens for ${flat.map((x) => item(x, "nfeat-natom")).join("; ")}.`);
+    out.push(
+      `Neural feature model vs. feature-aware rules on the lemma-disjoint split: ${neu
+        .map((x) => `${x.name} ${signed(x.ld.tests["nfeat-morph"].diff)}${significant(x.ld.tests["nfeat-morph"]) ? "" : " (n.s.)"}`)
+        .join(", ")} (positive = the network is more accurate).`,
+    );
+    const shift = (x: (typeof neu)[number], s: SystemId) => signed(x.ld.systems[s].mean - x.r.systems[s].mean);
+    out.push(
+      `Moving from the random to the lemma-disjoint split changes the neural feature model's accuracy by ${neu
+        .map((x) => `${shift(x, "nfeat")} for ${x.name}`)
+        .join(", ")}; the atomic-tag rules change by ${neu.map((x) => shift(x, "baseline")).join(", ")} (the two splits have different test items, so this is descriptive, not a paired test).`,
+    );
+  }
   return out;
 }
