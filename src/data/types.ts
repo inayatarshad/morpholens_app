@@ -5,7 +5,7 @@
  *  1. UniMorph triples (lemma, form, feature bundle), generated into
  *     src/data/generated/unimorph-sample.json by scripts/build-data.mjs, pinned to a
  *     repository commit.
- *  2. A handful of hand-annotated entries with gold morpheme segmentation
+ *  2. A handful of hand-annotated entries with morpheme segmentation (not expert-reviewed)
  *     (src/data/morphology.ts), each labelled by whether UniMorph attests it.
  */
 
@@ -60,7 +60,8 @@ export type DifficultyTag =
   | "CODE_SWITCHING"
   | "SYNCRETISM"
   | "PERIPHRASIS"
-  | "STEM_CHANGE";
+  | "STEM_CHANGE"
+  | "HOMONYMY";
 
 /**
  * unimorph   → the exact (lemma, form, bundle) triple occurs in the pinned UniMorph file.

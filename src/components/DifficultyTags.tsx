@@ -11,12 +11,13 @@ const ALL: DifficultyTag[] = [
   "SYNCRETISM",
   "PERIPHRASIS",
   "STEM_CHANGE",
+  "HOMONYMY",
 ];
 
 const SOURCE_LABEL: Record<TagSource, string> = {
   data: "DATA",
   heuristic: "HEURISTIC",
-  gold: "GOLD",
+  gold: "HAND",
   experiment: "EXPERIMENT",
 };
 
@@ -65,7 +66,7 @@ export function DifficultyTags({
         <p className="mt-3 text-sm text-muted">No difficulty signals detected for this form.</p>
       )}
       <p className="mt-3 text-[0.7rem] leading-relaxed text-muted">
-        DATA: read directly from stored records · HEURISTIC: inferred by MorphoLens · GOLD: hand annotation · EXPERIMENT: defined only relative to a train/test split (see the Experiment page).
+        DATA: read directly from stored records · HEURISTIC: inferred by MorphoLens · HAND: hand annotation (not expert-reviewed) · EXPERIMENT: defined only relative to a train/test split (see the Experiment page).
       </p>
     </div>
   );

@@ -7,14 +7,14 @@ import { StatusTag } from "./ResearchBadge";
 const cell = (v: number | null) => (v === null ? "n/a" : `${v.toFixed(1)}%`);
 
 /** Where accuracy is won or lost: seen vs. unseen bundles and lemmas, error types, edit distance. */
-export function BreakdownPanel({ lang, split, size }: { lang: LanguageId; split: ExperimentSplit; size: number }) {
+export function BreakdownPanel({ lang, split, size }: { lang: LanguageId | string; split: ExperimentSplit; size: number }) {
   const c = getCell(lang, split, size);
   if (!c) return null;
   const random = split === "random";
   return (
     <div className="rounded-2xl border border-line bg-ivory/80 p-6">
       <div className="flex flex-wrap items-center justify-between gap-2">
-        <p className="eyebrow">Where the differences come from · {split} · n = {size}</p>
+        <p className="eyebrow">Where the differences come from · {split} · n = {size} · strict</p>
         <StatusTag label="MEASURED" />
       </div>
       <div className="mt-4 overflow-x-auto">

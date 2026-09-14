@@ -2,13 +2,13 @@
 
 import { Cpu, TriangleAlert } from "lucide-react";
 import type { Language } from "@/data/types";
-import type { Analysis } from "@/lib/analysis";
+import { conflictsOf, type Analysis } from "@/lib/analysis";
 import type { AlignConfidence } from "@/lib/stem";
 import { MorphemeBreakdown } from "./MorphemeBreakdown";
 import { ParadigmTable } from "./ParadigmTable";
 import { DataProvenance } from "./DataProvenance";
 import { DifficultyTags } from "./DifficultyTags";
-import { GoldBadge, VerificationBadge } from "./VerificationBadge";
+import { HandBadge, VerificationBadge } from "./VerificationBadge";
 import { CopyButton, Panel, SectionLabel } from "./ui";
 
 const CONFIDENCE: Record<AlignConfidence, { label: string; cls: string; text: string }> = {
@@ -44,7 +44,7 @@ export function MorphologyAnalysis({
   const split = a.morphemes.map((m) => iso(m.form.replace(/^-|-$/g, ""))).join(" + ");
   const interlinear = [
     iso(a.surface) + (a.romanization ? ` (${a.romanization})` : ""),
-    `${a.segmentation === "hand" ? "Gold segmentation" : "Automatic surface alignment"}: ${split}`,
+    `${a.segmentation === "hand" ? "Hand segmentation" : "Automatic surface alignment"}: ${split}`,
     a.tag && `Source bundle: ${a.tag}`,
     a.gloss && a.segmentation === "hand" && `Gloss: ${a.gloss}`,
     a.translation && `‘${a.translation}’`,
@@ -53,7 +53,10 @@ export function MorphologyAnalysis({
     .join("\n");
   const al = a.alignment;
   const conf = al ? CONFIDENCE[al.confidence] : null;
-  const syncretic = a.paradigm.filter((p) => p.surface === a.surface).length;
+  const conflicts = conflictsOf(a);
+  const anomalies = a.schemaIssues.filter((s) => s.status === "anomaly");
+  const syncretic = a.difficulty.includes("SYNCRETISM");
+  const crossCategory = a.difficulty.includes("HOMONYMY");
 
   return (
     <div key={a.id} className="rise space-y-6">
@@ -78,22 +81,31 @@ export function MorphologyAnalysis({
           </div>
           <div className="flex flex-row flex-wrap items-start gap-2 md:flex-col md:items-end">
             <VerificationBadge status={a.provenance.attestation} />
-            {a.segmentation === "hand" && <GoldBadge />}
+            {a.segmentation === "hand" && <HandBadge />}
             <CopyButton text={a.surface} label="Copy word" />
             <CopyButton text={interlinear} label="Copy analysis" />
           </div>
         </div>
       </Panel>
 
-      {a.audit?.conflict && (
-        <div className="flex gap-3 rounded-lg border border-sienna/50 bg-sienna/[0.07] px-4 py-3 text-sm">
+      {conflicts.map((c) => (
+        <div key={c.field} className="flex gap-3 rounded-lg border border-sienna/50 bg-sienna/[0.07] px-4 py-3 text-sm">
           <TriangleAlert size={16} className="mt-0.5 shrink-0 text-sienna" />
           <p>
-            <span className="font-semibold text-sienna">This record conflicts with the audit.</span>{" "}
-            The source tags Number as {a.audit.source}, but the {a.audit.cue}, which suggests {a.audit.expected}. The record is shown exactly as stored.
+            <span className="font-semibold text-sienna">This record conflicts with the {c.field} audit.</span>{" "}
+            The source tags {c.field} as {c.source}, but the {c.cue}, which suggests {c.expected}. The record is shown exactly as stored.
           </p>
         </div>
-      )}
+      ))}
+      {anomalies.map((s) => (
+        <div key={s.atom} className="flex gap-3 rounded-lg border border-sienna/50 bg-sienna/[0.07] px-4 py-3 text-sm">
+          <TriangleAlert size={16} className="mt-0.5 shrink-0 text-sienna" />
+          <p>
+            <span className="font-semibold text-sienna">Non-schema source tag: {s.atom}.</span> It fits no UniMorph argument-marking or feature template.
+            Stored verbatim, never silently corrected; likely a source annotation or typographical issue. Excluded from the experiment.
+          </p>
+        </div>
+      ))}
 
       <div className="grid gap-6 lg:grid-cols-2">
         <DataProvenance analysis={a} />
@@ -102,7 +114,9 @@ export function MorphologyAnalysis({
             <Cpu size={13} /> MorphoLens interpretation
           </p>
           <p className="mt-1 text-xs text-muted">
-            {a.segmentation === "hand" ? "Hand annotation from the cited grammar; no automatic inference." : "Inferred by MorphoLens from the record and its paradigm. Not part of the source."}
+            {a.segmentation === "hand"
+              ? "Hand annotation by the MorphoLens author following the cited source; not expert-reviewed and no automatic inference."
+              : "Inferred by MorphoLens from the record and its paradigm. Not part of the source."}
           </p>
           {al && conf ? (
             <dl className="mt-4 grid gap-x-6 gap-y-3 text-sm sm:grid-cols-[8.5rem_1fr]">
@@ -133,23 +147,30 @@ export function MorphologyAnalysis({
               )}
               <dt className="text-muted">Ambiguity</dt>
               <dd className="text-xs">
-                {syncretic > 1 ? `${syncretic} records of this lemma share this surface form (syncretism).` : "No other record of this lemma has this form."}
+                {syncretic || crossCategory
+                  ? [syncretic && "syncretism within the paradigm (same lemma and part of speech)", crossCategory && "cross-category ambiguity (another part of speech or lemma)"]
+                      .filter(Boolean)
+                      .join("; ")
+                  : "No other record of this lemma has this form."}
               </dd>
               <dt className="text-muted">Record audit</dt>
-              <dd className="text-xs">
-                {a.audit === null || a.audit === undefined
-                  ? a.languageId === "ron"
-                    ? "No audit rule applies to this record."
-                    : "No audit rules exist for this language yet."
-                  : a.audit.conflict
-                    ? `Conflict: ${a.audit.cue} suggests ${a.audit.expected}; source says ${a.audit.source}.`
-                    : `Consistent: ${a.audit.cue}, matching the source tag ${a.audit.source}.`}
+              <dd className="space-y-1 text-xs">
+                {a.audits.length === 0 ? (
+                  <p>{a.languageId === "ron" ? "No audit rule applies to this record." : "No audit rules exist for this language yet."}</p>
+                ) : (
+                  a.audits.map((x) => (
+                    <p key={x.field} className={x.conflict ? "text-sienna" : ""}>
+                      {x.field}: {x.conflict ? `conflict, ${x.cue} suggests ${x.expected}; source says ${x.source}.` : `consistent, ${x.cue}, matching the source tag ${x.source}.`}
+                    </p>
+                  ))
+                )}
+                {a.languageId === "ron" && <p className="text-muted">Only Number and adjective Gender are audited.</p>}
               </dd>
             </dl>
           ) : (
             <dl className="mt-4 grid gap-x-6 gap-y-3 text-sm sm:grid-cols-[8.5rem_1fr]">
               <dt className="text-muted">Segmentation</dt>
-              <dd>Gold, hand-annotated</dd>
+              <dd>Hand-annotated (not expert-reviewed)</dd>
               {a.gloss && (
                 <>
                   <dt className="text-muted">Gloss</dt>
@@ -163,15 +184,15 @@ export function MorphologyAnalysis({
 
       <div className="grid gap-6 lg:grid-cols-[1.4fr_1fr]">
         <Panel>
-          <SectionLabel index="01">{a.segmentation === "hand" ? "Morphological segmentation · gold" : "Surface alignment · automatic"}</SectionLabel>
+          <SectionLabel index="01">{a.segmentation === "hand" ? "Morphological segmentation · hand-annotated" : "Surface alignment · automatic"}</SectionLabel>
           <div dir="ltr">
             <MorphemeBreakdown morphemes={a.morphemes} />
           </div>
           <p className="mt-4 border-t border-line pt-3 text-xs text-muted">
             {a.segmentation === "hand" ? (
-              <>Hand-annotated morpheme boundaries. Gloss&nbsp;&nbsp;<span className="font-mono text-ink">{a.gloss}</span></>
+              <>Hand-annotated morpheme boundaries, not expert-reviewed. Gloss&nbsp;&nbsp;<span className="font-mono text-ink">{a.gloss}</span></>
             ) : (
-              "Automatic character alignment. Not a gold morpheme segmentation: UniMorph stores feature bundles, not morpheme boundaries, so an exponent is never attributed to individual features."
+              "Automatic character alignment. Not a morphological segmentation: UniMorph stores feature bundles, not morpheme boundaries, so an exponent is never attributed to individual features."
             )}
           </p>
         </Panel>

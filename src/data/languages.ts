@@ -34,11 +34,11 @@ export const languages: Language[] = [
     name: "Evenki",
     iso: "evn",
     family: "Tungusic",
-    script: "Cyrillic · data in Latin transcription",
+    script: "Cyrillic orthography · data in IPA transcription",
     direction: "ltr",
     resourceLevel: "Low-resource",
     profile: "Agglutinative · predominantly suffixing · vowel harmony",
-    description: "A Tungusic language of Siberia and northern China; the UniMorph data is corpus-derived and sparse per lemma.",
+    description: "A Tungusic language of Siberia and northern China. The UniMorph data was converted from a corpus of oral Evenki texts in IPA, so many cells hold several dialectal or transcription variants.",
   },
   {
     id: "ckt",
@@ -49,7 +49,7 @@ export const languages: Language[] = [
     direction: "ltr",
     resourceLevel: "Low-resource",
     profile: "Polysynthetic · noun incorporation · prefixes, suffixes and circumfixes · vowel harmony",
-    description: "A polysynthetic language of the Russian Far East. UniMorph holds only a few hundred triples: the extreme low-resource case.",
+    description: "A polysynthetic language of the Russian Far East with polypersonal agreement and ergative-absolutive alignment. UniMorph holds 241 corpus-derived records from spoken Chukchi (Amguema variant), most of them citation forms: the extreme low-resource case.",
   },
   {
     id: "ron",

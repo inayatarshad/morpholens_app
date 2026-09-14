@@ -62,6 +62,26 @@ export function DataProvenance({ analysis }: { analysis: Analysis }) {
           <VerificationBadge status={p.attestation} />
           <p className="text-xs text-ink/75">{p.verification}</p>
         </dd>
+        {analysis.schemaIssues.length > 0 && (
+          <>
+            <dt className="text-muted">Tag validation</dt>
+            <dd className="space-y-1 text-xs">
+              {analysis.schemaIssues.map((s) =>
+                s.status === "anomaly" ? (
+                  <p key={s.atom} className="text-sienna">
+                    <span className="font-mono font-semibold">{s.atom}</span>: fits no UniMorph schema template. Stored verbatim; likely a source annotation
+                    or typographical issue. Records with this tag are excluded from the experiment.
+                  </p>
+                ) : (
+                  <p key={s.atom} className="text-ink/75">
+                    <span className="font-mono font-semibold">{s.atom}</span>: not in the published UniMorph schema lists, but used in {s.count.toLocaleString("en")} records of
+                    this dataset, so treated as a dataset convention.
+                  </p>
+                ),
+              )}
+            </dd>
+          </>
+        )}
       </dl>
       {Object.keys(analysis.features).length > 0 && (
         <div className="mt-5 border-t border-line pt-4">

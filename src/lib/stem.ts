@@ -1,7 +1,7 @@
 /**
  * Surface alignment of an inflected form against its lemma.
  *
- * This is an automatic, character-level heuristic, not a gold morpheme segmentation:
+ * This is an automatic, character-level heuristic, not a morpheme segmentation:
  * UniMorph records lemma, form and feature bundle, never morpheme boundaries. The
  * alignment tries, in order:
  *   1. the form contains the citation stem unchanged (pure affixation): confidence high;

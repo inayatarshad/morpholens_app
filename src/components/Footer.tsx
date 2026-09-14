@@ -1,4 +1,5 @@
 import Link from "next/link";
+import { VERSION } from "@/data/version";
 
 export function Footer() {
   return (
@@ -30,7 +31,7 @@ export function Footer() {
       </div>
       <div className="border-t border-ivory/10">
         <p className="mx-auto max-w-7xl px-5 py-4 font-mono text-[0.68rem] tracking-wider text-ivory/40 sm:px-8">
-          MORPHOLENS · v0.2 · DATA: UNIMORPH (TUR · URD · EVN · CKT · RON)
+          MORPHOLENS · v{VERSION} · DATA: UNIMORPH (TUR · URD · EVN · CKT · RON)
         </p>
       </div>
     </footer>

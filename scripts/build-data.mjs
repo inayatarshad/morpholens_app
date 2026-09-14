@@ -10,7 +10,8 @@
  */
 import fs from "node:fs";
 import path from "node:path";
-import { auditRecord } from "../src/lib/audit.ts";
+import { auditAll } from "../src/lib/audit.ts";
+import { atomStatus, unlistedAtoms } from "../src/lib/schema.ts";
 
 const DIR = process.argv[2];
 if (!DIR) throw new Error("Usage: node scripts/build-data.mjs <unimorph-dir>");
@@ -105,7 +106,8 @@ const specs = {
     past: { base: "LEMMA", must: ["V", "PST", "3", "SG"] },
   },
   ckt: {
-    plural: { base: "LEMMA", must: ["N", "PL"] },
+    // prefer a transparent absolutive plural over тумгытум, whose singular is reduplicated
+    plural: { base: "LEMMA", must: ["N", "PL"], prefer: ["ытԓыгын", "танӈын", "чакэттомгын"] },
     case: { base: "LEMMA", must: ["N", "ABL"] },
     past: { base: "LEMMA", must: ["V", "PST", "3"] },
     negation: { base: "LEMMA", must: ["NEG"] },
@@ -162,12 +164,18 @@ for (const lang of LANGS) {
   const entries = [];
   for (const l of chosen) entries.push(...byLemma.get(l).slice().sort(byComplexity).slice(0, MAX_CELLS_PER_LEMMA));
 
-  // Comparison examples: prefer featured lemmas, then any lemma in the full file.
+  // Records that must not be used as examples: audit conflicts and non-schema anomalies.
+  const unlistedCount = new Map();
+  for (const d of data) for (const a of unlistedAtoms(d.tag)) unlistedCount.set(a, (unlistedCount.get(a) ?? 0) + 1);
+  const isAnomaly = (d) => unlistedAtoms(d.tag).some((a) => atomStatus(a, unlistedCount.get(a) ?? 0) === "anomaly");
+  const isFlagged = (d) => isAnomaly(d) || auditAll(lang, d.lemma, d.form, d.tag).some((r) => r.conflict);
+
+  // Comparison examples: preferred lemmas, then featured lemmas, then any lemma in the full file.
   const comp = {};
   for (const [feature, spec] of Object.entries(specs[lang] ?? {})) {
     let found = null;
-    for (const l of [...chosen, ...ranked]) {
-      const cells = byLemma.get(l);
+    for (const l of [...(spec.prefer ?? []).filter((p) => byLemma.has(p)), ...chosen, ...ranked]) {
+      const cells = byLemma.get(l).filter((c) => !isFlagged(c));
       const targets = cells
         .filter((c) => contains(c.tag, spec.must))
         .sort((a, b) => byComplexity(a, b) || a.form.localeCompare(b.form));
@@ -207,25 +215,57 @@ for (const lang of LANGS) {
 
   // Rule-based audit over the full file (only languages with rules produce results).
   let checked = 0, conflicts = 0;
+  const byField = {};
   const byCue = {};
   const examples = [];
-  const exampleLemmas = new Set();
+  const exampleKeys = new Set();
   for (const d of data) {
-    const r = auditRecord(lang, d.lemma, d.form, d.tag);
-    if (!r) continue;
+    const findings = auditAll(lang, d.lemma, d.form, d.tag);
+    if (!findings.length) continue;
     checked++;
-    if (!r.conflict) continue;
-    conflicts++;
-    byCue[r.cue] = (byCue[r.cue] ?? 0) + 1;
-    if (examples.length < 10 && !exampleLemmas.has(d.lemma)) {
-      exampleLemmas.add(d.lemma);
-      examples.push({ lemma: d.lemma, form: d.form, tag: d.tag, expected: r.expected, cue: r.cue });
+    if (findings.some((r) => r.conflict)) conflicts++;
+    for (const r of findings) {
+      const fld = (byField[r.field] ??= { checked: 0, conflicts: 0 });
+      fld.checked++;
+      if (!r.conflict) continue;
+      fld.conflicts++;
+      byCue[r.cue] = (byCue[r.cue] ?? 0) + 1;
+      const key = `${r.field}:${d.lemma}`;
+      if (examples.length < 12 && !exampleKeys.has(key)) {
+        exampleKeys.add(key);
+        examples.push({ lemma: d.lemma, form: d.form, tag: d.tag, field: r.field, expected: r.expected, cue: r.cue });
+      }
     }
   }
   if (checked) {
-    (out.audits ??= {})[lang] = { checked, conflicts, byCue, examples };
-    console.log(`${lang} audit: ${conflicts} / ${checked} checked records conflict`, JSON.stringify(byCue));
+    (out.audits ??= {})[lang] = { checked, conflicts, byField, byCue, examples };
+    console.log(`${lang} audit: ${conflicts} / ${checked} records with a cue conflict`, JSON.stringify(byField));
   }
+
+  // Schema validation: unlisted atoms and their classification (convention vs anomaly).
+  const unlisted = Object.fromEntries([...unlistedCount].map(([a, n]) => [a, { count: n, status: atomStatus(a, n) }]));
+  const anomalyRecords = data.filter(isAnomaly);
+  (out.schema ??= {})[lang] = { unlisted, anomalyRecords };
+  if (unlistedCount.size) console.log(`${lang} unlisted tags:`, JSON.stringify(unlisted), "| anomaly records:", anomalyRecords.length);
+
+  // Variant forms: records whose (lemma, bundle) cell holds more than one form.
+  const cellForms = new Map();
+  for (const d of data) {
+    const k = `${d.lemma}\t${d.tag}`;
+    if (!cellForms.has(k)) cellForms.set(k, []);
+    cellForms.get(k).push(d.form);
+  }
+  let inMulti = 0;
+  let biggest = null;
+  for (const [k, forms] of cellForms) {
+    if (forms.length < 2) continue;
+    inMulti += forms.length;
+    if (!biggest || forms.length > biggest.forms.length) {
+      const [lemma, tag] = k.split("\t");
+      biggest = { lemma, tag, forms };
+    }
+  }
+  (out.variants ??= {})[lang] = { records: inMulti, share: (100 * inMulti) / data.length, example: biggest ?? undefined };
   console.log(lang, "featured:", chosen.join(", "), "| entries:", entries.length, "| comparisons:", Object.entries(comp).map(([k, v]) => `${k}=${v ? `${v.base.form}→${v.target.form} (${v.strategy})` : "none"}`).join("; "));
 }
 

@@ -1,7 +1,7 @@
 "use client";
 
-import { fmtP, getCell, signed, significant, type Test } from "@/data/experiments";
-import type { ExperimentSplit, LanguageId } from "@/data/types";
+import { fmtP, getCell, signed, significant, testOf, type Metric, type Test } from "@/data/experiments";
+import type { ExperimentSplit } from "@/data/types";
 import { StatusTag } from "./ResearchBadge";
 
 function Row({ label, ta, tb, color, split }: { label: string; ta: Test; tb: Test; color: string; split: ExperimentSplit }) {
@@ -29,8 +29,8 @@ function Row({ label, ta, tb, color, split }: { label: string; ta: Test; tb: Tes
   );
 }
 
-/** Paired-bootstrap differences for the current language and n. */
-export function GeneralisationGap({ lang, size, split }: { lang: LanguageId; size: number; split: ExperimentSplit }) {
+/** Paired-bootstrap differences for the current dataset and n. */
+export function GeneralisationGap({ lang, size, split, metric }: { lang: string; size: number; split: ExperimentSplit; metric: Metric }) {
   const r = getCell(lang, "random", size);
   const l = getCell(lang, "lemma-disjoint", size);
   if (!r || !l) return null;
@@ -39,20 +39,24 @@ export function GeneralisationGap({ lang, size, split }: { lang: LanguageId; siz
     <div className="rounded-2xl border border-line bg-ivory/80 p-6">
       <div className="flex flex-wrap items-center justify-between gap-2">
         <p className="eyebrow">What the numbers say · n = {size}</p>
-        <StatusTag label="MEASURED" />
+        <StatusTag label={metric === "strict" ? "STRICT" : "VARIANT-AWARE"} />
       </div>
       <div className="mt-3">
-        <Row label="Paradigm memory vs. atomic baseline" ta={r.tests["memory-baseline"]} tb={l.tests["memory-baseline"]} color="text-burgundy" split={split} />
-        <Row label="Feature-aware vs. atomic baseline" ta={r.tests["morph-baseline"]} tb={l.tests["morph-baseline"]} color="text-bush" split={split} />
+        <Row label="Paradigm memory vs. atomic baseline" ta={testOf(r, "memory-baseline", metric)} tb={testOf(l, "memory-baseline", metric)} color="text-burgundy" split={split} />
+        <Row label="Feature-aware vs. atomic baseline" ta={testOf(r, "morph-baseline", metric)} tb={testOf(l, "morph-baseline", metric)} color="text-bush" split={split} />
       </div>
-      <dl className="mt-2 grid grid-cols-2 gap-3 border-t border-line pt-4 text-sm">
+      <dl className="mt-2 grid grid-cols-3 gap-3 border-t border-line pt-4 text-sm">
         <div>
-          <dt className="text-xs text-muted">Test lemmas also in training (random split)</dt>
+          <dt className="text-xs text-muted">Test lemmas seen in training (random)</dt>
           <dd className="display text-2xl text-sienna">{r.overlap.toFixed(0)}%</dd>
         </div>
         <div>
-          <dt className="text-xs text-muted">Test bundles unseen in training (lemma-disjoint)</dt>
+          <dt className="text-xs text-muted">Test bundles unseen (lemma-disjoint)</dt>
           <dd className="display text-2xl text-sienna">{l.unseenBundle.toFixed(0)}%</dd>
+        </div>
+        <div>
+          <dt className="text-xs text-muted">Test cells with several stored forms</dt>
+          <dd className="display text-2xl text-sienna">{l.multiRef.toFixed(0)}%</dd>
         </div>
       </dl>
       <p className="mt-4 text-xs leading-relaxed text-muted">

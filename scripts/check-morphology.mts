@@ -7,7 +7,8 @@
  * Runs with Node's built-in TypeScript type stripping (Node ≥ 22.18 / 23.6).
  */
 import { alignSurface, alignmentSegments, headWord } from "../src/lib/stem.ts";
-import { auditRecord } from "../src/lib/audit.ts";
+import { auditGender, auditRecord } from "../src/lib/audit.ts";
+import { atomStatus, isSchemaAtom, unlistedAtoms } from "../src/lib/schema.ts";
 import { canonical, loose } from "../src/lib/lookup.ts";
 
 let failed = 0;
@@ -84,6 +85,36 @@ for (const [lemma, form, tag, want] of auditCases) {
   check(`${form} ${tag}: ${want}`, got === want, `got ${got}`);
 }
 check("audit is off for other languages", auditRecord("tur", "kedi", "kediler", "N;NOM;PL") === null);
+
+// [lemma, form, tag, expected: "conflict→X" | "ok" | "none"]
+const genderCases: [string, string, string, string][] = [
+  ["abandonabil", "abandonabilă", "ADJ;NOM/ACC;NEUT;SG;INDF", "conflict→FEM"],
+  ["abandonabil", "abandonabila", "ADJ;NOM/ACC;NEUT;SG;DEF", "conflict→FEM"],
+  ["abandonabil", "abandonabilei", "ADJ;DAT/GEN;NEUT;SG;DEF", "conflict→FEM"],
+  ["abandonabil", "abandonabilii", "ADJ;NOM/ACC;FEM;SG;DEF", "conflict→MASC"],
+  ["abandonabil", "abandonabilul", "ADJ;NOM/ACC;MASC;SG;DEF", "ok"],
+  ["abandonabil", "abandonabilului", "ADJ;DAT/GEN;MASC;SG;DEF", "ok"],
+  ["abandonabil", "abandonabili", "ADJ;NOM/ACC;FEM;SG;INDF", "none"],
+  ["casă", "casa", "N;NOM/ACC;PL;DEF", "none"],
+];
+console.log("Record audit (Romanian adjective Gender)");
+for (const [lemma, form, tag, want] of genderCases) {
+  const r = auditGender("ron", lemma, form, tag);
+  const got = !r ? "none" : r.conflict ? `conflict→${r.expected}` : "ok";
+  check(`${form} ${tag}: ${want}`, got === want, `got ${got}`);
+}
+
+// ── schema validation ──────────────────────────────────────────────────────────
+console.log("Schema validation");
+check("ARBAB3S is unlisted", JSON.stringify(unlistedAtoms("V;IND;FUT;ARGER1P;ARBAB3S")) === JSON.stringify(["ARBAB3S"]));
+check("rare unlisted atom is an anomaly", atomStatus("ARBAB3S", 4) === "anomaly");
+check("frequent unlisted atom is a convention", atomStatus("INFR", 183456) === "convention");
+check("schema atom stays schema", atomStatus("ARGAB3S", 1) === "schema");
+check("INV (inverse voice) is in the schema", isSchemaAtom("INV"));
+check("INTR (intransitive) is in the schema", isSchemaAtom("INTR"));
+check("PSSD is in the schema", isSchemaAtom("PSSD"));
+check("composites are split", unlistedAtoms("N;IN+ABL;SG").length === 0 && unlistedAtoms("N;NOM/ACC;SG").length === 0);
+check("LGSPEC atoms are accepted", isSchemaAtom("LGSPEC3"));
 
 // ── matching rules ─────────────────────────────────────────────────────────────
 console.log("Matching");

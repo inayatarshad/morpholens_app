@@ -3,8 +3,17 @@
  * MorphoLens: lemma-overlap experiment on UniMorph data.
  *
  * Task: morphological inflection. Given (lemma, UniMorph feature bundle) predict the
- * inflected form. Metrics: exact-match accuracy (primary) and mean Levenshtein distance
- * to the gold form (secondary, as in the SIGMORPHON shared tasks).
+ * inflected form. Metrics:
+ *   strict          exact match with the stored form of the test record;
+ *   variant-aware   exact match with ANY form stored for the same (lemma, bundle) cell, so
+ *                   dialectal or transcription variants (common in oral Evenki) are not errors;
+ *   edit distance   mean Levenshtein distance to the stored form (as in SIGMORPHON).
+ *
+ * Data preparation per dataset:
+ *   - records whose tags contain anomalous non-schema atoms (see src/lib/schema.ts) are
+ *     excluded (e.g. 7 Chukchi records tagged ARBAB/ARBEB);
+ *   - Romanian ("ron") uses verbs only, because noun and adjective Number and Gender tags are
+ *     systematically inconsistent; "ron-all" reruns the same design on all records (raw).
  *
  * Splits (built from the same sampled universe per seed):
  *   random:          items shuffled; test lemmas may also occur in training.
@@ -25,8 +34,8 @@
  *             or (2) backs off to the most similar bundle (Jaccard) instead of copying.
  *
  * Statistics: mean ± s.d. over seeds; paired bootstrap (2,000 resamples) over the test
- * items pooled across seeds for system differences; breakdowns by seen/unseen bundle
- * and lemma; share of errors that are lemma copies (no applicable rule).
+ * items pooled across seeds, for both metrics; breakdowns by seen/unseen bundle and lemma;
+ * share of errors that are lemma copies (no applicable rule).
  *
  * Usage:  node scripts/run-experiment.mjs <dir-with-unimorph-tsvs>
  * Output: src/data/generated/experiment-results.json (UI)
@@ -34,11 +43,19 @@
  */
 import fs from "node:fs";
 import path from "node:path";
+import { atomStatus, unlistedAtoms } from "../src/lib/schema.ts";
 
 const DIR = process.argv[2];
 if (!DIR) throw new Error("Usage: node scripts/run-experiment.mjs <unimorph-dir>");
 
-const LANGS = ["tur", "urd", "evn", "ckt", "ron"];
+const DATASETS = [
+  { id: "tur", source: "tur" },
+  { id: "urd", source: "urd" },
+  { id: "evn", source: "evn" },
+  { id: "ckt", source: "ckt" },
+  { id: "ron", source: "ron", verbsOnly: true, note: "verbs only (V, V.PTCP, V.CVB); noun and adjective tags are unreliable" },
+  { id: "ron-all", source: "ron", note: "all records, unfiltered (raw)" },
+];
 const SEEDS = [1, 2, 3, 4, 5];
 const SIZES = [50, 100, 250, 500, 1000];
 const CELLS_PER_LEMMA = 10;
@@ -160,6 +177,7 @@ function bestPrediction(examples, x) {
 // ── systems ───────────────────────────────────────────────────────────────────
 const POS_SET = new Set(["N", "V", "ADJ", "ADV", "PRO", "DET", "NUM", "V.PTCP", "V.CVB", "V.MSDR", "ADP", "PROPN"]);
 const posOf = (tag) => tag.split(";").find((f) => POS_SET.has(f)) ?? tag.split(";")[0];
+const isVerb = (tag) => ["V", "V.PTCP", "V.CVB", "V.MSDR"].includes(posOf(tag));
 
 function deltaKey(t1, t2) {
   const a = new Set(t1.split(";")), b = new Set(t2.split(";"));
@@ -330,24 +348,53 @@ function pairedBootstrap(a, b, seed) {
 }
 
 const pct = (xs) => (xs.length ? r1((100 * xs.reduce((s, x) => s + x, 0)) / xs.length) : null);
+const summary = (runs) => ({ mean: r1(mean(runs)), std: r1(std(runs)), runs: runs.map(r1) });
 
 // ── run ───────────────────────────────────────────────────────────────────────
 const shaFile = path.join(DIR, "shas.txt");
 const shas = fs.existsSync(shaFile)
-  ? Object.fromEntries(fs.readFileSync(shaFile, "utf8").trim().split("\n").map((l) => { const [lang, branch, sha] = l.split(" "); return [lang, { branch, sha }]; }))
+  ? Object.fromEntries(fs.readFileSync(shaFile, "utf8").trim().split(/\r?\n/).map((l) => { const [lang, branch, sha] = l.split(" "); return [lang, { branch, sha }]; }))
   : {};
 
 const results = {};
 const examples = {};
 const stats = {};
-const csv = [["language", "split", "n", "system", "accuracy_mean", "accuracy_sd", "levenshtein_mean", "acc_seen_bundle", "acc_unseen_bundle", "lemma_copy_share_of_errors", "test_items_pooled", "lemma_overlap_pct", "unseen_bundle_pct"].join(",")];
+const csv = [["dataset", "split", "n", "system", "accuracy_mean", "accuracy_sd", "variant_aware_mean", "variant_aware_sd", "levenshtein_mean", "acc_seen_bundle", "acc_unseen_bundle", "lemma_copy_share_of_errors", "test_items_pooled", "lemma_overlap_pct", "unseen_bundle_pct", "multi_form_cell_pct"].join(",")];
+const rawCache = new Map();
 
-for (const lang of LANGS) {
-  const data = load(lang);
-  stats[lang] = { triples: data.length, lemmas: new Set(data.map((d) => d.lemma)).size, bundles: new Set(data.map((d) => d.tag)).size };
+for (const ds of DATASETS) {
+  const lang = ds.id;
+  if (!rawCache.has(ds.source)) rawCache.set(ds.source, load(ds.source));
+  const raw = rawCache.get(ds.source);
+
+  // exclude records with anomalous non-schema tags; optionally keep verbs only
+  const unlistedCount = new Map();
+  for (const d of raw) for (const a of unlistedAtoms(d.tag)) unlistedCount.set(a, (unlistedCount.get(a) ?? 0) + 1);
+  const anomalous = (d) => unlistedAtoms(d.tag).some((a) => atomStatus(a, unlistedCount.get(a) ?? 0) === "anomaly");
+  const excludedAnomalies = raw.filter(anomalous).length;
+  const data = raw.filter((d) => !anomalous(d) && (!ds.verbsOnly || isVerb(d.tag)));
+
+  // all stored forms per (lemma, bundle) cell, for variant-aware scoring
+  const cellForms = new Map();
+  for (const d of data) {
+    const k = `${d.lemma}\t${d.tag}`;
+    if (!cellForms.has(k)) cellForms.set(k, new Set());
+    cellForms.get(k).add(d.form);
+  }
+
+  stats[lang] = {
+    source: ds.source,
+    note: ds.note,
+    triples: data.length,
+    rawTriples: raw.length,
+    excludedAnomalies,
+    lemmas: new Set(data.map((d) => d.lemma)).size,
+    bundles: new Set(data.map((d) => d.tag)).size,
+  };
   results[lang] = { random: {}, "lemma-disjoint": {} };
-  const acc = {};      // split → n → system → per-seed accuracy
-  const pooled = {};   // split → n → { items: [...], correct: {sys: [0/1]}, lev: {sys: []}, copy: {sys: []} }
+  const acc = {};   // split → n → system → per-seed strict accuracy
+  const accV = {};  // split → n → system → per-seed variant-aware accuracy
+  const pooled = {};
   let testSize = 0;
 
   for (const seed of SEEDS) {
@@ -361,18 +408,21 @@ for (const lang of LANGS) {
         const trainItems = pool.slice(0, n);
         const model = train(trainItems);
         const trainLemmas = new Set(trainItems.map((t) => t.lemma));
-        const P = (((pooled[split] ??= {})[n]) ??= { items: [], correct: {}, lev: {}, copy: {} });
+        const P = (((pooled[split] ??= {})[n]) ??= { items: [], correct: {}, correctV: {}, lev: {}, copy: {} });
         const preds = {};
         for (const [name, fn] of Object.entries(SYSTEMS)) {
           preds[name] = test.map((t) => fn(model, t.lemma, t.tag));
           const correct = preds[name].map((p, i) => (p === test[i].form ? 1 : 0));
-          (((acc[split] ??= {})[n] ??= {})[name] ??= []).push((100 * mean(correct)) / 1);
+          const correctV = preds[name].map((p, i) => (cellForms.get(`${test[i].lemma}\t${test[i].tag}`).has(p) ? 1 : 0));
+          (((acc[split] ??= {})[n] ??= {})[name] ??= []).push(100 * mean(correct));
+          (((accV[split] ??= {})[n] ??= {})[name] ??= []).push(100 * mean(correctV));
           (P.correct[name] ??= []).push(...correct);
+          (P.correctV[name] ??= []).push(...correctV);
           (P.lev[name] ??= []).push(...preds[name].map((p, i) => levenshtein(p, test[i].form)));
           (P.copy[name] ??= []).push(...preds[name].map((p, i) => (p === test[i].lemma && p !== test[i].form ? 1 : 0)));
         }
         for (const t of test) {
-          P.items.push({ lemmaSeen: trainLemmas.has(t.lemma), bundleSeen: model.byTag.has(t.tag), pos: posOf(t.tag) });
+          P.items.push({ lemmaSeen: trainLemmas.has(t.lemma), bundleSeen: model.byTag.has(t.tag), pos: posOf(t.tag), multi: cellForms.get(`${t.lemma}\t${t.tag}`).size > 1 });
         }
         // Real prediction examples: first seed, largest feasible size ≤ 500
         if (seed === SEEDS[0] && n === Math.min(500, ...SIZES.filter((s) => s <= pool.length).slice(-1))) {
@@ -384,7 +434,8 @@ for (const lang of LANGS) {
               b === t.form && m !== t.form ? "baseline-only" :
               mem === t.form && b !== t.form ? "memory-only" :
               b !== t.form && m !== t.form && mem !== t.form ? "all-wrong" : "all-right";
-            pick.push({ lemma: t.lemma, tag: t.tag, gold: t.form, baseline: b, memory: mem, morph: m, kind, lemmaSeen: trainLemmas.has(t.lemma), bundleSeen: model.byTag.has(t.tag) });
+            const alt = [...cellForms.get(`${t.lemma}\t${t.tag}`)].filter((f) => f !== t.form).slice(0, 5);
+            pick.push({ lemma: t.lemma, tag: t.tag, gold: t.form, alt, baseline: b, memory: mem, morph: m, kind, lemmaSeen: trainLemmas.has(t.lemma), bundleSeen: model.byTag.has(t.tag) });
           });
           (examples[lang] ??= {})[split] = { n, items: pick };
         }
@@ -408,9 +459,8 @@ for (const lang of LANGS) {
         const c = P.correct[s];
         const errors = c.map((x, i) => (x ? -1 : i)).filter((i) => i >= 0);
         systems[s] = {
-          mean: r1(mean(bySys[s])),
-          std: r1(std(bySys[s])),
-          runs: bySys[s].map(r1),
+          ...summary(bySys[s]),
+          variant: summary(accV[split][n][s]),
           lev: r2(mean(P.lev[s])),
           seenBundle: pct(seenB.map((i) => c[i])),
           unseenBundle: pct(unseenB.map((i) => c[i])),
@@ -421,26 +471,31 @@ for (const lang of LANGS) {
         };
       }
       const tests = Object.fromEntries(PAIRS.map(([a, b]) => [`${a}-${b}`, pairedBootstrap(P.correct[a], P.correct[b], bootSeed++)]));
-      results[lang][split][n] = {
+      const testsVariant = Object.fromEntries(PAIRS.map(([a, b]) => [`${a}-${b}`, pairedBootstrap(P.correctV[a], P.correctV[b], bootSeed++)]));
+      const cell = {
         overlap: pct(P.items.map((it) => (it.lemmaSeen ? 1 : 0))),
         unseenBundle: pct(P.items.map((it) => (it.bundleSeen ? 0 : 1))),
+        multiRef: pct(P.items.map((it) => (it.multi ? 1 : 0))),
         items: P.items.length,
         posCounts: Object.fromEntries(topPos.map((p) => [p, posCounts[p]])),
         systems,
         tests,
+        testsVariant,
       };
+      results[lang][split][n] = cell;
       for (const s of SYS) {
         const x = systems[s];
-        csv.push([lang, split, n, s, x.mean, x.std, x.lev, x.seenBundle ?? "", x.unseenBundle ?? "", x.copyShare, P.items.length, results[lang][split][n].overlap, results[lang][split][n].unseenBundle].join(","));
+        csv.push([lang, split, n, s, x.mean, x.std, x.variant.mean, x.variant.std, x.lev, x.seenBundle ?? "", x.unseenBundle ?? "", x.copyShare, P.items.length, cell.overlap, cell.unseenBundle, cell.multiRef].join(","));
       }
     }
   }
   stats[lang].testSize = testSize;
-  const show = results[lang]["lemma-disjoint"]["500"] ?? results[lang]["lemma-disjoint"]["100"];
-  console.log(`${lang}: ${data.length} triples, test=${testSize}`, show ? JSON.stringify(show.tests) : "");
+  const nShow = Object.keys(results[lang]["lemma-disjoint"]).map(Number).filter((x) => x <= 500).pop();
+  const show = results[lang]["lemma-disjoint"][nShow];
+  console.log(`${lang}: ${data.length} triples (excluded ${excludedAnomalies} anomalous${ds.verbsOnly ? ", verbs only" : ""}) n=${nShow} strict ${JSON.stringify(show?.tests["morph-baseline"])} variant ${JSON.stringify(show?.testsVariant["morph-baseline"])} multiRef=${show?.multiRef}%`);
 }
 
-/** Keep a small, diverse set of examples per language/split for the UI. */
+/** Keep a small, diverse set of examples per dataset/split for the UI. */
 function curate(items) {
   const order = ["morph-only", "memory-only", "baseline-only", "all-wrong"];
   const out = [];
@@ -459,7 +514,8 @@ const out = {
   runtimeSeconds: Math.round((Date.now() - t0) / 1000),
   node: process.version,
   config: { seeds: SEEDS, sizes: SIZES, cellsPerLemma: CELLS_PER_LEMMA, universeTarget: UNIVERSE_TARGET, testMax: TEST_MAX, testFraction: TEST_FRACTION, bootstrap: BOOTSTRAP },
-  sources: Object.fromEntries(LANGS.map((l) => [l, { repo: `https://github.com/unimorph/${l}`, ...(shas[l] ?? {}) }])),
+  datasets: DATASETS.map((d) => ({ id: d.id, source: d.source, note: d.note ?? null })),
+  sources: Object.fromEntries([...new Set(DATASETS.map((d) => d.source))].map((l) => [l, { repo: `https://github.com/unimorph/${l}`, ...(shas[l] ?? {}) }])),
   stats,
   results,
   examples: curatedExamples,

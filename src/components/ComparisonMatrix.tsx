@@ -102,9 +102,16 @@ export function ComparisonMatrix() {
                       <p className="font-serif text-lg leading-snug text-sienna">{slot.strategy}</p>
                       <p className="text-xs text-muted">Position: {slot.position}</p>
                       <VerificationBadge status={slot.analysis.provenance.attestation} />
-                      <p className="text-[0.68rem] text-muted">
-                        {slot.kind === "unimorph" ? "Strategy classified automatically from the aligned base and target forms." : "Hand-curated: UniMorph has no example."}
-                      </p>
+                      {slot.kind === "unimorph" && slot.annotation ? (
+                        <>
+                          <p className="text-xs text-ink/80">{slot.annotation.note}</p>
+                          <p className="text-[0.68rem] text-muted">{slot.annotation.source}; not expert-reviewed.</p>
+                        </>
+                      ) : (
+                        <p className="text-[0.68rem] text-muted">
+                          {slot.kind === "unimorph" ? "Strategy classified automatically from the aligned base and target forms." : "Hand-curated: UniMorph has no example."}
+                        </p>
+                      )}
                     </div>
                   </>
                 )}

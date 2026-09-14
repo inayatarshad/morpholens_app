@@ -1,7 +1,7 @@
 "use client";
 
 import { languages } from "@/data/languages";
-import { systemOrder, systems } from "@/data/experiments";
+import { metricLabel, systemOrder, systems, type Metric } from "@/data/experiments";
 import type { ExperimentSplit, LanguageId } from "@/data/types";
 
 type Props = {
@@ -9,12 +9,14 @@ type Props = {
   split: ExperimentSplit;
   size: number;
   sizes: number[];
+  metric: Metric;
   onLang: (l: LanguageId) => void;
   onSplit: (s: ExperimentSplit) => void;
   onSize: (n: number) => void;
+  onMetric: (m: Metric) => void;
 };
 
-export function ExperimentControls({ lang, split, size, sizes, onLang, onSplit, onSize }: Props) {
+export function ExperimentControls({ lang, split, size, sizes, metric, onLang, onSplit, onSize, onMetric }: Props) {
   const seg = (on: boolean) => `rounded-md px-3.5 py-1.5 text-sm transition-all ${on ? "bg-bush text-ivory shadow" : "text-bush hover:bg-ivory"}`;
   return (
     <div className="space-y-5 rounded-2xl border border-line bg-ivory/80 p-6">
@@ -24,7 +26,7 @@ export function ExperimentControls({ lang, split, size, sizes, onLang, onSplit, 
           <div role="radiogroup" aria-label="Language" className="inline-flex flex-wrap rounded-lg border border-line-strong bg-cashmere p-1">
             {languages.map((l) => (
               <button key={l.id} role="radio" aria-checked={l.id === lang} onClick={() => onLang(l.id)} className={seg(l.id === lang)}>
-                {l.name}
+                {l.id === "ron" ? "Romanian (verbs)" : l.name}
               </button>
             ))}
           </div>
@@ -57,7 +59,24 @@ export function ExperimentControls({ lang, split, size, sizes, onLang, onSplit, 
             ))}
           </div>
         </div>
+        <div>
+          <p className="eyebrow mb-2">Scoring</p>
+          <div role="radiogroup" aria-label="Scoring" className="inline-flex rounded-lg border border-line-strong bg-cashmere p-1">
+            {(["strict", "variant"] as Metric[]).map((m) => (
+              <button key={m} role="radio" aria-checked={metric === m} onClick={() => onMetric(m)} className={seg(metric === m)}>
+                {m === "strict" ? "Strict" : "Variant-aware"}
+              </button>
+            ))}
+          </div>
+        </div>
       </div>
+      <p className="text-xs text-muted">
+        {metricLabel[metric]}:{" "}
+        {metric === "strict"
+          ? "the prediction must equal the stored form of the test record."
+          : "the prediction may equal any form stored for the same lemma and bundle, so dialectal or transcription variants (frequent in oral Evenki) are not counted as errors."}
+        {lang === "ron" && " Romanian results use verbs only; noun and adjective tags are unreliable. Results on all records are listed in the findings table."}
+      </p>
       <div className="grid gap-3 text-sm sm:grid-cols-3">
         {systemOrder.map((m) => (
           <div key={m} className="rounded-lg border border-line bg-cashmere/60 px-3 py-2">

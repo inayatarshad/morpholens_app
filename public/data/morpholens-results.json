@@ -1,6 +1,6 @@
 {
- "generatedAt": "2026-09-13T18:58:32.178Z",
- "runtimeSeconds": 15,
+ "generatedAt": "2026-09-14T08:21:35.006Z",
+ "runtimeSeconds": 59,
  "node": "v24.15.0",
  "config": {
   "seeds": [
@@ -23,6 +23,38 @@
   "testFraction": 0.25,
   "bootstrap": 2000
  },
+ "datasets": [
+  {
+   "id": "tur",
+   "source": "tur",
+   "note": null
+  },
+  {
+   "id": "urd",
+   "source": "urd",
+   "note": null
+  },
+  {
+   "id": "evn",
+   "source": "evn",
+   "note": null
+  },
+  {
+   "id": "ckt",
+   "source": "ckt",
+   "note": null
+  },
+  {
+   "id": "ron",
+   "source": "ron",
+   "note": "verbs only (V, V.PTCP, V.CVB); noun and adjective tags are unreliable"
+  },
+  {
+   "id": "ron-all",
+   "source": "ron",
+   "note": "all records, unfiltered (raw)"
+  }
+ ],
  "sources": {
   "tur": {
    "repo": "https://github.com/unimorph/tur",
@@ -52,31 +84,57 @@
  },
  "stats": {
   "tur": {
+   "source": "tur",
    "triples": 570420,
+   "rawTriples": 570420,
+   "excludedAnomalies": 0,
    "lemmas": 3579,
    "bundles": 883,
    "testSize": 500
   },
   "urd": {
+   "source": "urd",
    "triples": 12572,
+   "rawTriples": 12572,
+   "excludedAnomalies": 0,
    "lemmas": 182,
    "bundles": 217,
    "testSize": 329
   },
   "evn": {
+   "source": "evn",
    "triples": 11371,
+   "rawTriples": 11371,
+   "excludedAnomalies": 0,
    "lemmas": 4495,
    "bundles": 1021,
    "testSize": 500
   },
   "ckt": {
-   "triples": 241,
-   "lemmas": 196,
-   "bundles": 99,
-   "testSize": 60
+   "source": "ckt",
+   "triples": 234,
+   "rawTriples": 241,
+   "excludedAnomalies": 7,
+   "lemmas": 192,
+   "bundles": 93,
+   "testSize": 58
   },
   "ron": {
+   "source": "ron",
+   "note": "verbs only (V, V.PTCP, V.CVB); noun and adjective tags are unreliable",
+   "triples": 44992,
+   "rawTriples": 80262,
+   "excludedAnomalies": 0,
+   "lemmas": 1216,
+   "bundles": 37,
+   "testSize": 500
+  },
+  "ron-all": {
+   "source": "ron",
+   "note": "all records, unfiltered (raw)",
    "triples": 80262,
+   "rawTriples": 80262,
+   "excludedAnomalies": 0,
    "lemmas": 4405,
    "bundles": 59,
    "testSize": 500
@@ -88,6 +146,7 @@
     "50": {
      "overlap": 14.4,
      "unseenBundle": 55.1,
+     "multiRef": 0,
      "items": 2500,
      "posCounts": {
       "N": 2064,
@@ -104,6 +163,17 @@
         15.8,
         12.4
        ],
+       "variant": {
+        "mean": 15.7,
+        "std": 2.5,
+        "runs": [
+         16.8,
+         19,
+         14.4,
+         15.8,
+         12.4
+        ]
+       },
        "lev": 4.57,
        "seenBundle": 33.5,
        "unseenBundle": 1.2,
@@ -125,6 +195,17 @@
         15.8,
         12.4
        ],
+       "variant": {
+        "mean": 15.7,
+        "std": 2.5,
+        "runs": [
+         16.8,
+         19,
+         14.4,
+         15.8,
+         12.4
+        ]
+       },
        "lev": 4.57,
        "seenBundle": 33.5,
        "unseenBundle": 1.2,
@@ -146,6 +227,17 @@
         15.8,
         13.6
        ],
+       "variant": {
+        "mean": 15.4,
+        "std": 1.3,
+        "runs": [
+         17,
+         16,
+         14.6,
+         15.8,
+         13.6
+        ]
+       },
        "lev": 3.66,
        "seenBundle": 33.5,
        "unseenBundle": 0.7,
@@ -177,11 +269,32 @@
        "hi": 0.1,
        "p": 0.167
       }
+     },
+     "testsVariant": {
+      "morph-baseline": {
+       "diff": -0.3,
+       "lo": -0.7,
+       "hi": 0.1,
+       "p": 0.169
+      },
+      "memory-baseline": {
+       "diff": 0,
+       "lo": 0,
+       "hi": 0,
+       "p": 1
+      },
+      "morph-memory": {
+       "diff": -0.3,
+       "lo": -0.7,
+       "hi": 0.1,
+       "p": 0.196
+      }
      }
     },
     "100": {
      "overlap": 27.1,
      "unseenBundle": 39.5,
+     "multiRef": 0,
      "items": 2500,
      "posCounts": {
       "N": 2064,
@@ -198,6 +311,17 @@
         19.2,
         19.2
        ],
+       "variant": {
+        "mean": 21,
+        "std": 2.4,
+        "runs": [
+         19.4,
+         24.6,
+         22.4,
+         19.2,
+         19.2
+        ]
+       },
        "lev": 4.01,
        "seenBundle": 33.6,
        "unseenBundle": 1.6,
@@ -219,6 +343,17 @@
         19.2,
         19.2
        ],
+       "variant": {
+        "mean": 21,
+        "std": 2.4,
+        "runs": [
+         19.4,
+         24.6,
+         22.4,
+         19.2,
+         19.2
+        ]
+       },
        "lev": 4.01,
        "seenBundle": 33.6,
        "unseenBundle": 1.6,
@@ -240,6 +375,17 @@
         22,
         20.2
        ],
+       "variant": {
+        "mean": 22.2,
+        "std": 1.9,
+        "runs": [
+         20.6,
+         24.2,
+         24,
+         22,
+         20.2
+        ]
+       },
        "lev": 3.14,
        "seenBundle": 34.1,
        "unseenBundle": 4,
@@ -267,7 +413,27 @@
       },
       "morph-memory": {
        "diff": 1.2,
+       "lo": 0.7,
+       "hi": 1.8,
+       "p": 0
+      }
+     },
+     "testsVariant": {
+      "morph-baseline": {
+       "diff": 1.2,
        "lo": 0.6,
+       "hi": 1.8,
+       "p": 0
+      },
+      "memory-baseline": {
+       "diff": 0,
+       "lo": 0,
+       "hi": 0,
+       "p": 1
+      },
+      "morph-memory": {
+       "diff": 1.2,
+       "lo": 0.7,
        "hi": 1.9,
        "p": 0
       }
@@ -276,6 +442,7 @@
     "250": {
      "overlap": 55,
      "unseenBundle": 25,
+     "multiRef": 0,
      "items": 2500,
      "posCounts": {
       "N": 2064,
@@ -292,6 +459,17 @@
         26.6,
         29.2
        ],
+       "variant": {
+        "mean": 28.5,
+        "std": 1.4,
+        "runs": [
+         27.6,
+         28.8,
+         30.2,
+         26.6,
+         29.2
+        ]
+       },
        "lev": 3.35,
        "seenBundle": 37.1,
        "unseenBundle": 2.6,
@@ -313,6 +491,17 @@
         27.8,
         30.2
        ],
+       "variant": {
+        "mean": 29.4,
+        "std": 1.3,
+        "runs": [
+         28,
+         30.2,
+         30.6,
+         27.8,
+         30.2
+        ]
+       },
        "lev": 3.33,
        "seenBundle": 38.3,
        "unseenBundle": 2.6,
@@ -334,6 +523,17 @@
         28,
         31.2
        ],
+       "variant": {
+        "mean": 29.7,
+        "std": 1.6,
+        "runs": [
+         28.2,
+         29.6,
+         31.4,
+         28,
+         31.2
+        ]
+       },
        "lev": 2.63,
        "seenBundle": 37.4,
        "unseenBundle": 6.4,
@@ -355,21 +555,42 @@
       },
       "memory-baseline": {
        "diff": 0.9,
-       "lo": 0.5,
+       "lo": 0.4,
        "hi": 1.3,
        "p": 0
       },
       "morph-memory": {
        "diff": 0.3,
-       "lo": -0.3,
+       "lo": -0.4,
        "hi": 1,
-       "p": 0.349
+       "p": 0.375
+      }
+     },
+     "testsVariant": {
+      "morph-baseline": {
+       "diff": 1.2,
+       "lo": 0.7,
+       "hi": 1.7,
+       "p": 0
+      },
+      "memory-baseline": {
+       "diff": 0.9,
+       "lo": 0.4,
+       "hi": 1.3,
+       "p": 0
+      },
+      "morph-memory": {
+       "diff": 0.3,
+       "lo": -0.4,
+       "hi": 1,
+       "p": 0.394
       }
      }
     },
     "500": {
      "overlap": 79.6,
      "unseenBundle": 19.2,
+     "multiRef": 0,
      "items": 2500,
      "posCounts": {
       "N": 2064,
@@ -386,6 +607,17 @@
         33.2,
         34
        ],
+       "variant": {
+        "mean": 34.2,
+        "std": 2.5,
+        "runs": [
+         31.4,
+         38.2,
+         34,
+         33.2,
+         34
+        ]
+       },
        "lev": 2.98,
        "seenBundle": 42.3,
        "unseenBundle": 0,
@@ -407,6 +639,17 @@
         34.4,
         39
        ],
+       "variant": {
+        "mean": 36.6,
+        "std": 3.2,
+        "runs": [
+         32.4,
+         40,
+         37.2,
+         34.4,
+         39
+        ]
+       },
        "lev": 2.91,
        "seenBundle": 45.3,
        "unseenBundle": 0,
@@ -428,6 +671,17 @@
         33.6,
         34.2
        ],
+       "variant": {
+        "mean": 34.6,
+        "std": 2.3,
+        "runs": [
+         32,
+         38.2,
+         35,
+         33.6,
+         34.2
+        ]
+       },
        "lev": 2.32,
        "seenBundle": 42.4,
        "unseenBundle": 1.9,
@@ -456,6 +710,26 @@
       "morph-memory": {
        "diff": -2,
        "lo": -3,
+       "hi": -0.9,
+       "p": 0.001
+      }
+     },
+     "testsVariant": {
+      "morph-baseline": {
+       "diff": 0.4,
+       "lo": 0.2,
+       "hi": 0.7,
+       "p": 0
+      },
+      "memory-baseline": {
+       "diff": 2.4,
+       "lo": 1.4,
+       "hi": 3.5,
+       "p": 0
+      },
+      "morph-memory": {
+       "diff": -2,
+       "lo": -3,
        "hi": -1,
        "p": 0
       }
@@ -464,6 +738,7 @@
     "1000": {
      "overlap": 96.9,
      "unseenBundle": 15.6,
+     "multiRef": 0,
      "items": 2500,
      "posCounts": {
       "N": 2064,
@@ -480,6 +755,17 @@
         41,
         38.8
        ],
+       "variant": {
+        "mean": 42,
+        "std": 2.7,
+        "runs": [
+         40.4,
+         45.2,
+         44.4,
+         41,
+         38.8
+        ]
+       },
        "lev": 2.63,
        "seenBundle": 49.7,
        "unseenBundle": 0,
@@ -501,6 +787,17 @@
         47.4,
         45.6
        ],
+       "variant": {
+        "mean": 48.1,
+        "std": 2.6,
+        "runs": [
+         45.8,
+         50.6,
+         51.2,
+         47.4,
+         45.6
+        ]
+       },
        "lev": 2.44,
        "seenBundle": 57,
        "unseenBundle": 0,
@@ -522,6 +819,17 @@
         41.4,
         39.2
        ],
+       "variant": {
+        "mean": 42.3,
+        "std": 2.6,
+        "runs": [
+         41,
+         45.4,
+         44.6,
+         41.4,
+         39.2
+        ]
+       },
        "lev": 1.91,
        "seenBundle": 49.8,
        "unseenBundle": 1.8,
@@ -537,14 +845,34 @@
      "tests": {
       "morph-baseline": {
        "diff": 0.4,
-       "lo": 0.1,
+       "lo": 0.2,
        "hi": 0.6,
        "p": 0
       },
       "memory-baseline": {
        "diff": 6.2,
-       "lo": 4.6,
-       "hi": 7.7,
+       "lo": 4.5,
+       "hi": 7.8,
+       "p": 0
+      },
+      "morph-memory": {
+       "diff": -5.8,
+       "lo": -7.4,
+       "hi": -4.2,
+       "p": 0
+      }
+     },
+     "testsVariant": {
+      "morph-baseline": {
+       "diff": 0.4,
+       "lo": 0.2,
+       "hi": 0.6,
+       "p": 0
+      },
+      "memory-baseline": {
+       "diff": 6.2,
+       "lo": 4.4,
+       "hi": 7.8,
        "p": 0
       },
       "morph-memory": {
@@ -560,6 +888,7 @@
     "50": {
      "overlap": 0,
      "unseenBundle": 52.8,
+     "multiRef": 0,
      "items": 2500,
      "posCounts": {
       "N": 2080,
@@ -576,6 +905,17 @@
         15.6,
         15.8
        ],
+       "variant": {
+        "mean": 16,
+        "std": 2.6,
+        "runs": [
+         15.6,
+         20.2,
+         13,
+         15.6,
+         15.8
+        ]
+       },
        "lev": 4.55,
        "seenBundle": 32.2,
        "unseenBundle": 1.6,
@@ -597,6 +937,17 @@
         15.6,
         15.8
        ],
+       "variant": {
+        "mean": 16,
+        "std": 2.6,
+        "runs": [
+         15.6,
+         20.2,
+         13,
+         15.6,
+         15.8
+        ]
+       },
        "lev": 4.55,
        "seenBundle": 32.2,
        "unseenBundle": 1.6,
@@ -618,6 +969,17 @@
         16.6,
         16
        ],
+       "variant": {
+        "mean": 15.9,
+        "std": 3.8,
+        "runs": [
+         16.4,
+         20.6,
+         10,
+         16.6,
+         16
+        ]
+       },
        "lev": 3.65,
        "seenBundle": 32.3,
        "unseenBundle": 1.3,
@@ -635,7 +997,7 @@
        "diff": -0.1,
        "lo": -0.6,
        "hi": 0.4,
-       "p": 0.693
+       "p": 0.669
       },
       "memory-baseline": {
        "diff": 0,
@@ -647,13 +1009,34 @@
        "diff": -0.1,
        "lo": -0.6,
        "hi": 0.4,
-       "p": 0.681
+       "p": 0.668
+      }
+     },
+     "testsVariant": {
+      "morph-baseline": {
+       "diff": -0.1,
+       "lo": -0.6,
+       "hi": 0.4,
+       "p": 0.692
+      },
+      "memory-baseline": {
+       "diff": 0,
+       "lo": 0,
+       "hi": 0,
+       "p": 1
+      },
+      "morph-memory": {
+       "diff": -0.1,
+       "lo": -0.6,
+       "hi": 0.4,
+       "p": 0.675
       }
      }
     },
     "100": {
      "overlap": 0,
      "unseenBundle": 35.8,
+     "multiRef": 0,
      "items": 2500,
      "posCounts": {
       "N": 2080,
@@ -670,6 +1053,17 @@
         21.8,
         20.6
        ],
+       "variant": {
+        "mean": 22.4,
+        "std": 3.1,
+        "runs": [
+         21,
+         27.8,
+         20.8,
+         21.8,
+         20.6
+        ]
+       },
        "lev": 3.9,
        "seenBundle": 34.7,
        "unseenBundle": 0.4,
@@ -691,6 +1085,17 @@
         21.8,
         20.6
        ],
+       "variant": {
+        "mean": 22.4,
+        "std": 3.1,
+        "runs": [
+         21,
+         27.8,
+         20.8,
+         21.8,
+         20.6
+        ]
+       },
        "lev": 3.9,
        "seenBundle": 34.7,
        "unseenBundle": 0.4,
@@ -712,6 +1117,17 @@
         22.4,
         21.2
        ],
+       "variant": {
+        "mean": 22.9,
+        "std": 2.9,
+        "runs": [
+         21.4,
+         28,
+         21.6,
+         22.4,
+         21.2
+        ]
+       },
        "lev": 3.14,
        "seenBundle": 34.8,
        "unseenBundle": 1.7,
@@ -729,7 +1145,7 @@
        "diff": 0.5,
        "lo": 0.2,
        "hi": 0.9,
-       "p": 0.001
+       "p": 0.008
       },
       "memory-baseline": {
        "diff": 0,
@@ -741,13 +1157,34 @@
        "diff": 0.5,
        "lo": 0.2,
        "hi": 0.9,
-       "p": 0.004
+       "p": 0.003
+      }
+     },
+     "testsVariant": {
+      "morph-baseline": {
+       "diff": 0.5,
+       "lo": 0.2,
+       "hi": 0.9,
+       "p": 0.01
+      },
+      "memory-baseline": {
+       "diff": 0,
+       "lo": 0,
+       "hi": 0,
+       "p": 1
+      },
+      "morph-memory": {
+       "diff": 0.5,
+       "lo": 0.2,
+       "hi": 0.9,
+       "p": 0.002
       }
      }
     },
     "250": {
      "overlap": 0,
      "unseenBundle": 21.5,
+     "multiRef": 0,
      "items": 2500,
      "posCounts": {
       "N": 2080,
@@ -764,6 +1201,17 @@
         28.6,
         27.2
        ],
+       "variant": {
+        "mean": 30.9,
+        "std": 5.7,
+        "runs": [
+         30.4,
+         40.8,
+         27.6,
+         28.6,
+         27.2
+        ]
+       },
        "lev": 3.21,
        "seenBundle": 39.3,
        "unseenBundle": 0.4,
@@ -785,6 +1233,17 @@
         28.6,
         27.2
        ],
+       "variant": {
+        "mean": 30.9,
+        "std": 5.7,
+        "runs": [
+         30.4,
+         40.8,
+         27.6,
+         28.6,
+         27.2
+        ]
+       },
        "lev": 3.21,
        "seenBundle": 39.3,
        "unseenBundle": 0.4,
@@ -806,6 +1265,17 @@
         30.2,
         27.6
        ],
+       "variant": {
+        "mean": 31.5,
+        "std": 5.7,
+        "runs": [
+         30.6,
+         41.4,
+         27.6,
+         30.2,
+         27.6
+        ]
+       },
        "lev": 2.55,
        "seenBundle": 39.4,
        "unseenBundle": 2.6,
@@ -835,13 +1305,34 @@
        "diff": 0.6,
        "lo": 0.2,
        "hi": 0.9,
+       "p": 0.002
+      }
+     },
+     "testsVariant": {
+      "morph-baseline": {
+       "diff": 0.6,
+       "lo": 0.2,
+       "hi": 0.9,
        "p": 0
+      },
+      "memory-baseline": {
+       "diff": 0,
+       "lo": 0,
+       "hi": 0,
+       "p": 1
+      },
+      "morph-memory": {
+       "diff": 0.6,
+       "lo": 0.2,
+       "hi": 0.9,
+       "p": 0.001
       }
      }
     },
     "500": {
      "overlap": 0,
      "unseenBundle": 17.3,
+     "multiRef": 0,
      "items": 2500,
      "posCounts": {
       "N": 2080,
@@ -858,6 +1349,17 @@
         33.8,
         35.2
        ],
+       "variant": {
+        "mean": 37.3,
+        "std": 6.5,
+        "runs": [
+         37.8,
+         48.2,
+         31.4,
+         33.8,
+         35.2
+        ]
+       },
        "lev": 2.85,
        "seenBundle": 45,
        "unseenBundle": 0.5,
@@ -879,6 +1381,17 @@
         33.8,
         35.2
        ],
+       "variant": {
+        "mean": 37.3,
+        "std": 6.5,
+        "runs": [
+         37.8,
+         48.2,
+         31.4,
+         33.8,
+         35.2
+        ]
+       },
        "lev": 2.85,
        "seenBundle": 45,
        "unseenBundle": 0.5,
@@ -900,6 +1413,17 @@
         34.2,
         35.4
        ],
+       "variant": {
+        "mean": 37.4,
+        "std": 6.5,
+        "runs": [
+         37.8,
+         48.4,
+         31.4,
+         34.2,
+         35.4
+        ]
+       },
        "lev": 2.23,
        "seenBundle": 45,
        "unseenBundle": 1.4,
@@ -917,7 +1441,7 @@
        "diff": 0.2,
        "lo": 0,
        "hi": 0.4,
-       "p": 0.208
+       "p": 0.23
       },
       "memory-baseline": {
        "diff": 0,
@@ -929,13 +1453,34 @@
        "diff": 0.2,
        "lo": -0.1,
        "hi": 0.4,
-       "p": 0.231
+       "p": 0.242
+      }
+     },
+     "testsVariant": {
+      "morph-baseline": {
+       "diff": 0.2,
+       "lo": 0,
+       "hi": 0.4,
+       "p": 0.196
+      },
+      "memory-baseline": {
+       "diff": 0,
+       "lo": 0,
+       "hi": 0,
+       "p": 1
+      },
+      "morph-memory": {
+       "diff": 0.2,
+       "lo": 0,
+       "hi": 0.4,
+       "p": 0.217
       }
      }
     },
     "1000": {
      "overlap": 0,
      "unseenBundle": 14.7,
+     "multiRef": 0,
      "items": 2500,
      "posCounts": {
       "N": 2080,
@@ -952,6 +1497,17 @@
         46.4,
         42
        ],
+       "variant": {
+        "mean": 45.8,
+        "std": 8.2,
+        "runs": [
+         42.8,
+         59.4,
+         38.2,
+         46.4,
+         42
+        ]
+       },
        "lev": 2.57,
        "seenBundle": 53.7,
        "unseenBundle": 0,
@@ -973,6 +1529,17 @@
         46.4,
         42
        ],
+       "variant": {
+        "mean": 45.8,
+        "std": 8.2,
+        "runs": [
+         42.8,
+         59.4,
+         38.2,
+         46.4,
+         42
+        ]
+       },
        "lev": 2.57,
        "seenBundle": 53.7,
        "unseenBundle": 0,
@@ -994,6 +1561,17 @@
         46.8,
         42.4
        ],
+       "variant": {
+        "mean": 46.2,
+        "std": 8.1,
+        "runs": [
+         43,
+         59.8,
+         38.8,
+         46.8,
+         42.4
+        ]
+       },
        "lev": 1.85,
        "seenBundle": 53.7,
        "unseenBundle": 2.7,
@@ -1010,8 +1588,28 @@
       "morph-baseline": {
        "diff": 0.4,
        "lo": 0.2,
-       "hi": 0.7,
+       "hi": 0.6,
        "p": 0
+      },
+      "memory-baseline": {
+       "diff": 0,
+       "lo": 0,
+       "hi": 0,
+       "p": 1
+      },
+      "morph-memory": {
+       "diff": 0.4,
+       "lo": 0.2,
+       "hi": 0.6,
+       "p": 0
+      }
+     },
+     "testsVariant": {
+      "morph-baseline": {
+       "diff": 0.4,
+       "lo": 0.2,
+       "hi": 0.6,
+       "p": 0.001
       },
       "memory-baseline": {
        "diff": 0,
@@ -1034,6 +1632,7 @@
     "50": {
      "overlap": 23,
      "unseenBundle": 39.4,
+     "multiRef": 0,
      "items": 1645,
      "posCounts": {
       "N": 933,
@@ -1050,6 +1649,17 @@
         44.4,
         38.3
        ],
+       "variant": {
+        "mean": 43.9,
+        "std": 3.4,
+        "runs": [
+         46.8,
+         46.2,
+         43.8,
+         44.4,
+         38.3
+        ]
+       },
        "lev": 2.82,
        "seenBundle": 71.9,
        "unseenBundle": 0.8,
@@ -1071,6 +1681,17 @@
         44.4,
         38.3
        ],
+       "variant": {
+        "mean": 43.7,
+        "std": 3.3,
+        "runs": [
+         46.8,
+         45.9,
+         43.2,
+         44.4,
+         38.3
+        ]
+       },
        "lev": 2.82,
        "seenBundle": 71.6,
        "unseenBundle": 0.8,
@@ -1092,6 +1713,17 @@
         46.2,
         40.1
        ],
+       "variant": {
+        "mean": 46,
+        "std": 3.7,
+        "runs": [
+         48.9,
+         49.2,
+         45.3,
+         46.2,
+         40.1
+        ]
+       },
        "lev": 1.72,
        "seenBundle": 71.9,
        "unseenBundle": 6,
@@ -1123,11 +1755,32 @@
        "hi": 3.1,
        "p": 0
       }
+     },
+     "testsVariant": {
+      "morph-baseline": {
+       "diff": 2.1,
+       "lo": 1.3,
+       "hi": 2.9,
+       "p": 0
+      },
+      "memory-baseline": {
+       "diff": -0.2,
+       "lo": -0.5,
+       "hi": 0.1,
+       "p": 0.359
+      },
+      "morph-memory": {
+       "diff": 2.2,
+       "lo": 1.4,
+       "hi": 3.1,
+       "p": 0
+      }
      }
     },
     "100": {
      "overlap": 42.7,
      "unseenBundle": 34.3,
+     "multiRef": 0,
      "items": 1645,
      "posCounts": {
       "N": 933,
@@ -1144,6 +1797,17 @@
         50.2,
         51.4
        ],
+       "variant": {
+        "mean": 51.1,
+        "std": 1.8,
+        "runs": [
+         51.4,
+         53.8,
+         48.9,
+         50.2,
+         51.4
+        ]
+       },
        "lev": 2.46,
        "seenBundle": 77.4,
        "unseenBundle": 0.9,
@@ -1165,6 +1829,17 @@
         49.8,
         51.7
        ],
+       "variant": {
+        "mean": 50.2,
+        "std": 2.2,
+        "runs": [
+         51.1,
+         51.7,
+         46.5,
+         49.8,
+         51.7
+        ]
+       },
        "lev": 2.46,
        "seenBundle": 75.9,
        "unseenBundle": 0.9,
@@ -1186,6 +1861,17 @@
         52.6,
         55.6
        ],
+       "variant": {
+        "mean": 53.4,
+        "std": 2.5,
+        "runs": [
+         52.6,
+         56.2,
+         50.2,
+         52.6,
+         55.6
+        ]
+       },
        "lev": 1.4,
        "seenBundle": 77.5,
        "unseenBundle": 7.4,
@@ -1207,9 +1893,29 @@
       },
       "memory-baseline": {
        "diff": -1,
-       "lo": -1.8,
+       "lo": -1.7,
        "hi": -0.2,
-       "p": 0.021
+       "p": 0.019
+      },
+      "morph-memory": {
+       "diff": 3.3,
+       "lo": 2.1,
+       "hi": 4.4,
+       "p": 0
+      }
+     },
+     "testsVariant": {
+      "morph-baseline": {
+       "diff": 2.3,
+       "lo": 1.5,
+       "hi": 3.2,
+       "p": 0
+      },
+      "memory-baseline": {
+       "diff": -1,
+       "lo": -1.7,
+       "hi": -0.2,
+       "p": 0.022
       },
       "morph-memory": {
        "diff": 3.3,
@@ -1222,6 +1928,7 @@
     "250": {
      "overlap": 73.9,
      "unseenBundle": 26.6,
+     "multiRef": 0,
      "items": 1645,
      "posCounts": {
       "N": 933,
@@ -1238,6 +1945,17 @@
         57.4,
         58.7
        ],
+       "variant": {
+        "mean": 58,
+        "std": 2.9,
+        "runs": [
+         58.1,
+         62,
+         53.8,
+         57.4,
+         58.7
+        ]
+       },
        "lev": 1.99,
        "seenBundle": 78.8,
        "unseenBundle": 0.7,
@@ -1259,6 +1977,17 @@
         56.2,
         56.8
        ],
+       "variant": {
+        "mean": 54.8,
+        "std": 4,
+        "runs": [
+         55.9,
+         57.4,
+         47.7,
+         56.2,
+         56.8
+        ]
+       },
        "lev": 2.01,
        "seenBundle": 74.5,
        "unseenBundle": 0.7,
@@ -1280,6 +2009,17 @@
         62.6,
         63.5
        ],
+       "variant": {
+        "mean": 62.4,
+        "std": 3.3,
+        "runs": [
+         61.7,
+         66.6,
+         57.4,
+         62.6,
+         63.5
+        ]
+       },
        "lev": 0.93,
        "seenBundle": 79,
        "unseenBundle": 16.4,
@@ -1296,7 +2036,7 @@
       "morph-baseline": {
        "diff": 4.4,
        "lo": 3.3,
-       "hi": 5.4,
+       "hi": 5.5,
        "p": 0
       },
       "memory-baseline": {
@@ -1308,7 +2048,27 @@
       "morph-memory": {
        "diff": 7.5,
        "lo": 5.8,
-       "hi": 9.3,
+       "hi": 9.4,
+       "p": 0
+      }
+     },
+     "testsVariant": {
+      "morph-baseline": {
+       "diff": 4.4,
+       "lo": 3.4,
+       "hi": 5.4,
+       "p": 0
+      },
+      "memory-baseline": {
+       "diff": -3.2,
+       "lo": -4.7,
+       "hi": -1.7,
+       "p": 0
+      },
+      "morph-memory": {
+       "diff": 7.5,
+       "lo": 5.7,
+       "hi": 9.2,
        "p": 0
       }
      }
@@ -1316,6 +2076,7 @@
     "500": {
      "overlap": 93.5,
      "unseenBundle": 16.7,
+     "multiRef": 0,
      "items": 1645,
      "posCounts": {
       "N": 933,
@@ -1332,6 +2093,17 @@
         66,
         64.4
        ],
+       "variant": {
+        "mean": 65.7,
+        "std": 2.8,
+        "runs": [
+         65,
+         70.2,
+         62.6,
+         66,
+         64.4
+        ]
+       },
        "lev": 1.38,
        "seenBundle": 78.6,
        "unseenBundle": 1.1,
@@ -1353,6 +2125,17 @@
         71.4,
         67.8
        ],
+       "variant": {
+        "mean": 69.4,
+        "std": 4.2,
+        "runs": [
+         66.6,
+         75.7,
+         65.3,
+         71.4,
+         67.8
+        ]
+       },
        "lev": 1.3,
        "seenBundle": 83,
        "unseenBundle": 1.1,
@@ -1374,6 +2157,17 @@
         70.5,
         68.4
        ],
+       "variant": {
+        "mean": 69.5,
+        "std": 2.2,
+        "runs": [
+         69,
+         72.6,
+         66.9,
+         70.5,
+         68.4
+        ]
+       },
        "lev": 0.54,
        "seenBundle": 78.9,
        "unseenBundle": 22.3,
@@ -1390,6 +2184,26 @@
       "morph-baseline": {
        "diff": 3.8,
        "lo": 2.9,
+       "hi": 4.7,
+       "p": 0
+      },
+      "memory-baseline": {
+       "diff": 3.7,
+       "lo": 2.2,
+       "hi": 5.3,
+       "p": 0
+      },
+      "morph-memory": {
+       "diff": 0.1,
+       "lo": -1.8,
+       "hi": 1.9,
+       "p": 0.926
+      }
+     },
+     "testsVariant": {
+      "morph-baseline": {
+       "diff": 3.8,
+       "lo": 2.9,
        "hi": 4.9,
        "p": 0
       },
@@ -1403,7 +2217,7 @@
        "diff": 0.1,
        "lo": -1.7,
        "hi": 1.9,
-       "p": 0.918
+       "p": 0.927
       }
      }
     }
@@ -1412,6 +2226,7 @@
     "50": {
      "overlap": 0,
      "unseenBundle": 37.2,
+     "multiRef": 0,
      "items": 1645,
      "posCounts": {
       "N": 993,
@@ -1428,6 +2243,17 @@
         46.5,
         43.8
        ],
+       "variant": {
+        "mean": 44.4,
+        "std": 2.6,
+        "runs": [
+         41.6,
+         47.7,
+         42.2,
+         46.5,
+         43.8
+        ]
+       },
        "lev": 2.61,
        "seenBundle": 70.7,
        "unseenBundle": 0,
@@ -1449,6 +2275,17 @@
         46.5,
         43.8
        ],
+       "variant": {
+        "mean": 44.4,
+        "std": 2.6,
+        "runs": [
+         41.6,
+         47.7,
+         42.2,
+         46.5,
+         43.8
+        ]
+       },
        "lev": 2.61,
        "seenBundle": 70.7,
        "unseenBundle": 0,
@@ -1470,6 +2307,17 @@
         51.4,
         47.4
        ],
+       "variant": {
+        "mean": 47.9,
+        "std": 3.2,
+        "runs": [
+         44.7,
+         51.1,
+         45,
+         51.4,
+         47.4
+        ]
+       },
        "lev": 1.58,
        "seenBundle": 70.7,
        "unseenBundle": 9.5,
@@ -1485,8 +2333,28 @@
      "tests": {
       "morph-baseline": {
        "diff": 3.5,
-       "lo": 2.6,
+       "lo": 2.7,
        "hi": 4.4,
+       "p": 0
+      },
+      "memory-baseline": {
+       "diff": 0,
+       "lo": 0,
+       "hi": 0,
+       "p": 1
+      },
+      "morph-memory": {
+       "diff": 3.5,
+       "lo": 2.7,
+       "hi": 4.4,
+       "p": 0
+      }
+     },
+     "testsVariant": {
+      "morph-baseline": {
+       "diff": 3.5,
+       "lo": 2.7,
+       "hi": 4.5,
        "p": 0
       },
       "memory-baseline": {
@@ -1506,6 +2374,7 @@
     "100": {
      "overlap": 0,
      "unseenBundle": 31.6,
+     "multiRef": 0,
      "items": 1645,
      "posCounts": {
       "N": 993,
@@ -1522,6 +2391,17 @@
         51.4,
         48
        ],
+       "variant": {
+        "mean": 50.6,
+        "std": 4.8,
+        "runs": [
+         48.6,
+         58.7,
+         46.5,
+         51.4,
+         48
+        ]
+       },
        "lev": 2.36,
        "seenBundle": 74,
        "unseenBundle": 0,
@@ -1543,6 +2423,17 @@
         51.4,
         48
        ],
+       "variant": {
+        "mean": 50.6,
+        "std": 4.8,
+        "runs": [
+         48.6,
+         58.7,
+         46.5,
+         51.4,
+         48
+        ]
+       },
        "lev": 2.36,
        "seenBundle": 74,
        "unseenBundle": 0,
@@ -1564,6 +2455,17 @@
         56.8,
         51.7
        ],
+       "variant": {
+        "mean": 54.6,
+        "std": 4.8,
+        "runs": [
+         53.2,
+         61.7,
+         49.5,
+         56.8,
+         51.7
+        ]
+       },
        "lev": 1.27,
        "seenBundle": 74,
        "unseenBundle": 12.5,
@@ -1595,11 +2497,32 @@
        "hi": 4.9,
        "p": 0
       }
+     },
+     "testsVariant": {
+      "morph-baseline": {
+       "diff": 4,
+       "lo": 3,
+       "hi": 4.9,
+       "p": 0
+      },
+      "memory-baseline": {
+       "diff": 0,
+       "lo": 0,
+       "hi": 0,
+       "p": 1
+      },
+      "morph-memory": {
+       "diff": 4,
+       "lo": 3,
+       "hi": 4.9,
+       "p": 0
+      }
      }
     },
     "250": {
      "overlap": 0,
      "unseenBundle": 22.8,
+     "multiRef": 0,
      "items": 1645,
      "posCounts": {
       "N": 993,
@@ -1616,6 +2539,17 @@
         57.1,
         53.5
        ],
+       "variant": {
+        "mean": 57.6,
+        "std": 4.5,
+        "runs": [
+         60.2,
+         63.8,
+         53.2,
+         57.1,
+         53.5
+        ]
+       },
        "lev": 1.82,
        "seenBundle": 74.6,
        "unseenBundle": 0,
@@ -1637,6 +2571,17 @@
         57.1,
         53.5
        ],
+       "variant": {
+        "mean": 57.6,
+        "std": 4.5,
+        "runs": [
+         60.2,
+         63.8,
+         53.2,
+         57.1,
+         53.5
+        ]
+       },
        "lev": 1.82,
        "seenBundle": 74.6,
        "unseenBundle": 0,
@@ -1658,6 +2603,17 @@
         62.3,
         59
        ],
+       "variant": {
+        "mean": 62.1,
+        "std": 4,
+        "runs": [
+         63.2,
+         68.1,
+         58.1,
+         62.3,
+         59
+        ]
+       },
        "lev": 0.78,
        "seenBundle": 74.9,
        "unseenBundle": 18.9,
@@ -1674,7 +2630,27 @@
       "morph-baseline": {
        "diff": 4.6,
        "lo": 3.6,
-       "hi": 5.7,
+       "hi": 5.5,
+       "p": 0
+      },
+      "memory-baseline": {
+       "diff": 0,
+       "lo": 0,
+       "hi": 0,
+       "p": 1
+      },
+      "morph-memory": {
+       "diff": 4.6,
+       "lo": 3.6,
+       "hi": 5.6,
+       "p": 0
+      }
+     },
+     "testsVariant": {
+      "morph-baseline": {
+       "diff": 4.6,
+       "lo": 3.6,
+       "hi": 5.6,
        "p": 0
       },
       "memory-baseline": {
@@ -1694,6 +2670,7 @@
     "500": {
      "overlap": 0,
      "unseenBundle": 14.6,
+     "multiRef": 0,
      "items": 1645,
      "posCounts": {
       "N": 993,
@@ -1710,6 +2687,17 @@
         63.8,
         60.2
        ],
+       "variant": {
+        "mean": 65.2,
+        "std": 5.3,
+        "runs": [
+         66.9,
+         73.6,
+         61.7,
+         63.8,
+         60.2
+        ]
+       },
        "lev": 1.3,
        "seenBundle": 76.4,
        "unseenBundle": 0,
@@ -1731,6 +2719,17 @@
         63.8,
         60.2
        ],
+       "variant": {
+        "mean": 65.2,
+        "std": 5.3,
+        "runs": [
+         66.9,
+         73.6,
+         61.7,
+         63.8,
+         60.2
+        ]
+       },
        "lev": 1.3,
        "seenBundle": 76.4,
        "unseenBundle": 0,
@@ -1752,6 +2751,17 @@
         67.8,
         66.3
        ],
+       "variant": {
+        "mean": 70,
+        "std": 4.4,
+        "runs": [
+         70.5,
+         77.5,
+         68.1,
+         67.8,
+         66.3
+        ]
+       },
        "lev": 0.47,
        "seenBundle": 76.6,
        "unseenBundle": 31.7,
@@ -1768,7 +2778,27 @@
       "morph-baseline": {
        "diff": 4.8,
        "lo": 3.8,
+       "hi": 5.9,
+       "p": 0
+      },
+      "memory-baseline": {
+       "diff": 0,
+       "lo": 0,
+       "hi": 0,
+       "p": 1
+      },
+      "morph-memory": {
+       "diff": 4.8,
+       "lo": 3.7,
        "hi": 5.8,
+       "p": 0
+      }
+     },
+     "testsVariant": {
+      "morph-baseline": {
+       "diff": 4.8,
+       "lo": 3.8,
+       "hi": 5.9,
        "p": 0
       },
       "memory-baseline": {
@@ -1780,7 +2810,7 @@
       "morph-memory": {
        "diff": 4.8,
        "lo": 3.8,
-       "hi": 5.8,
+       "hi": 5.9,
        "p": 0
       }
      }
@@ -1792,6 +2822,7 @@
     "50": {
      "overlap": 5.5,
      "unseenBundle": 55.6,
+     "multiRef": 16.2,
      "items": 2500,
      "posCounts": {
       "N": 1076,
@@ -1809,6 +2840,17 @@
         30.2,
         26
        ],
+       "variant": {
+        "mean": 30.7,
+        "std": 3.5,
+        "runs": [
+         29.4,
+         34.6,
+         26,
+         33.6,
+         30
+        ]
+       },
        "lev": 2.84,
        "seenBundle": 55.2,
        "unseenBundle": 6,
@@ -1831,6 +2873,17 @@
         30.2,
         26
        ],
+       "variant": {
+        "mean": 30.7,
+        "std": 3.5,
+        "runs": [
+         29.4,
+         34.6,
+         26,
+         33.6,
+         30
+        ]
+       },
        "lev": 2.84,
        "seenBundle": 55.2,
        "unseenBundle": 6,
@@ -1853,6 +2906,17 @@
         29.8,
         25
        ],
+       "variant": {
+        "mean": 29.7,
+        "std": 3.9,
+        "runs": [
+         27,
+         34.2,
+         25,
+         33.2,
+         29
+        ]
+       },
        "lev": 2.66,
        "seenBundle": 55.2,
        "unseenBundle": 4.2,
@@ -1885,11 +2949,32 @@
        "hi": -0.6,
        "p": 0
       }
+     },
+     "testsVariant": {
+      "morph-baseline": {
+       "diff": -1,
+       "lo": -1.5,
+       "hi": -0.6,
+       "p": 0
+      },
+      "memory-baseline": {
+       "diff": 0,
+       "lo": 0,
+       "hi": 0,
+       "p": 1
+      },
+      "morph-memory": {
+       "diff": -1,
+       "lo": -1.5,
+       "hi": -0.6,
+       "p": 0
+      }
      }
     },
     "100": {
      "overlap": 10.2,
      "unseenBundle": 43.9,
+     "multiRef": 16.2,
      "items": 2500,
      "posCounts": {
       "N": 1076,
@@ -1907,6 +2992,17 @@
         33,
         33
        ],
+       "variant": {
+        "mean": 34.7,
+        "std": 2.6,
+        "runs": [
+         33.2,
+         35.8,
+         31,
+         36.6,
+         37
+        ]
+       },
        "lev": 2.68,
        "seenBundle": 51.7,
        "unseenBundle": 5.5,
@@ -1929,6 +3025,17 @@
         33,
         33
        ],
+       "variant": {
+        "mean": 34.7,
+        "std": 2.6,
+        "runs": [
+         33.2,
+         35.8,
+         31,
+         36.6,
+         37
+        ]
+       },
        "lev": 2.68,
        "seenBundle": 51.7,
        "unseenBundle": 5.5,
@@ -1951,6 +3058,17 @@
         32.6,
         31.8
        ],
+       "variant": {
+        "mean": 33.9,
+        "std": 2.7,
+        "runs": [
+         32.4,
+         35.4,
+         29.8,
+         36.2,
+         35.8
+        ]
+       },
        "lev": 2.45,
        "seenBundle": 51.7,
        "unseenBundle": 3.6,
@@ -1983,11 +3101,32 @@
        "hi": -0.4,
        "p": 0
       }
+     },
+     "testsVariant": {
+      "morph-baseline": {
+       "diff": -0.8,
+       "lo": -1.2,
+       "hi": -0.4,
+       "p": 0
+      },
+      "memory-baseline": {
+       "diff": 0,
+       "lo": 0,
+       "hi": 0,
+       "p": 1
+      },
+      "morph-memory": {
+       "diff": -0.8,
+       "lo": -1.2,
+       "hi": -0.4,
+       "p": 0
+      }
      }
     },
     "250": {
      "overlap": 22.3,
      "unseenBundle": 30.4,
+     "multiRef": 16.2,
      "items": 2500,
      "posCounts": {
       "N": 1076,
@@ -2005,6 +3144,17 @@
         39,
         39.6
        ],
+       "variant": {
+        "mean": 41.4,
+        "std": 3.6,
+        "runs": [
+         39.2,
+         42.8,
+         36.2,
+         44,
+         44.6
+        ]
+       },
        "lev": 2.39,
        "seenBundle": 50.5,
        "unseenBundle": 5.3,
@@ -2027,6 +3177,17 @@
         39,
         39.8
        ],
+       "variant": {
+        "mean": 41.4,
+        "std": 3.6,
+        "runs": [
+         39.2,
+         42.8,
+         36.2,
+         44,
+         44.8
+        ]
+       },
        "lev": 2.39,
        "seenBundle": 50.5,
        "unseenBundle": 5.3,
@@ -2049,6 +3210,17 @@
         40.4,
         38.6
        ],
+       "variant": {
+        "mean": 41.8,
+        "std": 3.7,
+        "runs": [
+         40.2,
+         43.2,
+         36.2,
+         45.6,
+         43.6
+        ]
+       },
        "lev": 2.1,
        "seenBundle": 50.5,
        "unseenBundle": 6.4,
@@ -2067,25 +3239,46 @@
        "diff": 0.4,
        "lo": -0.1,
        "hi": 0.8,
-       "p": 0.121
+       "p": 0.125
       },
       "memory-baseline": {
        "diff": 0,
        "lo": 0,
        "hi": 0.1,
-       "p": 0.732
+       "p": 0.716
       },
       "morph-memory": {
        "diff": 0.3,
        "lo": -0.1,
        "hi": 0.8,
-       "p": 0.172
+       "p": 0.177
+      }
+     },
+     "testsVariant": {
+      "morph-baseline": {
+       "diff": 0.4,
+       "lo": 0,
+       "hi": 0.8,
+       "p": 0.086
+      },
+      "memory-baseline": {
+       "diff": 0,
+       "lo": 0,
+       "hi": 0.1,
+       "p": 0.714
+      },
+      "morph-memory": {
+       "diff": 0.4,
+       "lo": -0.1,
+       "hi": 0.8,
+       "p": 0.137
       }
      }
     },
     "500": {
      "overlap": 34.1,
      "unseenBundle": 22.4,
+     "multiRef": 16.2,
      "items": 2500,
      "posCounts": {
       "N": 1076,
@@ -2103,6 +3296,17 @@
         42,
         41
        ],
+       "variant": {
+        "mean": 45.9,
+        "std": 2,
+        "runs": [
+         43.2,
+         47,
+         44.4,
+         47.8,
+         47.2
+        ]
+       },
        "lev": 2.17,
        "seenBundle": 50.2,
        "unseenBundle": 3,
@@ -2125,6 +3329,17 @@
         42.6,
         41
        ],
+       "variant": {
+        "mean": 45.9,
+        "std": 2.1,
+        "runs": [
+         43.2,
+         46.4,
+         44.4,
+         48.4,
+         47.2
+        ]
+       },
        "lev": 2.17,
        "seenBundle": 50.4,
        "unseenBundle": 3,
@@ -2147,6 +3362,17 @@
         42.8,
         41.6
        ],
+       "variant": {
+        "mean": 46.8,
+        "std": 2,
+        "runs": [
+         44,
+         48.2,
+         45.4,
+         48.8,
+         47.8
+        ]
+       },
        "lev": 1.88,
        "seenBundle": 50.2,
        "unseenBundle": 6.6,
@@ -2171,19 +3397,40 @@
        "diff": 0.2,
        "lo": 0,
        "hi": 0.4,
-       "p": 0.206
+       "p": 0.191
       },
       "morph-memory": {
        "diff": 0.6,
        "lo": 0.2,
        "hi": 1.1,
-       "p": 0.005
+       "p": 0.01
+      }
+     },
+     "testsVariant": {
+      "morph-baseline": {
+       "diff": 0.9,
+       "lo": 0.5,
+       "hi": 1.4,
+       "p": 0
+      },
+      "memory-baseline": {
+       "diff": 0,
+       "lo": -0.2,
+       "hi": 0.2,
+       "p": 1
+      },
+      "morph-memory": {
+       "diff": 0.9,
+       "lo": 0.4,
+       "hi": 1.4,
+       "p": 0
       }
      }
     },
     "1000": {
      "overlap": 48,
      "unseenBundle": 15.2,
+     "multiRef": 16.2,
      "items": 2500,
      "posCounts": {
       "N": 1076,
@@ -2201,6 +3448,17 @@
         44.4,
         43.2
        ],
+       "variant": {
+        "mean": 50.5,
+        "std": 1.7,
+        "runs": [
+         50.8,
+         51.4,
+         47.6,
+         51.4,
+         51.4
+        ]
+       },
        "lev": 1.93,
        "seenBundle": 49.7,
        "unseenBundle": 2.6,
@@ -2223,6 +3481,17 @@
         44.4,
         43.4
        ],
+       "variant": {
+        "mean": 49.6,
+        "std": 2.4,
+        "runs": [
+         49.2,
+         49.6,
+         45.8,
+         52,
+         51.2
+        ]
+       },
        "lev": 1.97,
        "seenBundle": 48.9,
        "unseenBundle": 2.6,
@@ -2245,6 +3514,17 @@
         45.4,
         44.2
        ],
+       "variant": {
+        "mean": 51.5,
+        "std": 1.5,
+        "runs": [
+         51.2,
+         52.4,
+         49,
+         52.6,
+         52.4
+        ]
+       },
        "lev": 1.7,
        "seenBundle": 49.7,
        "unseenBundle": 8.9,
@@ -2261,7 +3541,7 @@
      "tests": {
       "morph-baseline": {
        "diff": 1,
-       "lo": 0.5,
+       "lo": 0.6,
        "hi": 1.4,
        "p": 0
       },
@@ -2269,12 +3549,32 @@
        "diff": -0.7,
        "lo": -1.2,
        "hi": -0.2,
-       "p": 0.009
+       "p": 0.013
       },
       "morph-memory": {
        "diff": 1.7,
        "lo": 1,
        "hi": 2.4,
+       "p": 0
+      }
+     },
+     "testsVariant": {
+      "morph-baseline": {
+       "diff": 1,
+       "lo": 0.6,
+       "hi": 1.5,
+       "p": 0
+      },
+      "memory-baseline": {
+       "diff": -1,
+       "lo": -1.6,
+       "hi": -0.4,
+       "p": 0.001
+      },
+      "morph-memory": {
+       "diff": 2,
+       "lo": 1.2,
+       "hi": 2.7,
        "p": 0
       }
      }
@@ -2284,6 +3584,7 @@
     "50": {
      "overlap": 0,
      "unseenBundle": 50.2,
+     "multiRef": 16.3,
      "items": 2500,
      "posCounts": {
       "N": 1175,
@@ -2301,6 +3602,17 @@
         28,
         32.8
        ],
+       "variant": {
+        "mean": 31.3,
+        "std": 4.6,
+        "runs": [
+         35.4,
+         24,
+         31,
+         31,
+         35
+        ]
+       },
        "lev": 2.89,
        "seenBundle": 49.9,
        "unseenBundle": 8.8,
@@ -2323,6 +3635,17 @@
         28,
         32.8
        ],
+       "variant": {
+        "mean": 31.3,
+        "std": 4.6,
+        "runs": [
+         35.4,
+         24,
+         31,
+         31,
+         35
+        ]
+       },
        "lev": 2.89,
        "seenBundle": 49.9,
        "unseenBundle": 8.8,
@@ -2345,6 +3668,17 @@
         27.8,
         31
        ],
+       "variant": {
+        "mean": 29.8,
+        "std": 5.2,
+        "runs": [
+         34.4,
+         21.2,
+         29,
+         30.8,
+         33.4
+        ]
+       },
        "lev": 2.71,
        "seenBundle": 49.9,
        "unseenBundle": 5.8,
@@ -2377,11 +3711,32 @@
        "hi": -1,
        "p": 0
       }
+     },
+     "testsVariant": {
+      "morph-baseline": {
+       "diff": -1.5,
+       "lo": -2,
+       "hi": -1,
+       "p": 0
+      },
+      "memory-baseline": {
+       "diff": 0,
+       "lo": 0,
+       "hi": 0,
+       "p": 1
+      },
+      "morph-memory": {
+       "diff": -1.5,
+       "lo": -2.1,
+       "hi": -1,
+       "p": 0
+      }
      }
     },
     "100": {
      "overlap": 0,
      "unseenBundle": 40.8,
+     "multiRef": 16.3,
      "items": 2500,
      "posCounts": {
       "N": 1175,
@@ -2399,6 +3754,17 @@
         32.2,
         34
        ],
+       "variant": {
+        "mean": 34.6,
+        "std": 2.5,
+        "runs": [
+         36.6,
+         30.4,
+         34.8,
+         34.8,
+         36.6
+        ]
+       },
        "lev": 2.66,
        "seenBundle": 49.9,
        "unseenBundle": 7.4,
@@ -2421,6 +3787,17 @@
         32.2,
         34
        ],
+       "variant": {
+        "mean": 34.6,
+        "std": 2.5,
+        "runs": [
+         36.6,
+         30.4,
+         34.8,
+         34.8,
+         36.6
+        ]
+       },
        "lev": 2.66,
        "seenBundle": 49.9,
        "unseenBundle": 7.4,
@@ -2443,6 +3820,17 @@
         32.2,
         33.2
        ],
+       "variant": {
+        "mean": 33.7,
+        "std": 3.3,
+        "runs": [
+         35.4,
+         28,
+         34,
+         35,
+         36.2
+        ]
+       },
        "lev": 2.48,
        "seenBundle": 49.9,
        "unseenBundle": 4.9,
@@ -2475,11 +3863,32 @@
        "hi": -0.6,
        "p": 0
       }
+     },
+     "testsVariant": {
+      "morph-baseline": {
+       "diff": -0.9,
+       "lo": -1.4,
+       "hi": -0.5,
+       "p": 0
+      },
+      "memory-baseline": {
+       "diff": 0,
+       "lo": 0,
+       "hi": 0,
+       "p": 1
+      },
+      "morph-memory": {
+       "diff": -0.9,
+       "lo": -1.4,
+       "hi": -0.4,
+       "p": 0
+      }
      }
     },
     "250": {
      "overlap": 0,
      "unseenBundle": 27.8,
+     "multiRef": 16.3,
      "items": 2500,
      "posCounts": {
       "N": 1175,
@@ -2497,6 +3906,17 @@
         34.8,
         37.6
        ],
+       "variant": {
+        "mean": 40.6,
+        "std": 4,
+        "runs": [
+         47.2,
+         39.2,
+         37.6,
+         37.8,
+         41
+        ]
+       },
        "lev": 2.29,
        "seenBundle": 49.6,
        "unseenBundle": 6.5,
@@ -2519,6 +3939,17 @@
         34.8,
         37.6
        ],
+       "variant": {
+        "mean": 40.6,
+        "std": 4,
+        "runs": [
+         47.2,
+         39.2,
+         37.6,
+         37.8,
+         41
+        ]
+       },
        "lev": 2.29,
        "seenBundle": 49.6,
        "unseenBundle": 6.5,
@@ -2541,6 +3972,17 @@
         34.6,
         38
        ],
+       "variant": {
+        "mean": 39.9,
+        "std": 4.2,
+        "runs": [
+         46.4,
+         36.6,
+         36.8,
+         37.8,
+         41.8
+        ]
+       },
        "lev": 2.08,
        "seenBundle": 49.6,
        "unseenBundle": 3.7,
@@ -2573,11 +4015,32 @@
        "hi": -0.3,
        "p": 0.001
       }
+     },
+     "testsVariant": {
+      "morph-baseline": {
+       "diff": -0.7,
+       "lo": -1.2,
+       "hi": -0.2,
+       "p": 0.006
+      },
+      "memory-baseline": {
+       "diff": 0,
+       "lo": 0,
+       "hi": 0,
+       "p": 1
+      },
+      "morph-memory": {
+       "diff": -0.7,
+       "lo": -1.2,
+       "hi": -0.2,
+       "p": 0.005
+      }
      }
     },
     "500": {
      "overlap": 0,
      "unseenBundle": 20,
+     "multiRef": 16.3,
      "items": 2500,
      "posCounts": {
       "N": 1175,
@@ -2595,6 +4058,17 @@
         40.6,
         44.2
        ],
+       "variant": {
+        "mean": 46.2,
+        "std": 4.6,
+        "runs": [
+         51.8,
+         39.4,
+         46.4,
+         45,
+         48.4
+        ]
+       },
        "lev": 2.02,
        "seenBundle": 52.4,
        "unseenBundle": 4.6,
@@ -2617,6 +4091,17 @@
         40.6,
         44.2
        ],
+       "variant": {
+        "mean": 46.2,
+        "std": 4.6,
+        "runs": [
+         51.8,
+         39.4,
+         46.4,
+         45,
+         48.4
+        ]
+       },
        "lev": 2.02,
        "seenBundle": 52.4,
        "unseenBundle": 4.6,
@@ -2639,6 +4124,17 @@
         40.4,
         45.4
        ],
+       "variant": {
+        "mean": 46.1,
+        "std": 5,
+        "runs": [
+         51.2,
+         38.4,
+         46,
+         45,
+         50
+        ]
+       },
        "lev": 1.81,
        "seenBundle": 52.4,
        "unseenBundle": 3.8,
@@ -2655,9 +4151,9 @@
      "tests": {
       "morph-baseline": {
        "diff": -0.2,
-       "lo": -0.6,
+       "lo": -0.5,
        "hi": 0.2,
-       "p": 0.474
+       "p": 0.471
       },
       "memory-baseline": {
        "diff": 0,
@@ -2667,15 +4163,36 @@
       },
       "morph-memory": {
        "diff": -0.2,
-       "lo": -0.6,
+       "lo": -0.5,
        "hi": 0.2,
-       "p": 0.471
+       "p": 0.49
+      }
+     },
+     "testsVariant": {
+      "morph-baseline": {
+       "diff": -0.1,
+       "lo": -0.5,
+       "hi": 0.4,
+       "p": 0.787
+      },
+      "memory-baseline": {
+       "diff": 0,
+       "lo": 0,
+       "hi": 0,
+       "p": 1
+      },
+      "morph-memory": {
+       "diff": -0.1,
+       "lo": -0.5,
+       "hi": 0.4,
+       "p": 0.792
       }
      }
     },
     "1000": {
      "overlap": 0,
      "unseenBundle": 12.5,
+     "multiRef": 16.3,
      "items": 2500,
      "posCounts": {
       "N": 1175,
@@ -2693,6 +4210,17 @@
         44.8,
         48
        ],
+       "variant": {
+        "mean": 50.9,
+        "std": 3,
+        "runs": [
+         55.2,
+         47.4,
+         49,
+         50.4,
+         52.4
+        ]
+       },
        "lev": 1.72,
        "seenBundle": 52.9,
        "unseenBundle": 3.8,
@@ -2715,6 +4243,17 @@
         44.8,
         48
        ],
+       "variant": {
+        "mean": 50.9,
+        "std": 3,
+        "runs": [
+         55.2,
+         47.4,
+         49,
+         50.4,
+         52.4
+        ]
+       },
        "lev": 1.72,
        "seenBundle": 52.9,
        "unseenBundle": 3.8,
@@ -2737,6 +4276,17 @@
         46,
         49.4
        ],
+       "variant": {
+        "mean": 51.9,
+        "std": 3,
+        "runs": [
+         55.6,
+         47.8,
+         50.6,
+         51.8,
+         53.8
+        ]
+       },
        "lev": 1.53,
        "seenBundle": 52.9,
        "unseenBundle": 11.8,
@@ -2765,7 +4315,27 @@
       },
       "morph-memory": {
        "diff": 1,
-       "lo": 0.5,
+       "lo": 0.6,
+       "hi": 1.5,
+       "p": 0
+      }
+     },
+     "testsVariant": {
+      "morph-baseline": {
+       "diff": 1,
+       "lo": 0.6,
+       "hi": 1.5,
+       "p": 0
+      },
+      "memory-baseline": {
+       "diff": 0,
+       "lo": 0,
+       "hi": 0,
+       "p": 1
+      },
+      "morph-memory": {
+       "diff": 1,
+       "lo": 0.6,
        "hi": 1.5,
        "p": 0
       }
@@ -2776,84 +4346,118 @@
   "ckt": {
    "random": {
     "50": {
-     "overlap": 11.7,
-     "unseenBundle": 46.7,
-     "items": 300,
+     "overlap": 10.7,
+     "unseenBundle": 41.4,
+     "multiRef": 2.8,
+     "items": 290,
      "posCounts": {
       "N": 137,
-      "V": 92
+      "V": 74
      },
      "systems": {
       "baseline": {
-       "mean": 55,
-       "std": 2.9,
+       "mean": 59,
+       "std": 8,
        "runs": [
-        55,
-        60,
-        53.3,
-        53.3,
-        53.3
+        48.3,
+        60.3,
+        53.4,
+        65.5,
+        67.2
        ],
-       "lev": 1.85,
-       "seenBundle": 83.1,
-       "unseenBundle": 22.9,
-       "seenLemma": 28.6,
-       "unseenLemma": 58.5,
-       "copyShare": 85.9,
+       "variant": {
+        "mean": 60.3,
+        "std": 8.8,
+        "runs": [
+         50,
+         60.3,
+         53.4,
+         67.2,
+         70.7
+        ]
+       },
+       "lev": 1.72,
+       "seenBundle": 84.7,
+       "unseenBundle": 22.5,
+       "seenLemma": 19.4,
+       "unseenLemma": 63.7,
+       "copyShare": 84,
        "pos": {
-        "N": 72.3,
-        "V": 15.2
+        "N": 76.6,
+        "V": 17.6
        }
       },
       "memory": {
-       "mean": 55,
-       "std": 2.9,
+       "mean": 59,
+       "std": 8,
        "runs": [
-        55,
-        60,
-        53.3,
-        53.3,
-        53.3
+        48.3,
+        60.3,
+        53.4,
+        65.5,
+        67.2
        ],
-       "lev": 1.85,
-       "seenBundle": 83.1,
-       "unseenBundle": 22.9,
-       "seenLemma": 28.6,
-       "unseenLemma": 58.5,
-       "copyShare": 85.9,
+       "variant": {
+        "mean": 60.3,
+        "std": 8.8,
+        "runs": [
+         50,
+         60.3,
+         53.4,
+         67.2,
+         70.7
+        ]
+       },
+       "lev": 1.72,
+       "seenBundle": 84.7,
+       "unseenBundle": 22.5,
+       "seenLemma": 19.4,
+       "unseenLemma": 63.7,
+       "copyShare": 84,
        "pos": {
-        "N": 72.3,
-        "V": 15.2
+        "N": 76.6,
+        "V": 17.6
        }
       },
       "morph": {
-       "mean": 53,
+       "mean": 59.3,
        "std": 5.5,
        "runs": [
-        51.7,
-        60,
-        53.3,
-        55,
-        45
+        53.4,
+        62.1,
+        53.4,
+        62.1,
+        65.5
        ],
-       "lev": 1.77,
-       "seenBundle": 83.8,
-       "unseenBundle": 17.9,
-       "seenLemma": 28.6,
-       "unseenLemma": 56.2,
-       "copyShare": 33.3,
+       "variant": {
+        "mean": 60.3,
+        "std": 6.8,
+        "runs": [
+         53.4,
+         62.1,
+         53.4,
+         63.8,
+         69
+        ]
+       },
+       "lev": 1.54,
+       "seenBundle": 84.7,
+       "unseenBundle": 23.3,
+       "seenLemma": 32.3,
+       "unseenLemma": 62.5,
+       "copyShare": 38.1,
        "pos": {
-        "N": 72.3,
-        "V": 13
+        "N": 77.4,
+        "V": 21.6
        }
       }
      },
      "tests": {
       "morph-baseline": {
-       "diff": -2,
-       "lo": -4.3,
-       "hi": 0,
-       "p": 0.095
+       "diff": 0.3,
+       "lo": -2.4,
+       "hi": 3.1,
+       "p": 0.909
       },
       "memory-baseline": {
        "diff": 0,
@@ -2862,92 +4466,146 @@
        "p": 1
       },
       "morph-memory": {
-       "diff": -2,
-       "lo": -4.3,
-       "hi": 0.3,
-       "p": 0.114
+       "diff": 0.3,
+       "lo": -2.4,
+       "hi": 3.1,
+       "p": 0.878
+      }
+     },
+     "testsVariant": {
+      "morph-baseline": {
+       "diff": 0,
+       "lo": -2.4,
+       "hi": 2.8,
+       "p": 1
+      },
+      "memory-baseline": {
+       "diff": 0,
+       "lo": 0,
+       "hi": 0,
+       "p": 1
+      },
+      "morph-memory": {
+       "diff": 0,
+       "lo": -2.8,
+       "hi": 2.8,
+       "p": 1
       }
      }
     },
     "100": {
-     "overlap": 18,
-     "unseenBundle": 40.3,
-     "items": 300,
+     "overlap": 16.9,
+     "unseenBundle": 36.6,
+     "multiRef": 2.8,
+     "items": 290,
      "posCounts": {
       "N": 137,
-      "V": 92
+      "V": 74
      },
      "systems": {
       "baseline": {
-       "mean": 56.3,
-       "std": 1.8,
+       "mean": 59.3,
+       "std": 8.4,
        "runs": [
-        58.3,
-        58.3,
-        55,
-        55,
-        55
+        48.3,
+        60.3,
+        53.4,
+        67.2,
+        67.2
        ],
-       "lev": 1.8,
-       "seenBundle": 82.7,
-       "unseenBundle": 17.4,
-       "seenLemma": 22.2,
-       "unseenLemma": 63.8,
-       "copyShare": 83.2,
+       "variant": {
+        "mean": 60.7,
+        "std": 9.2,
+        "runs": [
+         50,
+         60.3,
+         53.4,
+         69,
+         70.7
+        ]
+       },
+       "lev": 1.72,
+       "seenBundle": 81.5,
+       "unseenBundle": 20.8,
+       "seenLemma": 26.5,
+       "unseenLemma": 66,
+       "copyShare": 83.1,
        "pos": {
-        "N": 74.5,
-        "V": 17.4
+        "N": 78.1,
+        "V": 17.6
        }
       },
       "memory": {
-       "mean": 56.3,
-       "std": 1.8,
+       "mean": 59.3,
+       "std": 8.4,
        "runs": [
-        58.3,
-        58.3,
-        55,
-        55,
-        55
+        48.3,
+        60.3,
+        53.4,
+        67.2,
+        67.2
        ],
-       "lev": 1.8,
-       "seenBundle": 82.7,
-       "unseenBundle": 17.4,
-       "seenLemma": 22.2,
-       "unseenLemma": 63.8,
-       "copyShare": 83.2,
+       "variant": {
+        "mean": 60.7,
+        "std": 9.2,
+        "runs": [
+         50,
+         60.3,
+         53.4,
+         69,
+         70.7
+        ]
+       },
+       "lev": 1.72,
+       "seenBundle": 81.5,
+       "unseenBundle": 20.8,
+       "seenLemma": 26.5,
+       "unseenLemma": 66,
+       "copyShare": 83.1,
        "pos": {
-        "N": 74.5,
-        "V": 17.4
+        "N": 78.1,
+        "V": 17.6
        }
       },
       "morph": {
-       "mean": 55.3,
-       "std": 4.9,
+       "mean": 59.3,
+       "std": 5.8,
        "runs": [
-        58.3,
-        58.3,
-        56.7,
-        56.7,
-        46.7
+        51.7,
+        60.3,
+        55.2,
+        63.8,
+        65.5
        ],
-       "lev": 1.59,
-       "seenBundle": 82.7,
-       "unseenBundle": 14.9,
-       "seenLemma": 27.8,
-       "unseenLemma": 61.4,
-       "copyShare": 25.4,
+       "variant": {
+        "mean": 60.7,
+        "std": 6.6,
+        "runs": [
+         53.4,
+         60.3,
+         55.2,
+         65.5,
+         69
+        ]
+       },
+       "lev": 1.53,
+       "seenBundle": 82.1,
+       "unseenBundle": 19.8,
+       "seenLemma": 28.6,
+       "unseenLemma": 65.6,
+       "copyShare": 35.6,
        "pos": {
-        "N": 74.5,
-        "V": 18.5
+        "N": 78.1,
+        "V": 23
        }
       }
      },
      "tests": {
       "morph-baseline": {
-       "diff": -1,
-       "lo": -3.3,
-       "hi": 1.3,
-       "p": 0.476
+       "diff": 0,
+       "lo": -2.4,
+       "hi": 2.4,
+       "p": 1
       },
       "memory-baseline": {
        "diff": 0,
@@ -2956,10 +4614,30 @@
        "p": 1
       },
       "morph-memory": {
-       "diff": -1,
-       "lo": -3.3,
-       "hi": 1.3,
-       "p": 0.448
+       "diff": 0,
+       "lo": -2.4,
+       "hi": 2.4,
+       "p": 1
+      }
+     },
+     "testsVariant": {
+      "morph-baseline": {
+       "diff": 0,
+       "lo": -2.1,
+       "hi": 2.4,
+       "p": 1
+      },
+      "memory-baseline": {
+       "diff": 0,
+       "lo": 0,
+       "hi": 0,
+       "p": 1
+      },
+      "morph-memory": {
+       "diff": 0,
+       "lo": -2.4,
+       "hi": 2.4,
+       "p": 1
       }
      }
     }
@@ -2967,83 +4645,117 @@
    "lemma-disjoint": {
     "50": {
      "overlap": 0,
-     "unseenBundle": 49.7,
-     "items": 300,
+     "unseenBundle": 41.7,
+     "multiRef": 3.8,
+     "items": 290,
      "posCounts": {
-      "N": 109,
-      "V": 100
+      "N": 118,
+      "V": 75
      },
      "systems": {
       "baseline": {
-       "mean": 52.3,
-       "std": 4.5,
+       "mean": 55.5,
+       "std": 3.7,
        "runs": [
-        58.3,
-        46.7,
         51.7,
-        50,
-        55
+        56.9,
+        56.9,
+        60.3,
+        51.7
        ],
-       "lev": 2.08,
-       "seenBundle": 86.1,
-       "unseenBundle": 18.1,
+       "variant": {
+        "mean": 55.9,
+        "std": 3.4,
+        "runs": [
+         51.7,
+         56.9,
+         56.9,
+         60.3,
+         53.4
+        ]
+       },
+       "lev": 1.8,
+       "seenBundle": 84,
+       "unseenBundle": 15.7,
        "seenLemma": null,
-       "unseenLemma": 52.3,
-       "copyShare": 90.2,
+       "unseenLemma": 55.5,
+       "copyShare": 81.4,
        "pos": {
-        "N": 78.9,
-        "V": 14
+        "N": 72.9,
+        "V": 14.7
        }
       },
       "memory": {
-       "mean": 52.3,
-       "std": 4.5,
+       "mean": 55.5,
+       "std": 3.7,
        "runs": [
-        58.3,
-        46.7,
         51.7,
-        50,
-        55
+        56.9,
+        56.9,
+        60.3,
+        51.7
        ],
-       "lev": 2.08,
-       "seenBundle": 86.1,
-       "unseenBundle": 18.1,
+       "variant": {
+        "mean": 55.9,
+        "std": 3.4,
+        "runs": [
+         51.7,
+         56.9,
+         56.9,
+         60.3,
+         53.4
+        ]
+       },
+       "lev": 1.8,
+       "seenBundle": 84,
+       "unseenBundle": 15.7,
        "seenLemma": null,
-       "unseenLemma": 52.3,
-       "copyShare": 90.2,
+       "unseenLemma": 55.5,
+       "copyShare": 81.4,
        "pos": {
-        "N": 78.9,
-        "V": 14
+        "N": 72.9,
+        "V": 14.7
        }
       },
       "morph": {
-       "mean": 53.7,
-       "std": 4.6,
+       "mean": 56.9,
+       "std": 4.9,
        "runs": [
-        60,
-        48.3,
-        55,
-        50,
-        55
+        53.4,
+        62.1,
+        55.2,
+        62.1,
+        51.7
        ],
-       "lev": 1.82,
-       "seenBundle": 86.8,
-       "unseenBundle": 20.1,
+       "variant": {
+        "mean": 57.2,
+        "std": 4.5,
+        "runs": [
+         53.4,
+         62.1,
+         55.2,
+         62.1,
+         53.4
+        ]
+       },
+       "lev": 1.78,
+       "seenBundle": 85.2,
+       "unseenBundle": 17.4,
        "seenLemma": null,
-       "unseenLemma": 53.7,
-       "copyShare": 33.8,
+       "unseenLemma": 56.9,
+       "copyShare": 38.4,
        "pos": {
-        "N": 79.8,
-        "V": 19
+        "N": 73.7,
+        "V": 20
        }
       }
      },
      "tests": {
       "morph-baseline": {
-       "diff": 1.3,
-       "lo": -0.7,
-       "hi": 3.3,
-       "p": 0.242
+       "diff": 1.4,
+       "lo": -0.3,
+       "hi": 3.4,
+       "p": 0.208
       },
       "memory-baseline": {
        "diff": 0,
@@ -3052,92 +4764,146 @@
        "p": 1
       },
       "morph-memory": {
-       "diff": 1.3,
-       "lo": -0.7,
-       "hi": 3.3,
-       "p": 0.252
+       "diff": 1.4,
+       "lo": -0.3,
+       "hi": 3.4,
+       "p": 0.204
+      }
+     },
+     "testsVariant": {
+      "morph-baseline": {
+       "diff": 1.4,
+       "lo": -0.3,
+       "hi": 3.4,
+       "p": 0.238
+      },
+      "memory-baseline": {
+       "diff": 0,
+       "lo": 0,
+       "hi": 0,
+       "p": 1
+      },
+      "morph-memory": {
+       "diff": 1.4,
+       "lo": -0.3,
+       "hi": 3.4,
+       "p": 0.205
       }
      }
     },
     "100": {
      "overlap": 0,
-     "unseenBundle": 45.3,
-     "items": 300,
+     "unseenBundle": 36.2,
+     "multiRef": 3.8,
+     "items": 290,
      "posCounts": {
-      "N": 109,
-      "V": 100
+      "N": 118,
+      "V": 75
      },
      "systems": {
       "baseline": {
-       "mean": 53,
-       "std": 4,
+       "mean": 56.6,
+       "std": 3.3,
        "runs": [
-        58.3,
-        48.3,
-        53.3,
-        50,
-        55
+        55.2,
+        56.9,
+        58.6,
+        60.3,
+        51.7
        ],
-       "lev": 2.07,
-       "seenBundle": 83.5,
-       "unseenBundle": 16.2,
+       "variant": {
+        "mean": 56.9,
+        "std": 2.7,
+        "runs": [
+         55.2,
+         56.9,
+         58.6,
+         60.3,
+         53.4
+        ]
+       },
+       "lev": 1.74,
+       "seenBundle": 80,
+       "unseenBundle": 15.2,
        "seenLemma": null,
-       "unseenLemma": 53,
-       "copyShare": 85.8,
+       "unseenLemma": 56.6,
+       "copyShare": 79.4,
        "pos": {
-        "N": 80.7,
-        "V": 14
+        "N": 74.6,
+        "V": 16
        }
       },
       "memory": {
-       "mean": 53,
-       "std": 4,
+       "mean": 56.6,
+       "std": 3.3,
        "runs": [
-        58.3,
-        48.3,
-        53.3,
-        50,
-        55
+        55.2,
+        56.9,
+        58.6,
+        60.3,
+        51.7
        ],
-       "lev": 2.07,
-       "seenBundle": 83.5,
-       "unseenBundle": 16.2,
+       "variant": {
+        "mean": 56.9,
+        "std": 2.7,
+        "runs": [
+         55.2,
+         56.9,
+         58.6,
+         60.3,
+         53.4
+        ]
+       },
+       "lev": 1.74,
+       "seenBundle": 80,
+       "unseenBundle": 15.2,
        "seenLemma": null,
-       "unseenLemma": 53,
-       "copyShare": 85.8,
+       "unseenLemma": 56.6,
+       "copyShare": 79.4,
        "pos": {
-        "N": 80.7,
-        "V": 14
+        "N": 74.6,
+        "V": 16
        }
       },
       "morph": {
-       "mean": 54.3,
-       "std": 5.1,
+       "mean": 58.3,
+       "std": 5.4,
        "runs": [
-        61.7,
-        48.3,
-        53.3,
-        51.7,
-        56.7
+        53.4,
+        63.8,
+        62.1,
+        60.3,
+        51.7
        ],
-       "lev": 1.77,
-       "seenBundle": 84.8,
-       "unseenBundle": 17.6,
+       "variant": {
+        "mean": 58.6,
+        "std": 4.9,
+        "runs": [
+         53.4,
+         63.8,
+         62.1,
+         60.3,
+         53.4
+        ]
+       },
+       "lev": 1.56,
+       "seenBundle": 81.1,
+       "unseenBundle": 18.1,
        "seenLemma": null,
-       "unseenLemma": 54.3,
-       "copyShare": 29.2,
+       "unseenLemma": 58.3,
+       "copyShare": 33.9,
        "pos": {
-        "N": 79.8,
-        "V": 21
+        "N": 74.6,
+        "V": 25.3
        }
       }
      },
      "tests": {
       "morph-baseline": {
-       "diff": 1.3,
-       "lo": -1,
-       "hi": 4,
-       "p": 0.365
+       "diff": 1.7,
+       "lo": -0.3,
+       "hi": 4.1,
+       "p": 0.166
       },
       "memory-baseline": {
        "diff": 0,
@@ -3146,10 +4912,30 @@
        "p": 1
       },
       "morph-memory": {
-       "diff": 1.3,
-       "lo": -1,
-       "hi": 3.7,
-       "p": 0.297
+       "diff": 1.7,
+       "lo": -0.3,
+       "hi": 3.8,
+       "p": 0.15
+      }
+     },
+     "testsVariant": {
+      "morph-baseline": {
+       "diff": 1.7,
+       "lo": -0.3,
+       "hi": 4.1,
+       "p": 0.159
+      },
+      "memory-baseline": {
+       "diff": 0,
+       "lo": 0,
+       "hi": 0,
+       "p": 1
+      },
+      "morph-memory": {
+       "diff": 1.7,
+       "lo": -0.7,
+       "hi": 4.1,
+       "p": 0.182
       }
      }
     }
@@ -3158,8 +4944,1535 @@
   "ron": {
    "random": {
     "50": {
+     "overlap": 14.4,
+     "unseenBundle": 27.9,
+     "multiRef": 0,
+     "items": 2500,
+     "posCounts": {
+      "V": 2366,
+      "V.PTCP": 69,
+      "V.CVB": 65
+     },
+     "systems": {
+      "baseline": {
+       "mean": 43.5,
+       "std": 3.5,
+       "runs": [
+        41.4,
+        45.2,
+        38.6,
+        44.6,
+        47.6
+       ],
+       "variant": {
+        "mean": 43.5,
+        "std": 3.5,
+        "runs": [
+         41.4,
+         45.2,
+         38.6,
+         44.6,
+         47.6
+        ]
+       },
+       "lev": 1.48,
+       "seenBundle": 59.8,
+       "unseenBundle": 1.1,
+       "seenLemma": 44,
+       "unseenLemma": 43.4,
+       "copyShare": 74.2,
+       "pos": {
+        "V": 43,
+        "V.PTCP": 58,
+        "V.CVB": 46.2
+       }
+      },
+      "memory": {
+       "mean": 43.4,
+       "std": 3.5,
+       "runs": [
+        41.4,
+        45,
+        38.4,
+        44.4,
+        47.6
+       ],
+       "variant": {
+        "mean": 43.4,
+        "std": 3.5,
+        "runs": [
+         41.4,
+         45,
+         38.4,
+         44.4,
+         47.6
+        ]
+       },
+       "lev": 1.48,
+       "seenBundle": 59.7,
+       "unseenBundle": 1.1,
+       "seenLemma": 43.2,
+       "unseenLemma": 43.4,
+       "copyShare": 74.1,
+       "pos": {
+        "V": 42.9,
+        "V.PTCP": 58,
+        "V.CVB": 46.2
+       }
+      },
+      "morph": {
+       "mean": 42.7,
+       "std": 3.7,
+       "runs": [
+        39.4,
+        45.2,
+        38.2,
+        44,
+        46.8
+       ],
+       "variant": {
+        "mean": 42.7,
+        "std": 3.7,
+        "runs": [
+         39.4,
+         45.2,
+         38.2,
+         44,
+         46.8
+        ]
+       },
+       "lev": 1.38,
+       "seenBundle": 58.8,
+       "unseenBundle": 1.1,
+       "seenLemma": 44.6,
+       "unseenLemma": 42.4,
+       "copyShare": 11,
+       "pos": {
+        "V": 42.2,
+        "V.PTCP": 58,
+        "V.CVB": 46.2
+       }
+      }
+     },
+     "tests": {
+      "morph-baseline": {
+       "diff": -0.8,
+       "lo": -1.3,
+       "hi": -0.3,
+       "p": 0.002
+      },
+      "memory-baseline": {
+       "diff": -0.1,
+       "lo": -0.3,
+       "hi": 0,
+       "p": 0.112
+      },
+      "morph-memory": {
+       "diff": -0.6,
+       "lo": -1.2,
+       "hi": -0.1,
+       "p": 0.03
+      }
+     },
+     "testsVariant": {
+      "morph-baseline": {
+       "diff": -0.8,
+       "lo": -1.3,
+       "hi": -0.2,
+       "p": 0.005
+      },
+      "memory-baseline": {
+       "diff": -0.1,
+       "lo": -0.3,
+       "hi": 0,
+       "p": 0.101
+      },
+      "morph-memory": {
+       "diff": -0.6,
+       "lo": -1.2,
+       "hi": -0.1,
+       "p": 0.015
+      }
+     }
+    },
+    "100": {
+     "overlap": 27.1,
+     "unseenBundle": 7.5,
+     "multiRef": 0,
+     "items": 2500,
+     "posCounts": {
+      "V": 2366,
+      "V.PTCP": 69,
+      "V.CVB": 65
+     },
+     "systems": {
+      "baseline": {
+       "mean": 59.1,
+       "std": 0.7,
+       "runs": [
+        58.4,
+        59.4,
+        58.4,
+        59.8,
+        59.6
+       ],
+       "variant": {
+        "mean": 59.1,
+        "std": 0.7,
+        "runs": [
+         58.4,
+         59.4,
+         58.4,
+         59.8,
+         59.6
+        ]
+       },
+       "lev": 0.94,
+       "seenBundle": 63.8,
+       "unseenBundle": 1.1,
+       "seenLemma": 59.1,
+       "unseenLemma": 59.1,
+       "copyShare": 48.8,
+       "pos": {
+        "V": 58.5,
+        "V.PTCP": 75.4,
+        "V.CVB": 63.1
+       }
+      },
+      "memory": {
+       "mean": 59,
+       "std": 0.6,
+       "runs": [
+        58.6,
+        59.2,
+        58.2,
+        59.4,
+        59.6
+       ],
+       "variant": {
+        "mean": 59,
+        "std": 0.6,
+        "runs": [
+         58.6,
+         59.2,
+         58.2,
+         59.4,
+         59.6
+        ]
+       },
+       "lev": 0.94,
+       "seenBundle": 63.7,
+       "unseenBundle": 1.1,
+       "seenLemma": 58.7,
+       "unseenLemma": 59.1,
+       "copyShare": 48.6,
+       "pos": {
+        "V": 58.4,
+        "V.PTCP": 75.4,
+        "V.CVB": 63.1
+       }
+      },
+      "morph": {
+       "mean": 59.3,
+       "std": 1.4,
+       "runs": [
+        61.4,
+        59.8,
+        57.6,
+        59.2,
+        58.4
+       ],
+       "variant": {
+        "mean": 59.3,
+        "std": 1.4,
+        "runs": [
+         61.4,
+         59.8,
+         57.6,
+         59.2,
+         58.4
+        ]
+       },
+       "lev": 0.84,
+       "seenBundle": 63.4,
+       "unseenBundle": 9,
+       "seenLemma": 60,
+       "unseenLemma": 59,
+       "copyShare": 9.8,
+       "pos": {
+        "V": 58.7,
+        "V.PTCP": 75.4,
+        "V.CVB": 63.1
+       }
+      }
+     },
+     "tests": {
+      "morph-baseline": {
+       "diff": 0.2,
+       "lo": -0.4,
+       "hi": 0.8,
+       "p": 0.631
+      },
+      "memory-baseline": {
+       "diff": -0.1,
+       "lo": -0.3,
+       "hi": 0,
+       "p": 0.28
+      },
+      "morph-memory": {
+       "diff": 0.3,
+       "lo": -0.4,
+       "hi": 0.9,
+       "p": 0.423
+      }
+     },
+     "testsVariant": {
+      "morph-baseline": {
+       "diff": 0.2,
+       "lo": -0.4,
+       "hi": 0.8,
+       "p": 0.65
+      },
+      "memory-baseline": {
+       "diff": -0.1,
+       "lo": -0.3,
+       "hi": 0,
+       "p": 0.24
+      },
+      "morph-memory": {
+       "diff": 0.3,
+       "lo": -0.3,
+       "hi": 0.9,
+       "p": 0.414
+      }
+     }
+    },
+    "250": {
+     "overlap": 55,
+     "unseenBundle": 0,
+     "multiRef": 0,
+     "items": 2500,
+     "posCounts": {
+      "V": 2366,
+      "V.PTCP": 69,
+      "V.CVB": 65
+     },
+     "systems": {
+      "baseline": {
+       "mean": 74.1,
+       "std": 2.9,
+       "runs": [
+        72.6,
+        78.2,
+        71,
+        76,
+        72.6
+       ],
+       "variant": {
+        "mean": 74.1,
+        "std": 2.9,
+        "runs": [
+         72.6,
+         78.2,
+         71,
+         76,
+         72.6
+        ]
+       },
+       "lev": 0.58,
+       "seenBundle": 74.1,
+       "unseenBundle": null,
+       "seenLemma": 74.6,
+       "unseenLemma": 73.4,
+       "copyShare": 17.3,
+       "pos": {
+        "V": 73.7,
+        "V.PTCP": 84.1,
+        "V.CVB": 78.5
+       }
+      },
+      "memory": {
+       "mean": 73.4,
+       "std": 2.9,
+       "runs": [
+        72.4,
+        77.8,
+        70.2,
+        74.6,
+        72.2
+       ],
+       "variant": {
+        "mean": 73.4,
+        "std": 2.9,
+        "runs": [
+         72.4,
+         77.8,
+         70.2,
+         74.6,
+         72.2
+        ]
+       },
+       "lev": 0.59,
+       "seenBundle": 73.4,
+       "unseenBundle": null,
+       "seenLemma": 73.5,
+       "unseenLemma": 73.4,
+       "copyShare": 17,
+       "pos": {
+        "V": 73,
+        "V.PTCP": 84.1,
+        "V.CVB": 78.5
+       }
+      },
+      "morph": {
+       "mean": 74.2,
+       "std": 2.8,
+       "runs": [
+        73.4,
+        78.2,
+        71.2,
+        75.8,
+        72.6
+       ],
+       "variant": {
+        "mean": 74.2,
+        "std": 2.8,
+        "runs": [
+         73.4,
+         78.2,
+         71.2,
+         75.8,
+         72.6
+        ]
+       },
+       "lev": 0.52,
+       "seenBundle": 74.2,
+       "unseenBundle": null,
+       "seenLemma": 74.8,
+       "unseenLemma": 73.6,
+       "copyShare": 5.3,
+       "pos": {
+        "V": 73.8,
+        "V.PTCP": 84.1,
+        "V.CVB": 78.5
+       }
+      }
+     },
+     "tests": {
+      "morph-baseline": {
+       "diff": 0.2,
+       "lo": 0,
+       "hi": 0.4,
+       "p": 0.135
+      },
+      "memory-baseline": {
+       "diff": -0.6,
+       "lo": -1.2,
+       "hi": -0.2,
+       "p": 0.016
+      },
+      "morph-memory": {
+       "diff": 0.8,
+       "lo": 0.2,
+       "hi": 1.3,
+       "p": 0.006
+      }
+     },
+     "testsVariant": {
+      "morph-baseline": {
+       "diff": 0.2,
+       "lo": 0,
+       "hi": 0.4,
+       "p": 0.132
+      },
+      "memory-baseline": {
+       "diff": -0.6,
+       "lo": -1.2,
+       "hi": -0.1,
+       "p": 0.012
+      },
+      "morph-memory": {
+       "diff": 0.8,
+       "lo": 0.3,
+       "hi": 1.4,
+       "p": 0.008
+      }
+     }
+    },
+    "500": {
+     "overlap": 79.6,
+     "unseenBundle": 0,
+     "multiRef": 0,
+     "items": 2500,
+     "posCounts": {
+      "V": 2366,
+      "V.PTCP": 69,
+      "V.CVB": 65
+     },
+     "systems": {
+      "baseline": {
+       "mean": 79.1,
+       "std": 1.9,
+       "runs": [
+        78.2,
+        80.2,
+        81.6,
+        79,
+        76.6
+       ],
+       "variant": {
+        "mean": 79.1,
+        "std": 1.9,
+        "runs": [
+         78.2,
+         80.2,
+         81.6,
+         79,
+         76.6
+        ]
+       },
+       "lev": 0.44,
+       "seenBundle": 79.1,
+       "unseenBundle": null,
+       "seenLemma": 79.2,
+       "unseenLemma": 78.9,
+       "copyShare": 6.1,
+       "pos": {
+        "V": 78.9,
+        "V.PTCP": 85.5,
+        "V.CVB": 80
+       }
+      },
+      "memory": {
+       "mean": 72.7,
+       "std": 2.1,
+       "runs": [
+        73.6,
+        71.2,
+        75.8,
+        72.6,
+        70.4
+       ],
+       "variant": {
+        "mean": 72.7,
+        "std": 2.1,
+        "runs": [
+         73.6,
+         71.2,
+         75.8,
+         72.6,
+         70.4
+        ]
+       },
+       "lev": 0.55,
+       "seenBundle": 72.7,
+       "unseenBundle": null,
+       "seenLemma": 71.1,
+       "unseenLemma": 78.9,
+       "copyShare": 5.7,
+       "pos": {
+        "V": 72.2,
+        "V.PTCP": 87,
+        "V.CVB": 75.4
+       }
+      },
+      "morph": {
+       "mean": 79.2,
+       "std": 1.9,
+       "runs": [
+        78.2,
+        80.2,
+        81.6,
+        79.2,
+        76.6
+       ],
+       "variant": {
+        "mean": 79.2,
+        "std": 1.9,
+        "runs": [
+         78.2,
+         80.2,
+         81.6,
+         79.2,
+         76.6
+        ]
+       },
+       "lev": 0.43,
+       "seenBundle": 79.2,
+       "unseenBundle": null,
+       "seenLemma": 79.2,
+       "unseenLemma": 78.9,
+       "copyShare": 4.2,
+       "pos": {
+        "V": 79,
+        "V.PTCP": 85.5,
+        "V.CVB": 80
+       }
+      }
+     },
+     "tests": {
+      "morph-baseline": {
+       "diff": 0,
+       "lo": 0,
+       "hi": 0.2,
+       "p": 0.709
+      },
+      "memory-baseline": {
+       "diff": -6.4,
+       "lo": -7.6,
+       "hi": -5.2,
+       "p": 0
+      },
+      "morph-memory": {
+       "diff": 6.4,
+       "lo": 5.2,
+       "hi": 7.7,
+       "p": 0
+      }
+     },
+     "testsVariant": {
+      "morph-baseline": {
+       "diff": 0,
+       "lo": 0,
+       "hi": 0.1,
+       "p": 0.757
+      },
+      "memory-baseline": {
+       "diff": -6.4,
+       "lo": -7.6,
+       "hi": -5.2,
+       "p": 0
+      },
+      "morph-memory": {
+       "diff": 6.4,
+       "lo": 5.2,
+       "hi": 7.6,
+       "p": 0
+      }
+     }
+    },
+    "1000": {
+     "overlap": 96.9,
+     "unseenBundle": 0,
+     "multiRef": 0,
+     "items": 2500,
+     "posCounts": {
+      "V": 2366,
+      "V.PTCP": 69,
+      "V.CVB": 65
+     },
+     "systems": {
+      "baseline": {
+       "mean": 81.3,
+       "std": 1.7,
+       "runs": [
+        80.6,
+        82.8,
+        82.8,
+        81.4,
+        78.8
+       ],
+       "variant": {
+        "mean": 81.3,
+        "std": 1.7,
+        "runs": [
+         80.6,
+         82.8,
+         82.8,
+         81.4,
+         78.8
+        ]
+       },
+       "lev": 0.42,
+       "seenBundle": 81.3,
+       "unseenBundle": null,
+       "seenLemma": 81,
+       "unseenLemma": 88.5,
+       "copyShare": 3,
+       "pos": {
+        "V": 81.1,
+        "V.PTCP": 85.5,
+        "V.CVB": 84.6
+       }
+      },
+      "memory": {
+       "mean": 72,
+       "std": 2.8,
+       "runs": [
+        73.2,
+        68.4,
+        75.4,
+        73.2,
+        70
+       ],
+       "variant": {
+        "mean": 72,
+        "std": 2.8,
+        "runs": [
+         73.2,
+         68.4,
+         75.4,
+         73.2,
+         70
+        ]
+       },
+       "lev": 0.57,
+       "seenBundle": 72,
+       "unseenBundle": null,
+       "seenLemma": 71.5,
+       "unseenLemma": 88.5,
+       "copyShare": 2.7,
+       "pos": {
+        "V": 72,
+        "V.PTCP": 81.2,
+        "V.CVB": 63.1
+       }
+      },
+      "morph": {
+       "mean": 81.3,
+       "std": 1.7,
+       "runs": [
+        80.6,
+        82.8,
+        82.8,
+        81.4,
+        78.8
+       ],
+       "variant": {
+        "mean": 81.3,
+        "std": 1.7,
+        "runs": [
+         80.6,
+         82.8,
+         82.8,
+         81.4,
+         78.8
+        ]
+       },
+       "lev": 0.42,
+       "seenBundle": 81.3,
+       "unseenBundle": null,
+       "seenLemma": 81,
+       "unseenLemma": 88.5,
+       "copyShare": 2.8,
+       "pos": {
+        "V": 81.1,
+        "V.PTCP": 85.5,
+        "V.CVB": 84.6
+       }
+      }
+     },
+     "tests": {
+      "morph-baseline": {
+       "diff": 0,
+       "lo": 0,
+       "hi": 0,
+       "p": 1
+      },
+      "memory-baseline": {
+       "diff": -9.2,
+       "lo": -11,
+       "hi": -7.5,
+       "p": 0
+      },
+      "morph-memory": {
+       "diff": 9.2,
+       "lo": 7.6,
+       "hi": 11,
+       "p": 0
+      }
+     },
+     "testsVariant": {
+      "morph-baseline": {
+       "diff": 0,
+       "lo": 0,
+       "hi": 0,
+       "p": 1
+      },
+      "memory-baseline": {
+       "diff": -9.2,
+       "lo": -11,
+       "hi": -7.4,
+       "p": 0
+      },
+      "morph-memory": {
+       "diff": 9.2,
+       "lo": 7.6,
+       "hi": 10.9,
+       "p": 0
+      }
+     }
+    }
+   },
+   "lemma-disjoint": {
+    "50": {
+     "overlap": 0,
+     "unseenBundle": 24.1,
+     "multiRef": 0,
+     "items": 2500,
+     "posCounts": {
+      "V": 2367,
+      "V.PTCP": 72,
+      "V.CVB": 61
+     },
+     "systems": {
+      "baseline": {
+       "mean": 47.3,
+       "std": 6.4,
+       "runs": [
+        46.6,
+        41,
+        42.8,
+        57.4,
+        48.6
+       ],
+       "variant": {
+        "mean": 47.3,
+        "std": 6.4,
+        "runs": [
+         46.6,
+         41,
+         42.8,
+         57.4,
+         48.6
+        ]
+       },
+       "lev": 1.5,
+       "seenBundle": 61.9,
+       "unseenBundle": 1.3,
+       "seenLemma": null,
+       "unseenLemma": 47.3,
+       "copyShare": 70.7,
+       "pos": {
+        "V": 48.2,
+        "V.PTCP": 30.6,
+        "V.CVB": 29.5
+       }
+      },
+      "memory": {
+       "mean": 47.3,
+       "std": 6.4,
+       "runs": [
+        46.6,
+        41,
+        42.8,
+        57.4,
+        48.6
+       ],
+       "variant": {
+        "mean": 47.3,
+        "std": 6.4,
+        "runs": [
+         46.6,
+         41,
+         42.8,
+         57.4,
+         48.6
+        ]
+       },
+       "lev": 1.5,
+       "seenBundle": 61.9,
+       "unseenBundle": 1.3,
+       "seenLemma": null,
+       "unseenLemma": 47.3,
+       "copyShare": 70.7,
+       "pos": {
+        "V": 48.2,
+        "V.PTCP": 30.6,
+        "V.CVB": 29.5
+       }
+      },
+      "morph": {
+       "mean": 45.9,
+       "std": 6.4,
+       "runs": [
+        44.8,
+        39.2,
+        41.6,
+        55.6,
+        48.2
+       ],
+       "variant": {
+        "mean": 45.9,
+        "std": 6.4,
+        "runs": [
+         44.8,
+         39.2,
+         41.6,
+         55.6,
+         48.2
+        ]
+       },
+       "lev": 1.39,
+       "seenBundle": 60.2,
+       "unseenBundle": 0.7,
+       "seenLemma": null,
+       "unseenLemma": 45.9,
+       "copyShare": 9.3,
+       "pos": {
+        "V": 46.8,
+        "V.PTCP": 30.6,
+        "V.CVB": 29.5
+       }
+      }
+     },
+     "tests": {
+      "morph-baseline": {
+       "diff": -1.4,
+       "lo": -2,
+       "hi": -0.9,
+       "p": 0
+      },
+      "memory-baseline": {
+       "diff": 0,
+       "lo": 0,
+       "hi": 0,
+       "p": 1
+      },
+      "morph-memory": {
+       "diff": -1.4,
+       "lo": -2,
+       "hi": -0.9,
+       "p": 0
+      }
+     },
+     "testsVariant": {
+      "morph-baseline": {
+       "diff": -1.4,
+       "lo": -2,
+       "hi": -0.9,
+       "p": 0
+      },
+      "memory-baseline": {
+       "diff": 0,
+       "lo": 0,
+       "hi": 0,
+       "p": 1
+      },
+      "morph-memory": {
+       "diff": -1.4,
+       "lo": -2,
+       "hi": -0.9,
+       "p": 0
+      }
+     }
+    },
+    "100": {
+     "overlap": 0,
+     "unseenBundle": 6.2,
+     "multiRef": 0,
+     "items": 2500,
+     "posCounts": {
+      "V": 2367,
+      "V.PTCP": 72,
+      "V.CVB": 61
+     },
+     "systems": {
+      "baseline": {
+       "mean": 61.4,
+       "std": 3.3,
+       "runs": [
+        60.6,
+        58.2,
+        59,
+        66.4,
+        62.8
+       ],
+       "variant": {
+        "mean": 61.4,
+        "std": 3.3,
+        "runs": [
+         60.6,
+         58.2,
+         59,
+         66.4,
+         62.8
+        ]
+       },
+       "lev": 0.99,
+       "seenBundle": 65.5,
+       "unseenBundle": 0,
+       "seenLemma": null,
+       "unseenLemma": 61.4,
+       "copyShare": 50.7,
+       "pos": {
+        "V": 62,
+        "V.PTCP": 45.8,
+        "V.CVB": 55.7
+       }
+      },
+      "memory": {
+       "mean": 61.4,
+       "std": 3.3,
+       "runs": [
+        60.6,
+        58.2,
+        59,
+        66.4,
+        62.8
+       ],
+       "variant": {
+        "mean": 61.4,
+        "std": 3.3,
+        "runs": [
+         60.6,
+         58.2,
+         59,
+         66.4,
+         62.8
+        ]
+       },
+       "lev": 0.99,
+       "seenBundle": 65.5,
+       "unseenBundle": 0,
+       "seenLemma": null,
+       "unseenLemma": 61.4,
+       "copyShare": 50.7,
+       "pos": {
+        "V": 62,
+        "V.PTCP": 45.8,
+        "V.CVB": 55.7
+       }
+      },
+      "morph": {
+       "mean": 61.6,
+       "std": 3.5,
+       "runs": [
+        60.4,
+        58.4,
+        59.6,
+        67.4,
+        62.4
+       ],
+       "variant": {
+        "mean": 61.6,
+        "std": 3.5,
+        "runs": [
+         60.4,
+         58.4,
+         59.6,
+         67.4,
+         62.4
+        ]
+       },
+       "lev": 0.95,
+       "seenBundle": 65.3,
+       "unseenBundle": 5.8,
+       "seenLemma": null,
+       "unseenLemma": 61.6,
+       "copyShare": 8.7,
+       "pos": {
+        "V": 62.3,
+        "V.PTCP": 45.8,
+        "V.CVB": 55.7
+       }
+      }
+     },
+     "tests": {
+      "morph-baseline": {
+       "diff": 0.2,
+       "lo": -0.2,
+       "hi": 0.7,
+       "p": 0.305
+      },
+      "memory-baseline": {
+       "diff": 0,
+       "lo": 0,
+       "hi": 0,
+       "p": 1
+      },
+      "morph-memory": {
+       "diff": 0.2,
+       "lo": -0.2,
+       "hi": 0.7,
+       "p": 0.336
+      }
+     },
+     "testsVariant": {
+      "morph-baseline": {
+       "diff": 0.2,
+       "lo": -0.2,
+       "hi": 0.7,
+       "p": 0.332
+      },
+      "memory-baseline": {
+       "diff": 0,
+       "lo": 0,
+       "hi": 0,
+       "p": 1
+      },
+      "morph-memory": {
+       "diff": 0.2,
+       "lo": -0.2,
+       "hi": 0.7,
+       "p": 0.319
+      }
+     }
+    },
+    "250": {
+     "overlap": 0,
+     "unseenBundle": 0,
+     "multiRef": 0,
+     "items": 2500,
+     "posCounts": {
+      "V": 2367,
+      "V.PTCP": 72,
+      "V.CVB": 61
+     },
+     "systems": {
+      "baseline": {
+       "mean": 75.1,
+       "std": 7.2,
+       "runs": [
+        78.4,
+        71.2,
+        66.8,
+        85.6,
+        73.6
+       ],
+       "variant": {
+        "mean": 75.1,
+        "std": 7.2,
+        "runs": [
+         78.4,
+         71.2,
+         66.8,
+         85.6,
+         73.6
+        ]
+       },
+       "lev": 0.56,
+       "seenBundle": 75.1,
+       "unseenBundle": null,
+       "seenLemma": null,
+       "unseenLemma": 75.1,
+       "copyShare": 15,
+       "pos": {
+        "V": 74.6,
+        "V.PTCP": 90.3,
+        "V.CVB": 78.7
+       }
+      },
+      "memory": {
+       "mean": 75.1,
+       "std": 7.2,
+       "runs": [
+        78.4,
+        71.2,
+        66.8,
+        85.6,
+        73.6
+       ],
+       "variant": {
+        "mean": 75.1,
+        "std": 7.2,
+        "runs": [
+         78.4,
+         71.2,
+         66.8,
+         85.6,
+         73.6
+        ]
+       },
+       "lev": 0.56,
+       "seenBundle": 75.1,
+       "unseenBundle": null,
+       "seenLemma": null,
+       "unseenLemma": 75.1,
+       "copyShare": 15,
+       "pos": {
+        "V": 74.6,
+        "V.PTCP": 90.3,
+        "V.CVB": 78.7
+       }
+      },
+      "morph": {
+       "mean": 75.1,
+       "std": 7.1,
+       "runs": [
+        78.4,
+        71.8,
+        66.6,
+        85.4,
+        73.4
+       ],
+       "variant": {
+        "mean": 75.1,
+        "std": 7.1,
+        "runs": [
+         78.4,
+         71.8,
+         66.6,
+         85.4,
+         73.4
+        ]
+       },
+       "lev": 0.53,
+       "seenBundle": 75.1,
+       "unseenBundle": null,
+       "seenLemma": null,
+       "unseenLemma": 75.1,
+       "copyShare": 3.5,
+       "pos": {
+        "V": 74.6,
+        "V.PTCP": 90.3,
+        "V.CVB": 78.7
+       }
+      }
+     },
+     "tests": {
+      "morph-baseline": {
+       "diff": 0,
+       "lo": -0.2,
+       "hi": 0.2,
+       "p": 1
+      },
+      "memory-baseline": {
+       "diff": 0,
+       "lo": 0,
+       "hi": 0,
+       "p": 1
+      },
+      "morph-memory": {
+       "diff": 0,
+       "lo": -0.2,
+       "hi": 0.2,
+       "p": 1
+      }
+     },
+     "testsVariant": {
+      "morph-baseline": {
+       "diff": 0,
+       "lo": -0.2,
+       "hi": 0.2,
+       "p": 1
+      },
+      "memory-baseline": {
+       "diff": 0,
+       "lo": 0,
+       "hi": 0,
+       "p": 1
+      },
+      "morph-memory": {
+       "diff": 0,
+       "lo": -0.2,
+       "hi": 0.2,
+       "p": 1
+      }
+     }
+    },
+    "500": {
+     "overlap": 0,
+     "unseenBundle": 0,
+     "multiRef": 0,
+     "items": 2500,
+     "posCounts": {
+      "V": 2367,
+      "V.PTCP": 72,
+      "V.CVB": 61
+     },
+     "systems": {
+      "baseline": {
+       "mean": 79.6,
+       "std": 4.9,
+       "runs": [
+        79.4,
+        79.6,
+        73,
+        86.8,
+        79
+       ],
+       "variant": {
+        "mean": 79.6,
+        "std": 4.9,
+        "runs": [
+         79.4,
+         79.6,
+         73,
+         86.8,
+         79
+        ]
+       },
+       "lev": 0.44,
+       "seenBundle": 79.6,
+       "unseenBundle": null,
+       "seenLemma": null,
+       "unseenLemma": 79.6,
+       "copyShare": 4.9,
+       "pos": {
+        "V": 79.2,
+        "V.PTCP": 90.3,
+        "V.CVB": 80.3
+       }
+      },
+      "memory": {
+       "mean": 79.6,
+       "std": 4.9,
+       "runs": [
+        79.4,
+        79.6,
+        73,
+        86.8,
+        79
+       ],
+       "variant": {
+        "mean": 79.6,
+        "std": 4.9,
+        "runs": [
+         79.4,
+         79.6,
+         73,
+         86.8,
+         79
+        ]
+       },
+       "lev": 0.44,
+       "seenBundle": 79.6,
+       "unseenBundle": null,
+       "seenLemma": null,
+       "unseenLemma": 79.6,
+       "copyShare": 4.9,
+       "pos": {
+        "V": 79.2,
+        "V.PTCP": 90.3,
+        "V.CVB": 80.3
+       }
+      },
+      "morph": {
+       "mean": 79.6,
+       "std": 4.9,
+       "runs": [
+        79.4,
+        79.6,
+        73,
+        86.8,
+        79.2
+       ],
+       "variant": {
+        "mean": 79.6,
+        "std": 4.9,
+        "runs": [
+         79.4,
+         79.6,
+         73,
+         86.8,
+         79.2
+        ]
+       },
+       "lev": 0.43,
+       "seenBundle": 79.6,
+       "unseenBundle": null,
+       "seenLemma": null,
+       "unseenLemma": 79.6,
+       "copyShare": 2.4,
+       "pos": {
+        "V": 79.3,
+        "V.PTCP": 90.3,
+        "V.CVB": 80.3
+       }
+      }
+     },
+     "tests": {
+      "morph-baseline": {
+       "diff": 0,
+       "lo": 0,
+       "hi": 0.1,
+       "p": 0.774
+      },
+      "memory-baseline": {
+       "diff": 0,
+       "lo": 0,
+       "hi": 0,
+       "p": 1
+      },
+      "morph-memory": {
+       "diff": 0,
+       "lo": 0,
+       "hi": 0.1,
+       "p": 0.773
+      }
+     },
+     "testsVariant": {
+      "morph-baseline": {
+       "diff": 0,
+       "lo": 0,
+       "hi": 0.1,
+       "p": 0.722
+      },
+      "memory-baseline": {
+       "diff": 0,
+       "lo": 0,
+       "hi": 0,
+       "p": 1
+      },
+      "morph-memory": {
+       "diff": 0,
+       "lo": 0,
+       "hi": 0.1,
+       "p": 0.736
+      }
+     }
+    },
+    "1000": {
+     "overlap": 0,
+     "unseenBundle": 0,
+     "multiRef": 0,
+     "items": 2500,
+     "posCounts": {
+      "V": 2367,
+      "V.PTCP": 72,
+      "V.CVB": 61
+     },
+     "systems": {
+      "baseline": {
+       "mean": 82.1,
+       "std": 3.1,
+       "runs": [
+        80.8,
+        83.2,
+        78.4,
+        86.8,
+        81.4
+       ],
+       "variant": {
+        "mean": 82.1,
+        "std": 3.1,
+        "runs": [
+         80.8,
+         83.2,
+         78.4,
+         86.8,
+         81.4
+        ]
+       },
+       "lev": 0.38,
+       "seenBundle": 82.1,
+       "unseenBundle": null,
+       "seenLemma": null,
+       "unseenLemma": 82.1,
+       "copyShare": 1.6,
+       "pos": {
+        "V": 81.7,
+        "V.PTCP": 93.1,
+        "V.CVB": 85.2
+       }
+      },
+      "memory": {
+       "mean": 82.1,
+       "std": 3.1,
+       "runs": [
+        80.8,
+        83.2,
+        78.4,
+        86.8,
+        81.4
+       ],
+       "variant": {
+        "mean": 82.1,
+        "std": 3.1,
+        "runs": [
+         80.8,
+         83.2,
+         78.4,
+         86.8,
+         81.4
+        ]
+       },
+       "lev": 0.38,
+       "seenBundle": 82.1,
+       "unseenBundle": null,
+       "seenLemma": null,
+       "unseenLemma": 82.1,
+       "copyShare": 1.6,
+       "pos": {
+        "V": 81.7,
+        "V.PTCP": 93.1,
+        "V.CVB": 85.2
+       }
+      },
+      "morph": {
+       "mean": 82.1,
+       "std": 3.1,
+       "runs": [
+        80.8,
+        83.2,
+        78.4,
+        86.8,
+        81.4
+       ],
+       "variant": {
+        "mean": 82.1,
+        "std": 3.1,
+        "runs": [
+         80.8,
+         83.2,
+         78.4,
+         86.8,
+         81.4
+        ]
+       },
+       "lev": 0.38,
+       "seenBundle": 82.1,
+       "unseenBundle": null,
+       "seenLemma": null,
+       "unseenLemma": 82.1,
+       "copyShare": 1.3,
+       "pos": {
+        "V": 81.7,
+        "V.PTCP": 93.1,
+        "V.CVB": 85.2
+       }
+      }
+     },
+     "tests": {
+      "morph-baseline": {
+       "diff": 0,
+       "lo": 0,
+       "hi": 0,
+       "p": 1
+      },
+      "memory-baseline": {
+       "diff": 0,
+       "lo": 0,
+       "hi": 0,
+       "p": 1
+      },
+      "morph-memory": {
+       "diff": 0,
+       "lo": 0,
+       "hi": 0,
+       "p": 1
+      }
+     },
+     "testsVariant": {
+      "morph-baseline": {
+       "diff": 0,
+       "lo": 0,
+       "hi": 0,
+       "p": 1
+      },
+      "memory-baseline": {
+       "diff": 0,
+       "lo": 0,
+       "hi": 0,
+       "p": 1
+      },
+      "morph-memory": {
+       "diff": 0,
+       "lo": 0,
+       "hi": 0,
+       "p": 1
+      }
+     }
+    }
+   }
+  },
+  "ron-all": {
+   "random": {
+    "50": {
      "overlap": 13.4,
      "unseenBundle": 37.2,
+     "multiRef": 39.9,
      "items": 2500,
      "posCounts": {
       "N": 1293,
@@ -3177,6 +6490,17 @@
         26,
         25.2
        ],
+       "variant": {
+        "mean": 36.5,
+        "std": 1.2,
+        "runs": [
+         35.4,
+         38.4,
+         36.4,
+         36.8,
+         35.4
+        ]
+       },
        "lev": 2.49,
        "seenBundle": 34.8,
        "unseenBundle": 9.5,
@@ -3199,6 +6523,17 @@
         25.4,
         25.2
        ],
+       "variant": {
+        "mean": 36.4,
+        "std": 1.3,
+        "runs": [
+         35,
+         38.4,
+         36.4,
+         36.6,
+         35.4
+        ]
+       },
        "lev": 2.49,
        "seenBundle": 34.6,
        "unseenBundle": 9.5,
@@ -3221,6 +6556,17 @@
         23.6,
         21.4
        ],
+       "variant": {
+        "mean": 33.8,
+        "std": 2.2,
+        "runs": [
+         31.8,
+         37,
+         34.2,
+         34.4,
+         31.6
+        ]
+       },
        "lev": 2.52,
        "seenBundle": 34.8,
        "unseenBundle": 2.4,
@@ -3253,11 +6599,32 @@
        "hi": -1.7,
        "p": 0
       }
+     },
+     "testsVariant": {
+      "morph-baseline": {
+       "diff": -2.7,
+       "lo": -3.6,
+       "hi": -1.8,
+       "p": 0
+      },
+      "memory-baseline": {
+       "diff": -0.1,
+       "lo": -0.3,
+       "hi": 0,
+       "p": 0.243
+      },
+      "morph-memory": {
+       "diff": -2.6,
+       "lo": -3.4,
+       "hi": -1.7,
+       "p": 0
+      }
      }
     },
     "100": {
      "overlap": 26.4,
      "unseenBundle": 18.2,
+     "multiRef": 39.9,
      "items": 2500,
      "posCounts": {
       "N": 1293,
@@ -3275,6 +6642,17 @@
         37.8,
         32.2
        ],
+       "variant": {
+        "mean": 48.2,
+        "std": 4.1,
+        "runs": [
+         52,
+         50.2,
+         44.6,
+         51.4,
+         43
+        ]
+       },
        "lev": 2.12,
        "seenBundle": 40.8,
        "unseenBundle": 7.3,
@@ -3297,6 +6675,17 @@
         37.2,
         32.2
        ],
+       "variant": {
+        "mean": 47.8,
+        "std": 4,
+        "runs": [
+         51.6,
+         49.6,
+         44.2,
+         50.6,
+         42.8
+        ]
+       },
        "lev": 2.13,
        "seenBundle": 40.7,
        "unseenBundle": 7.3,
@@ -3319,6 +6708,17 @@
         37,
         32.4
        ],
+       "variant": {
+        "mean": 47.5,
+        "std": 3.4,
+        "runs": [
+         50.4,
+         48.6,
+         44.8,
+         50.6,
+         43.2
+        ]
+       },
        "lev": 2.07,
        "seenBundle": 40.5,
        "unseenBundle": 4.8,
@@ -3336,26 +6736,47 @@
       "morph-baseline": {
        "diff": -0.7,
        "lo": -1.4,
-       "hi": 0,
-       "p": 0.037
+       "hi": -0.1,
+       "p": 0.033
       },
       "memory-baseline": {
        "diff": -0.1,
        "lo": -0.5,
        "hi": 0.3,
-       "p": 0.77
+       "p": 0.764
       },
       "morph-memory": {
        "diff": -0.6,
        "lo": -1.4,
        "hi": 0.1,
-       "p": 0.104
+       "p": 0.109
+      }
+     },
+     "testsVariant": {
+      "morph-baseline": {
+       "diff": -0.7,
+       "lo": -1.4,
+       "hi": -0.1,
+       "p": 0.033
+      },
+      "memory-baseline": {
+       "diff": -0.5,
+       "lo": -0.9,
+       "hi": -0.1,
+       "p": 0.024
+      },
+      "morph-memory": {
+       "diff": -0.2,
+       "lo": -1,
+       "hi": 0.5,
+       "p": 0.572
       }
      }
     },
     "250": {
      "overlap": 53.1,
      "unseenBundle": 5.4,
+     "multiRef": 39.9,
      "items": 2500,
      "posCounts": {
       "N": 1293,
@@ -3373,6 +6794,17 @@
         46.2,
         47.8
        ],
+       "variant": {
+        "mean": 63.8,
+        "std": 3,
+        "runs": [
+         68.6,
+         64.2,
+         62,
+         63.4,
+         60.8
+        ]
+       },
        "lev": 1.8,
        "seenBundle": 49,
        "unseenBundle": 9,
@@ -3395,6 +6827,17 @@
         45.6,
         46.6
        ],
+       "variant": {
+        "mean": 62.4,
+        "std": 3.5,
+        "runs": [
+         68.2,
+         62.8,
+         60.6,
+         61.6,
+         59
+        ]
+       },
        "lev": 1.83,
        "seenBundle": 48.6,
        "unseenBundle": 9,
@@ -3417,6 +6860,17 @@
         48.2,
         47.6
        ],
+       "variant": {
+        "mean": 64.6,
+        "std": 2.6,
+        "runs": [
+         67.8,
+         64.6,
+         64.6,
+         65.4,
+         60.6
+        ]
+       },
        "lev": 1.75,
        "seenBundle": 50,
        "unseenBundle": 6.7,
@@ -3433,27 +6887,48 @@
      "tests": {
       "morph-baseline": {
        "diff": 0.8,
-       "lo": 0.2,
+       "lo": 0.3,
        "hi": 1.4,
-       "p": 0.005
+       "p": 0.003
       },
       "memory-baseline": {
        "diff": -0.4,
-       "lo": -1.5,
+       "lo": -1.6,
        "hi": 0.7,
-       "p": 0.519
+       "p": 0.499
       },
       "morph-memory": {
        "diff": 1.2,
        "lo": 0,
        "hi": 2.4,
-       "p": 0.056
+       "p": 0.054
+      }
+     },
+     "testsVariant": {
+      "morph-baseline": {
+       "diff": 0.8,
+       "lo": 0.2,
+       "hi": 1.4,
+       "p": 0.004
+      },
+      "memory-baseline": {
+       "diff": -1.4,
+       "lo": -2.4,
+       "hi": -0.3,
+       "p": 0.012
+      },
+      "morph-memory": {
+       "diff": 2.2,
+       "lo": 1,
+       "hi": 3.4,
+       "p": 0
       }
      }
     },
     "500": {
      "overlap": 79,
      "unseenBundle": 0.7,
+     "multiRef": 39.9,
      "items": 2500,
      "posCounts": {
       "N": 1293,
@@ -3471,6 +6946,17 @@
         52.8,
         59.6
        ],
+       "variant": {
+        "mean": 74,
+        "std": 1.9,
+        "runs": [
+         74.4,
+         72,
+         74,
+         72.8,
+         77
+        ]
+       },
        "lev": 1.63,
        "seenBundle": 54.4,
        "unseenBundle": 11.8,
@@ -3493,6 +6979,17 @@
         54.4,
         54
        ],
+       "variant": {
+        "mean": 72.8,
+        "std": 2.1,
+        "runs": [
+         74.6,
+         72.2,
+         74.6,
+         73,
+         69.4
+        ]
+       },
        "lev": 1.62,
        "seenBundle": 54.6,
        "unseenBundle": 11.8,
@@ -3515,6 +7012,17 @@
         53.2,
         59.6
        ],
+       "variant": {
+        "mean": 74.2,
+        "std": 1.7,
+        "runs": [
+         74.2,
+         72.6,
+         73.8,
+         73.2,
+         77
+        ]
+       },
        "lev": 1.6,
        "seenBundle": 54.6,
        "unseenBundle": 5.9,
@@ -3533,25 +7041,46 @@
        "diff": 0.1,
        "lo": -0.2,
        "hi": 0.4,
-       "p": 0.529
+       "p": 0.531
       },
       "memory-baseline": {
        "diff": 0.2,
-       "lo": -1.4,
+       "lo": -1.5,
        "hi": 1.8,
-       "p": 0.831
+       "p": 0.847
       },
       "morph-memory": {
        "diff": 0,
-       "lo": -1.7,
-       "hi": 1.7,
-       "p": 0.973
+       "lo": -1.8,
+       "hi": 1.6,
+       "p": 0.94
+      }
+     },
+     "testsVariant": {
+      "morph-baseline": {
+       "diff": 0.1,
+       "lo": -0.2,
+       "hi": 0.4,
+       "p": 0.515
+      },
+      "memory-baseline": {
+       "diff": -1.3,
+       "lo": -2.8,
+       "hi": 0.1,
+       "p": 0.083
+      },
+      "morph-memory": {
+       "diff": 1.4,
+       "lo": -0.1,
+       "hi": 2.8,
+       "p": 0.072
       }
      }
     },
     "1000": {
      "overlap": 96.1,
      "unseenBundle": 0,
+     "multiRef": 39.9,
      "items": 2500,
      "posCounts": {
       "N": 1293,
@@ -3569,6 +7098,17 @@
         53.4,
         61.4
        ],
+       "variant": {
+        "mean": 79.6,
+        "std": 2.9,
+        "runs": [
+         77.8,
+         77.2,
+         77.8,
+         81.2,
+         84
+        ]
+       },
        "lev": 1.64,
        "seenBundle": 54.9,
        "unseenBundle": null,
@@ -3591,6 +7131,17 @@
         55.2,
         58
        ],
+       "variant": {
+        "mean": 79.9,
+        "std": 1.8,
+        "runs": [
+         81.8,
+         79.2,
+         78.2,
+         81.8,
+         78.4
+        ]
+       },
        "lev": 1.58,
        "seenBundle": 55.4,
        "unseenBundle": null,
@@ -3613,6 +7164,17 @@
         53.4,
         61.8
        ],
+       "variant": {
+        "mean": 79.9,
+        "std": 2.9,
+        "runs": [
+         77.8,
+         77.6,
+         78.4,
+         81.2,
+         84.4
+        ]
+       },
        "lev": 1.63,
        "seenBundle": 55.2,
        "unseenBundle": null,
@@ -3631,19 +7193,39 @@
        "diff": 0.3,
        "lo": 0.1,
        "hi": 0.5,
-       "p": 0.011
+       "p": 0.015
       },
       "memory-baseline": {
        "diff": 0.5,
        "lo": -1.6,
        "hi": 2.6,
-       "p": 0.673
+       "p": 0.592
       },
       "morph-memory": {
        "diff": -0.2,
-       "lo": -2.2,
+       "lo": -2.4,
        "hi": 1.8,
-       "p": 0.818
+       "p": 0.858
+      }
+     },
+     "testsVariant": {
+      "morph-baseline": {
+       "diff": 0.3,
+       "lo": 0,
+       "hi": 0.5,
+       "p": 0.02
+      },
+      "memory-baseline": {
+       "diff": 0.3,
+       "lo": -1.4,
+       "hi": 1.9,
+       "p": 0.781
+      },
+      "morph-memory": {
+       "diff": 0,
+       "lo": -1.7,
+       "hi": 1.6,
+       "p": 1
       }
      }
     }
@@ -3652,6 +7234,7 @@
     "50": {
      "overlap": 0,
      "unseenBundle": 31.5,
+     "multiRef": 39.7,
      "items": 2500,
      "posCounts": {
       "N": 1320,
@@ -3669,6 +7252,17 @@
         26.4,
         19.8
        ],
+       "variant": {
+        "mean": 34.1,
+        "std": 6.3,
+        "runs": [
+         36.4,
+         34.2,
+         37.4,
+         39.2,
+         23.4
+        ]
+       },
        "lev": 2.47,
        "seenBundle": 31.4,
        "unseenBundle": 10.7,
@@ -3691,6 +7285,17 @@
         26.4,
         19.8
        ],
+       "variant": {
+        "mean": 34.1,
+        "std": 6.3,
+        "runs": [
+         36.4,
+         34.2,
+         37.4,
+         39.2,
+         23.4
+        ]
+       },
        "lev": 2.47,
        "seenBundle": 31.4,
        "unseenBundle": 10.7,
@@ -3713,6 +7318,17 @@
         24.2,
         19.8
        ],
+       "variant": {
+        "mean": 32,
+        "std": 5.6,
+        "runs": [
+         32.8,
+         30.2,
+         36.8,
+         37,
+         23.4
+        ]
+       },
        "lev": 2.55,
        "seenBundle": 32.1,
        "unseenBundle": 2.7,
@@ -3741,6 +7357,26 @@
       },
       "morph-memory": {
        "diff": -2.1,
+       "lo": -2.9,
+       "hi": -1.2,
+       "p": 0
+      }
+     },
+     "testsVariant": {
+      "morph-baseline": {
+       "diff": -2.1,
+       "lo": -2.9,
+       "hi": -1.2,
+       "p": 0
+      },
+      "memory-baseline": {
+       "diff": 0,
+       "lo": 0,
+       "hi": 0,
+       "p": 1
+      },
+      "morph-memory": {
+       "diff": -2.1,
        "lo": -3,
        "hi": -1.2,
        "p": 0
@@ -3750,6 +7386,7 @@
     "100": {
      "overlap": 0,
      "unseenBundle": 18.7,
+     "multiRef": 39.7,
      "items": 2500,
      "posCounts": {
       "N": 1320,
@@ -3767,6 +7404,17 @@
         31.6,
         30.2
        ],
+       "variant": {
+        "mean": 41.9,
+        "std": 5.9,
+        "runs": [
+         45,
+         35.4,
+         48,
+         45.4,
+         35.6
+        ]
+       },
        "lev": 2.22,
        "seenBundle": 37.7,
        "unseenBundle": 5.4,
@@ -3789,6 +7437,17 @@
         31.6,
         30.2
        ],
+       "variant": {
+        "mean": 41.9,
+        "std": 5.9,
+        "runs": [
+         45,
+         35.4,
+         48,
+         45.4,
+         35.6
+        ]
+       },
        "lev": 2.22,
        "seenBundle": 37.7,
        "unseenBundle": 5.4,
@@ -3811,6 +7470,17 @@
         31.6,
         30.2
        ],
+       "variant": {
+        "mean": 42,
+        "std": 6.6,
+        "runs": [
+         44,
+         35,
+         50.2,
+         45.4,
+         35.6
+        ]
+       },
        "lev": 2.18,
        "seenBundle": 38,
        "unseenBundle": 4.9,
@@ -3829,7 +7499,7 @@
        "diff": 0.2,
        "lo": -0.4,
        "hi": 0.7,
-       "p": 0.621
+       "p": 0.636
       },
       "memory-baseline": {
        "diff": 0,
@@ -3841,13 +7511,34 @@
        "diff": 0.2,
        "lo": -0.4,
        "hi": 0.7,
-       "p": 0.634
+       "p": 0.609
+      }
+     },
+     "testsVariant": {
+      "morph-baseline": {
+       "diff": 0.2,
+       "lo": -0.4,
+       "hi": 0.7,
+       "p": 0.648
+      },
+      "memory-baseline": {
+       "diff": 0,
+       "lo": 0,
+       "hi": 0,
+       "p": 1
+      },
+      "morph-memory": {
+       "diff": 0.2,
+       "lo": -0.4,
+       "hi": 0.8,
+       "p": 0.618
       }
      }
     },
     "250": {
      "overlap": 0,
      "unseenBundle": 5.4,
+     "multiRef": 39.7,
      "items": 2500,
      "posCounts": {
       "N": 1320,
@@ -3865,6 +7556,17 @@
         46.2,
         48.8
        ],
+       "variant": {
+        "mean": 59,
+        "std": 3.8,
+        "runs": [
+         53.2,
+         59.2,
+         58.6,
+         63.8,
+         60.4
+        ]
+       },
        "lev": 1.79,
        "seenBundle": 48.1,
        "unseenBundle": 0.7,
@@ -3887,6 +7589,17 @@
         46.2,
         48.8
        ],
+       "variant": {
+        "mean": 59,
+        "std": 3.8,
+        "runs": [
+         53.2,
+         59.2,
+         58.6,
+         63.8,
+         60.4
+        ]
+       },
        "lev": 1.79,
        "seenBundle": 48.1,
        "unseenBundle": 0.7,
@@ -3909,6 +7622,17 @@
         45.8,
         48.6
        ],
+       "variant": {
+        "mean": 59.6,
+        "std": 3.4,
+        "runs": [
+         54.4,
+         58.6,
+         61.2,
+         63.4,
+         60.2
+        ]
+       },
        "lev": 1.72,
        "seenBundle": 48.6,
        "unseenBundle": 1.5,
@@ -3926,8 +7650,28 @@
       "morph-baseline": {
        "diff": 0.5,
        "lo": 0.1,
+       "hi": 0.9,
+       "p": 0.014
+      },
+      "memory-baseline": {
+       "diff": 0,
+       "lo": 0,
+       "hi": 0,
+       "p": 1
+      },
+      "morph-memory": {
+       "diff": 0.5,
+       "lo": 0.1,
        "hi": 1,
-       "p": 0.016
+       "p": 0.014
+      }
+     },
+     "testsVariant": {
+      "morph-baseline": {
+       "diff": 0.5,
+       "lo": 0.1,
+       "hi": 0.9,
+       "p": 0.013
       },
       "memory-baseline": {
        "diff": 0,
@@ -3946,6 +7690,7 @@
     "500": {
      "overlap": 0,
      "unseenBundle": 0.6,
+     "multiRef": 39.7,
      "items": 2500,
      "posCounts": {
       "N": 1320,
@@ -3963,6 +7708,17 @@
         52.8,
         57.6
        ],
+       "variant": {
+        "mean": 70.9,
+        "std": 4.8,
+        "runs": [
+         67.2,
+         65.2,
+         77.2,
+         72.2,
+         72.6
+        ]
+       },
        "lev": 1.51,
        "seenBundle": 55.4,
        "unseenBundle": 0,
@@ -3985,6 +7741,17 @@
         52.8,
         57.6
        ],
+       "variant": {
+        "mean": 70.9,
+        "std": 4.8,
+        "runs": [
+         67.2,
+         65.2,
+         77.2,
+         72.2,
+         72.6
+        ]
+       },
        "lev": 1.51,
        "seenBundle": 55.4,
        "unseenBundle": 0,
@@ -4007,6 +7774,17 @@
         52.8,
         58.8
        ],
+       "variant": {
+        "mean": 71.3,
+        "std": 4.8,
+        "runs": [
+         68.2,
+         65,
+         77.2,
+         72.2,
+         73.8
+        ]
+       },
        "lev": 1.47,
        "seenBundle": 55.6,
        "unseenBundle": 42.9,
@@ -4025,7 +7803,7 @@
        "diff": 0.4,
        "lo": 0.2,
        "hi": 0.7,
-       "p": 0
+       "p": 0.001
       },
       "memory-baseline": {
        "diff": 0,
@@ -4037,13 +7815,34 @@
        "diff": 0.4,
        "lo": 0.2,
        "hi": 0.7,
-       "p": 0.003
+       "p": 0.002
+      }
+     },
+     "testsVariant": {
+      "morph-baseline": {
+       "diff": 0.4,
+       "lo": 0.2,
+       "hi": 0.7,
+       "p": 0.002
+      },
+      "memory-baseline": {
+       "diff": 0,
+       "lo": 0,
+       "hi": 0,
+       "p": 1
+      },
+      "morph-memory": {
+       "diff": 0.4,
+       "lo": 0.2,
+       "hi": 0.7,
+       "p": 0.002
       }
      }
     },
     "1000": {
      "overlap": 0,
      "unseenBundle": 0,
+     "multiRef": 39.7,
      "items": 2500,
      "posCounts": {
       "N": 1320,
@@ -4061,6 +7860,17 @@
         59.2,
         61.6
        ],
+       "variant": {
+        "mean": 76.9,
+        "std": 3.5,
+        "runs": [
+         73.2,
+         74,
+         81.6,
+         78.8,
+         76.8
+        ]
+       },
        "lev": 1.39,
        "seenBundle": 60.6,
        "unseenBundle": null,
@@ -4083,6 +7893,17 @@
         59.2,
         61.6
        ],
+       "variant": {
+        "mean": 76.9,
+        "std": 3.5,
+        "runs": [
+         73.2,
+         74,
+         81.6,
+         78.8,
+         76.8
+        ]
+       },
        "lev": 1.39,
        "seenBundle": 60.6,
        "unseenBundle": null,
@@ -4105,6 +7926,17 @@
         59.2,
         61.6
        ],
+       "variant": {
+        "mean": 77.1,
+        "std": 3.6,
+        "runs": [
+         73.6,
+         74,
+         82.4,
+         78.8,
+         76.8
+        ]
+       },
        "lev": 1.38,
        "seenBundle": 60.8,
        "unseenBundle": null,
@@ -4123,7 +7955,7 @@
        "diff": 0.2,
        "lo": 0.1,
        "hi": 0.4,
-       "p": 0.005
+       "p": 0.003
       },
       "memory-baseline": {
        "diff": 0,
@@ -4135,7 +7967,27 @@
        "diff": 0.2,
        "lo": 0.1,
        "hi": 0.4,
+       "p": 0.004
+      }
+     },
+     "testsVariant": {
+      "morph-baseline": {
+       "diff": 0.2,
+       "lo": 0.1,
+       "hi": 0.4,
        "p": 0.006
+      },
+      "memory-baseline": {
+       "diff": 0,
+       "lo": 0,
+       "hi": 0,
+       "p": 1
+      },
+      "morph-memory": {
+       "diff": 0.2,
+       "lo": 0.1,
+       "hi": 0.4,
+       "p": 0.001
       }
      }
     }
@@ -4151,6 +8003,7 @@
       "lemma": "veteriner",
       "tag": "N;GEN;SG;PSS2S",
       "gold": "veterinerinin",
+      "alt": [],
       "baseline": "veteriner",
       "memory": "veteriner",
       "morph": "veterinerinin",
@@ -4162,6 +8015,7 @@
       "lemma": "komikleşmek",
       "tag": "V;IND;PRS;HAB;3;PL;NEG;DECL",
       "gold": "komikleşmezler",
+      "alt": [],
       "baseline": "komikleşmek",
       "memory": "komikleşmek",
       "morph": "komikleşmezler",
@@ -4173,6 +8027,7 @@
       "lemma": "el sıkışmak",
       "tag": "V;IND;PRS;PROG;3;PL;INTR;POS",
       "gold": "el sıkışıyorlar mı",
+      "alt": [],
       "baseline": "el sıkışmak",
       "memory": "el sıkışmak",
       "morph": "el sıkışıyorlar mı",
@@ -4184,6 +8039,7 @@
       "lemma": "idadi",
       "tag": "N;ABL;SG",
       "gold": "idadiden",
+      "alt": [],
       "baseline": "idadi",
       "memory": "idadiden",
       "morph": "idadi",
@@ -4195,6 +8051,7 @@
       "lemma": "kek",
       "tag": "N;ACC;SG",
       "gold": "keki",
+      "alt": [],
       "baseline": "keğı",
       "memory": "keki",
       "morph": "keğı",
@@ -4206,6 +8063,7 @@
       "lemma": "konveks dörtgen",
       "tag": "N;NOM;PL",
       "gold": "konveks dörtgenler",
+      "alt": [],
       "baseline": "konveks dörtgenlar",
       "memory": "konveks dörtgenler",
       "morph": "konveks dörtgenlar",
@@ -4217,6 +8075,7 @@
       "lemma": "port",
       "tag": "N;NOM;PL;PSS3S",
       "gold": "portları",
+      "alt": [],
       "baseline": "portleri",
       "memory": "portleri",
       "morph": "portleri",
@@ -4228,6 +8087,7 @@
       "lemma": "kızan",
       "tag": "N;ABL;SG;PSS2P",
       "gold": "kızanınızdan",
+      "alt": [],
       "baseline": "kızannizden",
       "memory": "kızannizden",
       "morph": "kızannizden",
@@ -4244,6 +8104,7 @@
       "lemma": "kahraman",
       "tag": "N;DAT;SG;PSS2S",
       "gold": "kahramanına",
+      "alt": [],
       "baseline": "kahramanne",
       "memory": "kahramanne",
       "morph": "kahramanne",
@@ -4255,6 +8116,7 @@
       "lemma": "kavun",
       "tag": "N;ARGNO3P;SG;LGSPEC2",
       "gold": "kavunmuşlar",
+      "alt": [],
       "baseline": "kavun",
       "memory": "kavun",
       "morph": "kavunmışsılar",
@@ -4273,6 +8135,7 @@
       "lemma": "آرام کرنا",
       "tag": "V;3;PL;HAB;SBJV;FEM",
       "gold": "آرام کرتی ہوں",
+      "alt": [],
       "baseline": "آرام کرنا",
       "memory": "آرام کرنا",
       "morph": "آرام کرتی ہوں",
@@ -4284,6 +8147,7 @@
       "lemma": "لوٹنا",
       "tag": "V;2;PL;PRF;LGSPEC3;FEM",
       "gold": "لوٹی ہو گی",
+      "alt": [],
       "baseline": "لوٹنا",
       "memory": "لوٹنا",
       "morph": "لوٹی ہو گی",
@@ -4295,6 +8159,7 @@
       "lemma": "بہنا",
       "tag": "V;1;PL;PROG;LGSPEC4;MASC",
       "gold": "بہ رہے ہوتے",
+      "alt": [],
       "baseline": "بہنا",
       "memory": "بہنا",
       "morph": "بہ رہے ہوتے",
@@ -4306,6 +8171,7 @@
       "lemma": "قیدخانہ",
       "tag": "N;VOC;SG",
       "gold": "قید خاہے",
+      "alt": [],
       "baseline": "قیدخانہ",
       "memory": "قید خاہے",
       "morph": "قیدخانہ",
@@ -4317,6 +8183,7 @@
       "lemma": "پْرشنسا",
       "tag": "N;NOM;SG",
       "gold": "پررشنسا",
+      "alt": [],
       "baseline": "پْرشنسا",
       "memory": "پررشنسا",
       "morph": "پْرشنسا",
@@ -4328,6 +8195,7 @@
       "lemma": "سالگرہ",
       "tag": "N;ACC;PL",
       "gold": "سالگرہوں",
+      "alt": [],
       "baseline": "سالگروں",
       "memory": "سالگرہوں",
       "morph": "سالگروں",
@@ -4339,6 +8207,7 @@
       "lemma": "جلنا",
       "tag": "V;NFIN;LGSPEC1",
       "gold": "جلنا",
+      "alt": [],
       "baseline": "جلنا",
       "memory": "جلنا",
       "morph": "جلنے",
@@ -4350,6 +8219,7 @@
       "lemma": "لکھنا",
       "tag": "V;NFIN;LGSPEC1",
       "gold": "لکھنا",
+      "alt": [],
       "baseline": "لکھنا",
       "memory": "لکھنا",
       "morph": "لکھنے",
@@ -4361,6 +8231,7 @@
       "lemma": "جھکنا",
       "tag": "V;1;SG;SBJV;MASC",
       "gold": "میں جھکوں گا",
+      "alt": [],
       "baseline": "جھکنا",
       "memory": "جھکنا",
       "morph": "تو جھکے گا",
@@ -4372,6 +8243,7 @@
       "lemma": "ہنسنا",
       "tag": "V;2;SG;PROG;PST;FEM",
       "gold": "ہنس رہی تھی",
+      "alt": [],
       "baseline": "ہنسنا",
       "memory": "ہنسنا",
       "morph": "ہنس رہی تھا",
@@ -4388,6 +8260,7 @@
       "lemma": "سوپن دیکھنا",
       "tag": "V;3;PL;PRF;SBJV;FEM",
       "gold": "سوپن دیکھی ہوں",
+      "alt": [],
       "baseline": "سوپن دیکھنا",
       "memory": "سوپن دیکھنا",
       "morph": "سوپن دیکھی ہوں",
@@ -4399,6 +8272,7 @@
       "lemma": "کھیلنا",
       "tag": "V;3;PL;PROG;SBJV;FEM",
       "gold": "کھیل رہی ہوں",
+      "alt": [],
       "baseline": "کھیلنا",
       "memory": "کھیلنا",
       "morph": "کھیل رہی ہوں",
@@ -4410,6 +8284,7 @@
       "lemma": "چومنا",
       "tag": "V;1;SG;PROG;PST;FEM",
       "gold": "چوم رہی تھی",
+      "alt": [],
       "baseline": "چومنا",
       "memory": "چومنا",
       "morph": "چوم رہی تھی",
@@ -4421,6 +8296,7 @@
       "lemma": "جھگڑا",
       "tag": "N;NOM;PL",
       "gold": "جھگڑے",
+      "alt": [],
       "baseline": "جھگڑاے",
       "memory": "جھگڑاے",
       "morph": "جھگڑاے",
@@ -4432,6 +8308,7 @@
       "lemma": "سالگرہ",
       "tag": "N;NOM;PL",
       "gold": "سالگرہیں",
+      "alt": [],
       "baseline": "سالگرے",
       "memory": "سالگرے",
       "morph": "سالگرے",
@@ -4450,6 +8327,7 @@
       "lemma": "eːkun",
       "tag": "PRO;TERM;SG",
       "gold": "eːkundulaː",
+      "alt": [],
       "baseline": "eːkun",
       "memory": "eːkun",
       "morph": "eːkundulaː",
@@ -4461,6 +8339,7 @@
       "lemma": "aki",
       "tag": "V;FIN;IND;SG;1;ACT",
       "gold": "akim",
+      "alt": [],
       "baseline": "aki",
       "memory": "aki",
       "morph": "akim",
@@ -4472,6 +8351,7 @@
       "lemma": "baji",
       "tag": "N;COM;PL",
       "gold": "bajilnun",
+      "alt": [],
       "baseline": "baji",
       "memory": "baji",
       "morph": "bajilnun",
@@ -4483,6 +8363,9 @@
       "lemma": "ŋinakin",
       "tag": "N;ACC;DEF;SG",
       "gold": "ŋinakinma",
+      "alt": [
+       "ŋinakinmə"
+      ],
       "baseline": "ŋinakinmə",
       "memory": "ŋinakinma",
       "morph": "ŋinakinmə",
@@ -4494,6 +8377,9 @@
       "lemma": "amar",
       "tag": "N;DAT;SG;PSS3P",
       "gold": "amarduːn",
+      "alt": [
+       "amardutin"
+      ],
       "baseline": "amarduːtin",
       "memory": "amarduːtin",
       "morph": "amarduːtin",
@@ -4505,6 +8391,11 @@
       "lemma": "omŋo",
       "tag": "V;FIN;IND;SG;1;PST;ACT",
       "gold": "omŋokoːkuːśim",
+      "alt": [
+       "omŋolim",
+       "omŋom",
+       "omŋot͡ʃoːw"
+      ],
       "baseline": "omŋom",
       "memory": "omŋom",
       "morph": "omŋom",
@@ -4521,6 +8412,7 @@
       "lemma": "munŋədi",
       "tag": "PRO;NOM;PL;1+EXCL",
       "gold": "munŋədi",
+      "alt": [],
       "baseline": "munŋədi",
       "memory": "munŋədi",
       "morph": "munŋədiŋkiːwun",
@@ -4532,6 +8424,7 @@
       "lemma": "ədin",
       "tag": "DET;EQTV;PROX",
       "gold": "ədin",
+      "alt": [],
       "baseline": "ədin",
       "memory": "ədin",
       "morph": "ədinduː",
@@ -4543,6 +8436,7 @@
       "lemma": "ərə",
       "tag": "DET;PROX",
       "gold": "ərə",
+      "alt": [],
       "baseline": "ərə",
       "memory": "ərə",
       "morph": "ərəduː",
@@ -4554,6 +8448,7 @@
       "lemma": "amaski",
       "tag": "ADV;PSS3P",
       "gold": "amaskitin",
+      "alt": [],
       "baseline": "amaski",
       "memory": "amaski",
       "morph": "amaski",
@@ -4565,6 +8460,7 @@
       "lemma": "γoːta",
       "tag": "V;IPFV;FIN;IND;SG;1;PST;ACT",
       "gold": "γoːtaďasaːw",
+      "alt": [],
       "baseline": "γoːtaďət͡ʃaːw",
       "memory": "γoːtaďət͡ʃaːw",
       "morph": "γoːtaďət͡ʃaːw",
@@ -4580,47 +8476,75 @@
     "n": 100,
     "items": [
      {
-      "lemma": "ԓьук",
-      "tag": "V;IND;PFV;SG;3",
-      "gold": "гэԓьуԓин",
-      "baseline": "ԓьук",
-      "memory": "ԓьук",
-      "morph": "гэԓьуԓин",
+      "lemma": "тумгытум",
+      "tag": "N;ABS;PL",
+      "gold": "тумгыт",
+      "alt": [],
+      "baseline": "тумгытум",
+      "memory": "тумгытум",
+      "morph": "тумгыт",
       "kind": "morph-only",
       "lemmaSeen": true,
       "bundleSeen": false
      },
      {
-      "lemma": "мури",
-      "tag": "1;PRO;PL;ABS",
-      "gold": "мури",
-      "baseline": "мури",
-      "memory": "мури",
-      "morph": "мурык",
+      "lemma": "тэнӈыткук",
+      "tag": "V;IND;PFV;ITER;SG;3",
+      "gold": "гэтэнӈыткуԓин",
+      "alt": [],
+      "baseline": "тэнӈыткук",
+      "memory": "тэнӈыткук",
+      "morph": "гэтэнӈыткуԓин",
+      "kind": "morph-only",
+      "lemmaSeen": false,
+      "bundleSeen": false
+     },
+     {
+      "lemma": "ԓьук",
+      "tag": "V;IND;PFV;SG;3",
+      "gold": "гэԓьуԓин",
+      "alt": [],
+      "baseline": "ԓьук",
+      "memory": "ԓьук",
+      "morph": "гэԓьуԓин",
+      "kind": "morph-only",
+      "lemmaSeen": true,
+      "bundleSeen": true
+     },
+     {
+      "lemma": "тури",
+      "tag": "PRO;2;PL",
+      "gold": "тури",
+      "alt": [],
+      "baseline": "тури",
+      "memory": "тури",
+      "morph": "торыкагты",
       "kind": "baseline-only",
       "lemmaSeen": true,
       "bundleSeen": false
      },
      {
-      "lemma": "пэтька",
-      "tag": "PROPN;INS;SG",
-      "gold": "пэтькана",
-      "baseline": "пэтька",
-      "memory": "пэтька",
-      "morph": "пэтька",
+      "lemma": "ӈирэӄычьын",
+      "tag": "DAT;ADJ",
+      "gold": "ӈэраӄычьэты",
+      "alt": [],
+      "baseline": "ӈирэӄычьын",
+      "memory": "ӈирэӄычьын",
+      "morph": "ӈирэӄычьын",
       "kind": "all-wrong",
       "lemmaSeen": false,
       "bundleSeen": false
      },
      {
-      "lemma": "тыӈэк",
-      "tag": "PROPN;INS;ANIM",
-      "gold": "тыӈэтинэ",
-      "baseline": "тыӈэк",
-      "memory": "тыӈэк",
-      "morph": "тыӈэк",
+      "lemma": "гым",
+      "tag": "PRO;SG;DAT;1",
+      "gold": "гымыкагты",
+      "alt": [],
+      "baseline": "гым",
+      "memory": "гым",
+      "morph": "гым",
       "kind": "all-wrong",
-      "lemmaSeen": false,
+      "lemmaSeen": true,
       "bundleSeen": false
      }
     ]
@@ -4629,70 +8553,42 @@
     "n": 100,
     "items": [
      {
-      "lemma": "ытԓыгын",
-      "tag": "N;INS;ANIM;SG",
-      "gold": "ытԓыгэ",
-      "baseline": "ытԓыгын",
-      "memory": "ытԓыгын",
-      "morph": "ытԓыгэ",
-      "kind": "morph-only",
-      "lemmaSeen": false,
-      "bundleSeen": false
-     },
-     {
-      "lemma": "тэйкык",
-      "tag": "V;PFV;PST;SG;3",
-      "gold": "гэтэйкыԓин",
-      "baseline": "тэйкык",
-      "memory": "тэйкык",
-      "morph": "гэтэйкыԓин",
-      "kind": "morph-only",
-      "lemmaSeen": false,
-      "bundleSeen": false
-     },
-     {
-      "lemma": "ивык",
-      "tag": "V;IND;PST;ARGER3S;ARBEB1S",
-      "gold": "ивнин",
-      "baseline": "ивык",
-      "memory": "ивык",
-      "morph": "ивнин",
-      "kind": "morph-only",
-      "lemmaSeen": false,
-      "bundleSeen": false
-     },
-     {
-      "lemma": "тури",
-      "tag": "PRO;2;PL",
-      "gold": "тури",
-      "baseline": "тури",
-      "memory": "тури",
-      "morph": "турык",
+      "lemma": "итык",
+      "tag": "V;NFIN",
+      "gold": "итык",
+      "alt": [],
+      "baseline": "итык",
+      "memory": "итык",
+      "morph": "мыитнэт",
       "kind": "baseline-only",
       "lemmaSeen": false,
       "bundleSeen": false
      },
      {
-      "lemma": "чакыгэт",
-      "tag": "N;DAT;ANIM;SG",
-      "gold": "чакэттэты",
-      "baseline": "чакыгэт",
-      "memory": "чакыгэт",
-      "morph": "чакыгэт",
+      "lemma": "итык",
+      "tag": "V;IND;PST;PFV;1;SG",
+      "gold": "титгъэк",
+      "alt": [],
+      "baseline": "итык",
+      "memory": "итык",
+      "morph": "тыитгъэк",
       "kind": "all-wrong",
       "lemmaSeen": false,
       "bundleSeen": false
      },
      {
-      "lemma": "рывэтгавык",
-      "tag": "V;IND;PRS;ARGER3S;ARGAB3S",
-      "gold": "нынвэтгаваннэн",
-      "baseline": "рывэтгавык",
-      "memory": "рывэтгавык",
-      "morph": "рывэтгавынин",
+      "lemma": "гым",
+      "tag": "PRO;SG;1",
+      "gold": "гым",
+      "alt": [
+       "гымо"
+      ],
+      "baseline": "гг",
+      "memory": "гг",
+      "morph": "гг",
       "kind": "all-wrong",
       "lemmaSeen": false,
-      "bundleSeen": false
+      "bundleSeen": true
      }
     ]
    }
@@ -4702,9 +8598,108 @@
     "n": 500,
     "items": [
      {
+      "lemma": "ara",
+      "tag": "V;IND;PRS;2;SG",
+      "gold": "ari",
+      "alt": [],
+      "baseline": "arezi",
+      "memory": "ari",
+      "morph": "arezi",
+      "kind": "memory-only",
+      "lemmaSeen": true,
+      "bundleSeen": true
+     },
+     {
+      "lemma": "cere",
+      "tag": "V;IND;PST;3;SG;PRF",
+      "gold": "ceruse",
+      "alt": [],
+      "baseline": "cerese",
+      "memory": "ceruse",
+      "morph": "cerese",
+      "kind": "memory-only",
+      "lemmaSeen": true,
+      "bundleSeen": true
+     },
+     {
+      "lemma": "reduce",
+      "tag": "V;IND;PST;2;SG;PRF",
+      "gold": "reduseseși",
+      "alt": [],
+      "baseline": "reduceseși",
+      "memory": "reduseseși",
+      "morph": "reduceseși",
+      "kind": "memory-only",
+      "lemmaSeen": true,
+      "bundleSeen": true
+     },
+     {
+      "lemma": "augura",
+      "tag": "V;IND;PRS;3;SG",
+      "gold": "augurează",
+      "alt": [],
+      "baseline": "augură",
+      "memory": "augură",
+      "morph": "augură",
+      "kind": "all-wrong",
+      "lemmaSeen": true,
+      "bundleSeen": true
+     },
+     {
+      "lemma": "presupune",
+      "tag": "V;IND;PST;1;SG;PFV",
+      "gold": "presupusei",
+      "alt": [],
+      "baseline": "presupunei",
+      "memory": "presupunei",
+      "morph": "presupunei",
+      "kind": "all-wrong",
+      "lemmaSeen": true,
+      "bundleSeen": true
+     }
+    ]
+   },
+   "lemma-disjoint": {
+    "n": 500,
+    "items": [
+     {
+      "lemma": "răscula",
+      "tag": "V;SBJV;PRS;2;SG",
+      "gold": "să răscoli",
+      "alt": [],
+      "baseline": "să răsculi",
+      "memory": "să răsculi",
+      "morph": "să răsculi",
+      "kind": "all-wrong",
+      "lemmaSeen": false,
+      "bundleSeen": true
+     },
+     {
+      "lemma": "presupune",
+      "tag": "V;IND;PST;3;SG;PRF",
+      "gold": "presupusese",
+      "alt": [],
+      "baseline": "presupunese",
+      "memory": "presupunese",
+      "morph": "presupunese",
+      "kind": "all-wrong",
+      "lemmaSeen": false,
+      "bundleSeen": true
+     }
+    ]
+   }
+  },
+  "ron-all": {
+   "random": {
+    "n": 500,
+    "items": [
+     {
       "lemma": "sticlă",
       "tag": "N;NOM/ACC;SG;INDF",
       "gold": "niște sticle",
+      "alt": [
+       "o sticlă"
+      ],
       "baseline": "sticlă",
       "memory": "niște sticle",
       "morph": "sticlă",
@@ -4716,6 +8711,9 @@
       "lemma": "foaie",
       "tag": "N;GEN/DAT;SG;INDF",
       "gold": "unor foi",
+      "alt": [
+       "unei foi"
+      ],
       "baseline": "unei foaii",
       "memory": "unor foi",
       "morph": "unei foaii",
@@ -4727,6 +8725,7 @@
       "lemma": "sfârtica",
       "tag": "V;SBJV;PRS;2;SG",
       "gold": "să sfârtici",
+      "alt": [],
       "baseline": "să sfârticezi",
       "memory": "să sfârtici",
       "morph": "să sfârticezi",
@@ -4738,6 +8737,7 @@
       "lemma": "descoperi",
       "tag": "V;IND;PRS;2;SG",
       "gold": "descoperi",
+      "alt": [],
       "baseline": "descoperi",
       "memory": "descoperi",
       "morph": "descoperiești",
@@ -4749,6 +8749,9 @@
       "lemma": "trezire",
       "tag": "N;GEN/DAT;PL;DEF",
       "gold": "trezirii",
+      "alt": [
+       "trezirilor"
+      ],
       "baseline": "trezirei",
       "memory": "trezireei",
       "morph": "trezirei",
@@ -4760,6 +8763,7 @@
       "lemma": "depăra",
       "tag": "V;SBJV;PRS;3;PL",
       "gold": "să depere",
+      "alt": [],
       "baseline": "să depăre",
       "memory": "să depărască",
       "morph": "să depăre",
@@ -4776,6 +8780,7 @@
       "lemma": "cumplit",
       "tag": "ADJ;NOM/ACC;FEM;SG;INDF",
       "gold": "cumpliți",
+      "alt": [],
       "baseline": "cumplit",
       "memory": "cumplit",
       "morph": "cumpliți",
@@ -4787,6 +8792,7 @@
       "lemma": "convențional",
       "tag": "ADJ;NOM/ACC;FEM;SG;INDF",
       "gold": "convenționali",
+      "alt": [],
       "baseline": "convențional",
       "memory": "convențional",
       "morph": "convenționali",
@@ -4798,6 +8804,7 @@
       "lemma": "irațional",
       "tag": "ADJ;NOM/ACC;FEM;SG;INDF",
       "gold": "iraționali",
+      "alt": [],
       "baseline": "irațional",
       "memory": "irațional",
       "morph": "iraționali",
@@ -4809,6 +8816,9 @@
       "lemma": "molid",
       "tag": "N;NOM/ACC;SG;INDF",
       "gold": "niște molizi",
+      "alt": [
+       "un molid"
+      ],
       "baseline": "un molid",
       "memory": "un molid",
       "morph": "un molid",
@@ -4820,6 +8830,7 @@
       "lemma": "famen",
       "tag": "N;VOC;SG",
       "gold": "famenule",
+      "alt": [],
       "baseline": "famen",
       "memory": "famen",
       "morph": "famen",

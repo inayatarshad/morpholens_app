@@ -3,8 +3,9 @@ import { ArrowDown, ArrowRight, FlaskConical, Microscope } from "lucide-react";
 import { Container } from "@/components/AppShell";
 import { HeroSpecimen } from "@/components/HeroSpecimen";
 import { LanguageCard } from "@/components/LanguageCard";
-import { experiment, fmtCI, fmtP, getCell, sizesFor } from "@/data/experiments";
+import { fmtCI, fmtP, getCell, sizesFor } from "@/data/experiments";
 import { languages } from "@/data/languages";
+import { statsFor } from "@/data/unimorph";
 
 const questions = [
   { n: "01", q: "What morphological information is encoded in a word?", href: "/explore", cta: "Explore" },
@@ -20,7 +21,7 @@ export default function Home() {
   const tL = getCell("tur", "lemma-disjoint", nT)!;
   const nU = sizesFor("urd").filter((s) => s <= 500).pop()!;
   const uL = getCell("urd", "lemma-disjoint", nU)!;
-  const totalTriples = Object.values(experiment.stats).reduce((s, x) => s + x.triples, 0);
+  const totalTriples = languages.reduce((s, l) => s + statsFor(l.id).triples, 0);
 
   return (
     <>

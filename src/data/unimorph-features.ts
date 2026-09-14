@@ -33,7 +33,7 @@ const table: Record<string, [dimension: string, label: string]> = {
   // polarity
   POS: ["Polarity", "Positive"], NEG: ["Polarity", "Negative"],
   // gender / animacy
-  MASC: ["Gender", "Masculine"], FEM: ["Gender", "Feminine"], NEUT: ["Gender", "Neuter"], ANIM: ["Animacy", "Animate"], INV: ["Animacy", "Inverse"],
+  MASC: ["Gender", "Masculine"], FEM: ["Gender", "Feminine"], NEUT: ["Gender", "Neuter"], ANIM: ["Animacy", "Animate"], INV: ["Voice", "Inverse"],
   // definiteness
   DEF: ["Definiteness", "Definite"], INDF: ["Definiteness", "Indefinite"],
   // voice
@@ -55,7 +55,7 @@ function one(code: string): [string, string] {
   m = code.match(/^ARG(NO|ER|AB|AC|DA)([123])([SP])$/);
   if (m) return [`Agreement (${ROLE[m[1]]})`, `${m[2]}${NUM[m[3]]}`];
   if (/^LGSPEC\d+$/.test(code)) return ["Language-specific", code];
-  return ["Other", code];
+  return ["Unlisted tag", code];
 }
 
 /** Parse a UniMorph bundle into readable {dimension: value} pairs (primary POS excluded). */

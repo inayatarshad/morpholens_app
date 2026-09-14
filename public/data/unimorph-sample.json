@@ -1,5 +1,5 @@
 {
- "generatedAt": "2026-09-13T19:58:10.043Z",
+ "generatedAt": "2026-09-14T08:20:16.678Z",
  "sources": {
   "tur": {
    "repo": "https://github.com/unimorph/tur",
@@ -5394,6 +5394,11 @@
      "lemma": "тэйкык",
      "form": "гэтэйкыԓин",
      "tag": "V;PFV;PST;SG;3"
+    },
+    {
+     "lemma": "ытԓыгын",
+     "form": "ытԓыгыт",
+     "tag": "N;PL;ABS;ANIM"
     }
    ]
   },
@@ -6221,15 +6226,15 @@
   },
   "ckt": {
    "plural": {
-    "lemma": "тумгытум",
+    "lemma": "ытԓыгын",
     "base": {
-     "form": "тумгытум",
+     "form": "ытԓыгын",
      "tag": "LEMMA (citation form)"
     },
     "target": {
-     "lemma": "тумгытум",
-     "form": "тумгыт",
-     "tag": "N;ABS;PL"
+     "lemma": "ытԓыгын",
+     "form": "ытԓыгыт",
+     "tag": "N;PL;ABS;ANIM"
     },
     "variants": [],
     "strategy": "Ending replacement",
@@ -6279,9 +6284,7 @@
      "form": "unei case",
      "tag": "N;GEN/DAT;SG;INDF"
     },
-    "variants": [
-     "unor case"
-    ],
+    "variants": [],
     "strategy": "Separate word + ending replacement",
     "position": "Separate word before the stem"
    },
@@ -6317,12 +6320,191 @@
    }
   }
  },
+ "schema": {
+  "tur": {
+   "unlisted": {
+    "INFR": {
+     "count": 183456,
+     "status": "convention"
+    },
+    "LOC": {
+     "count": 21802,
+     "status": "convention"
+    }
+   },
+   "anomalyRecords": []
+  },
+  "urd": {
+   "unlisted": {},
+   "anomalyRecords": []
+  },
+  "evn": {
+   "unlisted": {
+    "PSSRS": {
+     "count": 451,
+     "status": "convention"
+    },
+    "PSSRP": {
+     "count": 248,
+     "status": "convention"
+    }
+   },
+   "anomalyRecords": []
+  },
+  "ckt": {
+   "unlisted": {
+    "ARBEB1S": {
+     "count": 1,
+     "status": "anomaly"
+    },
+    "ARBEB1P": {
+     "count": 1,
+     "status": "anomaly"
+    },
+    "ARBAB1S": {
+     "count": 1,
+     "status": "anomaly"
+    },
+    "ARBAB3S": {
+     "count": 4,
+     "status": "anomaly"
+    }
+   },
+   "anomalyRecords": [
+    {
+     "lemma": "ивык",
+     "form": "ивнин",
+     "tag": "V;IND;PST;ARGER3S;ARBEB1S"
+    },
+    {
+     "lemma": "ивык",
+     "form": "ивнинэт",
+     "tag": "V;IND;PST;ARGER3S;ARBEB1P"
+    },
+    {
+     "lemma": "йъок",
+     "form": "мытйъогъан",
+     "tag": "V;IND;PST;PFV;ARGER1P;ARBAB1S"
+    },
+    {
+     "lemma": "йъок",
+     "form": "мытрайъоӈын",
+     "tag": "V;IND;FUT;ARGER1P;ARBAB3S"
+    },
+    {
+     "lemma": "йъок",
+     "form": "йъонэн",
+     "tag": "V;IND;PST;PFV;ARGER3S;ARBAB3S"
+    },
+    {
+     "lemma": "йыток",
+     "form": "йытонэн",
+     "tag": "V;IND;PST;PFV;ARGER3S;ARBAB3S"
+    },
+    {
+     "lemma": "ринтык",
+     "form": "тынинтыгъэн",
+     "tag": "V;IND;PST;PFV;ARGER1S;ARBAB3S"
+    }
+   ]
+  },
+  "ron": {
+   "unlisted": {},
+   "anomalyRecords": []
+  }
+ },
+ "variants": {
+  "tur": {
+   "records": 0,
+   "share": 0
+  },
+  "urd": {
+   "records": 0,
+   "share": 0
+  },
+  "evn": {
+   "records": 2727,
+   "share": 23.982059625362766,
+   "example": {
+    "lemma": "ə",
+    "tag": "V.PTCP;SG",
+    "forms": [
+     "ədəŋə",
+     "əďəŋoː",
+     "əďəŋo",
+     "əďiŋəː",
+     "əďiŋə",
+     "əďiŋoː",
+     "əďiŋo",
+     "əfkiː",
+     "əfki",
+     "əfkoː",
+     "əlifkiː",
+     "əpkə",
+     "əpkiː",
+     "əpki",
+     "əpkoː",
+     "əra",
+     "ərə",
+     "əsəkoːn",
+     "əsə",
+     "əśə",
+     "əso",
+     "əśo",
+     "ət͡ʃa",
+     "ət͡ʃe",
+     "ət͡ʃə",
+     "ət͡ʃiə",
+     "əwkiː",
+     "əwkoː"
+    ]
+   }
+  },
+  "ckt": {
+   "records": 4,
+   "share": 1.6597510373443984,
+   "example": {
+    "lemma": "гым",
+    "tag": "PRO;SG;1",
+    "forms": [
+     "гым",
+     "гымо"
+    ]
+   }
+  },
+  "ron": {
+   "records": 16608,
+   "share": 20.692232937130896,
+   "example": {
+    "lemma": "grație",
+    "tag": "N;GEN/DAT;PL;DEF",
+    "forms": [
+     "grației",
+     "grațiilor"
+    ]
+   }
+  }
+ },
  "audits": {
   "ron": {
-   "checked": 22943,
-   "conflicts": 10171,
+   "checked": 23617,
+   "conflicts": 12262,
+   "byField": {
+    "Number": {
+     "checked": 22943,
+     "conflicts": 10171
+    },
+    "Gender": {
+     "checked": 4398,
+     "conflicts": 2822
+    }
+   },
    "byCue": {
+    "definite adjective ending “-a” is feminine singular": 731,
     "definite plural ending “-ii”": 731,
+    "definite plural ending “-ii” is masculine": 731,
+    "definite genitive/dative ending “-ei” is feminine singular": 686,
+    "adjective ending “-ă” is feminine singular": 674,
     "ending “-lor” is plural": 1004,
     "feminine definite article “-a” is singular": 1174,
     "definite genitive/dative ending “-ei” is singular": 677,
@@ -6334,8 +6516,17 @@
    "examples": [
     {
      "lemma": "gravat",
+     "form": "gravata",
+     "tag": "ADJ;NOM/ACC;NEUT;SG;DEF",
+     "field": "Gender",
+     "expected": "FEM",
+     "cue": "definite adjective ending “-a” is feminine singular"
+    },
+    {
+     "lemma": "gravat",
      "form": "gravații",
      "tag": "ADJ;NOM/ACC;FEM;SG;DEF",
+     "field": "Number",
      "expected": "PL",
      "cue": "definite plural ending “-ii”"
     },
@@ -6343,6 +6534,7 @@
      "lemma": "gravitate",
      "form": "gravitatea",
      "tag": "N;NOM/ACC;PL;DEF",
+     "field": "Number",
      "expected": "SG",
      "cue": "feminine definite article “-a” is singular"
     },
@@ -6350,13 +6542,23 @@
      "lemma": "gravitație",
      "form": "gravitației",
      "tag": "N;GEN/DAT;PL;DEF",
+     "field": "Number",
      "expected": "SG",
      "cue": "definite genitive/dative ending “-ei” is singular"
     },
     {
      "lemma": "gravitațional",
+     "form": "gravitaționala",
+     "tag": "ADJ;NOM/ACC;NEUT;SG;DEF",
+     "field": "Gender",
+     "expected": "FEM",
+     "cue": "definite adjective ending “-a” is feminine singular"
+    },
+    {
+     "lemma": "gravitațional",
      "form": "gravitaționalii",
      "tag": "ADJ;NOM/ACC;FEM;SG;DEF",
+     "field": "Number",
      "expected": "PL",
      "cue": "definite plural ending “-ii”"
     },
@@ -6364,6 +6566,7 @@
      "lemma": "grație",
      "form": "grației",
      "tag": "N;GEN/DAT;PL;DEF",
+     "field": "Number",
      "expected": "SG",
      "cue": "definite genitive/dative ending “-ei” is singular"
     },
@@ -6371,6 +6574,7 @@
      "lemma": "greață",
      "form": "unor grețuri",
      "tag": "N;GEN/DAT;SG;INDF",
+     "field": "Number",
      "expected": "PL",
      "cue": "indefinite article “unor” is plural"
     },
@@ -6378,6 +6582,7 @@
      "lemma": "greblă",
      "form": "greblei",
      "tag": "N;GEN/DAT;PL;DEF",
+     "field": "Number",
      "expected": "SG",
      "cue": "definite genitive/dative ending “-ei” is singular"
     },
@@ -6385,22 +6590,25 @@
      "lemma": "grec",
      "form": "grecului",
      "tag": "N;GEN/DAT;PL;DEF",
+     "field": "Number",
      "expected": "SG",
      "cue": "definite ending “-lui” is singular"
     },
     {
      "lemma": "grecesc",
-     "form": "greceștii",
-     "tag": "ADJ;NOM/ACC;FEM;SG;DEF",
-     "expected": "PL",
-     "cue": "definite plural ending “-ii”"
+     "form": "greceasca",
+     "tag": "ADJ;NOM/ACC;NEUT;SG;DEF",
+     "field": "Gender",
+     "expected": "FEM",
+     "cue": "definite adjective ending “-a” is feminine singular"
     },
     {
-     "lemma": "grecoaică",
-     "form": "grecoaicei",
-     "tag": "N;GEN/DAT;PL;DEF",
-     "expected": "SG",
-     "cue": "definite genitive/dative ending “-ei” is singular"
+     "lemma": "grecesc",
+     "form": "greceștii",
+     "tag": "ADJ;NOM/ACC;FEM;SG;DEF",
+     "field": "Number",
+     "expected": "PL",
+     "cue": "definite plural ending “-ii”"
     }
    ]
   }

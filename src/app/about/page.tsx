@@ -3,7 +3,8 @@ import { Download, ExternalLink } from "lucide-react";
 import { Container } from "@/components/AppShell";
 import { experiment, findingSentences } from "@/data/experiments";
 import { languages } from "@/data/languages";
-import { auditFor, qualityNotes, sourceFor, statsFor } from "@/data/unimorph";
+import { auditFor, qualityNotes, schemaFor, sourceFor, statsFor } from "@/data/unimorph";
+import { VERSION } from "@/data/version";
 
 export const metadata: Metadata = { title: "Methodology" };
 
@@ -24,6 +25,9 @@ const references = [
   "Cotterell, R. et al. (2017). CoNLL-SIGMORPHON 2017 Shared Task: Universal Morphological Reinflection in 52 Languages.",
   "Goldman, O., Guriel, D. & Tsarfaty, R. (2022). (Un)solving Morphological Inflection: Lemma Overlap Artificially Inflates Models’ Performance. Proceedings of ACL 2022.",
   "Pimentel, T., Ryskina, M. et al. (2021). SIGMORPHON 2021 Shared Task on Morphological Reinflection: Generalization Across Languages.",
+  "McCarthy, A. D. et al. (2018). Marrying Universal Dependencies and Universal Morphology. UDW 2018.",
+  "Kazakevich, O. A. & Klyachko, E. L. (2013). Создание мультимедийного аннотированного корпуса текстов как исследовательская процедура [Creating a multimedia annotated text corpus as a research procedure].",
+  "Dunn, M. (1999). A Grammar of Chukchi. PhD thesis, Australian National University.",
   "Vylomova, E. et al. (2020). SIGMORPHON 2020 Shared Task 0: Typologically Diverse Morphological Inflection.",
   "Tyers, F. & Mishchenkova, K. (2020). Dependency annotation of noun incorporation in polysynthetic languages. UDW 2020.",
   "Göksel, A. & Kerslake, C. (2005). Turkish: A Comprehensive Grammar. Routledge.",
@@ -33,7 +37,7 @@ const references = [
 const bibtex = `@misc{morpholens,
   title        = {MorphoLens: Exploring Morphological Generalisation to Unseen Lemmas},
   howpublished = {\\url{https://morpholens-app.vercel.app}},
-  note         = {Version 0.3. Data: UniMorph tur, urd, evn, ckt, ron at pinned commits},
+  note         = {Version ${VERSION}. Data: UniMorph tur, urd, evn, ckt, ron at pinned commits},
   year         = {2026}
 }`;
 
@@ -47,6 +51,9 @@ export default function AboutPage() {
   const c = experiment.config;
   const findings = findingSentences();
   const ronAudit = auditFor("ron");
+  const schemaRows = languages.flatMap((l) =>
+    Object.entries(schemaFor(l.id)?.unlisted ?? {}).map(([atom, v]) => ({ lang: l.name, atom, ...v })),
+  );
   return (
     <Container className="pt-12">
       <header className="mb-8 max-w-3xl">
@@ -113,8 +120,9 @@ export default function AboutPage() {
           </table>
         </div>
         <p className="text-sm">
-          Counts are after removing duplicate lines. Ten hand-annotated Turkish and Urdu entries add gold morpheme
-          segmentation, which UniMorph does not provide; each is labelled by whether UniMorph attests it.
+          Counts are after removing duplicate lines. A small set of hand-annotated entries (Turkish, Urdu and one Chukchi perfect) adds
+          morpheme segmentation, which UniMorph does not provide. These were annotated by the MorphoLens author following the cited sources and
+          have not been expert-reviewed; each is labelled by whether UniMorph stores the form.
         </p>
       </Section>
 
@@ -152,15 +160,53 @@ export default function AboutPage() {
           <li><strong>No split</strong>: suppletive forms that share nothing with the lemma (Romanian <em>fă</em> of <em>face</em>).</li>
         </ul>
         <p>
-          Gold segmentations exist only for the hand-annotated Turkish and Urdu entries and carry the label <em>Gold segmentation</em>.
+          Hand segmentations exist only for the hand-annotated entries and carry the label <em>Hand segmentation</em>. They were made by the
+          MorphoLens author following the cited sources and have not been expert-reviewed.
         </p>
         <p>
-          <strong className="text-bush">Difficulty tags</strong> say where they come from. <em>Data</em> is read from stored records (syncretism: one form
-          stored under several bundles; variant forms; multi-word forms). <em>Heuristic</em> is inferred by MorphoLens: <em>allomorphy</em> means a stem
+          <strong className="text-bush">Multiple analyses</strong> is the generic case of one string stored more than once. MorphoLens separates it
+          into <em>syncretism</em> (the same lemma and part of speech has the same form in different paradigm cells) and <em>cross-category
+          ambiguity</em> (the same string under a different part of speech of the lemma, or under a different lemma). The distinction matters for
+          corpus-derived data such as Evenki, where participles, converbs and finite forms of one lemma can coincide.
+        </p>
+        <p>
+          <strong className="text-bush">Difficulty tags</strong> say where they come from. <em>Data</em> is read from stored records (syncretism,
+          cross-category ambiguity, variant forms, multi-word forms). <em>Heuristic</em> is inferred by MorphoLens: <em>allomorphy</em> means a stem
           variant with one alternating segment (casă ~ case-), <em>stem change</em> means lemma material is replaced or removed without a single
-          consistent alternation. <em>Gold</em> comes from hand annotation, and <em>experiment</em> tags (unseen lemma, rare feature) only make sense
+          consistent alternation. <em>Hand</em> comes from hand annotation, and <em>experiment</em> tags (unseen lemma, rare feature) only make sense
           relative to a train/test split.
         </p>
+        <p>
+          <strong className="text-bush">Tag validation.</strong> Every tag atom is checked against the union of the two published UniMorph feature
+          lists (unimorph-schema-json and um-canonicalize). Atoms missing from both are reported per dataset: frequent ones are dataset conventions and
+          kept; rare ones that fit no template are anomalies, stored verbatim, flagged and excluded from the experiment.
+        </p>
+        {schemaRows.length > 0 && (
+          <div className="overflow-x-auto rounded-lg border border-line">
+            <table className="w-full min-w-[34rem] text-sm">
+              <thead className="bg-oak/70 text-left text-bush">
+                <tr>
+                  <th className="px-3 py-2">Language</th>
+                  <th className="px-3 py-2">Tag</th>
+                  <th className="px-3 py-2 text-right">Records</th>
+                  <th className="px-3 py-2">Treatment</th>
+                </tr>
+              </thead>
+              <tbody className="bg-ivory/70">
+                {schemaRows.map((r) => (
+                  <tr key={r.lang + r.atom} className="border-t border-line">
+                    <td className="px-3 py-2">{r.lang}</td>
+                    <td className="px-3 py-2 font-mono text-xs">{r.atom}</td>
+                    <td className="px-3 py-2 text-right font-mono text-xs">{r.count.toLocaleString("en")}</td>
+                    <td className={`px-3 py-2 text-xs ${r.status === "anomaly" ? "text-sienna" : "text-muted"}`}>
+                      {r.status === "anomaly" ? "Anomaly: fits no template; flagged, excluded from the experiment" : "Convention: used systematically; kept"}
+                    </td>
+                  </tr>
+                ))}
+              </tbody>
+            </table>
+          </div>
+        )}
         <p>
           <strong className="text-bush">Several analyses for one form</strong> are all shown. None is marked primary, because MorphoLens has no
           corpus frequencies; they are listed by how many records in the full file carry each bundle, so Romanian <em>caselor</em> lists
@@ -169,25 +215,47 @@ export default function AboutPage() {
         <p>
           <strong className="text-bush">Record audit.</strong> For Romanian nouns and adjectives, the Number tag is compared with unambiguous
           cues: indefinite articles (o, un, unei, unui are singular; niște, unor are plural) and definite endings (-lui, -ul, genitive/dative
-          -ei and feminine -a are singular; -lor and nominative -ii are plural), only when the ending is not already part of the lemma.
-          {ronAudit && (
-            <> Of {ronAudit.checked.toLocaleString("en")} records with such a cue, {ronAudit.conflicts.toLocaleString("en")} ({((100 * ronAudit.conflicts) / ronAudit.checked).toFixed(0)}%) conflict with their tag.</>
+          -ei and feminine -a are singular; -lor and nominative -ii are plural). For adjectives, the Gender tag is compared with endings that are
+          unambiguous for gender (-ă, definite -a and genitive/dative -ei are feminine singular; definite -ul(ui) is masculine or neuter singular;
+          definite -ii is masculine plural; neuter adjectives agree like masculines in the singular, so -ă is never neuter). A cue only counts when
+          the ending is not already part of the lemma.
+          {ronAudit?.byField.Number && (
+            <>
+              {" "}Number: {ronAudit.byField.Number.conflicts.toLocaleString("en")} of {ronAudit.byField.Number.checked.toLocaleString("en")} cue-bearing records conflict (
+              {((100 * ronAudit.byField.Number.conflicts) / ronAudit.byField.Number.checked).toFixed(0)}%).
+            </>
+          )}
+          {ronAudit?.byField.Gender && (
+            <>
+              {" "}Adjective Gender: {ronAudit.byField.Gender.conflicts.toLocaleString("en")} of {ronAudit.byField.Gender.checked.toLocaleString("en")} (
+              {((100 * ronAudit.byField.Gender.conflicts) / ronAudit.byField.Gender.checked).toFixed(0)}%).
+            </>
           )}{" "}
-          Conflicting records are flagged in the explorer and paradigm tables and shown exactly as stored. Records without a cue are not
-          checked, so an unflagged record is not thereby confirmed.
+          Conflicting records are flagged in the explorer and paradigm tables, shown exactly as stored, and kept out of comparisons. Records without a
+          cue are not checked, so an unflagged record is not thereby confirmed, and other dimensions are not audited.
         </p>
       </Section>
 
       <Section n="05" title="Experiment design">
         <p>
           The task is morphological inflection: predict the form for a (lemma, feature bundle) pair. Metrics: exact-match
-          accuracy and mean Levenshtein distance to the gold form. For each of {c.seeds.length} seeds a universe of up to
+          accuracy and mean Levenshtein distance to the stored form. For each of {c.seeds.length} seeds a universe of up to
           ~{c.universeTarget.toLocaleString("en")} triples is sampled ({c.cellsPerLemma} cells per lemma at most). The random split holds out items; the lemma-disjoint
           split holds out whole lemmas. Test sets hold up to {c.testMax} items; training sizes are {c.sizes.join(", ")}. Both splits use the same universe.
         </p>
         <p>
           Differences between systems are tested with a paired bootstrap ({c.bootstrap.toLocaleString("en")} resamples) over the test items pooled across
           seeds; we report the difference in accuracy points, its 95% interval and a two-sided p-value.
+        </p>
+        <p>
+          Every result is reported with two exact-match scores. <em>Strict</em> requires the stored form of the test record. <em>Variant-aware</em>
+          accepts any form stored for the same lemma and bundle, because oral Evenki in particular has many dialectal and transcription variants per
+          cell: Pimentel et al. (2021) note Evenki outputs that are practically correct but belong to a different dialect.
+        </p>
+        <p>
+          Data preparation: records with anomalous non-schema tags are excluded (7 Chukchi records). Romanian is evaluated on verbs only, because its
+          noun and adjective Number and Gender tags are unreliable; the same design on all Romanian records is reported separately as a raw run and
+          is not used for claims.
         </p>
       </Section>
 
@@ -234,12 +302,12 @@ export default function AboutPage() {
       <Section n="09" title="Limitations">
         <ul className="list-disc space-y-2 pl-5">
           <li>No neural models yet; conclusions apply to these rule-based systems only.</li>
-          <li>Exact match treats UniMorph variants (several forms for one cell) as errors; edit distance is reported as a complement.</li>
+          <li>Strict exact match treats stored variants (several forms for one cell) as errors; variant-aware accuracy and edit distance are reported alongside it.</li>
           <li>Bootstrap intervals treat pooled test items as independent; items from different seeds can overlap.</li>
-          <li>Surface alignments for UniMorph forms are automatic and handle one alternating stem segment at most; they are not gold morpheme boundaries, and exponents are never attributed to individual features.</li>
-          <li>The record audit covers Romanian Number only, and only records with an unambiguous cue.</li>
+          <li>Surface alignments for UniMorph forms are automatic and handle one alternating stem segment at most; they are not morpheme boundaries, and exponents are never attributed to individual features.</li>
+          <li>The record audit covers Romanian Number and adjective Gender only, and only records with an unambiguous cue; other dimensions are not audited.</li>
           <li>Turkish nouns and adjectives in UniMorph are Wiktionary-derived and unverified (per its README); Romanian noun labels show systematic issues.</li>
-          <li>Evenki data is in Latin transcription and sparse per lemma; Chukchi has 241 triples.</li>
+          <li>Evenki data is in IPA transcription from an oral corpus, sparse per lemma and rich in variants; Chukchi has 241 corpus-derived records (234 after excluding non-schema tags), mostly citation forms.</li>
           <li>Urdu romanisation in hand-annotated entries is simplified; Nastaliq rendering depends on the font.</li>
         </ul>
       </Section>

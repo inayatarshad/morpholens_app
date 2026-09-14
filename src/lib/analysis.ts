@@ -1,9 +1,10 @@
 import { entries as curated } from "@/data/morphology";
-import { sourceFor, unimorph, type Triple } from "@/data/unimorph";
+import { schemaFor, sourceFor, unimorph, type Triple } from "@/data/unimorph";
 import { bundleGloss, posLabel, readableFeatures } from "@/data/unimorph-features";
 import type { Attestation, DifficultyTag, LanguageId, Morpheme, MorphologicalEntry, ParadigmEntry, TagSource } from "@/data/types";
-import { auditRecord, type AuditResult } from "./audit";
+import { auditAll, type AuditResult } from "./audit";
 import { canonical, loose } from "./lookup";
+import { atomStatus, unlistedAtoms } from "./schema";
 import { alignSurface, alignmentSegments, headWord, type SurfaceAlignment } from "./stem";
 
 export type Provenance = {
@@ -21,6 +22,8 @@ export type Provenance = {
   record?: string;
 };
 
+export type SchemaIssue = { atom: string; status: "convention" | "anomaly"; count: number };
+
 /** One analysis of one surface form: the single shape every view renders. */
 export type Analysis = {
   id: string;
@@ -36,8 +39,10 @@ export type Analysis = {
   segmentation: "hand" | "auto";
   /** Automatic surface alignment (UniMorph analyses only). */
   alignment?: SurfaceAlignment;
-  /** Consistency audit of the source record (null = no rule applies). */
-  audit?: AuditResult | null;
+  /** Every audit finding that applies to the source record (consistent or conflicting). */
+  audits: AuditResult[];
+  /** Tag atoms that are not in the published UniMorph schema lists. */
+  schemaIssues: SchemaIssue[];
   gloss?: string;
   translation?: string;
   paradigm: ParadigmEntry[];
@@ -50,6 +55,8 @@ export type Analysis = {
   difficultySources: Partial<Record<DifficultyTag, TagSource>>;
   provenance: Provenance;
 };
+
+export const conflictsOf = (a: { audits: AuditResult[] }) => a.audits.filter((x) => x.conflict);
 
 export function fromCurated(e: MorphologicalEntry): Analysis {
   const tags = e.difficulty ?? [];
@@ -65,6 +72,8 @@ export function fromCurated(e: MorphologicalEntry): Analysis {
     features: e.features,
     morphemes: e.morphemes,
     segmentation: "hand",
+    audits: [],
+    schemaIssues: [],
     gloss: e.gloss,
     translation: e.translation,
     paradigm: e.paradigm ?? [],
@@ -80,8 +89,8 @@ export function fromCurated(e: MorphologicalEntry): Analysis {
       upstream: e.source,
       verification:
         e.attestation === "unimorph"
-          ? "Segmentation hand-annotated from the cited grammar; the same form and bundle are also stored in UniMorph."
-          : "Hand-annotated from the cited grammar; this form is not stored in UniMorph.",
+          ? "Segmentation hand-annotated by the MorphoLens author following the cited source, not expert-reviewed; the same form and bundle are also stored in UniMorph."
+          : "Hand-annotated by the MorphoLens author following the cited grammar, not expert-reviewed; this form is not stored in UniMorph.",
       note: e.note,
     },
   };
@@ -93,22 +102,41 @@ const primaryPos = (tag: string) => {
   return p === "V.PTCP" || p === "V.CVB" || p === "V.MSDR" ? "V" : p;
 };
 
-function conflictText(a: AuditResult): string {
-  return `Source tag ${a.source}; ${a.cue}, which suggests ${a.expected}.`;
+/** Unlisted tag atoms with their dataset-level classification. */
+export function schemaIssuesOf(lang: LanguageId, tag: string): SchemaIssue[] {
+  const summary = schemaFor(lang);
+  return unlistedAtoms(tag).map((atom) => {
+    const count = summary?.unlisted[atom]?.count ?? 0;
+    return { atom, count, status: summary?.unlisted[atom]?.status ?? (atomStatus(atom, count) === "convention" ? "convention" : "anomaly") };
+  });
 }
 
-/** Paradigm rows with automatic alignment and audit flags. */
+const flagged = (lang: LanguageId, c: Triple) =>
+  auditAll(lang, c.lemma, c.form, c.tag).some((x) => x.conflict) || schemaIssuesOf(lang, c.tag).some((s) => s.status === "anomaly");
+
+function conflictText(lang: LanguageId, c: Triple): string | undefined {
+  const parts = [
+    ...auditAll(lang, c.lemma, c.form, c.tag)
+      .filter((x) => x.conflict)
+      .map((x) => `${x.field}: source ${x.source}; ${x.cue}, which suggests ${x.expected}.`),
+    ...schemaIssuesOf(lang, c.tag)
+      .filter((s) => s.status === "anomaly")
+      .map((s) => `Non-schema tag ${s.atom}, stored verbatim.`),
+  ];
+  return parts.length ? parts.join(" ") : undefined;
+}
+
+/** Paradigm rows with automatic alignment and audit / schema flags. */
 export function paradigmRows(cells: Triple[], lang: LanguageId): ParadigmEntry[] {
   const heads = cells.map((c) => headWord(c.form, c.lemma));
   return cells.map((c) => {
     const al = alignSurface(c.lemma, c.form, lang, primaryPos(c.tag), heads);
-    const au = auditRecord(lang, c.lemma, c.form, c.tag);
     return {
       surface: c.form,
       features: readableFeatures(c.tag),
       tag: c.tag,
       segmentation: al.confidence === "none" ? [c.form] : alignmentSegments(al),
-      conflict: au?.conflict ? conflictText(au) : undefined,
+      conflict: conflictText(lang, c),
     };
   });
 }
@@ -171,7 +199,8 @@ export function fromTriple(lang: LanguageId, t: Triple, cells?: Triple[], bundle
   const list = cells ?? sample(lang).filter((c) => c.lemma === t.lemma);
   const heads = list.map((c) => headWord(c.form, c.lemma));
   const al = alignSurface(t.lemma, t.form, lang, primaryPos(t.tag), heads);
-  const audit = auditRecord(lang, t.lemma, t.form, t.tag);
+  const audits = auditAll(lang, t.lemma, t.form, t.tag);
+  const schemaIssues = schemaIssuesOf(lang, t.tag);
   const difficulty: DifficultyTag[] = [];
   const notes: Partial<Record<DifficultyTag, string>> = {};
   const sources: Partial<Record<DifficultyTag, TagSource>> = {};
@@ -181,13 +210,16 @@ export function fromTriple(lang: LanguageId, t: Triple, cells?: Triple[], bundle
     notes[tag] = note;
   };
 
-  const others = [...new Set(list.filter((c) => c.form === t.form && c.tag !== t.tag).map((c) => c.tag))];
-  if (others.length) add("SYNCRETISM", "data", `The same form of “${t.lemma}” is also stored as ${others.slice(0, 6).join(", ")}${others.length > 6 ? ` and ${others.length - 6} more` : ""}.`);
-  // Other forms under the same bundle count as variants only if the audit does not flag them
-  // as mislabelled (e.g. Romanian casei is stored as PL but is singular).
-  const sameBundle = list.filter((c) => c.tag === t.tag && c.form !== t.form);
-  const variants = sameBundle.filter((c) => !auditRecord(lang, c.lemma, c.form, c.tag)?.conflict).map((c) => c.form);
-  if (variants.length) add("ORTHOGRAPHIC_VARIATION", "data", `Other forms stored for the same bundle: ${variants.slice(0, 4).join(", ")}.`);
+  const pos = primaryPos(t.tag);
+  const sameForm = list.filter((c) => c.form === t.form && c.tag !== t.tag);
+  const syncretic = [...new Set(sameForm.filter((c) => primaryPos(c.tag) === pos).map((c) => c.tag))];
+  const crossPos = [...new Set(sameForm.filter((c) => primaryPos(c.tag) !== pos).map((c) => c.tag))];
+  if (syncretic.length) add("SYNCRETISM", "data", `The same lemma and part of speech also has this form in ${syncretic.slice(0, 6).join(", ")}${syncretic.length > 6 ? ` and ${syncretic.length - 6} more` : ""}.`);
+  if (crossPos.length) add("HOMONYMY", "data", `The same string is also stored for “${t.lemma}” under another part of speech: ${crossPos.slice(0, 4).join(", ")}.`);
+  // Other forms under the same bundle count as variants only if they are not flagged as
+  // mislabelled (e.g. Romanian casei is stored as PL but is singular).
+  const variants = list.filter((c) => c.tag === t.tag && c.form !== t.form && !flagged(lang, c)).map((c) => c.form);
+  if (variants.length) add("ORTHOGRAPHIC_VARIATION", "data", `${variants.length} other form${variants.length > 1 ? "s" : ""} stored for the same lemma and bundle: ${variants.slice(0, 6).join(", ")}${variants.length > 6 ? " …" : ""}.`);
   if (/\s/.test(t.form) && !/\s/.test(t.lemma)) add("PERIPHRASIS", "data", "Stored as a multi-word form.");
   if (al.method === "stem-variant" || al.method === "ending-replacement") {
     add("ALLOMORPHY", "heuristic", `Stem alternation ${al.alternation?.from} → ${al.alternation?.to} (${al.lemmaHead} ~ ${al.stem}-)${al.support.length ? `, recurring in ${al.support.length} other form${al.support.length > 1 ? "s" : ""}` : ""}.`);
@@ -207,7 +239,8 @@ export function fromTriple(lang: LanguageId, t: Triple, cells?: Triple[], bundle
     morphemes: morphemesFor(t, al),
     segmentation: "auto",
     alignment: al,
-    audit,
+    audits,
+    schemaIssues,
     gloss: bundleGloss(t.tag),
     paradigm: paradigmRows(list, lang),
     paradigmScope: cells ? "full" : "sample",
@@ -227,6 +260,23 @@ export function fromTriple(lang: LanguageId, t: Triple, cells?: Triple[], bundle
       record: `${t.lemma}\t${t.form}\t${t.tag}`,
     },
   };
+}
+
+/** When one string is stored under several lemmas, mark each UniMorph analysis as homographic. */
+export function markCrossLemma(analyses: Analysis[]): Analysis[] {
+  const lemmas = [...new Set(analyses.filter((a) => a.segmentation === "auto").map((a) => a.lemma))];
+  if (lemmas.length < 2) return analyses;
+  return analyses.map((a) => {
+    if (a.segmentation !== "auto") return a;
+    const others = lemmas.filter((l) => l !== a.lemma);
+    const note = `The same string is also stored under the lemma${others.length > 1 ? "s" : ""} ${others.join(", ")} (homography).`;
+    return {
+      ...a,
+      difficulty: a.difficulty.includes("HOMONYMY") ? a.difficulty : [...a.difficulty, "HOMONYMY"],
+      difficultyNotes: { ...a.difficultyNotes, HOMONYMY: a.difficultyNotes.HOMONYMY ? `${a.difficultyNotes.HOMONYMY} ${note}` : note },
+      difficultySources: { ...a.difficultySources, HOMONYMY: "data" },
+    };
+  });
 }
 
 /** Hand-annotated entries matching a query (surface, romanisation or listed alias). */

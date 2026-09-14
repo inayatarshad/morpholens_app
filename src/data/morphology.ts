@@ -1,9 +1,10 @@
-import type { CuratedComparison, DifficultyTag, MorphologicalEntry, ParadigmEntry } from "./types";
+import type { ComparisonFeature, CuratedComparison, DifficultyTag, LanguageId, MorphologicalEntry, ParadigmEntry } from "./types";
 
 /**
  * HAND-ANNOTATED ENTRIES
  * ----------------------
- * A small set of forms with gold morpheme segmentation and glosses, which UniMorph does
+ * A small set of forms with hand-annotated morpheme segmentation and glosses (by the MorphoLens
+ * author, not expert-reviewed), which UniMorph does
  * not provide. Each entry was checked against the pinned UniMorph file:
  *   attestation "unimorph"  → the triple occurs in UniMorph (bundle recorded in `unimorph`)
  *   attestation "reference" → textbook pattern (cited), absent from UniMorph
@@ -12,7 +13,7 @@ import type { CuratedComparison, DifficultyTag, MorphologicalEntry, ParadigmEntr
 
 const TUR_SOURCE = "Göksel & Kerslake (2005), Turkish: A Comprehensive Grammar. Routledge.";
 const URD_SOURCE = "Schmidt (1999), Urdu: An Essential Grammar. Routledge.";
-const NOT_IN_UNIMORPH = "Lemma not present in the pinned UniMorph file; segmentation hand-annotated from the cited grammar.";
+const NOT_IN_UNIMORPH = "Lemma not present in the pinned UniMorph file; segmentation hand-annotated by the MorphoLens author from the cited grammar (not expert-reviewed).";
 
 const evParadigm: ParadigmEntry[] = [
   { surface: "ev", features: { Number: "Singular", Case: "Nominative" }, segmentation: ["ev"] },
@@ -191,7 +192,59 @@ export const entries: MorphologicalEntry[] = [
   }),
 ];
 
+entries.push({
+  id: "ckt-getejkylin",
+  languageId: "ckt",
+  surface: "гэтэйкыԓин",
+  lemma: "тэйкык",
+  pos: "VERB",
+  segmentation: ["гэ", "тэйк", "ы", "ԓин"],
+  morphemes: [
+    { form: "гэ-", gloss: "PF", meaning: "perfect (first part of the gə-…-lin circumfix)", role: "prefix" },
+    { form: "тэйк", gloss: "MAKE", meaning: "make", role: "stem" },
+    { form: "-ы-", gloss: "E", meaning: "epenthetic vowel", role: "suffix" },
+    { form: "-ԓин", gloss: "3SG", meaning: "third person singular (second part of the circumfix)", role: "suffix" },
+  ],
+  features: { Tense: "Past", Aspect: "Perfective", Person: "3SG", "Grammatical description": "Perfect" },
+  unimorph: "V;PFV;PST;SG;3",
+  gloss: "PF-make-E-3SG",
+  translation: "(s)he has made",
+  source: "Hand annotation following the glossing of perfect forms in Dunn (1999), A Grammar of Chukchi, PhD thesis, Australian National University.",
+  attestation: "unimorph",
+  note: "Stored in UniMorph ckt as V;PFV;PST;SG;3. Chukchi grammars describe the gə-…-lin construction as the perfect, so UniMorph's PFV · PST and the traditional label are shown together.",
+});
+
 export const entryById = (id: string) => entries.find((e) => e.id === id);
+
+/** Linguistic annotations that replace the automatic strategy label of a comparison example. */
+export const comparisonAnnotations: {
+  languageId: LanguageId;
+  feature: ComparisonFeature;
+  form: string;
+  strategy: string;
+  position: string;
+  note: string;
+  source: string;
+}[] = [
+  {
+    languageId: "ckt",
+    feature: "past",
+    form: "гэтэйкыԓин",
+    strategy: "Circumfix гэ-…-ԓин (perfect)",
+    position: "Both edges",
+    note: "UniMorph: PFV · PST. Grammatical description: perfect, formed with the gə-…-lin circumfix (гэ-тэйк-ы-ԓин, PF-make-E-3SG).",
+    source: "Hand annotation, cf. Dunn (1999)",
+  },
+  {
+    languageId: "ckt",
+    feature: "plural",
+    form: "ытԓыгыт",
+    strategy: "Absolutive singular -ын replaced by plural -(ы)т",
+    position: "Suffix",
+    note: "Absolutive singular ытԓыг-ын, absolutive plural ытԓыг-ыт.",
+    source: "Hand annotation",
+  },
+];
 
 /** Used only for comparison slots UniMorph cannot fill. */
 export const curatedComparisons: CuratedComparison[] = [
@@ -211,10 +264,11 @@ export const difficultyMeta: Record<DifficultyTag, { label: string; description:
   UNSEEN_LEMMA: { label: "Unseen lemma", description: "No form of this lexical item appears in training." },
   ALLOMORPHY: { label: "Allomorphy", description: "A stem variant in which one segment alternates with the citation stem (casă ~ case-, kitap ~ kitab-)." },
   RARE_FEATURE: { label: "Rare feature", description: "Feature bundle sparsely attested in training." },
-  ORTHOGRAPHIC_VARIATION: { label: "Orthographic variation", description: "Several spellings for one form (e.g. Roman Urdu)." },
+  ORTHOGRAPHIC_VARIATION: { label: "Variant forms", description: "Several forms stored for the same lemma and bundle: spelling, dialectal or transcription variants (e.g. Roman Urdu, oral Evenki)." },
   LONG_MORPHEME_CHAIN: { label: "Long morpheme chain", description: "Several features realised in a long stacked exponent." },
   CODE_SWITCHING: { label: "Code-switching", description: "Material from another language inside the word." },
-  SYNCRETISM: { label: "Syncretism", description: "One surface form realises several feature bundles." },
+  SYNCRETISM: { label: "Syncretism", description: "The same lemma and part of speech has the same form in different paradigm cells." },
+  HOMONYMY: { label: "Cross-category ambiguity", description: "The same string is also stored under a different part of speech or a different lemma (homography), not a paradigm-internal syncretism." },
   PERIPHRASIS: { label: "Periphrasis", description: "The bundle is realised with more than one word." },
   STEM_CHANGE: { label: "Stem change", description: "Lemma material is replaced or removed, but no single consistent alternation was found." },
 };

@@ -19,13 +19,13 @@ export function VerificationBadge({ status, compact = false }: { status: Attesta
   );
 }
 
-export function GoldBadge() {
+export function HandBadge() {
   return (
     <span
-      title="Morpheme boundaries annotated by hand from the cited grammar."
+      title="Morpheme boundaries annotated by the MorphoLens author following the cited source; not expert-reviewed."
       className="inline-flex items-center rounded-sm border border-oak bg-oak/40 px-1.5 py-0.5 font-mono text-[0.62rem] font-semibold tracking-[0.12em] text-bush"
     >
-      GOLD SEGMENTATION
+      HAND SEGMENTATION
     </span>
   );
 }

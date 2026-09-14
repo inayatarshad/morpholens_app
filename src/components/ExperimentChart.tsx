@@ -14,20 +14,21 @@ import {
   XAxis,
   YAxis,
 } from "recharts";
-import { getCell, sizesFor, systemOrder, systems } from "@/data/experiments";
-import type { ExperimentSplit, LanguageId } from "@/data/types";
+import { getCell, sizesFor, summaryOf, systemOrder, systems, type Metric } from "@/data/experiments";
+import type { ExperimentSplit } from "@/data/types";
 import { StatusTag } from "./ResearchBadge";
 
 const C = { bush: "#102e28", line: "rgba(16,46,40,0.12)", muted: "#6f6a60" };
 const tooltipStyle = { background: "#f6f1e7", border: "1px solid rgba(16,46,40,0.2)", borderRadius: 8, fontSize: 12 };
 
-export function ExperimentChart({ lang, split, size }: { lang: LanguageId; split: ExperimentSplit; size: number }) {
+export function ExperimentChart({ lang, split, size, metric }: { lang: string; split: ExperimentSplit; size: number; metric: Metric }) {
   const data = (["random", "lemma-disjoint"] as ExperimentSplit[]).map((s) => {
     const cell = getCell(lang, s, size);
     const row: Record<string, string | number> = { split: s === "random" ? "Random split" : "Lemma-disjoint split", key: s };
     for (const m of systemOrder) {
-      row[m] = cell?.systems[m].mean ?? 0;
-      row[`${m}Err`] = cell?.systems[m].std ?? 0;
+      const sum = cell ? summaryOf(cell, m, metric) : undefined;
+      row[m] = sum?.mean ?? 0;
+      row[`${m}Err`] = sum?.std ?? 0;
     }
     return row;
   });
@@ -36,7 +37,7 @@ export function ExperimentChart({ lang, split, size }: { lang: LanguageId; split
     <div className="rounded-2xl border border-line bg-ivory/80 p-6">
       <div className="flex flex-wrap items-center justify-between gap-2">
         <p className="eyebrow">Accuracy by evaluation split · n = {size}</p>
-        <StatusTag label="MEASURED · 5 SEEDS" />
+        <StatusTag label={`MEASURED · 5 SEEDS · ${metric === "strict" ? "STRICT" : "VARIANT-AWARE"}`} />
       </div>
       <div className="mt-4 h-[320px] w-full">
         <ResponsiveContainer width="100%" height="100%">
@@ -65,21 +66,21 @@ export function ExperimentChart({ lang, split, size }: { lang: LanguageId; split
           </BarChart>
         </ResponsiveContainer>
       </div>
-      <p className="mt-2 text-xs text-muted">Bars: mean exact-match accuracy; whiskers: ±1 s.d. across seeds. The selected split is shown at full opacity.</p>
+      <p className="mt-2 text-xs text-muted">Bars: mean accuracy; whiskers: ±1 s.d. across seeds. The selected split is shown at full opacity.</p>
     </div>
   );
 }
 
-export function LearningCurve({ lang, split }: { lang: LanguageId; split: ExperimentSplit }) {
+export function LearningCurve({ lang, split, metric }: { lang: string; split: ExperimentSplit; metric: Metric }) {
   const data = sizesFor(lang).map((n) => {
     const cell = getCell(lang, split, n);
-    return { n, ...Object.fromEntries(systemOrder.map((m) => [m, cell?.systems[m].mean ?? null])) };
+    return { n, ...Object.fromEntries(systemOrder.map((m) => [m, cell ? summaryOf(cell, m, metric).mean : null])) };
   });
   return (
     <div className="rounded-2xl border border-line bg-ivory/80 p-6">
       <div className="flex flex-wrap items-center justify-between gap-2">
         <p className="eyebrow">Learning curve · {split}</p>
-        <StatusTag label="MEASURED" />
+        <StatusTag label={metric === "strict" ? "MEASURED · STRICT" : "MEASURED · VARIANT-AWARE"} />
       </div>
       <div className="mt-4 h-[240px] w-full">
         <ResponsiveContainer width="100%" height="100%">

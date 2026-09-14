@@ -34,7 +34,7 @@ export function PredictionExample({ lang, split }: { lang: LanguageId; split: Ex
             <thead className="text-left text-xs text-muted">
               <tr>
                 <th className="py-2 pr-3 font-medium">Lemma · bundle</th>
-                <th className="py-2 pr-3 font-medium">Gold</th>
+                <th className="py-2 pr-3 font-medium">Stored form</th>
                 {systemOrder.map((m) => (
                   <th key={m} className="py-2 pr-3 font-medium">{systems[m].name}</th>
                 ))}
@@ -44,7 +44,7 @@ export function PredictionExample({ lang, split }: { lang: LanguageId; split: Ex
               {ex.items.map((it, i) => (
                 <tr key={i} className="border-t border-line align-top">
                   <td className="py-2.5 pr-3">
-                    <span className={`${cls} text-bush`}>{it.lemma}</span>
+                    <bdi className={`${cls} text-bush`}>{it.lemma}</bdi>
                     <span className="block font-mono text-[0.62rem] text-muted">{it.tag}</span>
                     <span className="mt-1 flex flex-wrap gap-1">
                       <span className="rounded-sm bg-cashmere px-1 text-[0.6rem] text-muted">{kindLabel[it.kind]}</span>
@@ -52,15 +52,20 @@ export function PredictionExample({ lang, split }: { lang: LanguageId; split: Ex
                       {!it.bundleSeen && <span className="rounded-sm bg-burgundy/10 px-1 text-[0.6rem] text-burgundy">unseen bundle</span>}
                     </span>
                   </td>
-                  <td className={`py-2.5 pr-3 ${cls} text-bush`}>{it.gold}</td>
+                  <td className={`py-2.5 pr-3 ${cls} text-bush`}>
+                    <bdi>{it.gold}</bdi>
+                    {it.alt.length > 0 && <span className="block font-sans text-[0.62rem] text-muted">also stored: {it.alt.join(", ")}</span>}
+                  </td>
                   {systemOrder.map((m) => {
-                    const ok = it[m] === it.gold;
+                    const strict = it[m] === it.gold;
+                    const variant = !strict && it.alt.includes(it[m]);
                     return (
-                      <td key={m} className={`py-2.5 pr-3 ${cls} ${ok ? "text-bush" : "text-burgundy"}`}>
+                      <td key={m} className={`py-2.5 pr-3 ${cls} ${strict || variant ? "text-bush" : "text-burgundy"}`}>
                         <span className="inline-flex items-start gap-1">
-                          {ok ? <Check size={14} className="mt-1 shrink-0 text-bush" /> : <X size={14} className="mt-1 shrink-0 text-burgundy" />}
-                          <span className={ok ? "" : "line-through decoration-1"}>{it[m]}</span>
+                          {strict || variant ? <Check size={14} className="mt-1 shrink-0 text-bush" /> : <X size={14} className="mt-1 shrink-0 text-burgundy" />}
+                          <bdi className={strict || variant ? "" : "line-through decoration-1"}>{it[m]}</bdi>
                         </span>
+                        {variant && <span className="block font-sans text-[0.6rem] text-sienna">stored variant (variant-aware only)</span>}
                       </td>
                     );
                   })}
