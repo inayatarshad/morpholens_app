@@ -355,15 +355,6 @@ npm run experiment:neural   # PyTorch (CPU), 2 neural systems → experiments/ne
 npm run experiment     # 5 languages × 2 splits × 5 sizes × 5 seeds (+ bootstrap)
 npm test               # regression checks: alignment, audit, matching
 npm run dev`}</pre>
-        <p className="text-sm text-muted">
-          Last run: {new Date(experiment.generatedAt).toISOString().slice(0, 10)} · Node {experiment.node} · {experiment.runtimeSeconds}s
-          {experiment.neural && (
-            <>
-              {" "}· neural models: PyTorch {experiment.neural.torch} on CPU, {(experiment.neural.trainSeconds / 3600).toFixed(1)} CPU-hours of training
-            </>
-          )}
-          . Re-running <code>npm run experiment</code> reproduces the shipped results exactly from the committed neural predictions.
-        </p>
       </Section>
     </Container>
   );
