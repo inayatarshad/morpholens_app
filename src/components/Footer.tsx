@@ -25,7 +25,7 @@ export function Footer() {
           <p className="eyebrow !text-ivory/50">Integrity</p>
           <p className="mt-3">
             Forms come from pinned UniMorph commits or cited grammars, each with a verbatim evidence record. Results are
-            measured with transparent rule-based systems; neural comparisons are future work.
+            measured with transparent rule-based systems and PyTorch neural models trained on the same splits.
           </p>
         </div>
       </div>
