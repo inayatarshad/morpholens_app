@@ -20,20 +20,21 @@ export type Person = {
   email?: string;
 };
 
+/** Display order on the site. */
 export const team: Person[] = [
-  {
-    name: "Inayat Arshad",
-    citationName: "Arshad, Inayat",
-    role: "Design, implementation and experiments",
-    affiliation: "PIEAS",
-    email: "bscs2248@pieas.edu.pk",
-  },
   {
     name: "Ekaterina Vylomova",
     citationName: "Vylomova, Ekaterina",
     role: "Supervision",
     affiliation: "University of Melbourne",
     email: "ekaterina.vylomova@unimelb.edu.au",
+  },
+  {
+    name: "Inayat Arshad",
+    citationName: "Arshad, Inayat",
+    role: "Design, implementation and experiments",
+    affiliation: "PIEAS",
+    email: "bscs2248@pieas.edu.pk",
   },
   {
     name: "David Samuel Setiawan",
@@ -44,4 +45,10 @@ export const team: Person[] = [
   },
 ];
 
-export const citationAuthors = team.map((p) => p.citationName).join(" and ");
+/**
+ * Citation order, which is not the display order: the citation keeps the first author first.
+ */
+const citationOrder = ["Inayat Arshad", "Ekaterina Vylomova", "David Samuel Setiawan"];
+export const citationAuthors = citationOrder
+  .map((n) => team.find((p) => p.name === n)?.citationName ?? n)
+  .join(" and ");
