@@ -4,6 +4,7 @@ import { Container } from "@/components/AppShell";
 import { experiment, findingSentences } from "@/data/experiments";
 import { languages } from "@/data/languages";
 import { auditFor, qualityNotes, schemaFor, sourceFor, statsFor } from "@/data/unimorph";
+import { citationAuthors, project, team } from "@/data/team";
 import { VERSION } from "@/data/version";
 
 export const metadata: Metadata = { title: "Methodology" };
@@ -39,6 +40,7 @@ const references = [
 ];
 
 const bibtex = `@misc{morpholens,
+  author       = {${citationAuthors}},
   title        = {MorphoLens: Exploring Morphological Generalisation to Unseen Lemmas},
   howpublished = {\\url{https://morpholens-app.vercel.app}},
   note         = {Version ${VERSION}. Data: UniMorph tur, urd, evn, ckt, ron at pinned commits},
@@ -355,6 +357,32 @@ npm run experiment:neural   # PyTorch (CPU), 2 neural systems → experiments/ne
 npm run experiment     # 5 languages × 2 splits × 5 sizes × 5 seeds (+ bootstrap)
 npm test               # regression checks: alignment, audit, matching
 npm run dev`}</pre>
+      </Section>
+
+      <Section n="13" title="Project & contact">
+        <p>
+          MorphoLens is developed with the {project.institution} as part of the {project.scheme} project{" "}
+          <em>{project.decraTitle}</em>, which studies how language technology can support endangered and low-resource
+          languages. The workspace contributes the evaluation and resource-auditing side of that question.
+        </p>
+        <dl className="grid gap-3 sm:grid-cols-3">
+          {team.map((p) => (
+            <div key={p.name} className="rounded-lg border border-line bg-ivory/80 p-4">
+              <dt className="font-semibold text-bush">{p.name}</dt>
+              <dd className="mt-1 text-xs text-muted">{p.role}</dd>
+              <dd className="text-xs text-muted">{p.affiliation}</dd>
+              {p.email && (
+                <dd className="mt-2 break-all text-xs">
+                  <a href={`mailto:${p.email}`} className="text-sienna underline underline-offset-2">{p.email}</a>
+                </dd>
+              )}
+            </div>
+          ))}
+        </dl>
+        <p className="text-sm text-muted">
+          Questions, corrections and reports of annotation errors are welcome. Everything shown here is reproducible from
+          the pinned data and the commands above.
+        </p>
       </Section>
     </Container>
   );

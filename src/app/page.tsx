@@ -5,6 +5,7 @@ import { HeroSpecimen } from "@/components/HeroSpecimen";
 import { LanguageCard } from "@/components/LanguageCard";
 import { fmtCI, fmtP, getCell, sizesFor } from "@/data/experiments";
 import { languages } from "@/data/languages";
+import { project, team } from "@/data/team";
 import { statsFor } from "@/data/unimorph";
 
 const questions = [
@@ -56,6 +57,26 @@ export default function Home() {
             </div>
           </div>
           <HeroSpecimen />
+        </Container>
+      </section>
+
+      <section className="border-b border-line bg-oak-soft/45">
+        <Container className="grid gap-6 py-8 lg:grid-cols-[1.35fr_1fr] lg:items-center">
+          <div>
+            <p className="eyebrow">Research context</p>
+            <p className="mt-2 font-serif text-lg leading-relaxed text-bush">
+              Developed with the {project.institution} as part of the {project.scheme} project{" "}
+              <em className="text-sienna">{project.decraTitle}</em>.
+            </p>
+          </div>
+          <ul className="flex flex-wrap gap-x-6 gap-y-2 text-sm lg:justify-end">
+            {team.map((p) => (
+              <li key={p.name}>
+                <span className="font-semibold text-bush">{p.name}</span>
+                <span className="block text-xs text-muted">{p.affiliation}</span>
+              </li>
+            ))}
+          </ul>
         </Container>
       </section>
 
